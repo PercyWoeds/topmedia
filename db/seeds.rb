@@ -49,20 +49,20 @@
 
 @c =Company.new
 @c.user_id= 4
-@c.name= "TRANSPORTES PEREDA SRL"
-@c.address1= "JR VICTOR REINEL NRO 187 VALLE DE LA LEGUA"
+@c.name= "MASA S.A."
+@c.address1= "MIRAFLORES"
 @c.address2= "LIMA"
 @c.city= "LIMA"
 @c.state= "LIMA"
 @c.zip= "92"
 @c.country= "Peru", 
-@c.website= "http://www.tpereda.com.pe"
+@c.website= "http://www.masa.com.pe"
 @c.save
 
 @l =Location.new
 @l.company_id= 1
 @l.name="LIMA"
-@l.address1= "JR VICTOR REINEL NRO.187 VALLE DE LA LEGUA"
+@l.address1= "MIRAFLORES"
 @l.address2= "LIMA"
 @l.city= "LIMA"
 @l.state= ""
@@ -70,14 +70,6 @@
 @l.save
 @l.company_id= 1
 
-@l =Location.new
-@l.name="AREQUIPA"
-@l.address1= "AREQUIPA"
-@l.address2= "AREQUIPA"
-@l.city= "AREQUIPA"
-@l.state= ""
-@l.country= "Peru"
-@l.save
 
  @d =Division.new
  @d.company_id= 1 
