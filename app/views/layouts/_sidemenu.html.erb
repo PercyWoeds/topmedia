@@ -65,6 +65,23 @@
 
                 <div id="cards-wrapper" class="cards-wrapper row">
 
+                 <%if @current_user.level == "ventas" || @current_user.level == "admin"%> 
+
+                    <div class="item item-purple col-md-4 col-sm-6 col-xs-6">
+                        <div class="item-inner">
+                            <div class="icon-holder">
+                                <span aria-hidden="true" class="icon icon_lifesaver"></span>
+                            </div><!--//icon-holder-->
+                            <h3 class="title">Contratos de Publicidad</h3>
+                            <p class="intro">Registro de contratos de publicidad  </p>
+                            <%= link_to "", "/companies/license/#{@company.id}", class: "link" %><span></span></a>
+                        </div><!--//item-inner-->
+                    </div><!--//item-->
+                    <% end %>
+
+
+                
+
             <%if @current_user.level == "compras" || @current_user.level == "admin" || @current_user.level == "almacen"%> 
 
                         <div class="item item-green col-md-4 col-sm-6 col-xs-6">
@@ -83,36 +100,6 @@
 
                     <% end %>
 
-                    <%if @current_user.level == "almacen" || @current_user.level == "admin"%>     
-
-                        <div class="item item-pink item-2 col-md-4 col-sm-6 col-xs-6">
-                            <div class="item-inner">
-                                <div class="icon-holder">
-                                    <span aria-hidden="true" class="icon icon_puzzle_alt"></span>
-                                </div><!--//icon-holder-->
-                                <h3 class="title">Almacen</h3>
-                                <p class="intro">Almacen de Productos </p>
-                                <%= link_to "", "/companies/components/#{@company.id}", class: "link" %><span></span></a>
-                            </div><!--//item-inner-->
-                        </div><!--//item-->
-                    <% end %>
-
-
-                    <%if @current_user.level == "guias" || @current_user.level == "admin"  || @current_user.level == "ventas"%> 
-
-                        <div class="item item-blue col-md-4 col-sm-6 col-xs-6">
-                            <div class="item-inner">
-                                <div class="icon-holder">
-                                    <span aria-hidden="true" class="icon icon_datareport_alt"></span>
-                                </div><!--//icon-holder-->
-                                <h3 class="title">Control de Viajes </h3>
-                                <p class="intro"> Modulo de control de viajes   </p>
-                                <%= link_to "", "/companies/charts/#{@company.id}", class: "link" %><span></span></a>
-
-
-                            </div><!--//item-inner-->
-                        </div><!--//item-->
-                    <% end %>    
 
                     <%if @current_user.level == "ventas" || @current_user.level == "admin"%> 
 
@@ -126,32 +113,9 @@
                             <%= link_to "", "/companies/faqs/#{@company.id}", class: "link" %><span></span></a>
                         </div><!--//item-inner-->
                     </div><!--//item-->
-
-                    <div class="item item-primary col-md-4 col-sm-6 col-xs-6">
-                        <div class="item-inner">
-                            <div class="icon-holder">
-                                <span aria-hidden="true" class="icon icon_genius"></span>
-                            </div><!--//icon-holder-->
-                            <h3 class="title">Mantenimiento unidades</h3>
-                            <p class="intro">Control de mantenimento unidades de </p>
-                            <a class="link" href="showcase.html"><span></span></a>
-                        </div><!--//item-inner-->
-                    </div><!--//item-->
-                    <% end %>
-                    <%if @current_user.level == "almacen" || @current_user.level == "admin"%> 
-                    <div class="item item-orange col-md-4 col-sm-6 col-xs-6">
-                        <div class="item-inner">
-                            <div class="icon-holder">
-                                <span aria-hidden="true" class="icon icon_gift"></span>
-                            </div><!--//icon-holder-->
-                            <h3 class="title"> Configuracion</h3>
-                            <p class="intro">Configuracion.</p>
-                            <a><%= link_to "", "/companies/license/#{@company.id}", class: "link" %><span></span></a>
-                        </div><!--//item-inner-->
-                    </div><!--//item-->
-
                     <% end %>
 
+                    
                     <%if @current_user.level == "finanzas" || @current_user.level == "admin"%> 
 
                      <div class="item item-orange col-md-4 col-sm-6 col-xs-6">
@@ -182,20 +146,24 @@
 
                     <% end %>
 
-                    <%if @current_user.level == "caja" || @current_user.level == "admin"%> 
+                 <%if @current_user.level == "ventas" || @current_user.level == "admin"%> 
 
-                    <div class="item item-primary col-md-4 col-sm-6 col-xs-6">
+                    <div class="item item-purple col-md-4 col-sm-6 col-xs-6">
                         <div class="item-inner">
                             <div class="icon-holder">
-                                <span aria-hidden="true" class="icon icon_genius"></span>
+                                <span aria-hidden="true" class="icon icon_lifesaver"></span>
                             </div><!--//icon-holder-->
-                            <h3 class="title">Caja </h3>
-                            <p class="intro">Control de caja y liquidaciones de viaje </p>
-                            <a class="link" href="showcase.html"><span></span></a>
+                            <h3 class="title">Configuracion</h3>
+                            <p class="intro">Registro de archivos del sistema  </p>
+                            <%= link_to "", "/companies/license/#{@company.id}", class: "link" %><span></span></a>
                         </div><!--//item-inner-->
                     </div><!--//item-->
-
                     <% end %>
+
+                    
+
+
+                    
                 </div><!--//cards-->
             </div><!--//cards-->
             </div><!--//container-->
