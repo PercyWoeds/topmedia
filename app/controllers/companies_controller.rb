@@ -82,13 +82,22 @@ class CompaniesController < ApplicationController
     @locations = Location.where(company_id: @company.id)
   end 
   
-  def license 
+  def contratos
     @company = Company.find(params[:id])
     set_company(@company)
     
     @pagetitle = @company[:name]
     @locations = Location.where(company_id: @company.id)
   end 
+
+  def configuracion
+    @company = Company.find(params[:id])
+    set_company(@company)
+    
+    @pagetitle = @company[:name]
+    @locations = Location.where(company_id: @company.id)
+  end 
+
 
   def components
     @company = Company.find(params[:id])

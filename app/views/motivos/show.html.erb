@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Descrip:</strong>
+  <%= @motivo.descrip %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @motivo.comments %>
+</p>
+
+<%= link_to 'Edit', edit_motivo_path(@motivo) %> |
+<%= link_to 'Back', motivos_path %>

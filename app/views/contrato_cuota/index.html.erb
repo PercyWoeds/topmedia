@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Contrato Cuota</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nro</th>
+      <th>Fecha</th>
+      <th>Cuota</th>
+      <th>Vventa</th>
+      <th>Comision1</th>
+      <th>Comision2</th>
+      <th>Total</th>
+      <th>Facturacanal</th>
+      <th>Factura1</th>
+      <th>Factura2</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @contrato_cuota.each do |contrato_cuotum| %>
+      <tr>
+        <td><%= contrato_cuotum.nro %></td>
+        <td><%= contrato_cuotum.fecha %></td>
+        <td><%= contrato_cuotum.cuota %></td>
+        <td><%= contrato_cuotum.vventa %></td>
+        <td><%= contrato_cuotum.comision1 %></td>
+        <td><%= contrato_cuotum.comision2 %></td>
+        <td><%= contrato_cuotum.total %></td>
+        <td><%= contrato_cuotum.facturacanal %></td>
+        <td><%= contrato_cuotum.factura1 %></td>
+        <td><%= contrato_cuotum.factura2 %></td>
+        <td><%= link_to 'Show', contrato_cuotum %></td>
+        <td><%= link_to 'Edit', edit_contrato_cuotum_path(contrato_cuotum) %></td>
+        <td><%= link_to 'Destroy', contrato_cuotum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Contrato cuotum', new_contrato_cuotum_path %>

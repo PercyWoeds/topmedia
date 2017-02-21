@@ -1,0 +1,1 @@
+json.array! @campania, partial: 'campania/campanium', as: :campanium

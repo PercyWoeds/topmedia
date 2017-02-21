@@ -1,0 +1,1 @@
+json.array! @avisodetails, partial: 'avisodetails/avisodetail', as: :avisodetail

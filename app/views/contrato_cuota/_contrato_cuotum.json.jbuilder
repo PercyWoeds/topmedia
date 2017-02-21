@@ -1,0 +1,2 @@
+json.extract! contrato_cuotum, :id, :nro, :fecha, :cuota, :vventa, :comision1, :comision2, :total, :facturacanal, :factura1, :factura2, :created_at, :updated_at
+json.url contrato_cuotum_url(contrato_cuotum, format: :json)

@@ -137,8 +137,7 @@ module ApplicationHelper
   
   # Genera un GUID
   def generate_guid
-    require 'digest/md5'
-    
+    require 'digest/md5'    
     hash = Digest::MD5.hexdigest(Time.now.to_s)
     hash = hash[0..5].upcase
     return hash
@@ -146,14 +145,13 @@ module ApplicationHelper
 
   def generate_guid2
 
-
     @voidedlast = Voided.find(1)
 
     correlative_number =@voidedlast.serie + "-"+@voidedlast.numero.to_s
 
     return correlative_number
   end
-  def generate_guid3
+  def generate_guid3  
     @voidedlast = Voided.find(2)
     correlative_number =@voidedlast.serie + "-"+@voidedlast.numero.to_s
 
@@ -207,6 +205,12 @@ module ApplicationHelper
 # Supplier payments
   def generate_guid10
     @voidedlast = Voided.find(12)
+    correlative_number =@voidedlast.serie + "-"+@voidedlast.numero.to_s
+    return correlative_number
+  end
+# Supplier payments
+  def generate_guid11
+    @voidedlast = Voided.find(13)
     correlative_number =@voidedlast.serie + "-"+@voidedlast.numero.to_s
     return correlative_number
   end

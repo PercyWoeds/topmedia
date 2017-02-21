@@ -1,0 +1,88 @@
+<%= simple_form_for(@contrato) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+    <div class="field">
+    
+    <%= f.label :code, "CODIGO *", :class => "bold" %><br />
+    <%= f.text_field :code , :onclick => "$(this).select();"%>
+    </div>
+    <div class="field">
+
+    
+    <%= f.label :fecha %><br />
+    <%= f.text_field :fecha ,value:Time.now.strftime("%d/%m/%Y") %>
+
+    </div>
+  
+
+    <div class="field">
+      <%= f.label :customer_id,"Clientes  " %><br />
+
+    <% if @edit %>
+      <%= f.select :customer_id,options_from_collection_for_select(@customers,'id','name',:selected => @contrato.customer_id)%>
+    <% else %>
+      <%= f.select :customer_id,options_from_collection_for_select(@customers,'id','name') %>
+    <% end %>
+      
+    </div>
+    <div class="field">
+      <%= f.label :medio_id,"Medios  " %><br />
+    <% if @edit %>
+    <%= f.select :medio_id,options_from_collection_for_select(@medios,'id','descrip',:selected => @contrato.medio_id)%>
+    <% else %>
+      <%= f.select :medio_id,options_from_collection_for_select(@medios,'id','descrip') %>
+    <% end %>
+    </div>
+
+    <div class="field">
+    <%= f.label :importe,"Importe " %><br />
+    <%= f.text_field :importe ,value: 0.00 %>
+    </div>
+
+
+    <div class="field">
+    <%= f.label :moneda_id ,"  "%><br />
+    <% if @edit %>  
+      <%= f.select :moneda_id, options_for_select([["SOLES",1],["DOLARES",2]],:selected=>@contrato.moneda_id) %>
+    <% else %>    
+      <%= f.select :moneda_id, options_for_select([["SOLES",1],["DOLARES",2]]) %>
+    <% end %>  
+
+    </div>
+
+    <div class="field">
+    <%= f.label :tipocontrato_id ,"  "%><br />
+
+    <% if @edit %>
+      <%= f.select :tipocontrato_id,options_for_select([["CUOTAS",1],["CONTRA AVISO",2]],:selected => @contrato.tipocontrato_id)%>
+    <% else %>
+    
+    <%= f.select :tipocontrato_id, options_for_select([["CUOTAS",1],["CONTRA AVISO",2]]) %>
+     <% end %> 
+    
+    </div>
+
+    <div class="field">
+    <%= f.label :nrocuotas,"Importe " %><br />
+    <%= f.text_field :nrocuotas %>
+    </div>
+
+    <div class="field">
+    <%= f.label :comision1,"Comision 1:  " %><br />
+    <%= f.text_field :comision1  %>
+    </div>
+
+    <div class="field">
+    <%= f.label :comision2,"Comision 2:  " %><br />
+    <%= f.text_field :comision2  %>
+    </div>
+    
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

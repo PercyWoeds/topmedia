@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Descrip:</strong>
+  <%= @periodo.descrip %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @periodo.comments %>
+</p>
+
+<%= link_to 'Edit', edit_periodo_path(@periodo) %> |
+<%= link_to 'Back', periodos_path %>

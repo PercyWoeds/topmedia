@@ -1,0 +1,1 @@
+json.partial! "tipoavisos/tipoaviso", tipoaviso: @tipoaviso

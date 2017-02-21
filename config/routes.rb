@@ -1,6 +1,17 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :ordens
+  resources :versions
+  resources :tipoavisos
+  resources :periodos
+  resources :motivos
+  resources :medios
+  resources :contrato_cuota
+  resources :contratos
+  resources :ciudads
+  resources :campania
+  resources :avisodetails
   resources :tipocambios
   resources :ubicas
   resources :bank_acounts
@@ -667,7 +678,8 @@ end
   match 'companies/start/:id' => 'companies#start', via: [:get, :post]
   match 'companies/faqs/:id' => 'companies#faqs', via: [:get, :post]
   match 'companies/charts/:id' => 'companies#charts', via: [:get, :post]
-  match 'companies/license/:id' => 'companies#license', via: [:get, :post]
+  match 'companies/configuracion/:id' => 'companies#configuracion', via: [:get, :post]
+  match 'companies/contratos/:id' => 'companies#contratos', via: [:get, :post]
   match 'companies/components/:id' => 'companies#components', via: [:get, :post]
   match 'companies/cpagar/:id' => 'companies#cpagar', via: [:get, :post]
   match 'companies/ccobrar/:id' => 'companies#ccobrar', via: [:get, :post]

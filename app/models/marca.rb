@@ -1,6 +1,6 @@
 class Marca < ActiveRecord::Base
 
-	validates_presence_of :company_id, :descrip
+	validates_presence_of  :descrip
 
   belongs_to :company
   

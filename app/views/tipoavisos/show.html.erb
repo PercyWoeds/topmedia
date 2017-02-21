@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Descrip:</strong>
+  <%= @tipoaviso.descrip %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @tipoaviso.comments %>
+</p>
+
+<%= link_to 'Edit', edit_tipoaviso_path(@tipoaviso) %> |
+<%= link_to 'Back', tipoavisos_path %>

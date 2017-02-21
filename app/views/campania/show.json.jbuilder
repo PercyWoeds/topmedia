@@ -1,0 +1,1 @@
+json.partial! "campania/campanium", campanium: @campanium

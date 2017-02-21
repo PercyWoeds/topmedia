@@ -1,0 +1,2 @@
+json.extract! contrato, :id, :code, :fecha, :customer_id, :medio_id, :importe, :moneda_id, :tipocontrato_id, :nrocuotas, :comision1, :comision2, :created_at, :updated_at
+json.url contrato_url(contrato, format: :json)

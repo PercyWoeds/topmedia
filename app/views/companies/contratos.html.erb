@@ -2,7 +2,7 @@
   
   <h3>
     <%= image_tag("products_32.png", :class => "vmiddle") %>
-    <%= link_to "Contratos ", "/companies/marcas/#{@company.id}" %>
+    <%= link_to "Contratos ", contratos_path %>
   </h3>
 
   <p>
@@ -13,7 +13,7 @@
 
   <h3>
     <%= image_tag("product_kit_32.png", :class => "vmiddle") %>
-    <%= link_to "Ordenes de publicidad", "/companies/modelos/#{@company.id}" %>
+    <%= link_to "Ordenes de publicidad", ordens_path %>
   </h3>
 
   <p>
@@ -38,8 +38,6 @@
 
 <div class="mid_box">
   <h3>
-    <%= image_tag("reports_32.png", :class => "vmiddle") %>
-    <%= link_to "Reportes ", tipocambios_path %>
   </h3>
 
   <p>

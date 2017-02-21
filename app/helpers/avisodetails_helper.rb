@@ -1,0 +1,2 @@
+module AvisodetailsHelper
+end

@@ -1,0 +1,1 @@
+json.array! @contrato_cuota, partial: 'contrato_cuota/contrato_cuotum', as: :contrato_cuotum

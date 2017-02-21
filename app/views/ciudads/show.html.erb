@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Descrip:</strong>
+  <%= @ciudad.descrip %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @ciudad.comments %>
+</p>
+
+<%= link_to 'Edit', edit_ciudad_path(@ciudad) %> |
+<%= link_to 'Back', ciudads_path %>

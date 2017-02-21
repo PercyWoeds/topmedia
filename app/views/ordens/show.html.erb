@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Contrato:</strong>
+  <%= @orden.contrato_id %>
+</p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @orden.fecha %>
+</p>
+
+<p>
+  <strong>Medio:</strong>
+  <%= @orden.medio_id %>
+</p>
+
+<p>
+  <strong>Marca:</strong>
+  <%= @orden.marca_id %>
+</p>
+
+<p>
+  <strong>Version:</strong>
+  <%= @orden.version_id %>
+</p>
+
+<p>
+  <strong>Fecha1:</strong>
+  <%= @orden.fecha1 %>
+</p>
+
+<p>
+  <strong>Fecha2:</strong>
+  <%= @orden.fecha2 %>
+</p>
+
+<p>
+  <strong>Tiempo:</strong>
+  <%= @orden.tiempo %>
+</p>
+
+<%= link_to 'Edit', edit_orden_path(@orden) %> |
+<%= link_to 'Back', ordens_path %>
