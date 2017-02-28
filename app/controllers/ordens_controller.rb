@@ -10,15 +10,36 @@ class OrdensController < ApplicationController
   # GET /ordens/1
   # GET /ordens/1.json
   def show
+    @orden = Orden.find(params[:id])
+    @contratos =Contrato.all
+    @medios = Medio.all
+    @marcas = Marca.all 
+    @versions = Version.all
+    @edit = false 
+
+
   end
 
   # GET /ordens/new
   def new
     @orden = Orden.new
+    @contratos =Contrato.all
+    @medios = Medio.all
+    @marcas = Marca.all 
+    @versions = Version.all
+    @edit = false 
+
   end
 
   # GET /ordens/1/edit
   def edit
+    @orden = Orden.find(params[:id])
+    @contratos =Contrato.all
+    @medios = Medio.all
+    @marcas = Marca.all 
+    @versions = Version.all
+
+    @edit = true
   end
 
   # POST /ordens

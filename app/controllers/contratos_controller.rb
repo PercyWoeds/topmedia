@@ -10,6 +10,12 @@ class ContratosController < ApplicationController
   # GET /contratos/1
   # GET /contratos/1.json
   def show
+    @contrato= Contrato.find(params[:id])
+
+     respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @contrato   }
+    end
   end
 
   # GET /contratos/new

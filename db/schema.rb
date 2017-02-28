@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170221153748) do
+ActiveRecord::Schema.define(version: 20170222130056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -190,8 +190,9 @@ ActiveRecord::Schema.define(version: 20170221153748) do
     t.float    "nrocuotas"
     t.float    "comision1"
     t.float    "comision2"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "contrato_cuota_id"
   end
 
   create_table "csubdia", force: :cascade do |t|
@@ -942,6 +943,7 @@ ActiveRecord::Schema.define(version: 20170221153748) do
     t.float    "tiempo"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "code"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -1245,6 +1247,22 @@ ActiveRecord::Schema.define(version: 20170221153748) do
     t.integer  "division_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "quotes", force: :cascade do |t|
+    t.integer  "nro"
+    t.datetime "fecha"
+    t.float    "importe"
+    t.float    "vventa"
+    t.float    "comision1"
+    t.float    "comision2"
+    t.float    "total"
+    t.string   "facturacanal"
+    t.string   "factura1"
+    t.string   "factura2"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "contrato_id"
   end
 
   create_table "restocks", force: :cascade do |t|

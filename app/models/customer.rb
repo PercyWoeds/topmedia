@@ -7,9 +7,9 @@ class Customer < ActiveRecord::Base
   has_many :manifests
   has_many :facturas
   
-  has_many :addresses , :dependent => :destroy
+  has_many :quotes , :dependent => :destroy
   
-  accepts_nested_attributes_for :addresses, :reject_if => lambda { |a| a[:address].blank? }, :allow_destroy => true
+  accepts_nested_attributes_for :quotes, :reject_if => lambda { |a| a[:importe].blank? }, :allow_destroy => true
 
 
     def self.import(file)

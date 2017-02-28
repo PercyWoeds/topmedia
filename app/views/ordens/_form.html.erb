@@ -2,14 +2,78 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :contrato_id %>
-    <%= f.input :fecha %>
-    <%= f.input :medio_id %>
-    <%= f.input :marca_id %>
-    <%= f.input :version_id %>
-    <%= f.input :fecha1 %>
-    <%= f.input :fecha2 %>
-    <%= f.input :tiempo %>
+
+    <div class="field">
+      <%= f.label :code,"Numero " %><br>
+      <%= f.text_field :code %>    
+    </div>
+
+   <div class="field">
+      <%= f.label :contrato_id,"Contrato  " %><br />
+    <% if @edit %>
+    <%= f.select :contrato_id,options_from_collection_for_select(@contratos,'id','code',:selected => @orden.contrato_id)%>
+    <% else %>
+      <%= f.select :contrato_id,options_from_collection_for_select(@contratos,'id','code') %>
+    <% end %>
+    </div>
+
+
+    <div class="field">  
+    <%= f.label :fecha %><br />
+    <%= f.text_field :fecha ,value:Time.now.strftime("%d/%m/%Y") %>
+    </div>
+  
+
+
+   <div class="field">
+      <%= f.label :medio_id,"Medios  " %><br />
+    <% if @edit %>
+    <%= f.select :medio_id,options_from_collection_for_select(@medios,'id','descrip',:selected => @orden.medio_id)%>
+    <% else %>
+      <%= f.select :medio_id,options_from_collection_for_select(@medios,'id','descrip') %>
+    <% end %>
+    </div>
+
+
+   <div class="field">
+      <%= f.label :marca_id,"Marcas " %><br />
+    <% if @edit %>
+    <%= f.select :marca_id,options_from_collection_for_select(@marcas,'id','descrip',:selected => @orden.medio_id)%>
+    <% else %>
+      <%= f.select :marca_id,options_from_collection_for_select(@marcas,'id','descrip') %>
+    <% end %>
+    </div>
+
+
+   <div class="field">
+      <%= f.label :version_id,"Version   " %><br />
+    <% if @edit %>
+    <%= f.select :version_id,options_from_collection_for_select(@versions,'id','descrip',:selected => @orden.medio_id)%>
+    <% else %>
+      <%= f.select :version_id,options_from_collection_for_select(@versions,'id','descrip') %>
+    <% end %>
+    </div>
+
+
+    <div class="field">  
+    <%= f.label :fecha1,"Fecha 1 " %><br />
+    <%= f.text_field :fecha1 ,value:Time.now.strftime("%d/%m/%Y") %>
+    </div>
+  
+
+    <div class="field">  
+    <%= f.label :fecha2,"Fecha 2" %><br />
+    <%= f.text_field :fecha2 ,value:Time.now.strftime("%d/%m/%Y") %>
+    </div>
+  
+
+    <div class="field">
+      <%= f.label :tiempo,"Tiempo " %><br>
+      <%= f.text_field :tiempo %>    
+    </div>
+
+
+
   </div>
 
   <div class="form-actions">

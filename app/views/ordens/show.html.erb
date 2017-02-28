@@ -1,8 +1,16 @@
 <p id="notice"><%= notice %></p>
 
+
 <p>
+
+  <strong>Orden Nro:</strong>
+  <%= @orden.code %>
+</p>
+
+<p>
+
   <strong>Contrato:</strong>
-  <%= @orden.contrato_id %>
+  <%= @orden.contrato.code %>
 </p>
 
 <p>
@@ -12,27 +20,27 @@
 
 <p>
   <strong>Medio:</strong>
-  <%= @orden.medio_id %>
+  <%= @orden.medio.descrip %>
 </p>
 
 <p>
   <strong>Marca:</strong>
-  <%= @orden.marca_id %>
+  <%= @orden.marca.descrip %>
 </p>
 
 <p>
   <strong>Version:</strong>
-  <%= @orden.version_id %>
+  <%= @orden.version.descrip %>
 </p>
 
 <p>
   <strong>Fecha1:</strong>
-  <%= @orden.fecha1 %>
+  <%= doDate(@orden.fecha1) %>
 </p>
 
 <p>
   <strong>Fecha2:</strong>
-  <%= @orden.fecha2 %>
+  <%= doDate(@orden.fecha2) %>
 </p>
 
 <p>
@@ -40,5 +48,5 @@
   <%= @orden.tiempo %>
 </p>
 
-<%= link_to 'Edit', edit_orden_path(@orden) %> |
-<%= link_to 'Back', ordens_path %>
+<%= link_to 'Editar', edit_orden_path(@orden) %> |
+<%= link_to 'Regresar', ordens_path %>

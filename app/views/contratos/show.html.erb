@@ -1,9 +1,22 @@
+
+<h1>
+  <%= image_tag("supplier_48.png", :class => "vmiddle") %>
+    <%= @contrato.code  %>
+</h1>
+
+<%= hr() %>
+
+
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Code:</strong>
-  <%= @contrato.code %>
-</p>
+
+<% if @contrato.code %>
+  <p>
+    <b>Contrato Nro:</b>
+    <%= link_to @contrato.code, @contrato.code %>
+  </p>
+<% end %>
+
 
 <p>
   <strong>Fecha:</strong>
@@ -12,12 +25,12 @@
 
 <p>
   <strong>Customer:</strong>
-  <%= @contrato.customer_id %>
+  <%= @contrato.customer.name %>
 </p>
 
 <p>
   <strong>Medio:</strong>
-  <%= @contrato.medio_id %>
+  <%= @contrato.medio.descrip %>
 </p>
 
 <p>
@@ -27,12 +40,16 @@
 
 <p>
   <strong>Moneda:</strong>
-  <%= @contrato.moneda_id %>
+
+  <%= @contrato.get_moneda %>
+
 </p>
 
 <p>
   <strong>Tipocontrato:</strong>
-  <%= @contrato.tipocontrato_id %>
+  
+ <%= @contrato.get_contrato %>
+
 </p>
 
 <p>
@@ -50,5 +67,21 @@
   <%= @contrato.comision2 %>
 </p>
 
-<%= link_to 'Edit', edit_contrato_path(@contrato) %> |
-<%= link_to 'Back', contratos_path %>
+<div class="row">
+
+  <div class="col-md-12">
+    <div class="contrato_cuota">
+      <h3> Cuotas   </h3>
+      <%= render @contrato.quotes %>
+      <div>
+      <%= link_to "Agregar cuota  ", new_contrato_quote_path(@contrato), class: "button" %>  
+    
+      </div>
+    </div>
+
+  </div>  
+</div>
+
+
+<%= link_to 'Editar', edit_contrato_path(@contrato) %> |
+<%= link_to 'Regresar', contratos_path %>

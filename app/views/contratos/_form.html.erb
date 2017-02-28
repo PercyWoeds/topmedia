@@ -53,7 +53,7 @@
     </div>
 
     <div class="field">
-    <%= f.label :tipocontrato_id ,"  "%><br />
+    <%= f.label :tipocontrato_id ,"TIPO CONTRATO "%><br />
 
     <% if @edit %>
       <%= f.select :tipocontrato_id,options_for_select([["CUOTAS",1],["CONTRA AVISO",2]],:selected => @contrato.tipocontrato_id)%>
@@ -65,7 +65,7 @@
     </div>
 
     <div class="field">
-    <%= f.label :nrocuotas,"Importe " %><br />
+    <%= f.label :nrocuotas,"Nro.Cuotas " %><br />
     <%= f.text_field :nrocuotas %>
     </div>
 
@@ -80,9 +80,11 @@
     </div>
     
 
+
   </div>
 
   <div class="form-actions">
     <%= f.button :submit %>
   </div>
+  
 <% end %>

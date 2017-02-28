@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Contratos</h1>
+<h1>Contratos</h1>
 
 <table>
   <thead>
@@ -24,17 +24,17 @@
       <tr>
         <td><%= contrato.code %></td>
         <td><%= contrato.fecha %></td>
-        <td><%= contrato.customer_id %></td>
-        <td><%= contrato.medio_id %></td>
+        <td><%= contrato.customer.name  %></td>
+        <td><%= contrato.medio.descrip  %></td>
         <td><%= contrato.importe %></td>
         <td><%= contrato.moneda_id %></td>
         <td><%= contrato.tipocontrato_id %></td>
         <td><%= contrato.nrocuotas %></td>
         <td><%= contrato.comision1 %></td>
         <td><%= contrato.comision2 %></td>
-        <td><%= link_to 'Show', contrato %></td>
+        <td><%= link_to 'Ver', contrato %></td>
         <td><%= link_to 'Edit', edit_contrato_path(contrato) %></td>
-        <td><%= link_to 'Destroy', contrato, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Eliminar', contrato, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -42,4 +42,4 @@
 
 <br>
 
-<%= link_to 'New Contrato', new_contrato_path %>
+<%= link_to 'Nuevo Contrato',new_contrato_path  %>

@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nro:</strong>
+  <%= @quote.nro %>
+</p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @quote.fecha %>
+</p>
+
+<p>
+  <strong>Importe:</strong>
+  <%= @quote.importe %>
+</p>
+
+<p>
+  <strong>Vventa:</strong>
+  <%= @quote.vventa %>
+</p>
+
+<p>
+  <strong>Comision1:</strong>
+  <%= @quote.comision1 %>
+</p>
+
+<p>
+  <strong>Comision2:</strong>
+  <%= @quote.comision2 %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @quote.total %>
+</p>
+
+<p>
+  <strong>Facturacanal:</strong>
+  <%= @quote.facturacanal %>
+</p>
+
+<p>
+  <strong>Factura1:</strong>
+  <%= @quote.factura1 %>
+</p>
+
+<p>
+  <strong>Factura2:</strong>
+  <%= @quote.factura2 %>
+</p>
+
+<%= link_to 'Editar', edit_quote_path(@quote) %> |
+<%= link_to 'Regresar', quotes_path %>

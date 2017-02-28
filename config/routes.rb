@@ -1,6 +1,7 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :quotes
   resources :ordens
   resources :versions
   resources :tipoavisos
@@ -168,7 +169,13 @@ end
     collection { post :import2 }
 
   end 
+
+  resources :contratos do
+    resources :quotes    
+  end 
+  
   resources :purchases do
+
      collection { post :datos  }
   end 
   

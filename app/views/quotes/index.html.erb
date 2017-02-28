@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Cuotas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nro</th>
+      <th>Fecha</th>
+      <th>Importe</th>
+      <th>Vventa</th>
+      <th>Comision1</th>
+      <th>Comision2</th>
+      <th>Total</th>
+      <th>Facturacanal</th>
+      <th>Factura1</th>
+      <th>Factura2</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @quotes.each do |quote| %>
+      <tr>
+        <td><%= quote.nro %></td>
+        <td><%= quote.fecha %></td>
+        <td><%= quote.importe %></td>
+        <td><%= quote.vventa %></td>
+        <td><%= quote.comision1 %></td>
+        <td><%= quote.comision2 %></td>
+        <td><%= quote.total %></td>
+        <td><%= quote.facturacanal %></td>
+        <td><%= quote.factura1 %></td>
+        <td><%= quote.factura2 %></td>
+        <td><%= link_to 'Show', quote %></td>
+        <td><%= link_to 'Edit', edit_quote_path(quote) %></td>
+        <td><%= link_to 'Destroy', quote, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Nueva Cuota ', new_quote_path %>

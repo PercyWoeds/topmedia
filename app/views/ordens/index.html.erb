@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Ordens</h1>
+<h1>Ordenes</h1>
 
 <table>
   <thead>
@@ -20,11 +20,11 @@
   <tbody>
     <% @ordens.each do |orden| %>
       <tr>
-        <td><%= orden.contrato_id %></td>
+        <td><%= orden.contrato.code %></td>
         <td><%= orden.fecha %></td>
-        <td><%= orden.medio_id %></td>
-        <td><%= orden.marca_id %></td>
-        <td><%= orden.version_id %></td>
+        <td><%= orden.medio.descrip %></td>
+        <td><%= orden.marca.descrip %></td>
+        <td><%= orden.version.descrip %></td>
         <td><%= orden.fecha1 %></td>
         <td><%= orden.fecha2 %></td>
         <td><%= orden.tiempo %></td>
