@@ -2060,6 +2060,15 @@ def get_ingresos_day3(fecha1,fecha2)
     return @purchases 
 
 end
+def get_contratos_day(fecha1,fecha2)    
+    @contratos = Contrato.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+    return @contratos
+end 
+def get_ordenes_day(fecha1,fecha2)    
+    @ordenes = Orden.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+    return @ordenes
+    
+ end 
 
 
 

@@ -1,18 +1,51 @@
 <div class="metadata">
-<div class="item">
-        <div class="title">
-            <%= quote.nro %> 
-			<%= quote.fecha %> 
-			<%= quote.importe %> 
-			<%= quote.vventa %> 
-			<%= quote.comision1 %>
-			<%= quote.comision2 %>
-			<%= quote.total %>
-			<%= quote.facturacanal %>
-			<%= quote.factura1 %>
-			<%= quote.factura2 %>
+	<div class="item">
+
+
+<table>
+    <thead>
+      <tr>
+        <th class="bordered_right bordered_bottom" style="width: 20px;">
+          Numero
+        </th>
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+          Fecha
+        </th>
+        <th class="bordered_right bordered_bottom" style="width: 20px;">
+          Importe
+        </th>
+        
+        <th class="bordered_right bordered_bottom" style="width: 20px;">
+          V.Venta
+        </th>
+        
+      </tr>
+    </thead>
+    <tbody>
     
-		</div>
+   
+        <tr>
+          <td class="bordered_right bordered_bottom">
+            <%= quote.nro %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= quote.fecha.strftime("%d/%m/%Y")  %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= quote.importe %>
+          </td>
+                    
+          <td class="bordered_right bordered_bottom">
+            <%= quote.vventa  %>
+          </td>
+          <td> 	
+          
+          </td>
+
+          
+    </tbody>
+  </table>
+
 	</div>
 			
 </div>

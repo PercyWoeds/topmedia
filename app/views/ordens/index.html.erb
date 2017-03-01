@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th>Orden</th>
       <th>Contrato</th>
       <th>Fecha</th>
       <th>Medio</th>
@@ -20,6 +21,7 @@
   <tbody>
     <% @ordens.each do |orden| %>
       <tr>
+        <td><%= orden.code %></td>
         <td><%= orden.contrato.code %></td>
         <td><%= orden.fecha %></td>
         <td><%= orden.medio.descrip %></td>
@@ -28,9 +30,9 @@
         <td><%= orden.fecha1 %></td>
         <td><%= orden.fecha2 %></td>
         <td><%= orden.tiempo %></td>
-        <td><%= link_to 'Show', orden %></td>
-        <td><%= link_to 'Edit', edit_orden_path(orden) %></td>
-        <td><%= link_to 'Destroy', orden, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Ver', orden %></td>
+        <td><%= link_to 'Editar', edit_orden_path(orden) %></td>
+        <td><%= link_to 'Eliminar', orden, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -38,4 +40,4 @@
 
 <br>
 
-<%= link_to 'New Orden', new_orden_path %>
+<%= link_to 'Nueva Orden', new_orden_path %>

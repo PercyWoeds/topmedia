@@ -13,27 +13,27 @@ totals = []
   <%= link_to "Reports", "/companies/reports/#{@company.id}" %>
 </div>
 
-<h3>
+<h1>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
- Reporte de Facturas emitidas 
-</h3	>
+  Reporte de Ordenes
+</h1>
 
-<form method="get" action="/purchases/rpt_purchase_all/<%= @company.id %>">
+<form method="get" action="/ordens/rpt_ordenes1/<%= @company.id %>">
+  
 
   <div class="field">
-      <input type="date" name="fecha1" value="2017-01-01" style = "width: 150px" >
-
-    </div>
-	<div class="field">
-		<input type="date" name="fecha2" value="2017-01-31" style = "width: 150px" >
+    Desde <input type="date" name="fecha1" value="2017-03-01" style = "width: 150px" >
   </div>
-  <input type="submit" value="Generar"  />
+
+	<div class="field">
+    Hasta <input type="date" name="fecha2" value="2017-03-01" style = "width: 150px" >
+  </div>
+
+
+  <input type="submit" value="Generar Reporte "  />
+  
   
 </form>
-
-<div class="button">
-  <%= link_to 'Regresar', "/companies/reports/reports_contratos/#{@company.id}" %>
-</div>
 
 <br />
 

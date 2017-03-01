@@ -1,52 +1,56 @@
 <p id="notice"><%= notice %></p>
 
+<h1>
+  <%= image_tag("supplier_48.png", :class => "vmiddle") %>
+    <%= @orden.code %>
+</h1>
+
+<%= hr() %>
+
+<% if @orden.contrato %>
+  <p>
+    <b> Contrato : </b>
+    <%=  @orden.contrato.code %>
+  </p>
+<% end %>
+
+<% if @orden.fecha %>
+  <p>
+    <b>Fecha:</b>
+    <%= @orden.fecha %>
+  </p>
+<% end %>
 
 <p>
-
-  <strong>Orden Nro:</strong>
-  <%= @orden.code %>
-</p>
-
-<p>
-
-  <strong>Contrato:</strong>
-  <%= @orden.contrato.code %>
-</p>
-
-<p>
-  <strong>Fecha:</strong>
-  <%= @orden.fecha %>
-</p>
-
-<p>
-  <strong>Medio:</strong>
+  <b>Medio:</b>
   <%= @orden.medio.descrip %>
 </p>
 
 <p>
-  <strong>Marca:</strong>
+  <b>Marca:</b>
   <%= @orden.marca.descrip %>
 </p>
 
 <p>
-  <strong>Version:</strong>
+  <b>Version:</b>
   <%= @orden.version.descrip %>
 </p>
 
 <p>
-  <strong>Fecha1:</strong>
+  <b>Fecha1:</b>
   <%= doDate(@orden.fecha1) %>
 </p>
 
 <p>
-  <strong>Fecha2:</strong>
+  <b>Fecha2:</b>
   <%= doDate(@orden.fecha2) %>
 </p>
 
 <p>
-  <strong>Tiempo:</strong>
+  <b>Tiempo:</b>
   <%= @orden.tiempo %>
 </p>
+
 
 <%= link_to 'Editar', edit_orden_path(@orden) %> |
 <%= link_to 'Regresar', ordens_path %>

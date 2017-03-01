@@ -266,6 +266,11 @@ end
   match 'companies/reports/rpt_calmacen6_pdf/:company_id' => 'reports#rpt_calmacen6_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_calmacen7_pdf/:company_id' => 'reports#rpt_calmacen7_pdf', via: [:get, :post]  
 
+  match 'contratos/rpt_contratos1/:company_id' => 'contratos#rpt_contratos1', via: [:get, :post]  
+
+  match 'ordens/rpt_ordenes1/:company_id' => 'ordens#rpt_ordenes1', via: [:get, :post]  
+  
+
   match 'companies/reports/rpt_facturas_all/:company_id' => 'reports#rpt_facturas_all', via: [:get, :post]
   match 'companies/reports/rpt_facturas_all2/:company_id' => 'reports#rpt_facturas_all2', via: [:get, :post]
 
@@ -274,6 +279,9 @@ end
 
   match 'companies/reports/sales/:company_id' => 'reports#report_sales', via: [:get, :post]
   match 'companies/reports/:company_id' => 'reports#reports', via: [:get, :post]
+  match 'companies/reports/reports_contratos/:company_id' => 'reports#reports_contratos', via: [:get, :post]
+  match 'companies/reports/rpt_contratos1_pdf/:company_id' => 'reports#rpt_contratos1_pdf', via: [:get, :post]
+  match 'companies/reports/rpt_ordenes1_pdf/:company_id' => 'reports#rpt_ordenes1_pdf', via: [:get, :post]
 
   # Company users
 

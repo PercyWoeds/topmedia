@@ -27,8 +27,8 @@
         <td><%= contrato.customer.name  %></td>
         <td><%= contrato.medio.descrip  %></td>
         <td><%= contrato.importe %></td>
-        <td><%= contrato.moneda_id %></td>
-        <td><%= contrato.tipocontrato_id %></td>
+        <td><%= contrato.get_moneda %></td>
+        <td><%= contrato.get_contrato %></td>
         <td><%= contrato.nrocuotas %></td>
         <td><%= contrato.comision1 %></td>
         <td><%= contrato.comision2 %></td>
@@ -43,3 +43,5 @@
 <br>
 
 <%= link_to 'Nuevo Contrato',new_contrato_path  %>
+
+

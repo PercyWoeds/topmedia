@@ -1318,4 +1318,23 @@ class ReportsController < ApplicationController
     
   end
 
+  def reports_contratos
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Reportes de Contratos "    
+    @customers = @company.get_customers()
+    @monedas=@company.get_monedas    
+  end
+  def rpt_contratos1_pdf
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Reportes de Contratos "    
+    @customers = @company.get_customers()
+    @monedas=@company.get_monedas    
+  end
+  def rpt_ordenes1_pdf
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Reportes de Ordenes "    
+    @customers = @company.get_customers()
+    @monedas=@company.get_monedas    
+  end
+
 end

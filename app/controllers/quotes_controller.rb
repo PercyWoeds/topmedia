@@ -4,6 +4,7 @@ before_action :find_quote
 
 def new
     
+
   @quote = Quote.new 
 
 
@@ -13,7 +14,8 @@ end
 def create
 
   @quote  =Quote.new(quote_params)
-  @quote.contrato_id =@quote.id
+
+  @quote.contrato_id =@contrato.id
   
 
   if @quote.save
@@ -23,17 +25,6 @@ def create
 
   end 
 
-  @address =Address.new(address_params)
-  @address.customer_id =@customer.id
-  @address.user_id= current_user.id
-
-  if @address.save
-    redirect_to customer_path(@customer)  
-  else
-    render 'new'  
-
-  end 
-  
 end
 
 private

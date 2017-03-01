@@ -1,4 +1,21 @@
+<% if @orden.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@orden.errors.count, "error") %> prohibited this orden from being saved:</h2>
+
+    <ul>
+    <% @orden.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= hr() %>
+
+
+
 <%= simple_form_for(@orden) do |f| %>
+
   <%= f.error_notification %>
 
   <div class="form-inputs">
@@ -22,7 +39,6 @@
     <%= f.label :fecha %><br />
     <%= f.text_field :fecha ,value:Time.now.strftime("%d/%m/%Y") %>
     </div>
-  
 
 
    <div class="field">
