@@ -23,12 +23,12 @@
       <tr>
         <td><%= orden.code %></td>
         <td><%= orden.contrato.code %></td>
-        <td><%= orden.fecha %></td>
+        <td><%= orden.fecha.strftime("%d/%m/%Y") %></td>
         <td><%= orden.medio.descrip %></td>
         <td><%= orden.marca.descrip %></td>
         <td><%= orden.version.descrip %></td>
-        <td><%= orden.fecha1 %></td>
-        <td><%= orden.fecha2 %></td>
+        <td><%= orden.fecha1.strftime("%d/%m/%Y") %></td>
+        <td><%= orden.fecha2.strftime("%d/%m/%Y") %></td>
         <td><%= orden.tiempo %></td>
         <td><%= link_to 'Ver', orden %></td>
         <td><%= link_to 'Editar', edit_orden_path(orden) %></td>
