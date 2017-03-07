@@ -50,6 +50,8 @@ class ContratosController < ApplicationController
     
     respond_to do |format|
       if @contrato.save
+         @contrato.correlativo 
+
         format.html { redirect_to @contrato, notice: 'Contrato was successfully created.' }
         format.json { render :show, status: :created, location: @contrato }
       else

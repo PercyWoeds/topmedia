@@ -208,9 +208,16 @@ module ApplicationHelper
     correlative_number =@voidedlast.serie + "-"+@voidedlast.numero.to_s
     return correlative_number
   end
-# Supplier payments
+# Contrato 
   def generate_guid11
     @voidedlast = Voided.find(13)
+    correlative_number =@voidedlast.serie + "-"+@voidedlast.numero.to_s
+    return correlative_number
+  end
+
+# orden
+  def generate_guid12
+    @voidedlast = Voided.find(14)
     correlative_number =@voidedlast.serie + "-"+@voidedlast.numero.to_s
     return correlative_number
   end

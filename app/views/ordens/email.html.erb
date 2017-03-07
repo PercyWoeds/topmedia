@@ -7,18 +7,26 @@
 
 <h1>
   <%= image_tag("invoice_48.png", :class => "vmiddle") %>
-  Editing orden
+  Send orden via email
 </h1>
 
-<p>
-  To modify the orden, please fill out the following form.  Fields marked with <strong>*</strong> are required.
-</p>
+<%= hr() %>
 
-<%= render 'form' %>
+<h3>
+  <%= link_to @orden.identifier, @orden %>
+</h3>
+
+<%= hr() %>
+
+<form method="post" action="/ordens/do_email/<%= @orden.id %>">
+  <strong>Email:</strong>
+  <input type="text" name="email" value="<%= @orden.customer.email %>" onclick="$(this).select();" />
+  <input type="submit" value="Send" class="bold" />
+</form>
 
 <%= hr() %>
 
 <div class="button">
-  <%= link_to 'Show', @orden %>
+  <%= link_to 'Show orden', @orden %>
   <%= link_to 'Back', "/companies/ordens/#{@company.id}" %>
 </div>

@@ -1,0 +1,61 @@
+<% if @ordens.count > 0 %>
+  <table>
+    <thead>
+      <tr>
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+          orden
+        </th>
+        <th class="bordered_right bordered_bottom" style="width: 350px;">
+          Customer
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Total
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Date
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Processed
+        </th>
+        <th class="bordered_right bordered_bottom" colspan="3">
+          Options
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <% for orden in @ordens %>
+        <tr>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to orden.code, orden, :title => "Ir a factura" %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to orden.customer.name, orden.customer, :title => "Go to customer" %>
+          </td>
+          <td class="bordered_right bordered_bottom right">
+            <%= money(orden.total) %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= doDate(orden.created_at) %>
+          </td>
+          <td class="bordered_right bordered_bottom <%= orden.processed_color %>">
+            <%= orden.get_processed_short %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to "View", orden %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to "Edit", edit_orden_path(orden) %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= link_to 'Delete', orden, :confirm => 'Are you sure?', :method => :delete %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="error">
+    We couldn't find any ordens.
+  </p>
+<% end %>

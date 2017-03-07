@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  orden_id: 1
+  avisodetail_id: 1
+  price: 1.5
+  quantity: 1.5
+  total: 1.5
+  fecha: 2017-03-02 22:32:52
+
+two:
+  orden_id: 1
+  avisodetail_id: 1
+  price: 1.5
+  quantity: 1.5
+  total: 1.5
+  fecha: 2017-03-02 22:32:52

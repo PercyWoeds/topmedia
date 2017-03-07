@@ -1373,6 +1373,123 @@
     $("#items").val(items_final.join(","));
     listItemsOutput();
   }
+
+
+// Add an item to Orden
+  function addItemToOrden() {
+    var item = $("#ac_item").val();
+
+
+    if(item != "") {
+      var company_id = $("#orden_company_id").val();
+      var item_id = $("#ac_item_id").val();
+      var fecha = $("#ac_item_fecha").val();
+
+  //return ((day==fecha.getDate()) && (month==dteDate.getMonth()) && (year==dteDate.getFullYear()))
+
+
+
+      var fecha_arr = $("#ac_item_fecha").val().split("-");
+
+      var fecha_yy = fecha_arr[0];
+      var fecha_mm = fecha_arr[1];
+      var fecha_dd = fecha_arr[2];
+    
+      var quantity = $("#ac_item_quantity").val();
+      var tarifa = $("#ac_item_tarifa").val();
+      
+
+      var items_arr = $("#items").val().split(",");
+
+      if(quantity == "" || !isNumeric(quantity)) {
+        alert("Por favor ingrese una cantidad");
+      } else if(tarifa == "" || !isNumeric(tarifa)) {
+        alert("Por favor ingrese una tarifa");
+      } else {
+
+        var item_line = item_id + "|BRK|"+fecha_dd + "|BRK|" + fecha_mm + "|BRK|" +fecha_yy + "|BRK|" + quantity + "|BRK|" + tarifa ;      
+        
+
+        $("#items").val($("#items").val() + "," + item_line);
+        
+        listItemsOrden();
+        
+        $("#ac_item_id").val("");
+        $("#ac_item").val("");
+        $("#ac_item_quantity").val("1");
+        $("#ac_item_tarifa").val("1");
+        updateItemOrden();
+      }
+    } else {
+      alert("Por favor ingrese un programa/ elemento primero.");
+    }
+
+    
+  }
+
+  // List items in a kit
+  function listItemsOrden() {
+    var items = $("#items").val();
+    var company_id = $("#orden_company_id").val();
+    
+    $.get('/ordens/list_items/' + company_id, {
+      items: items
+    },
+    function(data) {
+      $("#list_items").html(data);
+      documentReady();
+    });
+  }
+
+  // Update price total for invoice
+  function updateItemOrden() {
+    var quantity = $("#ac_item_quantity").val();
+    var tarifa = $("#ac_item_tarifa").val();
+    
+    if(isNumeric(quantity)  && isNumeric(tarifa)) {
+
+      price = (tarifa / 30 ) * 10
+
+      var total = quantity * price;
+      
+      $("#ac_item_price").html(price);
+      $("#ac_item_total").html(total);
+
+    } else {
+      $("#ac_item_total").html("0.00");
+      $("#ac_item_price").html("0.00");
+    }
+  }
+
+// Removes an item from an invoice
+  function removeItemFromOrden(id) {
+    var items = $("#items").val();
+    var items_arr = items.split(",");
+    var items_final = Array();
+    var i = 0;
+    
+    while(i < items_arr.length) {
+      if(i != id) {
+        items_final[i] = items_arr[i];
+      }
+      i++;
+    }
+    
+    $("#items").val(items_final.join(","));
+    listItemsOrden();
+  }
+
+
+
+function getFormattedDate(date) {
+  var year = date.getFullYear();
+  var month = (1 + date.getMonth()).toString();
+  month = month.length > 1 ? month : '0' + month;
+  var day = date.getDate().toString();
+  day = day.length > 1 ? day : '0' + day;
+  return month + '/' + day + '/' + year;
+}
+
  //............................................................................  
 
 

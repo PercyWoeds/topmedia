@@ -1,56 +1,176 @@
-<p id="notice"><%= notice %></p>
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @orden.company.name, @orden.company %> &raquo;
+  <%= link_to "ordens", "/companies/ordens/#{@orden.company.id}" %>
+</div>
 
 <h1>
-  <%= image_tag("supplier_48.png", :class => "vmiddle") %>
-    <%= @orden.code %>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  <%= @orden.identifier %>
 </h1>
 
 <%= hr() %>
 
-<% if @orden.contrato %>
-  <p>
-    <b> Contrato : </b>
-    <%=  @orden.contrato.code %>
-  </p>
-<% end %>
-
-<% if @orden.fecha %>
-  <p>
-    <b>Fecha:</b>
-    <%= @orden.fecha %>
-  </p>
-<% end %>
 
 <p>
-  <b>Medio:</b>
+  <b>Orden:</b>
+  <%= @orden.code %>
+</p>
+
+<p>
+
+<b>Contrato:</b>
+  <%= @orden.contrato.code %>
+</p>
+
+<b>Medio:</b>
   <%= @orden.medio.descrip %>
 </p>
 
-<p>
-  <b>Marca:</b>
+<b>Marca:</b>
   <%= @orden.marca.descrip %>
 </p>
 
-<p>
-  <b>Version:</b>
+<b>Version:</b>
   <%= @orden.version.descrip %>
 </p>
 
-<p>
-  <b>Fecha1:</b>
-  <%= doDate(@orden.fecha1) %>
-</p>
+
+<%= hr() %>
+
+<h3>
+   Informacion cliente
+</h3>
 
 <p>
-  <b>Fecha2:</b>
-  <%= doDate(@orden.fecha2) %>
+  <b>Nombre :</b>
+  <%= link_to @customer.name, @customer %>
 </p>
+
+<%= render "customers/show" %>
+
+<%= hr() %>
+
+<h3>
+  Detalle
+</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        Producto
+      </th>
+      <th>
+        Fecha 
+      </th>
+      
+      <th>
+        Precio
+      </th>
+      <th>
+        Cantidad
+      </th>
+      <th>
+        Tarifa
+      </th>
+      <th>
+        Total
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for productItem in @orden.get_products() %>
+      <tr>
+        <td class="bordered_bottom bordered_right">
+          <%= link_to productItem.name   %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= productItem.fecha.strftime("%d/%m/%Y") %>
+        </td>
+        
+        <td class="bordered_bottom bordered_right">
+          <%= money(productItem.price) %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= productItem.quantity %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= money(productItem.tarifa) %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= money(productItem.total) %>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="6" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Subtotal:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@orden.subtotal) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        IGV:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@orden.tax) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Total:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@orden.total) %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br />
+
+<%= hr() %>
+
+<% if @orden.description != "" %>
+  <div>
+    <b>Description:</b>
+    <br />
+    <br />
+    <%= format_text(@orden.description) %>
+  </div>
+  <%= hr() %>
+<% end %>
+
+
+<br />
+
+<div>
+  <strong><%= @orden.get_processed %></strong>
+  <% if @orden.processed == "1" and @orden.date_processed %>
+    <%= doDate(@orden.date_processed) %>
+  <% end %>
+</div>
 
 <p>
-  <b>Tiempo:</b>
-  <%= @orden.tiempo %>
+  <strong> Usuario:</strong>
+  <%= link_to @orden.user.username, @orden.user %>
 </p>
 
+<%= hr() %>
 
-<%= link_to 'Editar', edit_orden_path(@orden) %> |
-<%= link_to 'Regresar', ordens_path %>
+<div class="button">
+  <%= link_to 'Export to PDF', "/ordens/pdf/#{@orden.id} " %>
+
+  
+  <%= link_to 'Send orden via email', "/ordens/email/#{@orden.id}" %>
+  <%= link_to 'Process orden', "/ordens/do_process/#{@orden.id}" %>
+  <%= link_to 'Edit', edit_orden_path(@orden) %>
+  <%= link_to 'Back', "/companies/ordens/#{@orden.company.id}" %>
+</div>

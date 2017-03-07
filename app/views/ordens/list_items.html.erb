@@ -1,0 +1,57 @@
+<p class="bold big">
+  Detalle 
+</p>
+
+
+  <table>
+    <thead>
+      <tr>
+        <th class="small bordered_bottom bordered_right">
+          Programa
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Fecha
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Costo
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Cantidad
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Tarifa 
+        </th>
+
+        <th class="small bordered_bottom bordered_right">
+          Total
+        </th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <% for product in @products %>
+        <tr>
+          <td class="small bordered_bottom bordered_right" style="width: 220px;">
+            <a href="#" onclick="removeItemFromOrden(<%= product.i %>); return false;" title="Remove product from invoice"><%= product.descrip %></a>
+            [<a href="#" onclick="removeItemFromOrden(<%= product.i %>); return false;" title="Remove product from invoice">X</a>]
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.fecha.strftime("%d/%m/%Y") %>
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= money(product.price) %>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.quantity %>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= money(product.tarifa) %>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= money(product.total) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

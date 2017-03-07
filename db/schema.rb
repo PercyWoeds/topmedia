@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170222130056) do
+ActiveRecord::Schema.define(version: 20170307041524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,12 @@ ActiveRecord::Schema.define(version: 20170222130056) do
     t.string   "comments"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float    "quantity"
+    t.float    "price"
+    t.float    "total"
+    t.datetime "fecha"
+    t.float    "tarifa"
+    t.float    "i"
   end
 
   create_table "bank_acounts", force: :cascade do |t|
@@ -932,6 +938,20 @@ ActiveRecord::Schema.define(version: 20170222130056) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "orden_products", force: :cascade do |t|
+    t.integer  "orden_id"
+    t.integer  "avisodetail_id"
+    t.float    "price"
+    t.float    "quantity"
+    t.float    "total"
+    t.datetime "fecha"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.float    "tarifa"
+    t.float    "i"
+    t.string   "dia"
+  end
+
   create_table "ordens", force: :cascade do |t|
     t.integer  "contrato_id"
     t.datetime "fecha"
@@ -944,6 +964,14 @@ ActiveRecord::Schema.define(version: 20170222130056) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.string   "code"
+    t.integer  "company_id"
+    t.float    "subtotal"
+    t.float    "tax"
+    t.float    "total"
+    t.integer  "user_id"
+    t.string   "processed"
+    t.integer  "customer_id"
+    t.text     "description"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -1221,6 +1249,7 @@ ActiveRecord::Schema.define(version: 20170222130056) do
     t.float    "pago"
     t.integer  "purchaseorder_id"
     t.string   "yearmonth"
+    t.string   "tipo"
   end
 
   create_table "purchaseships", force: :cascade do |t|

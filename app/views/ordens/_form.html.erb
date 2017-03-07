@@ -12,87 +12,251 @@
 
 <%= hr() %>
 
+<div class="mid_box bordered_right">
+  <%= form_for(@orden) do |f| %>
+    <h3>
+       Informacion Orden 
+    </h3>
 
+<div class="field">
+      <%= f.label :code, "Code*", :class => "bold" %><br />
+      <%= f.text_field :code  %>
+    </div>
 
-<%= simple_form_for(@orden) do |f| %>
-
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
 
     <div class="field">
-      <%= f.label :code,"Numero " %><br>
-      <%= f.text_field :code %>    
+    
+      <label for="ac_customer" class="bold">Cliente*</label><br />
+      
+      <input type="text" name="ac_customer" id="ac_customer" value="<% if @ac_customer %><%= @ac_customer %><% end %>" />
+      
+      
+      <div class="small">
+        Ingrese una termino de busqueda para encontrar un cliente.
+      </div>
+
+      <br />
+
+      <div class="small">
+        <strong>Seleccionar cliente:</strong>
+        <span id="selected_customer"><% if @ac_customer %><%= @ac_customer %><% else %><!-- i --><% end %></span>
+      </div>
     </div>
-
-   <div class="field">
-      <%= f.label :contrato_id,"Contrato  " %><br />
-    <% if @edit %>
-    <%= f.select :contrato_id,options_from_collection_for_select(@contratos,'id','code',:selected => @orden.contrato_id)%>
-    <% else %>
-      <%= f.select :contrato_id,options_from_collection_for_select(@contratos,'id','code') %>
-    <% end %>
-    </div>
-
-
-    <div class="field">  
-    <%= f.label :fecha %><br />
-    <%= f.text_field :fecha ,value:Time.now.strftime("%d/%m/%Y") %>
-    </div>
-
-
-   <div class="field">
-      <%= f.label :medio_id,"Medios  " %><br />
-    <% if @edit %>
-    <%= f.select :medio_id,options_from_collection_for_select(@medios,'id','descrip',:selected => @orden.medio_id)%>
-    <% else %>
+          
+ 
+    <div class="field">
+      <%= f.label :medio_id %><br />
       <%= f.select :medio_id,options_from_collection_for_select(@medios,'id','descrip') %>
-    <% end %>
     </div>
-
-
-   <div class="field">
-      <%= f.label :marca_id,"Marcas " %><br />
-    <% if @edit %>
-    <%= f.select :marca_id,options_from_collection_for_select(@marcas,'id','descrip',:selected => @orden.medio_id)%>
-    <% else %>
-      <%= f.select :marca_id,options_from_collection_for_select(@marcas,'id','descrip') %>
-    <% end %>
-    </div>
-
-
-   <div class="field">
-      <%= f.label :version_id,"Version   " %><br />
-    <% if @edit %>
-    <%= f.select :version_id,options_from_collection_for_select(@versions,'id','descrip',:selected => @orden.medio_id)%>
-    <% else %>
-      <%= f.select :version_id,options_from_collection_for_select(@versions,'id','descrip') %>
-    <% end %>
-    </div>
-
-
-    <div class="field">  
-    <%= f.label :fecha1,"Fecha 1 " %><br />
-    <%= f.text_field :fecha1 ,value:Time.now.strftime("%d/%m/%Y") %>
-    </div>
-  
-
-    <div class="field">  
-    <%= f.label :fecha2,"Fecha 2" %><br />
-    <%= f.text_field :fecha2 ,value:Time.now.strftime("%d/%m/%Y") %>
-    </div>
-  
 
     <div class="field">
-      <%= f.label :tiempo,"Tiempo " %><br>
-      <%= f.text_field :tiempo %>    
+      <%= f.label :contrato_id %><br />
+      <%= f.select :contrato_id,options_from_collection_for_select(@contratos,'id','code') %>
+    </div>
+    
+    
+    <div class="field">
+      <%= f.label :marca_id %><br />
+      <%= f.select :marca_id,options_from_collection_for_select(@marcas,'id','descrip') %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :version_id %><br />
+      <%= f.select :version_id,options_from_collection_for_select(@versions,'id','descrip') %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :tiempo, "Duracion*", :class => "bold"   %><br />
+      <%= f.text_field :tiempo  %>
+    </div>
+    
+
+  
+    <%= hr() %>
+    
+    <div class="field" id="list_items">
+      <p class="bold big">Programas:</p>
+    </div>
+    
+    <%= hr() %>
+  
+    <div class="field">
+      <%= f.check_box :processed %>
+      <%= f.label :processed, "Process orden", :class => "bold" %>
+      <div class="small">
+        Marks wether or not this orden has been payed and we can deduct the product quantities and count it towards the month's total.
+      </div>
+    </div>
+  
+    
+    <%= hr() %>
+    
+    <div class="field">
+      <label for="ac_user" class="bold">Usuario*</label><br />
+      <input type="text" name="ac_user" id="ac_user" value="<% if @ac_user %><%= @ac_user %><% end %>" />
+
+      <div class="small">
+        Enter a search term to find a user.
+      </div>
+      <br />
+
+      <div class="small">
+        <strong>Selected seller:</strong>
+        <span id="selected_seller"><% if @ac_user %><%= @ac_user %><% else %><!-- i --><% end %></span>
+      </div>
+    </div>
+  
+    <%= hr() %>
+
+    <div class="field">
+      <%= f.label :description,"Descripcion " %><br />
+      <%= f.text_area :description %>
+    </div>
+  
+  
+    
+    <%= hr() %>
+  
+    <div class="actions">
+      <input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />
+      <%= f.hidden_field :user_id, :id => "ac_user_id" %>
+      <%= f.hidden_field :customer_id, :id => "ac_customer_id" %>
+      <%= f.hidden_field :company_id %>
+      <%= f.submit %>
+    </div>
+    
+    <div class="small">
+      Once you're done adding products, don't forget to <strong><%= @action_txt %></strong> your orden.
+    </div>
+  <% end %>
+</div>
+
+<div class="mid_box">
+  <h3>
+    Agregar Programas
+  </h3>
+
+
+
+
+  <form method="get" action="/ordens" onsubmit="addItemToOrden(); return false;">
+    <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />
+    
+    <strong>Programa/elemento </strong><br />
+    <input type="text" name="ac_item" id="ac_item" value="" />
+    <div class="small">
+      Ingrese un termino de busqueda para encontrar un producto.
+    </div>
+    <br />
+
+    <strong>Fecha :</strong><br />
+    <input type="date" name="ac_item_fecha" id="ac_item_fecha" min="2017-01-01" value="2017-03-03" />
+
+    <div class="small">
+     Fecha del programa/elemento  para agregar una orden
     </div>
 
+    <br />
 
 
-  </div>
+    
+    
+    <strong>Cantidad:</strong><br />
+    <input type="text" name="ac_item_quantity" id="ac_item_quantity" value="1" class="tf_short" />
+    <div class="small">
+     Cantidad del programa/elemento  para agregar una orden
+    </div>
+    <br />
+    
+    <strong>Tarifa:</strong><br />
+    <input type="text" name="ac_item_tarifa" id="ac_item_tarifa" value="" class="tf_short" />
+    <div class="small">
+      Tarifa del programa/elemento de para agregar una orden 
+    </div>
+    <br />
+    
+    
+    
+    <div class="small">
+    <strong>Costo :</strong><br />
+    <span id="ac_item_price">0.00</span> <br/>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
-<% end %>
+     Costo  del producto para agregar una factura.
+    </div>
+    <br />
+    
+    
+
+    <div>
+      <strong>Total:</strong><br />
+      <span id="ac_item_total">0.00</span>
+    </div>
+    
+    <br />
+    <input type="submit" value="Agregar item a Factura" />
+  </form>
+  
+  <%= hr() %>
+  
+  
+<%= br() %>
+
+<br />
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#ac_customer").autocomplete("/ordens/ac_customers/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_customer").result(function(event, data, formatted) {
+      $("#ac_customer_id").val(data[2]);
+      $("#selected_customer").html(data[0]);
+    });
+    
+    
+    
+    $("#ac_user").autocomplete("/ordens/ac_user/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_user").result(function(event, data, formatted) {
+      $("#ac_user_id").val(data[2]);
+      $("#selected_seller").html(data[0]);
+    });
+    
+    $("#ac_item").autocomplete("/ordens/ac_programs/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item").result(function(event, data, formatted) {
+      $("#ac_item_id").val(data[2]);      
+      
+      updateItemOrden();
+    });
+    
+    $("#ac_item_quantity").bind("keyup", function() {
+      updateItemOrden();
+    });
+    
+    
+    $("#ac_item_tarifa").bind("keyup", function() {
+      updateItemOrden();
+    });
+    
+    <% if @products_lines %>
+      
+      listItemsOrden();
+    <% end %>
+
+  });
+
+</script>

@@ -1267,8 +1267,6 @@ class CustomerPaymentsController < ApplicationController
   end
 
 
-
-
 ##-------------------------------------------------------------------------------------
 ## REPORTE DE ESTADISTICA DE VENTAS
 ##-------------------------------------------------------------------------------------
@@ -1666,7 +1664,8 @@ class CustomerPaymentsController < ApplicationController
 
 
   def rpt_ccobrar5_pdf
-    @company=Company.find(params[:id])      
+    @company=Company.find(params[:id])  
+
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
     @tipomoneda = params[:moneda_id]
@@ -1678,6 +1677,7 @@ class CustomerPaymentsController < ApplicationController
     Prawn::Document.generate("app/pdf_output/rpt_customerpayment2.pdf") do |pdf|        
 
         pdf.start_new_page(:size => "A4", :layout => :landscape)
+
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt2(pdf)
         pdf = build_pdf_body_rpt2(pdf)

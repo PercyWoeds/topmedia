@@ -290,6 +290,22 @@ end
   match 'company_list', to: 'company_users#list_users', via: [:get, :post] 
   resources :company_users
 
+#  ordens
+  
+  match 'ordens/list_items/:company_id' => 'ordens#list_items', via: [:get, :post]  
+  match 'ordens/ac_programs/:company_id' => 'ordens#ac_programs', via: [:get, :post]
+  match 'ordens/ac_user/:company_id' => 'ordens#ac_user', via: [:get, :post]
+  match 'ordens/ac_customers/:company_id' => 'ordens#ac_customers', via: [:get, :post]
+  match 'ordens/new/:company_id' => 'ordens#new', via: [:get, :post]
+  
+  match 'ordens/do_email/:id' => 'ordens#do_email', via: [:get, :post]
+  match 'ordens/do_process/:id' => 'ordens#do_process', via: [:get, :post]
+  match 'ordens/email/:id' => 'ordens#email', via: [:get, :post]
+  match 'ordens/pdf/:id' => 'ordens#pdf', via: [:get, :post]
+  match 'companies/ordens/:company_id' => 'ordens#list_invoices', via: [:get, :post]
+  resources :ordens
+
+
   # Invoices
   match 'invoice/add_kit/:company_id' => 'invoices#add_kit', via: [:get, :post]
   match 'invoices/list_items/:company_id' => 'invoices#list_items', via: [:get, :post]
