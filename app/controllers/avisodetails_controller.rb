@@ -1,6 +1,12 @@
 class AvisodetailsController < ApplicationController
+
   before_action :set_avisodetail, only: [:show, :edit, :update, :destroy]
 
+  def import
+      Avisodetail.import(params[:file])
+       redirect_to root_url, notice: "importadas."
+  end 
+  
   # GET /avisodetails
   # GET /avisodetails.json
   def index
@@ -20,6 +26,7 @@ class AvisodetailsController < ApplicationController
   # GET /avisodetails/1/edit
   def edit
   end
+
 
   # POST /avisodetails
   # POST /avisodetails.json

@@ -16,7 +16,10 @@
   resources :contratos
   resources :ciudads
   resources :campania
-  resources :avisodetails
+  resources :avisodetails do 
+
+    collection { post :import }
+  end 
   resources :tipocambios
   resources :ubicas
   resources :bank_acounts

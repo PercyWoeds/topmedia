@@ -26,4 +26,13 @@
 
 <br>
 
-<%= link_to 'New Avisodetail', new_avisodetail_path %>
+<%= link_to 'Nuevo Programa', new_avisodetail_path %>
+
+
+
+<h2>Importar Archivo  "*.csv"</h2>
+
+<%= form_tag import_avisodetails_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
