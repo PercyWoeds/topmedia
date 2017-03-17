@@ -1,6 +1,13 @@
 class TipoavisosController < ApplicationController
   before_action :set_tipoaviso, only: [:show, :edit, :update, :destroy]
 
+
+  def import
+      Customer.import(params[:file])
+       redirect_to root_url, notice: "Clientes importadas."
+  end 
+  
+
   # GET /tipoavisos
   # GET /tipoavisos.json
   def index

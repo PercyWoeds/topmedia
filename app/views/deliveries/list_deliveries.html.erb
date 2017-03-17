@@ -21,15 +21,13 @@
 </div>
 
 
-
 <br />
 <%= render "deliveries/list" %>
-
 <br />
 
 <div class="button">
   <%= link_to 'Nueva Guia', "/deliveries/new/#{@company.id}" %>
-  <%= link_to 'Unir Guias', "/deliveries/do_unir/#{@company.id}" %>
+  <%= link_to 'Registrar fechas', "/deliveries/do_unir/#{@company.id}" %>
 
 
 </div>

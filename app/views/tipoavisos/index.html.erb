@@ -24,6 +24,16 @@
   </tbody>
 </table>
 
+
 <br>
 
-<%= link_to 'New Tipoaviso', new_tipoaviso_path %>
+<%= link_to 'Nuevo Programa/ Elemento', new_tipoaviso_path %>
+
+
+<h2>Importar Archivo clientes "*.csv"</h2>
+
+<%= form_tag import_customers_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+

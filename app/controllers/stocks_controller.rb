@@ -227,11 +227,8 @@ class StocksController < ApplicationController
           columns([0, 2]).font_style = :bold
 
         end
-
         pdf.move_down 10
-
       end
-
 
       pdf.move_down 15
       pdf 
@@ -258,7 +255,6 @@ class StocksController < ApplicationController
       nroitem=1
       @cantidad1 = 0
       @cantidad = 0
-
       @totales  = 0
         
 
@@ -396,14 +392,16 @@ class StocksController < ApplicationController
     @company=Company.find(params[:company_id])      
     @fecha1 = params[:fecha1] 
     @fecha2 = params[:fecha2]   
-      
-    @movements = @company.get_movement_stocks(@fecha1,@fecha2) 
+    @categoria =params[:products_category_id]
+
+
+    @movements = @company.get_movement_stocks(@fecha1,@fecha2,@categoria) 
       
     Prawn::Document.generate("app/pdf_output/stocks3.pdf") do |pdf|      
         pdf.font "Helvetica"
-        pdf = build_pdf_header2(pdf)
-        pdf = build_pdf_body2(pdf)
-        build_pdf_footer2(pdf)
+        pdf = build_pdf_header3(pdf)
+        pdf = build_pdf_body3(pdf)
+        build_pdf_footer3(pdf)
         $lcFileName =  "app/pdf_output/stocks3.pdf"      
         
     end     
