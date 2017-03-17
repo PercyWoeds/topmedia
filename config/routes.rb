@@ -4,7 +4,11 @@
   resources :quotes
   resources :ordens
   resources :versions
-  resources :tipoavisos
+  resources :tipoavisos do 
+
+
+    collection { post :import }
+  end 
   resources :periodos
   resources :motivos
   resources :medios
