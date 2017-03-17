@@ -3,7 +3,7 @@ class TipoavisosController < ApplicationController
 
 
   def import
-      Customer.import(params[:file])
+      Tipoaviso.import(params[:file])
        redirect_to root_url, notice: "Clientes importadas."
   end 
   

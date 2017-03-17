@@ -3,7 +3,7 @@ class Tipoaviso < ActiveRecord::Base
 
     def self.import(file)
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
-          Customer.create! row.to_hash 
+          Tipoaviso.create! row.to_hash 
         end
     end      
 
