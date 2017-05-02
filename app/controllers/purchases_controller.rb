@@ -7,8 +7,7 @@ class PurchasesController < ApplicationController
   before_filter :authenticate_user!, :checkProducts
 
             
-
-    
+   
   def ingresos
         @company = Company.find(params[:id])
         @purchases  = PurchaseDetail.all.paginate(:page => params[:page])
@@ -1929,6 +1928,7 @@ def newfactura2
     @monedas  = @company.get_monedas()
     @payments  = @company.get_payments()
 
+
     @tipodocumento = @purchase[:document_id]
     
     if @tipodocumento == 3
@@ -1948,7 +1948,11 @@ def newfactura2
       @purchase[:tax_amount] = 0
       
     end
+
+    @purchase[:location_id] = 1
+    @purchase[:division_id] = 1
     
+
     @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]
     @purchase[:charge]  = 0
     @purchase[:pago] = 0

@@ -1642,9 +1642,14 @@ def get_purchaseorder_detail2(fecha1,fecha2)
                 if $lcmoneda == 2
                  movdetail.price = detail.price_without_tax  
                 else
-                 dolar = Tipocambio.find_by('dia = ?',$lcFecha)
+                 #dolar = Tipocambio.find_by('dia = ?',$lcFecha)
 
-                 if dolar 
+                selected_date = Date.parse($lcFecha)
+                  # This will look for records on the given date between 00:00:00 and 23:59:59
+                sh = Tipocambio.where(
+                  :created_at => selected_date.beginning_of_day..selected_date.end_of_day)
+
+                 if sh  
                     movdetail.price = detail.price_without_tax * dolar.compra  
                  else 
                     movdetail.price = 0

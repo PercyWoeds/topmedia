@@ -126,11 +126,11 @@ TABLE_HEADERS2  = ["ITEM ",
         
         id = parts[0]
         quantity = parts[1]
-        price = parts[2]
-        discount = parts[3]
-        price2 = parts[4]
+        price = parts[2]        
+        inafecto = parts[3]
+        discount = parts[4]
         
-        total = price.to_f * quantity.to_i
+        total = price.to_f * quantity.to_i 
         total -= total * (discount.to_f / 100)
         
         begin
@@ -143,47 +143,54 @@ TABLE_HEADERS2  = ["ITEM ",
     return subtotal
   end
   
+  def get_inafecto(items)
+   inafecto = 0
+    
+    for item in items
+      if(item and item != "")
+        parts = item.split("|BRK|")
+        
+        id = parts[0]
+        quantity = parts[1]
+        
+        inafecto = parts[3]
+        
+        
+        total = inafecto.to_f * quantity.to_i 
+      
+        
+        begin
+          product = Product.find(id.to_i)
+          inafecto += total
+        rescue
+        end
+      end
+    end  
+    return inafecto
+  end
+  
+
   def get_tax(items, supplier_id)
     tax = 0
     
-    supplier = Supplier.find(supplier_id)
-    
-    if(supplier)
-      if(supplier.taxable == "1")
-        for item in items
-          if(item and item != "")
-            parts = item.split("|BRK|")
+    for item in items
+      if(item and item != "")
+        parts = item.split("|BRK|")
         
-            id = parts[0]
-            quantity = parts[1]
-            price = parts[2]
-            discount = parts[3]
-          
-            total = price.to_f * quantity.to_i
-            total -= total * (discount.to_f / 100)
-        
-            begin
-              product = Product.find(id.to_i)
-              
-              if(product)
-                if(product.tax1 and product.tax1 > 0)
-                  tax += total * (product.tax1 / 100)
-                end
-
-                if(product.tax2 and product.tax2 > 0)
-                  tax += total * (product.tax2 / 100)
-                end
-
-                if(product.tax3 and product.tax3 > 0)
-                  tax += total * (product.tax3 / 100)
-                end
-              end
-            rescue
-            end
-          end
+        id = parts[0]
+        quantity = parts[1]
+        price = parts[2]        
+        inafecto = parts[3]
+        discount = parts[4]        
+        total = inafecto.to_f * quantity.to_i 
+                
+        begin
+          product = Product.find(id.to_i)
+          tax += total
+        rescue
         end
       end
-    end
+    end  
     
     return tax
   end
@@ -195,6 +202,7 @@ TABLE_HEADERS2  = ["ITEM ",
       ip.destroy
     end
   end
+
   
   def add_products(items)
     for item in items
@@ -204,7 +212,8 @@ TABLE_HEADERS2  = ["ITEM ",
         id = parts[0]
         quantity = parts[1]
         price = parts[2]
-        discount = parts[3]
+        inafecto = parts[3]
+        discount = parts[4]
         
         total = price.to_f * quantity.to_i
         total -= total * (discount.to_f / 100)
@@ -213,13 +222,12 @@ TABLE_HEADERS2  = ["ITEM ",
           product = Product.find(id.to_i)
           
           new_pur_product = PurchaseDetail.new(:purchase_id => self.id, :product_id => product.id,
-          :price_with_tax => price.to_f, :quantity => quantity.to_i, :discount => discount.to_f,
+          :price_without_tax => price.to_f, :inafecto=>inafecto.to_f,:quantity => quantity.to_i, :discount => discount.to_f,
           :total => total.to_f)
           new_pur_product.save
         rescue
         end
-
-                
+               
 
 
       end
@@ -255,7 +263,7 @@ TABLE_HEADERS2  = ["ITEM ",
   
   def get_products    
     @itemproducts = PurchaseDetail.find_by_sql(['Select purchase_details.price_with_tax as price,purchase_details.quantity,
-      purchase_details.discount,purchase_details.price_without_tax as price2,purchase_details.total,
+      purchase_details.discount,purchase_details.price_without_tax as price2,purchase_details.inafecto,purchase_details.total,
       products.name  from purchase_details INNER JOIN products ON 
       purchase_details.product_id = products.id where purchase_details.purchase_id = ?', self.id ])
     puts self.id
@@ -273,12 +281,12 @@ TABLE_HEADERS2  = ["ITEM ",
     purchase_details = PurchaseDetail.where(purchase_id:  self.id)   
     purchase_details.each do | ip |
 
-      ip.product[:price] = ip.price_with_tax
+      ip.product[:price] = ip.price_without_tax
       ip.product[:quantity] = ip.quantity
-      ip.product[:discount] = ip.discount
-      ip.product[:price2] = ip.price_without_tax
+      ip.product[:discount] = ip.discount      
+      ip.product[:inafecto] = ip.inafecto
       ip.product[:total] = ip.total
-      products.push("#{ip.product.id}|BRK|#{ip.product.quantity}|BRK|#{ip.product.price}|BRK|#{ip.product.discount}|BRK|#{ip.product.price2}|BRK|#{ip.product.total}")
+      products.push("#{ip.product.id}|BRK|#{ip.product.quantity}|BRK|#{ip.product.price}|BRK|#{ip.product.discount}|BRK|#{ip.product.inafecto}|BRK|#{ip.product.total}")
       end
 
     return products.join(",")
