@@ -10,13 +10,101 @@
           Programa
         </th>
         <th class="small bordered_bottom bordered_right">
-          Fecha
+          01
         </th>
         <th class="small bordered_bottom bordered_right">
-          Costo
+          02
         </th>
         <th class="small bordered_bottom bordered_right">
-          Cantidad
+          03
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          04
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          05
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          06
+        <th class="small bordered_bottom bordered_right">
+          07
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          08
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          09
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          10
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          11
+        </th>
+
+        <th class="small bordered_bottom bordered_right">
+          12
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          13
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          14
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          15
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          16
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          17
+        <th class="small bordered_bottom bordered_right">
+          18
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          19
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          20
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          21
+        </th>
+      <th class="small bordered_bottom bordered_right">
+          22
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          23
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          24
+        <th class="small bordered_bottom bordered_right">
+          25
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          26
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          27
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          28
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          29
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          30
+        </th>
+      <th class="small bordered_bottom bordered_right">
+          31
+        </th>
+                                
+
+
+        <th class="small bordered_bottom bordered_right">
+          Precio
         </th>
         <th class="small bordered_bottom bordered_right">
           Tarifa 
@@ -34,16 +122,103 @@
           <td class="small bordered_bottom bordered_right" style="width: 220px;">
             <a href="#" onclick="removeItemFromOrden(<%= product.i %>); return false;" title="Remove product from invoice"><%= product.descrip %></a>
             [<a href="#" onclick="removeItemFromOrden(<%= product.i %>); return false;" title="Remove product from invoice">X</a>]
+          </td>          
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d01 %>              
           </td>
           <td class="small bordered_bottom bordered_right">
-            <%= product.fecha.strftime("%d/%m/%Y") %>
+            <%= product.d02 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d03 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d04 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d05 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d06 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d07 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d08 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d09 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d10 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d11 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d12 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d13 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d14 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d15 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d16 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d17 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d18 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d19 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d20 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d21 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d22 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d23 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d24 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d25 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d26 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d27 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d28 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d29 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d30 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d31 %>              
           </td>
           
           <td class="small bordered_bottom bordered_right">
             <%= money(product.price) %>
-          </td>
-          <td class="small bordered_bottom bordered_right">
-            <%= product.quantity %>
           </td>
           <td class="small bordered_bottom bordered_right">
             <%= money(product.tarifa) %>
@@ -51,6 +226,8 @@
           <td class="small bordered_bottom bordered_right">
             <%= money(product.total) %>
           </td>
+
+
         </tr>
       <% end %>
     </tbody>

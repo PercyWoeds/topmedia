@@ -4,14 +4,12 @@ class Orden < ActiveRecord::Base
 	
   	belongs_to :company
   	belongs_to :customer
-  	belongs_to :user
-   
-  
-	belongs_to :contrato
-	belongs_to :medio
-	belongs_to :marca
-	belongs_to :version
-	has_many :orden_products
+  	belongs_to :user   
+  	belongs_to :contrato
+  	belongs_to :medio
+  	belongs_to :marca
+  	belongs_to :version
+  	has_many :orden_products
 
 TABLE_HEADERS = ["ITEM",
 			     "CONTRATO",
@@ -62,10 +60,9 @@ TABLE_HEADERS2 = ["ITEM",
                     "IMPORTE "]
 
   def correlativo        
-        numero = Voided.find(14).numero.to_i + 1
-        lcnumero = numero.to_s
-        Voided.where(:id=>'14').update_all(:numero =>lcnumero)        
-        
+      numero = Voided.find(14).numero.to_i + 1
+      lcnumero = numero.to_s
+      Voided.where(:id=>'14').update_all(:numero =>lcnumero)                
   end
 
   
@@ -76,7 +73,6 @@ TABLE_HEADERS2 = ["ITEM",
       if(item and item != "")
         parts = item.split("|BRK|")
 
-#item_line = item_id + "|BRK|"+fecha_dd + "|BRK|" + fecha_mm + "|BRK|" +fecha_yy + "|BRK|" + quantity + "|BRK|" + tarifa ;                     
         id = parts[0]
         quantity = parts[4]
         tarifa_1 = parts[5]
@@ -152,17 +148,47 @@ TABLE_HEADERS2 = ["ITEM",
       if(item and item != "")
         parts = item.split("|BRK|")
         
-        id = parts[0]
-        fecha_dd   = parts[1]        
-        fecha_mm   = parts[2]        
-        fecha_aa   = parts[3]               
+        id    = parts[0]
+        dia_1 = parts[1]
+        dia_2 = parts[2]
+        dia_3 = parts[3]
+        dia_4 = parts[4]
+        dia_5 = parts[5]
+        dia_6 = parts[6]
+        dia_7 = parts[7]
+        dia_8 = parts[8]
+        dia_9 = parts[9]
+        dia_10 = parts[10]
+        dia_11 = parts[11]
+        dia_12 = parts[12]
+        dia_13 = parts[13]
+        dia_14 = parts[14]
+        dia_15 = parts[15]
+        dia_16 = parts[16]
+        dia_17 = parts[17]
+        dia_18 = parts[18]
+        dia_19 = parts[19]
+        dia_20 = parts[20]
+        dia_21 = parts[21]
+        dia_22 = parts[22]
+        dia_23 = parts[23]
+        dia_24 = parts[24]
+        dia_25 = parts[25]
+        dia_26 = parts[26]
+        dia_27 = parts[27]
+        dia_28 = parts[28]
+        dia_29 = parts[29]
+        dia_30 = parts[30]
+        dia_31 = parts[31]
         
-        fecha_d = fecha_aa <<"-"<< fecha_mm <<"-"<<fecha_dd <<" 00:00:00" 
+       # fecha_dd   = parts[1]        
+       # fecha_mm   = parts[2]        
+       # fecha_aa   = parts[3]               
+        
+       # fecha_d = fecha_aa <<"-"<< fecha_mm <<"-"<<fecha_dd <<" 00:00:00" 
 
-
-
-        quantity = parts[4]
-        tarifa_1 = parts[5].to_f
+        
+        tarifa_1 = parts[32].to_f
 
         price = ( (tarifa_1  / 30 ) * 10  )                                   
 

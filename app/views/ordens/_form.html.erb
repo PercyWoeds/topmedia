@@ -10,10 +10,13 @@
   </div>
 <% end %>
 
-<%= hr() %>
 
-<div class="mid_box bordered_right">
+
+<div>
   <%= form_for(@orden) do |f| %>
+
+    <%= hr() %>
+
     <h3>
        Informacion Orden 
     </h3>
@@ -69,17 +72,12 @@
       <%= f.label :tiempo, "Duracion*", :class => "bold"   %><br />
       <%= f.text_field :tiempo  %>
     </div>
-    
+  
+  
+    <%= hr() %>
 
   
-    <%= hr() %>
-    
-    <div class="field" id="list_items">
-      <p class="bold big">Programas:</p>
-    </div>
-    
-    <%= hr() %>
-  
+
     <div class="field">
       <%= f.check_box :processed %>
       <%= f.label :processed, "Process orden", :class => "bold" %>
@@ -87,7 +85,6 @@
         Marks wether or not this orden has been payed and we can deduct the product quantities and count it towards the month's total.
       </div>
     </div>
-  
     
     <%= hr() %>
     
@@ -110,10 +107,9 @@
 
     <div class="field">
       <%= f.label :description,"Descripcion " %><br />
-      <%= f.text_area :description %>
+      <%= f.text_field :description %>
     </div>
-  
-  
+
     
     <%= hr() %>
   
@@ -128,76 +124,198 @@
     <div class="small">
       Once you're done adding products, don't forget to <strong><%= @action_txt %></strong> your orden.
     </div>
+  
+    
   <% end %>
 </div>
 
-<div class="mid_box">
+  
+  
+      
+<div class="field" id="list_items">
+      <p class="bold big">Programas:</p>
+  </div>
+   
+  
+
+<div >
+    <%= hr() %>
+
   <h3>
     Agregar Programas
   </h3>
 
-
-
-
   <form method="get" action="/ordens" onsubmit="addItemToOrden(); return false;">
-    <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />
-    
-    <strong>Programa/elemento </strong><br />
-    <input type="text" name="ac_item" id="ac_item" value="" />
-    <div class="small">
-      Ingrese un termino de busqueda para encontrar un producto.
-    </div>
-    <br />
+    <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />        
+    <table>
+      <tr>
+        <th>Programa/elemento</th>
+        <th>01</th>
+        <th>02</th>
+        <th>03</th>
+        <th>04</th>
+        <th>05</th>
+        <th>06</th>        
+        <th>07</th>
+        <th>08</th>        
+        <th>09</th>
+        <th>10</th>        
+        <th>11</th>
+        <th>12</th>
+        <th>13</th>
+        <th>14</th>        
+        <th>15</th>
+        <th>16</th>
+        <th>17</th>
+        <th>18</th>
+        <th>19</th>
+        <th>20</th>
+        <th>21</th>
+        <th>22</th>        
+        <th>23</th>
+        <th>24</th>        
+        <th>25</th>
+        <th>26</th>        
+        <th>27</th>
+        <th>28</th>
+        <th>29</th>
+        <th>30</th>        
+        <th>31</th>        
 
-    <strong>Fecha :</strong><br />
-    <input type="date" name="ac_item_fecha" id="ac_item_fecha" min="2017-01-01" value="2017-03-03" />
+        <th>Tarifa</th>
+        <th>Costo</th>
+        <th>Total</th>
+      </tr>
+    <tr>
+      <td>        
+        <input type="text" name="ac_item" id="ac_item" value="" />        
+      </td>
+      <td>        
+        <input type="text" name="ac_item_1" id="ac_item_1" value="0" class="tf_short1" />  
+      </td>
+      <td>
+        <input type="text" name="ac_item_2" id="ac_item_2" value="0" class="tf_short1" />      
+      </td>
+      <td>
+        <input type="text" name="ac_item_3" id="ac_item_3" value="0" class="tf_short1" />      
+      </td>
+      <td>
+        <input type="text" name="ac_item_4" id="ac_item_4" value="0" class="tf_short1" />      
+      </td>
+      <td>        
+        <input type="text" name="ac_item_5" id="ac_item_5" value="0" class="tf_short1" />  
+      </td>
+      <td>
+        <input type="text" name="ac_item_6" id="ac_item_6" value="0" class="tf_short1" />      
+      </td>
+      <td>
+        <input type="text" name="ac_item_7" id="ac_item_7" value="0" class="tf_short1" />      
+      </td>
+      <td>
+        <input type="text" name="ac_item_8" id="ac_item_8" value="0" class="tf_short1" />      
+      </td>
+      <td>        
+        <input type="text" name="ac_item_9" id="ac_item_9" value="0" class="tf_short1" />  
+      </td>
 
-    <div class="small">
-     Fecha del programa/elemento  para agregar una orden
-    </div>
+      <td>
+        <input type="text" name="ac_item_10" id="ac_item_10" value="0" class="tf_short1" />      
+      </td>
+      <td>
+        <input type="text" name="ac_item_11" id="ac_item_11" value="0" class="tf_short1" />      
+      </td>
 
-    <br />
+      <td>
+        <input type="text" name="ac_item_12" id="ac_item_12" value="0" class="tf_short1" />      
+      </td>
+      <td>        
+        <input type="text" name="ac_item_13" id="ac_item_13" value="0" class="tf_short1" />  
+      </td>
+
+      <td>
+        <input type="text" name="ac_item_14" id="ac_item_14" value="0" class="tf_short1" />      
+      </td>
+      <td>
+        <input type="text" name="ac_item_15" id="ac_item_15" value="0" class="tf_short1" />      
+      </td>
+
+      <td>
+        <input type="text" name="ac_item_16" id="ac_item_16" value="0" class="tf_short1" />      
+      </td>
+      <td>        
+        <input type="text" name="ac_item_17" id="ac_item_17" value="0" class="tf_short1" />  
+      </td>
+      <td>
+        <input type="text" name="ac_item_18" id="ac_item_18" value="0" class="tf_short1" />      
+      </td>
+      <td>
+        <input type="text" name="ac_item_19" id="ac_item_19" value="0" class="tf_short1" />      
+      </td>
+      <td>
+        <input type="text" name="ac_item_20" id="ac_item_20" value="0" class="tf_short1" />      
+      </td>
+      <td>        
+        <input type="text" name="ac_item_21" id="ac_item_21" value="0" class="tf_short1" />  
+      </td>
+      <td>
+        <input type="text" name="ac_item_22" id="ac_item_22" value="0" class="tf_short1" />      
+      </td>
+      <td>
+        <input type="text" name="ac_item_23" id="ac_item_23" value="0" class="tf_short1" />      
+      </td>
+      <td>
+        <input type="text" name="ac_item_24" id="ac_item_24" value="0" class="tf_short1" />      
+      </td>
+      <td>        
+        <input type="text" name="ac_item_25" id="ac_item_25" value="0" class="tf_short1" />  
+      </td>
+
+      <td>
+        <input type="text" name="ac_item_26" id="ac_item_26" value="0" class="tf_short1" />      
+      </td>
+      <td>
+        <input type="text" name="ac_item_27" id="ac_item_27" value="0" class="tf_short1" />      
+      </td>
+
+      <td>
+        <input type="text" name="ac_item_28" id="ac_item_28" value="0" class="tf_short1" />      
+      </td>
+      <td>        
+        <input type="text" name="ac_item_29" id="ac_item_29" value="0" class="tf_short1" />  
+      </td>
 
 
-    
-    
-    <strong>Cantidad:</strong><br />
-    <input type="text" name="ac_item_quantity" id="ac_item_quantity" value="1" class="tf_short" />
-    <div class="small">
-     Cantidad del programa/elemento  para agregar una orden
-    </div>
-    <br />
-    
-    <strong>Tarifa:</strong><br />
-    <input type="text" name="ac_item_tarifa" id="ac_item_tarifa" value="" class="tf_short" />
-    <div class="small">
-      Tarifa del programa/elemento de para agregar una orden 
-    </div>
-    <br />
-    
-    
-    
-    <div class="small">
-    <strong>Costo :</strong><br />
-    <span id="ac_item_price">0.00</span> <br/>
+      <td>
+        <input type="text" name="ac_item_30" id="ac_item_30" value="0" class="tf_short1" />      
+      </td>
+      <td>
+        <input type="text" name="ac_item_31" id="ac_item_31" value="0" class="tf_short1" />      
+      </td>
 
-     Costo  del producto para agregar una factura.
-    </div>
-    <br />
-    
-    
+      <td>
+        <input type="text" name="ac_item_tarifa" id="ac_item_tarifa" value="" class="tf_short" />
+        
+      </td>
 
-    <div>
-      <strong>Total:</strong><br />
-      <span id="ac_item_total">0.00</span>
-    </div>
-    
+      <td>
+        <div class="small">
+        
+          <span id="ac_item_price">0.00</span> <br/>         
+        </div>    
+      </td>    
+      <td>
+        <div>
+          <strong>Total:</strong><br />
+          <span id="ac_item_total">0.00</span>
+        </div>
+      </td>
+    </tr>
+  
+      </table>
     <br />
     <input type="submit" value="Agregar item a Factura" />
   </form>
-  
-  <%= hr() %>
-  
+
   
 <%= br() %>
 

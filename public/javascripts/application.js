@@ -1384,34 +1384,57 @@
   function addItemToOrden() {
     var item = $("#ac_item").val();
 
-
     if(item != "") {
       var company_id = $("#orden_company_id").val();
       var item_id = $("#ac_item_id").val();
-      var fecha = $("#ac_item_fecha").val();
 
-  //return ((day==fecha.getDate()) && (month==dteDate.getMonth()) && (year==dteDate.getFullYear()))
-
-      var fecha_arr = $("#ac_item_fecha").val().split("-");
-
-      var fecha_yy = fecha_arr[0];
-      var fecha_mm = fecha_arr[1];
-      var fecha_dd = fecha_arr[2];
-    
-      var quantity = $("#ac_item_quantity").val();
       var tarifa = $("#ac_item_tarifa").val();
-      
 
+      var item_1 =  $("#ac_item_1").val();
+      var item_2 =  $("#ac_item_2").val();
+      var item_3 =  $("#ac_item_3").val();    
+      var item_4 =  $("#ac_item_4").val();
+      var item_5 =  $("#ac_item_5").val();
+      var item_6 =  $("#ac_item_6").val();
+      var item_7 =  $("#ac_item_7").val();
+      var item_8 =  $("#ac_item_8").val();
+      var item_9 =  $("#ac_item_9").val();    
+      var item_10 =  $("#ac_item_10").val();
+      var item_11 =  $("#ac_item_11").val();
+      var item_12 =  $("#ac_item_12").val();
+      var item_13 =  $("#ac_item_13").val();
+      var item_14 =  $("#ac_item_14").val();
+      var item_15 =  $("#ac_item_15").val();    
+      var item_16 =  $("#ac_item_16").val();
+      var item_17 =  $("#ac_item_17").val();
+      var item_18 =  $("#ac_item_18").val();
+      var item_19 =  $("#ac_item_19").val();
+      var item_20 =  $("#ac_item_20").val();
+      var item_21 =  $("#ac_item_21").val();    
+      var item_22 =  $("#ac_item_22").val();
+      var item_23 =  $("#ac_item_23").val();
+      var item_24 =  $("#ac_item_24").val();
+      var item_25 =  $("#ac_item_25").val();    
+      var item_26 =  $("#ac_item_26").val();
+      var item_27 =  $("#ac_item_27").val();
+      var item_28 =  $("#ac_item_28").val();
+      var item_29 =  $("#ac_item_29").val();
+      var item_30 =  $("#ac_item_30").val();
+      var item_31 =  $("#ac_item_31").val();
+        
+      
       var items_arr = $("#items").val().split(",");
 
-      if(quantity == "" || !isNumeric(quantity)) {
-        alert("Por favor ingrese una cantidad");
-      } else if(tarifa == "" || !isNumeric(tarifa)) {
-        alert("Por favor ingrese una tarifa");
+      if(tarifa == "" || !isNumeric(tarifa)) {
+        alert("Por favor ingrese un tarifa");
+      
       } else {
 
-        var item_line = item_id + "|BRK|"+fecha_dd + "|BRK|" + fecha_mm + "|BRK|" +fecha_yy + "|BRK|" + quantity + "|BRK|" + tarifa ;      
+   var item_line = item_id + "|BRK|"+item_1 + "|BRK|" + item_2 + "|BRK|" +item_3 + "|BRK|"+item_4 + "|BRK|" + item_5 + "|BRK|" +item_6 + "|BRK|" + item_7 + "|BRK|" +item_8 + "|BRK|"  + item_9 + "|BRK|" +item_10
+                           + "|BRK|"+item_11+ "|BRK|" +item_12 + "|BRK|"+ item_13+ "|BRK|"+item_14 +"|BRK|" + item_15 + "|BRK|"+item_16 +"|BRK|" + item_17 + "|BRK|"+item_18 + "|BRK|" + item_19 + "|BRK|"+item_20 
+                           + "|BRK|"+item_21 + "|BRK|"+item_22 + "|BRK|"+ item_23 +"|BRK|"+item_24 +"|BRK|" + item_25 + "|BRK|"+item_26 + "|BRK|"+ item_27 + "|BRK|"+item_28 + "|BRK|" + item_29+ "|BRK|" +item_30+"|BRK|" +item_31+"|BRK|"+ tarifa
         
+      
 
         $("#items").val($("#items").val() + "," + item_line);
         
@@ -1419,7 +1442,6 @@
         
         $("#ac_item_id").val("");
         $("#ac_item").val("");
-        $("#ac_item_quantity").val("1");
         $("#ac_item_tarifa").val("1");
         updateItemOrden();
       }
@@ -1446,14 +1468,14 @@
 
   // Update price total for invoice
   function updateItemOrden() {
-    var quantity = $("#ac_item_quantity").val();
+    
     var tarifa = $("#ac_item_tarifa").val();
     
-    if(isNumeric(quantity)  && isNumeric(tarifa)) {
+    if( isNumeric(tarifa)) {
 
       price = (tarifa / 30 ) * 10
 
-      var total = quantity * price;
+      var total = price;
       
       $("#ac_item_price").html(price);
       $("#ac_item_total").html(total);

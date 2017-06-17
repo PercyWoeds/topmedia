@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170308151008) do
+ActiveRecord::Schema.define(version: 20170616205347) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +97,38 @@ ActiveRecord::Schema.define(version: 20170308151008) do
     t.datetime "fecha"
     t.float    "tarifa"
     t.float    "i"
+    t.string   "code"
+    t.integer  "d01"
+    t.integer  "d02"
+    t.integer  "d03"
+    t.integer  "d04"
+    t.integer  "d05"
+    t.integer  "d06"
+    t.integer  "d07"
+    t.integer  "d08"
+    t.integer  "d09"
+    t.integer  "d10"
+    t.integer  "d11"
+    t.integer  "d12"
+    t.integer  "d13"
+    t.integer  "d14"
+    t.integer  "d15"
+    t.integer  "d16"
+    t.integer  "d17"
+    t.integer  "d18"
+    t.integer  "d19"
+    t.integer  "d20"
+    t.integer  "d21"
+    t.integer  "d22"
+    t.integer  "d23"
+    t.integer  "d24"
+    t.integer  "d25"
+    t.integer  "d26"
+    t.integer  "d27"
+    t.integer  "d28"
+    t.integer  "d29"
+    t.integer  "d30"
+    t.integer  "d31"
   end
 
   create_table "bank_acounts", force: :cascade do |t|
@@ -201,32 +233,6 @@ ActiveRecord::Schema.define(version: 20170308151008) do
     t.integer  "contrato_cuota_id"
     t.string   "description"
     t.string   "codigointerno"
-  end
-
-  create_table "csubdia", force: :cascade do |t|
-    t.string   "ccompro"
-    t.string   "cfeccom"
-    t.string   "ccodmon"
-    t.string   "csitua"
-    t.float    "ctipcam"
-    t.string   "cglosa"
-    t.float    "ctotal"
-    t.string   "ctipo"
-    t.string   "cflag"
-    t.datetime "cdate"
-    t.string   "chora"
-    t.string   "cfeccam"
-    t.string   "cuser"
-    t.string   "corig"
-    t.string   "cform"
-    t.string   "cextor"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string   "csubdia"
-    t.float    "factory"
-    t.float    "ajuste"
-    t.float    "compen"
-    t.float    "total1"
   end
 
   create_table "csubdiarios", force: :cascade do |t|
@@ -374,8 +380,6 @@ ActiveRecord::Schema.define(version: 20170308151008) do
     t.integer  "address2_id"
     t.datetime "date_processed"
     t.integer  "tranportorder_id"
-    t.datetime "fecha3"
-    t.datetime "fecha4"
   end
 
   create_table "delivery_services", force: :cascade do |t|
@@ -421,38 +425,6 @@ ActiveRecord::Schema.define(version: 20170308151008) do
     t.integer  "company_id"
     t.string   "descripshort"
     t.string   "tiposunat"
-  end
-
-  create_table "dsubdia", force: :cascade do |t|
-    t.string   "dcompro"
-    t.string   "dsecue"
-    t.string   "dfeccom"
-    t.string   "dcuenta"
-    t.string   "dcodane"
-    t.string   "dcencos"
-    t.string   "dcodmon"
-    t.string   "ddh"
-    t.float    "dimport"
-    t.string   "dtipdoc"
-    t.string   "dnumdoc"
-    t.string   "dfecdoc"
-    t.string   "dfecven"
-    t.string   "darea"
-    t.string   "dflag"
-    t.string   "dxglosa"
-    t.datetime "ddate"
-    t.string   "dcodane2"
-    t.float    "dusimpor"
-    t.float    "dmnimpor"
-    t.string   "dcodarc"
-    t.string   "dtidref"
-    t.string   "dndoref"
-    t.datetime "dfecref"
-    t.datetime "dbimref"
-    t.float    "digvref"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string   "dsubdia"
   end
 
   create_table "dsubdiarios", force: :cascade do |t|
@@ -649,7 +621,6 @@ ActiveRecord::Schema.define(version: 20170308151008) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.float    "preciocigv"
-    t.integer  "factura_id"
   end
 
   create_table "invoiceitems", force: :cascade do |t|
@@ -916,25 +887,6 @@ ActiveRecord::Schema.define(version: 20170308151008) do
     t.string   "purchaseorder"
   end
 
-  create_table "notacredits", force: :cascade do |t|
-    t.datetime "fecha"
-    t.string   "code"
-    t.integer  "nota_id"
-    t.string   "motivo"
-    t.float    "subtotal"
-    t.float    "tax"
-    t.float    "total"
-    t.integer  "moneda_id"
-    t.string   "mod_factura"
-    t.integer  "mod_tipo"
-    t.string   "processed"
-    t.string   "tipo"
-    t.string   "description"
-    t.integer  "customer_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
   create_table "numeras", force: :cascade do |t|
     t.string   "subdiario"
     t.string   "compro"
@@ -1167,6 +1119,7 @@ ActiveRecord::Schema.define(version: 20170308151008) do
     t.float    "discount"
     t.float    "total"
     t.integer  "purchase_id"
+    t.float    "inafect"
   end
 
   create_table "purchaseorder_details", force: :cascade do |t|
@@ -1254,7 +1207,7 @@ ActiveRecord::Schema.define(version: 20170308151008) do
     t.float    "pago"
     t.integer  "purchaseorder_id"
     t.string   "yearmonth"
-    t.string   "tipo"
+    t.float    "inafect"
   end
 
   create_table "purchaseships", force: :cascade do |t|
@@ -1521,6 +1474,7 @@ ActiveRecord::Schema.define(version: 20170308151008) do
     t.text     "comments"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float    "duracion"
   end
 
   create_table "tipocambios", force: :cascade do |t|

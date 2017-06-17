@@ -872,35 +872,86 @@ if customerpayment_rpt.dia == '01'
 
     for item in items
       if item != ""
-        parts = item.split("|BRK|")
-        
-
+        parts = item.split("|BRK|")        
         id = parts[0]
 #item_id + "|BRK|"+fecha_dd + "|BRK|" + fecha_mm + "|BRK|" +fecha_yy + "|BRK|" + quantity + "|BRK|" + tarifa ;
-
-        fecha_dd   = parts[1]        
-        fecha_mm   = parts[2]        
-        fecha_aa   = parts[3]        
-        quantity   = parts[4]
-        tarifa     = parts[5]
+       # fecha_dd   = parts[1]        
+       # fecha_mm   = parts[2]        
+       # fecha_aa   = parts[3]        
+        dia_01 = parts[1]
+        dia_02 = parts[2]
+        dia_03 = parts[3]
+        dia_04 = parts[4]
+        dia_05 = parts[5]
+        dia_06 = parts[6]
+        dia_07 = parts[7]
+        dia_08 = parts[8]
+        dia_09 = parts[9]
+        dia_10 = parts[10]
+        dia_11 = parts[11]
+        dia_12 = parts[12]
+        dia_13 = parts[13]
+        dia_14 = parts[14]
+        dia_15 = parts[15]
+        dia_16 = parts[16]
+        dia_17 = parts[17]
+        dia_18 = parts[18]
+        dia_19 = parts[19]
+        dia_20 = parts[20]
+        dia_21 = parts[21]
+        dia_22 = parts[22]
+        dia_23 = parts[23]
+        dia_24 = parts[24]
+        dia_25 = parts[25]
+        dia_26 = parts[26]
+        dia_27 = parts[27]
+        dia_28 = parts[28]
+        dia_29 = parts[29]
+        dia_30 = parts[30]
+        dia_31 = parts[31]
         
-        
+        tarifa     = parts[32]
+                
         product = Avisodetail.find(id.to_i)
+
         product[:i] = i
-
-        fecha_d = fecha_aa <<"-"<< fecha_mm <<"-"<<fecha_dd <<" 00:00:00" 
-
-        product[:fecha] = fecha_d
-        product[:quantity] = quantity.to_f
         product[:tarifa] = tarifa.to_f
-
         product[:price]  = (product[:tarifa] / 30) * 10      
+        product[:d01] = dia_01.to_f
+        product[:d02] = dia_02.to_f
+        product[:d03] = dia_03.to_f
+        product[:d04] = dia_04.to_f
+        product[:d05] = dia_05.to_f
+        product[:d06] = dia_06.to_f
+        product[:d07] = dia_07.to_f
+        product[:d08] = dia_08.to_f
+        product[:d09] = dia_09.to_f
+        product[:d10] = dia_10.to_f
+        product[:d11] = dia_11.to_f
+        product[:d12] = dia_12.to_f
+        product[:d13] = dia_13.to_f
+        product[:d14] = dia_14.to_f
+        product[:d15] = dia_15.to_f
+        product[:d16] = dia_16.to_f
+        product[:d17] = dia_17.to_f
+        product[:d18] = dia_18.to_f
+        product[:d19] = dia_19.to_f
+        product[:d20] = dia_20.to_f
+        product[:d21] = dia_21.to_f
+        product[:d22] = dia_22.to_f
+        product[:d23] = dia_23.to_f
+        product[:d24] = dia_24.to_f
+        product[:d25] = dia_25.to_f
+        product[:d26] = dia_26.to_f
+        product[:d27] = dia_27.to_f
+        product[:d28] = dia_28.to_f
+        product[:d29] = dia_29.to_f
+        product[:d30] = dia_30.to_f
+        product[:d31] = dia_31.to_f
         
-        total = product[:price] * product[:quantity]
+        total = product[:price] * ( product[:d01] +product[:d02] + product[:d03]+ product[:d04]+product[:d05]+product[:d06])
              
         product[:total] = total
-        puts "fecha : "
-        puts product[:fecha]
         @products.push(product)
       end
       

@@ -477,6 +477,10 @@ input.tf_short {
   width: 100px;
 }
 
+input.tf_short1 {
+  width: 10px;
+}
+
 textarea {
   border: 1px solid #006699;
   background-color: #eee;
