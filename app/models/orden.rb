@@ -181,23 +181,23 @@ TABLE_HEADERS2 = ["ITEM",
         dia_30 = parts[30]
         dia_31 = parts[31]
         
-       # fecha_dd   = parts[1]        
-       # fecha_mm   = parts[2]        
-       # fecha_aa   = parts[3]               
-        
-       # fecha_d = fecha_aa <<"-"<< fecha_mm <<"-"<<fecha_dd <<" 00:00:00" 
-
+        fecha_dd   = '01'
+        fecha_mm   = @month.to_s 
+        fecha_aa   = @year.to_s
+    
         
         tarifa_1 = parts[32].to_f
 
         price = ( (tarifa_1  / 30 ) * 10  )                                   
 
         total = price * quantity.to_i
-                
+        quantity_1 = 1         
+
         begin
-          product = Avisodetail.find(id.to_i)
-          
-          new_invoice_product = OrdenProduct.new(:orden_id => self.id, :avisodetail_id => product.id,:fecha=>fecha_d, :price => price.to_f, :quantity => quantity.to_i, :tarifa => tarifa_1,:dia=>fecha_dd, :total => total.to_f)
+          product = Avisodetail.find(id.to_i)        
+          new_invoice_product = OrdenProduct.new(:orden_id => self.id, :avisodetail_id => product.id,:fecha=>fecha_d, :price => price.to_f, :quantity => quantity_1, :tarifa => tarifa_1, :total => total.to_f,
+          :d01=>dia_1.to_i,:d02=>dia_2.to_i,:d03=>dia_3.to_i,:d04=>dia_4.to_i,:d05=>dia_5.to_i,:d06=>dia_6.to_i,:d07=>dia_7.to_i,:d08=>dia_8.to_i,:d09=>dia_9.to_i, :d10=>dia_10.to_i,           
+          :d11=>dia_1.to_i,:d01=>dia_1.to_i,:d01=>dia_1.to_i,:d01=>dia_1.to_i,:d01=>dia_1.to_i,:d01=>dia_1.to_i,:d01=>dia_1.to_i,:d01=>dia_1.to_i,:d01=>dia_1.to_i,      )
           new_invoice_product.save
 
         rescue

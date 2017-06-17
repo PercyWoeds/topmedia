@@ -1080,6 +1080,34 @@ if customerpayment_rpt.dia == '01'
     @pagetitle = "New orden"
     @action_txt = "Create"
 
+    if(params[:year] and params[:year].numeric?)
+      @year = params[:year].to_i
+    else
+      @year = Time.now.year
+    end
+    
+    
+    if(params[:month] and params[:month].numeric?)
+      @month = params[:month].to_i
+    else
+      @month = Time.now.month
+    end
+    
+    if(@month < 10)
+      month_s = "0#{@month}"
+    else
+      month_s = @month.to_s
+    end
+    
+    curr_year = Time.now.year
+    c_year = curr_year
+    c_month = 1
+    
+    @years = []
+    @months = monthsArr
+    @month_name = @months[@month - 1][0]
+    
+
     @customers = Customer.all
     @motivos =Motivo.all
     @medios = Medio.all    
