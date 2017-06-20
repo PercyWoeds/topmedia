@@ -100,7 +100,8 @@
 @u.first_name= "percy"
 @u.last_name= "woeds",
 @u.email= "percywoeds@gmail.com"
-@u.encrypted_password= "ycrep2016"
+@u.password= "ycrep2016"
+@u.password_confirmation = "ycrep2016"
 @u.save
 
 @c=CompanyUser.new

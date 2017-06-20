@@ -263,7 +263,7 @@ TABLE_HEADERS2  = ["ITEM ",
   
   def get_products    
     @itemproducts = PurchaseDetail.find_by_sql(['Select purchase_details.price_with_tax as price,purchase_details.quantity,
-      purchase_details.discount,purchase_details.price_without_tax as price2,purchase_details.inafecto,purchase_details.total,
+      purchase_details.discount,purchase_details.price_without_tax as price2,purchase_details.inafect,purchase_details.total,
       products.name  from purchase_details INNER JOIN products ON 
       purchase_details.product_id = products.id where purchase_details.purchase_id = ?', self.id ])
     puts self.id

@@ -1949,6 +1949,7 @@ def newfactura2
       
     end
 
+
     @purchase[:location_id] = 1
     @purchase[:division_id] = 1
     

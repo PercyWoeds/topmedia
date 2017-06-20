@@ -908,7 +908,8 @@
 
     var impuesto  = $("#ac_item_impuesto").val();
     var inafecto  = $("#ac_item_inafecto").val();
-  
+    total = 0 ;
+    
 
     if(isNumeric(impuesto) && isNumeric(inafecto)) {
 
@@ -924,6 +925,7 @@
       $("#ac_item_subtotal").html("0.00");
     }
   }  
+  
 
   // List items in a kit
   function listItemsPurchase() {
