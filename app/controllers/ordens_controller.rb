@@ -911,12 +911,16 @@ if customerpayment_rpt.dia == '01'
         dia_31 = parts[31]
         
         tarifa     = parts[32]
-                
+        price      = parts[33]        
+        total      = parts[34]        
+        
         product = Avisodetail.find(id.to_i)
 
         product[:i] = i
         product[:tarifa] = tarifa.to_f
-        product[:price]  = (product[:tarifa] / 30) * 10      
+        product[:price]  = price.to_f
+        product[:total]  = total.to_f
+        
         product[:d01] = dia_01.to_f
         product[:d02] = dia_02.to_f
         product[:d03] = dia_03.to_f
@@ -949,8 +953,7 @@ if customerpayment_rpt.dia == '01'
         product[:d30] = dia_30.to_f
         product[:d31] = dia_31.to_f
         
-        total = product[:price] * ( product[:d01] +product[:d02] + product[:d03]+ product[:d04]+product[:d05]+product[:d06])
-             
+    
         product[:total] = total
         @products.push(product)
       end
@@ -1086,7 +1089,6 @@ if customerpayment_rpt.dia == '01'
       @year = Time.now.year
     end
     
-    
     if(params[:month] and params[:month].numeric?)
       @month = params[:month].to_i
     else
@@ -1106,6 +1108,33 @@ if customerpayment_rpt.dia == '01'
     @years = []
     @months = monthsArr
     @month_name = @months[@month - 1][0]
+    
+    
+    
+    while(c_year > Time.now.year - 5)
+      @years.push(c_year)
+      c_year -= 1
+    end
+    
+    @dates = []
+    
+    last_day_of_month = last_day_of_month(@year, @month)
+    @date_cats = []
+    
+    i = 1
+    
+    while(i <= last_day_of_month)
+      if(i < 10)
+        i_s = "0#{i}"
+      else
+        i_s = i.to_s
+      end
+      
+      @dates.push("#{@year}-#{month_s}-#{i_s}")
+      @date_cats.push("'" + doDate(Time.parse("#{@year}-#{@month}-#{i_s}"), 5) + "'")
+      
+      i += 1
+    end
     
 
     @customers = Customer.all

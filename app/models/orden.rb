@@ -74,14 +74,11 @@ TABLE_HEADERS2 = ["ITEM",
         parts = item.split("|BRK|")
 
         id = parts[0]
-        quantity = parts[4]
-        tarifa_1 = parts[5]
-
-        price = tarifa_1.to_f / 30
-        price = price * 10 
-
-
-        total = price  * quantity.to_i
+        
+   
+        tarifa_1 = parts[32].to_f
+        price =  parts[33].to_f
+        total =  parts[34].to_f
   
         begin
           product = Avisodetail.find(id.to_i)
@@ -109,12 +106,11 @@ TABLE_HEADERS2 = ["ITEM",
             parts = item.split("|BRK|")
         
             id = parts[0]
-            quantity = parts[4]                       
-            tarifa_1 = parts[5].to_f
+                              
+            tarifa_1 = parts[32].to_f
 
-        	price =   ( tarifa_1 / 30 ) * 10
-
-        	total =  price  * quantity.to_i
+        	price =   parts[33].to_f
+        	total =  parts[34].to_f
 
             begin
               product = Avisodetail.find(id.to_i)
@@ -180,6 +176,9 @@ TABLE_HEADERS2 = ["ITEM",
         dia_29 = parts[29]
         dia_30 = parts[30]
         dia_31 = parts[31]
+        dia_tarifa = parts[32]
+        dia_precio = parts[33]
+        dia_total = parts[34]
         
         fecha_dd   = '01'
         fecha_mm   = @month.to_s 

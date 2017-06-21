@@ -67,6 +67,7 @@
       <%= f.select :version_id,options_from_collection_for_select(@versions,'id','descrip') %>
     </div>
     
+    
     <div class="field">
       <%= f.label :tiempo, "Duracion*", :class => "bold"   %><br />
       <%= f.text_field :tiempo  %>
@@ -80,7 +81,6 @@
 
     <%= hr() %>
 
-  
 
     <div class="field">
       <%= f.check_box :processed %>
@@ -148,7 +148,7 @@
   <h3>
     Agregar Programas
   </h3>
-
+  
   <form method="get" action="/ordens" onsubmit="addItemToOrden(); return false;">
     <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />        
     <table>
