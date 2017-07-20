@@ -788,21 +788,21 @@
 
 
   // Update price total for invoice
-  function updateItemTotal4() {
+  function updateItemTotal5() {
     var quantity = $("#ac_item_quantity").val();
     var price = $("#ac_item_price").val();
     var discount = $("#ac_item_discount").val();
     
     if(isNumeric(quantity) && isNumeric(price) && isNumeric(discount)) {
+
       var total = quantity * price;
       total -= total * (discount / 100);
 
-      $("#ac_item_total").html(total);
+      $("#ac_item_total").html( total);
     } else {
       $("#ac_item_total").html("0.00");
     }
   }
-
   // Removes an item from an invoice
   function removeItemFromserviceorder(id) {
     var items = $("#items").val();
@@ -861,11 +861,11 @@
     }
   }
 
-  function addItemTopurchaseorder() {
+  function addItemToPurchase() {
     var item = $("#ac_item").val();
     
     if(item != "") {
-      var company_id = $("#purchaseorder_company_id").val();
+      var company_id = $("#purchase_company_id").val();
       var item_id = $("#ac_item_id").val();
       
       var quantity = $("#ac_item_quantity").val();
@@ -883,7 +883,7 @@
         var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount;
         
         $("#items").val($("#items").val() + "," + item_line);
-        listItemspurchaseorder();
+        listItemsPurchase();
         
         $("#ac_item_id").val("");
         $("#ac_item").val("");
@@ -896,6 +896,7 @@
       alert("Por favor ingrese un servicio primero.");
     }
   }
+
 
 // Update price total for invoice
   function updateItemTotal6b() {
