@@ -177,7 +177,7 @@
   </thead>
   <tbody>
     <% for product in @orden.get_products() %>
-    
+    <tr>
           <td class="small bordered_bottom bordered_right">
             <%= product.avisodetail.descrip %>    
           </td>
@@ -284,7 +284,8 @@
           <td class="small bordered_bottom bordered_right">
             <%= money(product.total) %>
           </td>
-
+    </td>
+    
     <% end %>
     <tr>
       <td colspan="35" class="bordered_bottom bordered_right">

@@ -14,10 +14,7 @@ class OrdensController < ApplicationController
      pdf.font "Helvetica" , :size => 6
       
      $lcCli  =  @orden.customer.name 
-     $lcContrato =  @orden.contrato.code
-     $lcMedio  = @orden.medio.descrip
-     $lcMarca  = @orden.marca.descrip
-     $lcVersion = @orden.version.descrip
+
      $lcMoneda ="NUEVOS SOLES "
      
      $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
@@ -44,14 +41,15 @@ class OrdensController < ApplicationController
         end
       end
    
-  
+    pdf.text "Lima, " << @orden.fecha.strftime("%d/%m/%Y") ,:size =>10 ,:style=> :bold 
     pdf 
 
 
   end   
 
   def build_pdf_body_rpt2(pdf)
-       
+    
+    
    pdf.move_down 5 
     pdf.font "Helvetica" , :size => 6
     pdf.text "________________________________________________________________________________________________________", :size => 13, :spacing => 4
@@ -1127,12 +1125,18 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
      $lcMedio  = @orden.medio.descrip
      $lcMarca  = @orden.marca.descrip
      $lcVersion = @orden.version.descrip
+     $lcFechaMes = @orden.month.to_i  
+     @months = monthsArr
+     @month_name = @months[$lcFechaMes - 1][0] <<" - " <<@orden.year.to_s
+    
+     
+     
      $lcMoneda ="NUEVOS SOLES "
      
       client_headers  = [["Medio: ", $lcMedio]] 
       client_headers << ["Marca: ", $lcMarca]
       client_headers << ["Version  : ",$lcVersion]
-      client_headers << ["Emision campaña : ",$lcFechames]     
+      client_headers << ["Emision campaña : ",@month_name ]     
       client_headers
   end
 
@@ -1142,7 +1146,6 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
       invoice_headers <<  ["RUC : ", $lcRuccli]
       invoice_headers <<  ["Direccion : ", $lcRuccli]
       invoice_headers <<  ["Contrato : ", $lcContrato]
-      invoice_headers <<  ["Estado  : ",$lcAprobado ]    
       invoice_headers
   end
 
