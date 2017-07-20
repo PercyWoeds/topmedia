@@ -41,11 +41,7 @@
       <%= f.date_field :date1, value: Time.now.strftime("%d/%m/%Y") %>
     </div>
 
-    <div class="field">
-      <%= f.label :date2, "Fecha Entrega*", :class => "bold" %><br />
-      <%= f.date_field :date2, value: Time.now.strftime("%d/%m/%Y") %>
-    </div>
-
+    
     <div class="field">
       <%= f.label :payment_id,"Forma de Pago " %><br />
       <%= f.select :payment_id, options_from_collection_for_select(@payments,'id','descrip')%>
@@ -120,7 +116,7 @@
 
 
     <strong>Op.Gravada :</strong><br />
-    <span id="ac_item_afecto">0.00</span>
+     <input type="text" name="ac_item_afecto" id="ac_item_afecto" value="0.00" class="tf_short" />
 
     <div class="small">
       Op.Gravada del  producto para agregar una factura.
@@ -137,7 +133,7 @@
     <div>
 
     <strong>Total:</strong><br />
-     <input type="text" name="ac_item_total" id="ac_item_total" value="0.00" class="tf_short" />
+     <span id="ac_item_total">0.00</span>
 
      <div class="small">
        Importe Total 
@@ -216,6 +212,9 @@
 
     
     $("#ac_item_inafecto").bind("keyup", function() {
+      updateItemTotal6b();
+    });
+    $("#ac_item_afecto").bind("keyup", function() {
       updateItemTotal6b();
     });
     

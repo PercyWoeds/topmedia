@@ -908,13 +908,17 @@
 
     var impuesto  = $("#ac_item_impuesto").val();
     var inafecto  = $("#ac_item_inafecto").val();
+    var afecto  = $("#ac_item_afecto").val();
     total = 0 ;
-    
+    total1 = 0 ;
 
-    if(isNumeric(impuesto) && isNumeric(inafecto)) {
+    if(isNumeric(impuesto) && isNumeric(inafecto) && isNumeric(afecto)) {
 
-      var subtotal = total * ((impuesto / 100)+1)
-      var tax      = total - subtotal 
+      var total1 = afecto * ((impuesto / 100)+1)
+      
+      var tax      = total1 - afecto
+      
+      var total =total1+inafecto 
       
 
       $("#ac_item_tax").html(tax);

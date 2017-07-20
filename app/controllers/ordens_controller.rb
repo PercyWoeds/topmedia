@@ -1145,7 +1145,7 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
   def invoice_headers            
       invoice_headers  = [["Fecha de emisión : ",$lcFecha1]]
       invoice_headers <<  ["Cliente : ", $lcCli]
-      invoice_headers <<  ["RUC : ", $lcRuccli]
+      invoice_headers <<  ["RUC : ", $lcRucCli]
       invoice_headers <<  ["Direccion : ", $lcDircli]
       invoice_headers <<  ["Contrato : ", $lcContrato]
       invoice_headers
