@@ -1739,6 +1739,9 @@ def newfactura2
     @products = []
     i = 0
 
+
+  # item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount+"|BRK|" + inafecto+"|BRK|" + impuesto;
+        
     for item in items
       if item != ""
         parts = item.split("|BRK|")      
@@ -1746,16 +1749,19 @@ def newfactura2
         quantity = parts[1]
         price = parts[2]
         discount = parts[3]
-        price2 = price.to_f/1.18
+        inafecto = parts[4]
+        impuesto = parts[5]
+        
+        
               
         product = Product.find(id.to_i)
         product[:i] = i
         product[:quantity] = quantity.to_f
         product[:price]    = price.to_f
         product[:discount] = discount.to_f
-        product[:price2]   = price2.round(2)
+        product[:price2]   = inafecto.to_f
 
-        total = product[:price] * product[:quantity]
+        total = product[:price] * product[:quantity]+product[:price2]
         total -= total * (product[:discount] / 100)        
         product[:CurrTotal] = total        
 

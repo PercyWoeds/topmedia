@@ -193,7 +193,7 @@
 
  // Update price total for invoice
   function updateItemTotal() {
-    var quantity = $("#ac_item_quantity").val();
+    var quantity = $("#ac_item_quantity").val
     var price = $("#ac_item_price").val();
     var discount = $("#ac_item_discount").val();
     
@@ -869,6 +869,8 @@
       var item_id = $("#ac_item_id").val();
       
       var quantity = $("#ac_item_quantity").val();
+      var inafecto = $("#ac_item_inafecto").val();
+      var impuesto = $("#ac_item_impuesto").val();
       var price = $("#ac_item_price").val();
       var discount = $("#ac_item_discount").val();    
       var items_arr = $("#items").val().split(",");
@@ -876,11 +878,14 @@
       if(quantity == "" || !isNumeric(quantity)) {
         alert("Por favor ingrese una cantidad validad");
       } else if(price == "" || !isNumeric(price)) {
-        alert("Por favor ingrese un precio valido");
+        alert("Por favor ingrese un importe afecto");
       } else if(discount == "" || !isNumeric(discount)) {
         alert("Por favor ingrese un descuento valido");
-      } else {
-        var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount;
+      } else if(inafecto == "" || !isNumeric(inafecto)) {
+        alert("Por favor ingrese un importe inafecto");
+      }
+      else {
+        var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount+"|BRK|" + inafecto+"|BRK|" + impuesto;
         
         $("#items").val($("#items").val() + "," + item_line);
         listItemsPurchase();
@@ -888,40 +893,42 @@
         $("#ac_item_id").val("");
         $("#ac_item").val("");
         $("#ac_item_quantity").val("1");
-        $("#ac_item_price").val("");
+        $("#ac_item_price").val("0");
+        $("#ac_item_inafecto").val("0");
         $("#ac_item_discount").val("0");
-        updateItemTotal5();
+        $("#ac_item_impuesto").val("18");
+        updateItemTotalPur();
       }
     } else {
-      alert("Por favor ingrese un servicio primero.");
+      alert("Por favor ingrese un detalle primero.");
     }
   }
 
 
 // Update price total for invoice
-  function updateItemTotal6b() {
+  function updateItemTotalPur() {
 
     var impuesto  = $("#ac_item_impuesto").val();
     var inafecto  = $("#ac_item_inafecto").val();
-    var afecto  = $("#ac_item_afecto").val();
+    var afecto  = $("#ac_item_price").val();
     total = 0 ;
     total1 = 0 ;
 
     if(isNumeric(impuesto) && isNumeric(inafecto) && isNumeric(afecto)) {
 
-      var total1 = afecto * ((impuesto / 100)+1)
+      var total1 = Number(afecto) * (1 + (Number(impuesto) / 100) )
       
       var tax      = total1 - afecto
       
-      var total =total1+inafecto 
+      var total = total1 + inafecto 
       
 
-      $("#ac_item_tax").html(tax);
-      $("#ac_item_afecto").html(subtotal);
+      
+      $("#ac_item_total").html(total);
 
     } else {
-      $("#ac_item_tax").html("0.00");
-      $("#ac_item_subtotal").html("0.00");
+
+      $("#ac_item_total").html("0.00");
     }
   }  
   

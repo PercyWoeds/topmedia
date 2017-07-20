@@ -137,8 +137,21 @@
       Ingrese un termino de busqueda para encontrar un producto.
     </div>
     <br />
+    <strong>Impuesto :</strong><br />
+    <input type="text" name="ac_item_impuesto" id="ac_item_impuesto" value="18" class="tf_short" />
+    <div class="small">
+      Precio del  producto para agregar una factura.
+    </div>
     
-    <strong>Precio:</strong><br />
+    <br />
+    <strong>Op.Inafecta :</strong><br />
+    <input type="text" name="ac_item_inafecto" id="ac_item_inafecto" value="" class="tf_short" />
+    <div class="small">
+      Precio del  producto para agregar una factura.
+    </div>
+    <br />
+    
+    <strong>Op.Afecta :</strong><br />
     <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" />
     <div class="small">
       Precio del  producto para agregar una factura.
@@ -225,20 +238,21 @@
     $("#ac_item").result(function(event, data, formatted) {
       $("#ac_item_id").val(data[2]);
       $("#ac_item_price").val(data[4]);
-      updateItemTotal();
+      $("#ac_item_inafecto").val(data[4]);
+      updateItemTotalPur();
     });
 
     
     $("#ac_item_quantity").bind("keyup", function() {
-      updateItemTotal();
+      updateItemTotalPur();
     });
     
     $("#ac_item_price").bind("keyup", function() {
-      updateItemTotal();
+      updateItemTotalPur();
     });
     
     $("#ac_item_discount").bind("keyup", function() {
-      updateItemTotal();
+      updateItemTotalPur();
     });
     
     <% if @products_lines %>
