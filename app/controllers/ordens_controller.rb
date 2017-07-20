@@ -876,8 +876,9 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
     @marcas= Marca.all 
     @versions = Version.all 
     @contratos = Contrato.all 
-
-
+    @orden[:month]= @month 
+    @orden[:year]= @year
+    
     @orden[:subtotal] = @orden.get_subtotal(items)
     
     begin

@@ -55,7 +55,11 @@
       <%= f.label :contrato_id %><br />
       <%= f.select :contrato_id,options_from_collection_for_select(@contratos,'id','code') %>
     </div>
-    
+    <div class="field">
+      <%= f.label :fecha, "Fecha Emision*", :class => "bold" %><br />
+      <%= f.date_field :fecha, value: Time.now.strftime("%d/%m/%Y") %>
+    </div>
+
     
     <div class="field">
       <%= f.label :marca_id %><br />
