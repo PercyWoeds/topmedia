@@ -38,7 +38,7 @@
     </div>
     <div class="field">
       <%= f.label :date1, "Fecha Emision*", :class => "bold" %><br />
-      <%= f.date_field :date1 , value: Date.today.strftime("%d/%m/%Y") , min: Date.new($yy, $mm, $dd) %>
+      <%= f.date_field :date1 , value: Date.today.strftime("%d/%m/%Y") %>
     </div>
 
     <div class="field">
