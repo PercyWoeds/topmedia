@@ -189,9 +189,10 @@
     $("#items").val(items_final.join(","));
     listItemsKit();
   }
+  
 
-  // Update price total for invoice
-  function Total() {
+ // Update price total for invoice
+  function updateItemTotal() {
     var quantity = $("#ac_item_quantity").val();
     var price = $("#ac_item_price").val();
     var discount = $("#ac_item_discount").val();

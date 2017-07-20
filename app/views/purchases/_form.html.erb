@@ -1,4 +1,4 @@
-<div class="bordered_right">
+<div class="mid_box bordered_right">
   <%= form_for(@purchase) do |f| %>
     <h3>
        Informacion Factura 
@@ -23,8 +23,8 @@
         <strong>Seleccionar proveedor:</strong>
 
         <span id="selected supplier"><% if @ac_supplier %><%= @ac_supplier %><% else %><!-- i --><% end %></span>
-    </div>
 
+      </div>
     </div>
     <div class="field">
       <%= f.label :document_id,"Documento" %><br />
@@ -38,29 +38,35 @@
     </div>
     <div class="field">
       <%= f.label :date1, "Fecha Emision*", :class => "bold" %><br />
-      <%= f.date_field :date1, value: Time.now.strftime("%d/%m/%Y") %>
+      <%= f.date_field :date1 , value: Date.today.strftime("%d/%m/%Y") , min: Date.new($yy, $mm, $dd) %>
     </div>
 
-    
+    <div class="field">
+      <%= f.label :date2, "Fecha Entrega*", :class => "bold" %><br />
+      <%= f.date_field :date2, value: Date.today.strftime("%d/%m/%Y") %>
+    </div>
+
+
     <div class="field">
       <%= f.label :payment_id,"Forma de Pago " %><br />
       <%= f.select :payment_id, options_from_collection_for_select(@payments,'id','descrip')%>
     </div>
-
     <div class="field">
       <%= f.label :date3, "Fecha Vmto*", :class => "bold" %><br />
       <%= f.date_field :date3, value: Time.now.strftime("%d/%m/%Y")  %>
-    </div>quit
-    
+    </div>quit    
+
+
     <div class="field">
       <%= f.label :moneda_id ,"  "%><br />
       <%= f.select :moneda_id, options_from_collection_for_select(@monedas,'id','description') %>
-    </div>    
-  
+    </div>
+    
+      
     <%= hr() %>
     
     <div class="field" id="list_items">
-      <p class="bold big">Detalle:</p>
+      <p class="bold big">Productos:</p>
     </div>
     
     <%= hr() %>
@@ -99,50 +105,6 @@
     </div>
   
     <%= hr() %>
-    
-    <strong>Impuesto :</strong><br />
-     <input type="text" name="ac_item_impuesto" id="ac_item_impuesto" value="18.00" class="tf_short" />
-    <div class="small">
-      Op.Impuesto 
-    </div>
-    <br />
-
-    <strong>Op.Inafecta :</strong><br />
-     <input type="text" name="ac_item_inafecto" id="ac_item_inafecto" value="0.00" class="tf_short" />
-    <div class="small">
-      Op.Inafecta  producto para agregar una factura.
-    </div>
-    <br />
-
-
-    <strong>Op.Gravada :</strong><br />
-     <input type="text" name="ac_item_afecto" id="ac_item_afecto" value="0.00" class="tf_short" />
-
-    <div class="small">
-      Op.Gravada del  producto para agregar una factura.
-    </div>
-    <br />
-    
-    <strong> Impuestos : </strong><br />
-    <span id="ac_item_igv">0.00</span>
-    <div class="small">
-     IGV del documento. 
-    </div>
-    <br />  
-        
-    <div>
-
-    <strong>Total:</strong><br />
-     <span id="ac_item_total">0.00</span>
-
-     <div class="small">
-       Importe Total 
-     </div>
-    
-    </div>
-  
-<%= hr() %> 
-
   
 
     <div class="actions">
@@ -159,11 +121,72 @@
   <% end %>
 </div>
 
+<div class="mid_box">
+  <h4>
+    Agregar Productos  a la factura 
+
+  </h4>
+  
+  <form method="get" action="/products" onsubmit="addItemToPurchase(); return false;">
+
+    <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />
+    
+    <strong>Producto:</strong><br />
+    <input type="text" name="ac_item" id="ac_item" value="" />
+    <div class="small">
+      Ingrese un termino de busqueda para encontrar un producto.
+    </div>
+    <br />
+    
+    <strong>Precio:</strong><br />
+    <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" />
+    <div class="small">
+      Precio del  producto para agregar una factura.
+    </div>
+    <br />
+    
+    <div class="small">
+      Precio S/IGV del  producto para agregar una factura.
+    </div>
+
+    <br />
+    
+    <strong>Cantidad:</strong><br />
+    <input type="text" name="ac_item_quantity" id="ac_item_quantity" value="1" class="tf_short" />
+    <div class="small">
+     Cantidad del producto para agregar una factura.
+    </div>
+    <br />
+    
+    <strong>Discount %:</strong><br />
+    <input type="text" name="ac_item_discount" id="ac_item_discount" value="0" class="tf_short" />
+    <div class="small">
+      Descuento % del producto para agregar una factura.
+    </div>
+    <br />
+    
+
+    <div>
+      <strong>Total:</strong><br />
+      <span id="ac_item_total">0.00</span>
+    </div>
+
+    
+    <br />
+    <input type="submit" value="Agregar item a Factura" />
+  </form>
+  
+  <%= hr() %>
+    
+</div>
   </form>
   
   <%= hr() %>
   
+
   
+
+
 <%= br() %>
 <br />
 
@@ -199,31 +222,23 @@
       selectFirst: false
     });
     
-    
     $("#ac_item").result(function(event, data, formatted) {
       $("#ac_item_id").val(data[2]);
       $("#ac_item_price").val(data[4]);
-      updateItemTotal6b();
-    });
-
-    $("#ac_item_quantity").bind("keyup", function() {
-      updateItemTotal6b();
+      updateItemTotal();
     });
 
     
-    $("#ac_item_inafecto").bind("keyup", function() {
-      updateItemTotal6b();
-    });
-    $("#ac_item_afecto").bind("keyup", function() {
-      updateItemTotal6b();
+    $("#ac_item_quantity").bind("keyup", function() {
+      updateItemTotal();
     });
     
     $("#ac_item_price").bind("keyup", function() {
-      updateItemTotal6b();
+      updateItemTotal();
     });
     
     $("#ac_item_discount").bind("keyup", function() {
-      updateItemTotal6b();
+      updateItemTotal();
     });
     
     <% if @products_lines %>
@@ -232,5 +247,3 @@
     <% end %>
   });
 </script>
-
-
