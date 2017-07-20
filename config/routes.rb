@@ -309,7 +309,7 @@ end
   match 'ordens/do_process/:id' => 'ordens#do_process', via: [:get, :post]
   match 'ordens/email/:id' => 'ordens#email', via: [:get, :post]
   match 'ordens/pdf/:id' => 'ordens#pdf', via: [:get, :post]
-  match 'companies/ordens/:company_id' => 'ordens#list_invoices', via: [:get, :post]
+  match 'companies/ordens/:company_id' => 'ordens#list_ordens', via: [:get, :post]
   resources :ordens
 
 

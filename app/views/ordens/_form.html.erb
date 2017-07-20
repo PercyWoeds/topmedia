@@ -111,7 +111,7 @@
 
     <div class="field">
       <%= f.label :description,"Descripcion " %><br />
-      <%= f.text_field :description %>
+      <%= f.text_area :description %>
     </div>
 
     
@@ -303,14 +303,14 @@
 
       <td>
         <div class="small">
-        
-          <span id="ac_item_price">0.00</span> <br/>         
+         
+           <input type="text" name="ac_item_price" id="ac_item_price" value="" readonly class="tf_short" />
         </div>    
       </td>    
       <td>
         <div>
-          <strong>Total:</strong><br />
-          <span id="ac_item_total">0.00</span>
+         
+          <input type="text" name="ac_item_total" id="ac_item_total" value="" readonly class="tf_short" />
         </div>
       </td>
     </tr>

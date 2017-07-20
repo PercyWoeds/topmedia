@@ -54,8 +54,9 @@ TABLE_HEADERS2 = ["ITEM",
                     "28",                  
                     "29",
                     "30",             
-                    "31",                    
-                    "TOTAL   ",
+                    "31",   
+                    "TOTAL DE UND.",
+                    "TARIFA UNITARIA   ",
                     "TAFIFA  ",
                     "IMPORTE "]
 
@@ -66,6 +67,7 @@ TABLE_HEADERS2 = ["ITEM",
   end
 
   
+  
   def get_subtotal(items)
     subtotal = 0
     
@@ -74,12 +76,17 @@ TABLE_HEADERS2 = ["ITEM",
         parts = item.split("|BRK|")
 
         id = parts[0]
+      
+       
+        total      = parts[34].to_f
         
-   
-        tarifa_1 = parts[32].to_f
-        price =  parts[33].to_f
-        total =  parts[34].to_f
-  
+        
+        
+       puts "get_subtotal"
+     
+       puts total
+       
+       
         begin
           product = Avisodetail.find(id.to_i)
           subtotal += total
@@ -107,10 +114,8 @@ TABLE_HEADERS2 = ["ITEM",
         
             id = parts[0]
                               
-            tarifa_1 = parts[32].to_f
-
-        	price =   parts[33].to_f
-        	total =  parts[34].to_f
+           total      = parts[34] 
+        
 
             begin
               product = Avisodetail.find(id.to_i)
@@ -145,15 +150,15 @@ TABLE_HEADERS2 = ["ITEM",
         parts = item.split("|BRK|")
         
         id    = parts[0]
-        dia_1 = parts[1]
-        dia_2 = parts[2]
-        dia_3 = parts[3]
-        dia_4 = parts[4]
-        dia_5 = parts[5]
-        dia_6 = parts[6]
-        dia_7 = parts[7]
-        dia_8 = parts[8]
-        dia_9 = parts[9]
+        dia_01 = parts[1]
+        dia_02 = parts[2]
+        dia_03 = parts[3]
+        dia_04 = parts[4]
+        dia_05 = parts[5]
+        dia_06 = parts[6]
+        dia_07 = parts[7]
+        dia_08 = parts[8]
+        dia_09 = parts[9]
         dia_10 = parts[10]
         dia_11 = parts[11]
         dia_12 = parts[12]
@@ -176,32 +181,27 @@ TABLE_HEADERS2 = ["ITEM",
         dia_29 = parts[29]
         dia_30 = parts[30]
         dia_31 = parts[31]
-        dia_tarifa = parts[32]
-        dia_precio = parts[33]
-        dia_total = parts[34]
         
-        fecha_dd   = '01'
-        fecha_mm   = @month.to_s 
-        fecha_aa   = @year.to_s
-    
+        precio     = parts[32]        
+        tarifa_1  = parts[33]
+        total      = parts[34] 
         
-        tarifa_1 = parts[32].to_f
+        quantity_1 = 0  
+      
 
-        price = ( (tarifa_1  / 30 ) * 10  )                                   
-
-        total = price * quantity.to_i
-        quantity_1 = 1         
-
-        begin
+       
+  
           product = Avisodetail.find(id.to_i)        
-          new_invoice_product = OrdenProduct.new(:orden_id => self.id, :avisodetail_id => product.id,:fecha=>fecha_d, :price => price.to_f, :quantity => quantity_1, :tarifa => tarifa_1, :total => total.to_f,
-          :d01=>dia_1.to_i,:d02=>dia_2.to_i,:d03=>dia_3.to_i,:d04=>dia_4.to_i,:d05=>dia_5.to_i,:d06=>dia_6.to_i,:d07=>dia_7.to_i,:d08=>dia_8.to_i,:d09=>dia_9.to_i, :d10=>dia_10.to_i,           
-          :d11=>dia_1.to_i,:d01=>dia_1.to_i,:d01=>dia_1.to_i,:d01=>dia_1.to_i,:d01=>dia_1.to_i,:d01=>dia_1.to_i,:d01=>dia_1.to_i,:d01=>dia_1.to_i,:d01=>dia_1.to_i,      )
+          new_invoice_product = OrdenProduct.new(:orden_id => self.id, :avisodetail_id => product.id, :price => precio.to_f, :quantity => quantity_1, :tarifa => tarifa_1, :total => total.to_f,
+          :d01=>dia_01.to_i,:d02=>dia_02.to_i,:d03=>dia_03.to_i,:d04=>dia_04.to_i,:d05=>dia_05.to_i,:d06=>dia_06.to_i,:d07=>dia_07.to_i,:d08=>dia_08.to_i,:d09=>dia_09.to_i, :d10=>dia_10.to_i,           
+          :d11=>dia_11.to_i,:d12=>dia_12.to_i,:d13=>dia_13.to_i,:d14=>dia_14.to_i,:d15=>dia_15.to_i,:d16=>dia_16.to_i,:d17=>dia_17.to_i,:d18=>dia_18.to_i,:d19=>dia_19.to_i, :d20=>dia_20.to_i,
+          :d21=>dia_21.to_i,:d22=>dia_22.to_i,:d23=>dia_23.to_i,:d24=>dia_24.to_i,:d25=>dia_25.to_i,:d26=>dia_26.to_i,:d27=>dia_27.to_i,:d28=>dia_28.to_i,:d29=>dia_29.to_i, :d30=>dia_30.to_i,:d31 => dia_31.to_i)
+         
           new_invoice_product.save
 
-        rescue
+    
           
-        end
+  
       end
     end
   end
@@ -210,9 +210,9 @@ TABLE_HEADERS2 = ["ITEM",
     return "#{self.code} - #{self.customer.name}"
   end
   def get_products    
-    @itemproducts = OrdenProduct.find_by_sql(['Select orden_products.fecha,orden_products.price,orden_products.quantity,orden_products.tarifa,orden_products.total,avisodetails.descrip as name  from orden_products INNER JOIN avisodetails ON orden_products.avisodetail_id = avisodetails.id where orden_products.orden_id = ?', self.id ])
-
-    return @itemproducts
+  #  @itemproducts = OrdenProduct.find_by_sql(['Select orden_products.fecha,orden_products.price,orden_products.quantity,orden_products.tarifa,orden_products.total,avisodetails.descrip as name  from orden_products INNER JOIN avisodetails ON orden_products.avisodetail_id = avisodetails.id where orden_products.orden_id = ?', self.id ])
+  @itemproducts =OrdenProduct.where(orden_id:  self.id) 
+  return @itemproducts
   end
   
   def get_orden_products

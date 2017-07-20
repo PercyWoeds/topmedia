@@ -1384,30 +1384,28 @@
 
 
 // Add an item to Orden
-  function addItemToOrden() {
-    
+  function addItemToOrden() { 
+
+
     var item = $("#ac_item").val();
     
-    alert("additem orden"); 
-    
     if(item != "") {
-      
-
       var company_id = $("#orden_company_id").val();
-      var duracion   = $("#orden_tiempo").val();  
       var item_id = $("#ac_item_id").val();
-      var tarifa  = $("#ac_item_tarifa").val();
-      var price = (tarifa / 30 * duracion );
       
-      var item_1 =    $("#ac_item_1").val();
-      var item_2 =    $("#ac_item_2").val();
-      var item_3 =    $("#ac_item_3").val();    
-      var item_4 =    $("#ac_item_4").val();
-      var item_5 =    $("#ac_item_5").val();
-      var item_6 =    $("#ac_item_6").val();
-      var item_7 =    $("#ac_item_7").val();
-      var item_8 =    $("#ac_item_8").val();
-      var item_9 =    $("#ac_item_9").val();    
+      var price  = $("#ac_item_price").val();
+      var tarifa = $("#ac_item_tarifa").val();
+      var total  = $("#ac_item_total").val();
+      
+      var item_1 =  $("#ac_item_1").val();
+      var item_2 =  $("#ac_item_2").val();
+      var item_3 =  $("#ac_item_3").val();    
+      var item_4 =  $("#ac_item_4").val();
+      var item_5 =  $("#ac_item_5").val();
+      var item_6 =  $("#ac_item_6").val();
+      var item_7 =  $("#ac_item_7").val();
+      var item_8 =  $("#ac_item_8").val();
+      var item_9 =  $("#ac_item_9").val();    
       var item_10 =  $("#ac_item_10").val();
       var item_11 =  $("#ac_item_11").val();
       var item_12 =  $("#ac_item_12").val();
@@ -1431,39 +1429,34 @@
       var item_30 =  $("#ac_item_30").val();
       var item_31 =  $("#ac_item_31").val();
       
-      var suma_dias = parseInt(item_1)+parseInt(item_2)+parseInt(item_3)+parseInt(item_4)+parseInt(item_5)+parseInt(item_6)+parseInt(item_7)+parseInt(item_8)+parseInt(item_9)+parseInt(item_10)+parseInt(item_11)+parseInt(item_12)+parseInt(item_13)+parseInt(item_14)+parseInt(item_15)+parseInt(item_16)+parseInt(item_17)+parseInt(item_18)+parseInt(item_19)+parseInt(item_20)+parseInt(item_21)+parseInt(item_22)+parseInt(item_23)+parseInt(item_24)+parseInt(item_25)+parseInt(item_26)+parseInt(item_27)+parseInt(item_28)+parseInt(item_29)+parseInt(item_30)+parseInt(item_31); 
-      var total =  suma_dias * price;
-            
       
+    
+    
       var items_arr = $("#items").val().split(",");
 
       if(tarifa == "" || !isNumeric(tarifa)) {
-        alert("Por favor ingrese un tarifa");
-      
-      } else {
-
-   var item_line = item_id + "|BRK|"+item_1 + "|BRK|" + item_2 + "|BRK|" +item_3 + "|BRK|"+item_4 + "|BRK|" + item_5 + "|BRK|" +item_6 + "|BRK|" + item_7 + "|BRK|" +item_8 + "|BRK|"  + item_9 + "|BRK|" +item_10
-                           + "|BRK|"+item_11+ "|BRK|" +item_12 + "|BRK|"+ item_13+ "|BRK|"+item_14 +"|BRK|" + item_15 + "|BRK|"+item_16 +"|BRK|" + item_17 + "|BRK|"+item_18 + "|BRK|" + item_19 + "|BRK|"+item_20 
-                           + "|BRK|"+item_21 + "|BRK|"+item_22 + "|BRK|"+ item_23 +"|BRK|"+item_24 +"|BRK|" + item_25 + "|BRK|"+item_26 + "|BRK|"+ item_27 + "|BRK|"+item_28 + "|BRK|" + item_29+ "|BRK|" +item_30+"|BRK|" +item_31+"|BRK|"+ tarifa +"|BRK|"+ precio+"|BRK|" +total
+        alert("Por favor ingrese una cantidad valida");
+    
+      }  else {
         
-      
-
+        var item_line = item_id+"|BRK|" +item_1+"|BRK|"+item_2 +"|BRK|"+item_3+"|BRK|"+item_4+"|BRK|"+item_5+"|BRK|"+item_6+"|BRK|"+item_7+"|BRK|"+item_8+"|BRK|"+item_9+"|BRK|"+item_10+"|BRK|"+item_11+"|BRK|"+item_12 +"|BRK|"+item_13+"|BRK|"+item_14+"|BRK|"+item_15+"|BRK|"+item_16+"|BRK|"+item_17+"|BRK|"+item_18+"|BRK|"+item_19+"|BRK|"+item_20+"|BRK|"+item_21+"|BRK|"+item_22+"|BRK|"+item_23+"|BRK|"+item_24+"|BRK|"+item_25+"|BRK|"+item_26+"|BRK|"+item_27+"|BRK|"+item_28+"|BRK|"+item_29+"|BRK|"+item_30+"|BRK|"+item_30+"|BRK|"+ price + "|BRK|" + tarifa + "|BRK|" + total ;
+        
         $("#items").val($("#items").val() + "," + item_line);
         
         listItemsOrden();
         
         $("#ac_item_id").val("");
         $("#ac_item").val("");
-        $("#ac_item_tarifa").val("1");
+        $("#ac_item_tarifa").val("0");
+        $("#ac_item_price").val("");
+        $("#ac_item_total").val("");
+      
         updateItemOrden();
       }
     } else {
-      alert("Por favor ingrese un programa/ elemento primero.");
+      alert("Por favor agregue un item .");
     }
-
-    
   }
-
 
 
   // List items in a kit
@@ -1527,6 +1520,9 @@
       
       $("#ac_item_price").html(price);
       $("#ac_item_total").html(total);
+      
+      document.getElementById('ac_item_price').value = price;
+      document.getElementById('ac_item_total').value = total;
 
     } else {
       

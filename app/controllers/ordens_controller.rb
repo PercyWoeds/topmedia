@@ -13,34 +13,77 @@ class OrdensController < ApplicationController
   def build_pdf_header_rpt2(pdf)
      pdf.font "Helvetica" , :size => 6
       
-     $lcCli  = @company.name 
-     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
-
+     $lcCli  =  @orden.customer.name 
+     $lcContrato =  @orden.contrato.code
+     $lcMedio  = @orden.medio.descrip
+     $lcMarca  = @orden.marca.descrip
+     $lcVersion = @orden.version.descrip
+     $lcMoneda ="NUEVOS SOLES "
+     
      $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
      $lcHora  = Time.now.to_s    
         
-      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 270        
-      pdf.move_down 6        
-      pdf.move_down 4
-      pdf.text "Cliente   : " + @orden.customer.name  , :size => 10
-      pdf.text "Contrato  : "+ @orden.contrato.code, :size => 10
-      pdf.text "Medio     : " + @orden.medio.descrip, :size => 10
-      pdf.text "Marca     : " +  @orden.marca.descrip, :size => 10
-      pdf.text "Version   : " + @orden.version.descrip , :size => 10
-      pdf.text "Moneda    : NUEVOS SOLES ", :size => 10
-      pdf.text "ORDEN     : #{@orden.code}", :size => 12
-      
+      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 120
         
-      pdf.move_down 10
-      pdf 
+      pdf.move_down 25
+        
+      #pdf.text supplier.street, :size => 10
+      #pdf.text supplier.district, :size => 10
+      #pdf.text supplier.city, :size => 1
+    
+       
+       pdf.bounding_box([555, 525], :width => 200, :height => 80) do
+        pdf.stroke_bounds
+        pdf.move_down 15
+        pdf.font "Helvetica", :style => :bold do
+          pdf.text "R.U.C: 20100040009008", :align => :center,:size => 10
+          pdf.text "ORDEN DE TRANSMISION", :align => :center,:size  =>10
+          pdf.text "#{@orden.code}", :align => :center,:size  =>10,
+                                 :style => :bold
+          
+        end
+      end
+   
+  
+    pdf 
 
 
   end   
 
   def build_pdf_body_rpt2(pdf)
-    
+       
+   pdf.move_down 5 
     pdf.font "Helvetica" , :size => 6
+    pdf.text "________________________________________________________________________________________________________", :size => 13, :spacing => 4
+    pdf.text " ", :size => 13, :spacing => 4
+    pdf.font "Helvetica" , :size => 8
+   pdf.move_down 5
+    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers.length >= row ? client_data_headers[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers.length >= row ? invoice_headers[rows_index] : ['',''])
+      end
 
+      if rows.present?
+
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+        end
+
+        pdf.move_down 5
+
+      end
+        
+         pdf.font "Helvetica" , :size => 6
+      pdf.move_down 10
       headers = []
       table_content = []
       total_general = 0
@@ -137,603 +180,148 @@ class OrdensController < ApplicationController
       $lcCliName = ""
     
 
-     for  customerpayment_rpt in @orden_detalle 
+     for  order in @orden_detalle 
 
-        if lcCli == customerpayment_rpt.avisodetail_id 
-
-          $lcCliName = customerpayment_rpt.avisodetail.descrip   
-          
-          if customerpayment_rpt.dia == '01'
-            @total_dia01 += customerpayment_rpt.quantity.round(2)        
-          end   
-          if customerpayment_rpt.dia == '02' 
-            @total_dia02 += customerpayment_rpt.quantity.round(2)        
-          end             
-          if customerpayment_rpt.dia == '03' 
-            @total_dia03 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '04' 
-            @total_dia04 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '05' 
-            @total_dia05 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '06' 
-            @total_dia06 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '07' 
-            @total_dia07 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '08' 
-            @total_dia08 += customerpayment_rpt.quantity.round(2)        
-          end
-          if customerpayment_rpt.dia == '09' 
-            @total_dia09 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '10' 
-            @total_dia10 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '11' 
-            @total_dia11 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '12' 
-            @total_dia12 += customerpayment_rpt.quantity.round(2)        
-          end 
-
-          if customerpayment_rpt.dia == '13'
-            @total_dia13 += customerpayment_rpt.quantity.round(2)        
-          end   
-          if customerpayment_rpt.dia == '14' 
-            @total_dia14 += customerpayment_rpt.quantity.round(2)        
-          end             
-          if customerpayment_rpt.dia == '15' 
-            @total_dia15 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '16' 
-            @total_dia16 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '17' 
-            @total_dia17 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '18' 
-            @total_dia18 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '19' 
-            @total_dia19 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '20' 
-            @total_dia20 += customerpayment_rpt.quantity.round(2)        
-          end
-          if customerpayment_rpt.dia == '21' 
-            @total_dia21 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '22' 
-            @total_dia22 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '23' 
-            @total_dia23 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '24' 
-            @total_dia24 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '25' 
-            @total_dia25 += customerpayment_rpt.quantity.round(2)        
-          end
-          if customerpayment_rpt.dia == '26' 
-            @total_dia26 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '27' 
-            @total_dia27 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '28' 
-            @total_dia28 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '29' 
-            @total_dia29 += customerpayment_rpt.quantity.round(2)        
-          end           
-          if customerpayment_rpt.dia == '30' 
-            @total_dia30 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '31' 
-            @total_dia31 += customerpayment_rpt.quantity.round(2)        
-          end 
-
-
-        else
-          
-            @total_cliente = @total_anterior+
-            @total_dia01+
-            @total_dia02+
-            @total_dia03+
-            @total_dia04+
-            @total_dia05+
-            @total_dia06+
-            @total_dia07+
-            @total_dia08+
-            @total_dia09+
-            @total_dia10+
-            @total_dia11+
-            @total_dia12+
-            @total_dia13+
-            @total_dia14+
-            @total_dia15+
-            @total_dia16+
-            @total_dia17+
-            @total_dia18+
-            @total_dia19+
-            @total_dia20+
-            @total_dia21+
-            @total_dia22+
-            @total_dia23+
-            @total_dia24+
-            @total_dia25+
-            @total_dia26+
-            @total_dia27+
-            @total_dia28+
-            @total_dia29+
-            @total_dia30+
-            @total_dia31
+        
             
             row = []
             row << nroitem.to_s        
-            row << $lcCliName
-            row << sprintf("%.2f",@total_anterior.to_s)
-            row << sprintf("%.2f",@total_dia01.to_s)
-            row << sprintf("%.2f",@total_dia02.to_s)
-            row << sprintf("%.2f",@total_dia03.to_s)
-            row << sprintf("%.2f",@total_dia04.to_s)
-            row << sprintf("%.2f",@total_dia05.to_s)
-            row << sprintf("%.2f",@total_dia06.to_s)
-            row << sprintf("%.2f",@total_dia07.to_s)
-            row << sprintf("%.2f",@total_dia08.to_s)
-            row << sprintf("%.2f",@total_dia09.to_s)
-            row << sprintf("%.2f",@total_dia10.to_s)
-            row << sprintf("%.2f",@total_dia11.to_s)
-            row << sprintf("%.2f",@total_dia12.to_s)
-            row << sprintf("%.2f",@total_dia13.to_s)
-            row << sprintf("%.2f",@total_dia14.to_s)
-            row << sprintf("%.2f",@total_dia15.to_s)
-            row << sprintf("%.2f",@total_dia16.to_s)
-            row << sprintf("%.2f",@total_dia17.to_s)
-            row << sprintf("%.2f",@total_dia18.to_s)
-            row << sprintf("%.2f",@total_dia19.to_s)
-            row << sprintf("%.2f",@total_dia20.to_s)
-            row << sprintf("%.2f",@total_dia21.to_s)
-            row << sprintf("%.2f",@total_dia22.to_s)
-            row << sprintf("%.2f",@total_dia23.to_s)
-            row << sprintf("%.2f",@total_dia24.to_s)
-            row << sprintf("%.2f",@total_dia25.to_s)
-            row << sprintf("%.2f",@total_dia26.to_s)
-            row << sprintf("%.2f",@total_dia27.to_s)
-            row << sprintf("%.2f",@total_dia28.to_s)
-            row << sprintf("%.2f",@total_dia29.to_s)
-            row << sprintf("%.2f",@total_dia30.to_s)
-            row << sprintf("%.2f",@total_dia31.to_s)
+            row << order.avisodetail.descrip 
+            
+            row << sprintf("%.0f",order.d01.to_s)
+            row << sprintf("%.0f",order.d02.to_s)
+            row << sprintf("%.0f",order.d03.to_s)
+            row << sprintf("%.0f",order.d04.to_s)
+            row << sprintf("%.0f",order.d05.to_s)
+            row << sprintf("%.0f",order.d06.to_s)
+            row << sprintf("%.0f",order.d07.to_s)
+            row << sprintf("%.0f",order.d08.to_s)
+            row << sprintf("%.0f",order.d09.to_s)
+            row << sprintf("%.0f",order.d10.to_s)
+            row << sprintf("%.0f",order.d11.to_s)
+            row << sprintf("%.0f",order.d12.to_s)
+            row << sprintf("%.0f",order.d13.to_s)
+            row << sprintf("%.0f",order.d14.to_s)
+            row << sprintf("%.0f",order.d15.to_s)
+            row << sprintf("%.0f",order.d16.to_s)
+            row << sprintf("%.0f",order.d17.to_s)
+            row << sprintf("%.0f",order.d18.to_s)
+            row << sprintf("%.0f",order.d19.to_s)
+            row << sprintf("%.0f",order.d20.to_s)
+            row << sprintf("%.0f",order.d21.to_s)
+            row << sprintf("%.0f",order.d22.to_s)
+            row << sprintf("%.0f",order.d23.to_s)
+            row << sprintf("%.0f",order.d24.to_s)
+            row << sprintf("%.0f",order.d25.to_s)
+            row << sprintf("%.0f",order.d26.to_s)
+            row << sprintf("%.0f",order.d27.to_s)
+            row << sprintf("%.0f",order.d28.to_s)
+            row << sprintf("%.0f",order.d29.to_s)
+            row << sprintf("%.0f",order.d30.to_s)
+            row << sprintf("%.0f",order.d31.to_s)
             
             
-            row << sprintf("%.2f",@total_cliente.to_s)
+            @total_dia01_column += order.d01
+            @total_dia02_column += order.d02
+            @total_dia03_column += order.d03
+            @total_dia04_column += order.d04
+            @total_dia05_column += order.d05
+            @total_dia06_column += order.d06
+            @total_dia07_column += order.d07
+            @total_dia08_column += order.d08
+            @total_dia09_column += order.d09
+            @total_dia10_column += order.d10
+            @total_dia11_column += order.d11
+            @total_dia12_column += order.d12
+            @total_dia13_column += order.d13
+            @total_dia14_column += order.d14
+            @total_dia15_column += order.d15
+            @total_dia16_column += order.d16
+            @total_dia17_column += order.d17
+            @total_dia18_column += order.d18
+            @total_dia19_column += order.d19
+            @total_dia20_column += order.d20
+            @total_dia21_column += order.d21
+            @total_dia22_column += order.d22
+            @total_dia23_column += order.d23
+            @total_dia24_column += order.d24
+            @total_dia25_column += order.d25
+            @total_dia26_column += order.d26
+            @total_dia27_column += order.d27
+            @total_dia28_column += order.d28
+            @total_dia29_column += order.d29
+            @total_dia30_column += order.d30
+            @total_dia31_column += order.d31
 
+            @total_linea = order.d01+order.d02+order.d03+order.d04+order.d05+order.d06+order.d07+order.d08+order.d09+order.d10+
+                           order.d11+order.d12+order.d13+order.d14+order.d15+order.d16+order.d17+order.d18+order.d19+order.d20+
+                           order.d21+order.d22+order.d23+order.d24+order.d25+order.d26+order.d27+order.d28+order.d29+order.d30+order.d31
+            row << sprintf("%.2f",@total_linea.to_s)
+            row << sprintf("%.2f",order.price.to_s)
+            row << sprintf("%.2f",order.tarifa.to_s)
+            row << sprintf("%.2f",order.total.to_s)
+            
             table_content << row            
-            ## TOTAL XMES GENERAL
-            @total_anterior_column +=  @total_anterior
+             @total_linea_general += @total_linea
 
-            @total_dia01_column += @total_dia01
-            @total_dia02_column += @total_dia02
-            @total_dia03_column += @total_dia03
-            @total_dia04_column += @total_dia04
-            @total_dia05_column += @total_dia05
-            @total_dia06_column += @total_dia06
-            @total_dia07_column += @total_dia07
-            @total_dia08_column += @total_dia08
-            @total_dia09_column += @total_dia09
-            @total_dia10_column += @total_dia10
-            @total_dia11_column += @total_dia11
-            @total_dia12_column += @total_dia12
-            @total_dia13_column += @total_dia13
-            @total_dia14_column += @total_dia14
-            @total_dia15_column += @total_dia15
-            @total_dia16_column += @total_dia16
-            @total_dia17_column += @total_dia17
-            @total_dia18_column += @total_dia18
-            @total_dia19_column += @total_dia19
-            @total_dia20_column += @total_dia20
-            @total_dia21_column += @total_dia21
-            @total_dia22_column += @total_dia22
-            @total_dia23_column += @total_dia23
-            @total_dia24_column += @total_dia24
-            @total_dia25_column += @total_dia25
-            @total_dia26_column += @total_dia26
-            @total_dia27_column += @total_dia27
-            @total_dia28_column += @total_dia28
-            @total_dia29_column += @total_dia29
-            @total_dia30_column += @total_dia30
-            @total_dia31_column += @total_dia31
-
-            @total_cliente = 0 
-            ## TOTAL XMES GENERAL
-
-            $lcCliName =customerpayment_rpt.avisodetail.descrip
-            lcCli = customerpayment_rpt.avisodetail_id
-
-
-            @total_anterior = 0
-            @total_dia01 = 0
-            @total_dia02 = 0
-            @total_dia03 = 0
-            @total_dia04 = 0
-            @total_dia05 = 0
-            @total_dia06 = 0
-            @total_dia07 = 0
-            @total_dia08 = 0
-            @total_dia09 = 0
-            @total_dia10 = 0
-            @total_dia11 = 0
-            @total_dia12 = 0
-            @total_dia13 = 0
-            @total_dia14 = 0
-            @total_dia15 = 0
-            @total_dia16 = 0
-            @total_dia17 = 0
-            @total_dia18 = 0
-            @total_dia19 = 0
-            @total_dia20 = 0
-            @total_dia21 = 0
-            @total_dia22 = 0
-            @total_dia23 = 0
-            @total_dia24 = 0
-            @total_dia25 = 0
-            @total_dia26 = 0
-            @total_dia27 = 0
-            @total_dia28 = 0
-            @total_dia29 = 0
-            @total_dia30 = 0
-            @total_dia31 = 0
-
-            @total_cliente = 0 
-
-
-if customerpayment_rpt.dia == '01'
-            @total_dia01 += customerpayment_rpt.quantity.round(2)        
-          end   
-          if customerpayment_rpt.dia == '02' 
-            @total_dia02 += customerpayment_rpt.quantity.round(2)        
-          end             
-          if customerpayment_rpt.dia == '03' 
-            @total_dia03 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '04' 
-            @total_dia04 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '05' 
-            @total_dia05 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '06' 
-            @total_dia06 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '07' 
-            @total_dia07 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '08' 
-            @total_dia08 += customerpayment_rpt.quantity.round(2)        
-          end
-          if customerpayment_rpt.dia == '09' 
-            @total_dia09 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '10' 
-            @total_dia10 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '11' 
-            @total_dia11 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '12' 
-            @total_dia12 += customerpayment_rpt.quantity.round(2)        
-          end 
-
-          if customerpayment_rpt.dia == '13'
-            @total_dia13 += customerpayment_rpt.quantity.round(2)        
-          end   
-          if customerpayment_rpt.dia == '14' 
-            @total_dia14 += customerpayment_rpt.quantity.round(2)        
-          end             
-          if customerpayment_rpt.dia == '15' 
-            @total_dia15 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '16' 
-            @total_dia16 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '17' 
-            @total_dia17 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '18' 
-            @total_dia18 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '19' 
-            @total_dia19 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '20' 
-            @total_dia20 += customerpayment_rpt.quantity.round(2)        
-          end
-          if customerpayment_rpt.dia == '21' 
-            @total_dia21 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '22' 
-            @total_dia22 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '23' 
-            @total_dia23 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '24' 
-            @total_dia24 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '25' 
-            @total_dia25 += customerpayment_rpt.quantity.round(2)        
-          end
-          if customerpayment_rpt.dia == '26' 
-            @total_dia26 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '27' 
-            @total_dia27 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '28' 
-            @total_dia28 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '29' 
-            @total_dia29 += customerpayment_rpt.quantity.round(2)        
-          end           
-          if customerpayment_rpt.dia == '30' 
-            @total_dia30 += customerpayment_rpt.quantity.round(2)        
-          end 
-          if customerpayment_rpt.dia == '31' 
-            @total_dia31 += customerpayment_rpt.quantity.round(2)        
-          end 
+              @total_linea = 0 
 
           nroitem = nroitem + 1 
 
-
-
-        end 
-
-         @total_general = @total_general + customerpayment_rpt.quantity.round(2)
-
+         
        end   
 
       #fin for
           #ultimo cliente 
 
-          @total_cliente = @total_anterior+
-            @total_dia01+
-            @total_dia02+
-            @total_dia03+
-            @total_dia04+
-            @total_dia05+
-            @total_dia06+
-            @total_dia07+
-            @total_dia08+
-            @total_dia09+
-            @total_dia10+
-            @total_dia11+
-            @total_dia12+
-            @total_dia13+
-            @total_dia14+
-            @total_dia15+
-            @total_dia16+
-            @total_dia17+
-            @total_dia18+
-            @total_dia19+
-            @total_dia20+
-            @total_dia21+
-            @total_dia22+
-            @total_dia23+
-            @total_dia24+
-            @total_dia25+
-            @total_dia26+
-            @total_dia27+
-            @total_dia28+
-            @total_dia29+
-            @total_dia30+
-            @total_dia31
-
-          @total_anterior_column +=  @total_anterior
-
-            @total_dia01_column += @total_dia01
-            @total_dia02_column += @total_dia02
-            @total_dia03_column += @total_dia03
-            @total_dia04_column += @total_dia04
-            @total_dia05_column += @total_dia05
-            @total_dia06_column += @total_dia06
-            @total_dia07_column += @total_dia07
-            @total_dia08_column += @total_dia08
-            @total_dia09_column += @total_dia09
-            @total_dia10_column += @total_dia10
-            @total_dia11_column += @total_dia11
-            @total_dia12_column += @total_dia12
-            @total_dia13_column += @total_dia13
-            @total_dia14_column += @total_dia14
-            @total_dia15_column += @total_dia15
-            @total_dia16_column += @total_dia16
-            @total_dia17_column += @total_dia17
-            @total_dia18_column += @total_dia18
-            @total_dia19_column += @total_dia19
-            @total_dia20_column += @total_dia20
-            @total_dia21_column += @total_dia21
-            @total_dia22_column += @total_dia22
-            @total_dia23_column += @total_dia23
-            @total_dia24_column += @total_dia24
-            @total_dia25_column += @total_dia25
-            @total_dia26_column += @total_dia26
-            @total_dia27_column += @total_dia27
-            @total_dia28_column += @total_dia28
-            @total_dia29_column += @total_dia29
-            @total_dia30_column += @total_dia30
-            @total_dia31_column += @total_dia31
-
           
-            row = []
-            row << nroitem.to_s        
-            row << customerpayment_rpt.avisodetail.descrip           
-            row << sprintf("%.1f",@total_dia01.to_s)
-            row << sprintf("%.1f",@total_dia02.to_s)
-            row << sprintf("%.1f",@total_dia03.to_s)
-            row << sprintf("%.1f",@total_dia04.to_s)
-            row << sprintf("%.1f",@total_dia05.to_s)
-            row << sprintf("%.1f",@total_dia06.to_s)
-            row << sprintf("%.1f",@total_dia07.to_s)
-            row << sprintf("%.1f",@total_dia08.to_s)
-            row << sprintf("%.1f",@total_dia09.to_s)
-            row << sprintf("%.1f",@total_dia10.to_s)
-            row << sprintf("%.1f",@total_dia11.to_s)
-            row << sprintf("%.1f",@total_dia12.to_s)
-            row << sprintf("%.1f",@total_dia13.to_s)
-            row << sprintf("%.1f",@total_dia14.to_s)
-            row << sprintf("%.1f",@total_dia15.to_s)
-            row << sprintf("%.1f",@total_dia16.to_s)
-            row << sprintf("%.1f",@total_dia17.to_s)
-            row << sprintf("%.1f",@total_dia18.to_s)
-            row << sprintf("%.1f",@total_dia19.to_s)
-            row << sprintf("%.1f",@total_dia20.to_s)
-            row << sprintf("%.1f",@total_dia21.to_s)
-            row << sprintf("%.1f",@total_dia22.to_s)
-            row << sprintf("%.1f",@total_dia23.to_s)
-            row << sprintf("%.1f",@total_dia24.to_s)
-            row << sprintf("%.1f",@total_dia25.to_s)
-            row << sprintf("%.1f",@total_dia26.to_s)
-            row << sprintf("%.1f",@total_dia27.to_s)
-            row << sprintf("%.1f",@total_dia28.to_s)
-            row << sprintf("%.1f",@total_dia29.to_s)
-            row << sprintf("%.1f",@total_dia30.to_s)
-            row << sprintf("%.1f",@total_dia31.to_s)
-            row << sprintf("%.2f",@total_cliente.to_s)
+     
 
-             @total_linea = @total_cliente * customerpayment_rpt.tarifa
-            row << sprintf("%.2f",customerpayment_rpt.tarifa.to_s)
-            row << sprintf("%.2f",@total_linea.to_s)
-            @total_linea_general += @total_linea
-
-            table_content << row            
+           
             
-
-
+        
         row = []
          row << ""       
          row << " TOTAL GENERAL => "         
-         row << sprintf("%.1f",@total_dia01_column.to_s)
-         row << sprintf("%.1f",@total_dia02_column.to_s)
-         row << sprintf("%.1f",@total_dia03_column.to_s)
-         row << sprintf("%.1f",@total_dia04_column.to_s)
-         row << sprintf("%.1f",@total_dia05_column.to_s)
-         row << sprintf("%.1f",@total_dia06_column.to_s)
-         row << sprintf("%.1f",@total_dia07_column.to_s)
-         row << sprintf("%.1f",@total_dia08_column.to_s)
-         row << sprintf("%.1f",@total_dia09_column.to_s)
-         row << sprintf("%.1f",@total_dia10_column.to_s)
-         row << sprintf("%.1f",@total_dia11_column.to_s)
-         row << sprintf("%.1f",@total_dia12_column.to_s)
-         row << sprintf("%.1f",@total_dia13_column.to_s)
-         row << sprintf("%.1f",@total_dia14_column.to_s)
-         row << sprintf("%.1f",@total_dia15_column.to_s)
-         row << sprintf("%.1f",@total_dia16_column.to_s)
-         row << sprintf("%.1f",@total_dia17_column.to_s)
-         row << sprintf("%.1f",@total_dia18_column.to_s)
-         row << sprintf("%.1f",@total_dia19_column.to_s)
-         row << sprintf("%.1f",@total_dia20_column.to_s)
-         row << sprintf("%.1f",@total_dia21_column.to_s)
-         row << sprintf("%.1f",@total_dia22_column.to_s)
-         row << sprintf("%.1f",@total_dia23_column.to_s)
-         row << sprintf("%.1f",@total_dia24_column.to_s)
-         row << sprintf("%.1f",@total_dia25_column.to_s)
-         row << sprintf("%.1f",@total_dia26_column.to_s)
-         row << sprintf("%.1f",@total_dia27_column.to_s)
-         row << sprintf("%.1f",@total_dia28_column.to_s)
-         row << sprintf("%.1f",@total_dia29_column.to_s)
-         row << sprintf("%.1f",@total_dia30_column.to_s)
-         row << sprintf("%.1f",@total_dia31_column.to_s)
-
-         row << sprintf("%.2f",@total_general.to_s)
-         row << " "
+         row << sprintf("%.0f",@total_dia01_column.to_s)
+         row << sprintf("%.0f",@total_dia02_column.to_s)
+         row << sprintf("%.0f",@total_dia03_column.to_s)
+         row << sprintf("%.0f",@total_dia04_column.to_s)
+         row << sprintf("%.0f",@total_dia05_column.to_s)
+         row << sprintf("%.0f",@total_dia06_column.to_s)
+         row << sprintf("%.0f",@total_dia07_column.to_s)
+         row << sprintf("%.0f",@total_dia08_column.to_s)
+         row << sprintf("%.0f",@total_dia09_column.to_s)
+         row << sprintf("%.0f",@total_dia10_column.to_s)
+         row << sprintf("%.0f",@total_dia11_column.to_s)
+         row << sprintf("%.0f",@total_dia12_column.to_s)
+         row << sprintf("%.0f",@total_dia13_column.to_s)
+         row << sprintf("%.0f",@total_dia14_column.to_s)
+         row << sprintf("%.0f",@total_dia15_column.to_s)
+         row << sprintf("%.0f",@total_dia16_column.to_s)
+         row << sprintf("%.0f",@total_dia17_column.to_s)
+         row << sprintf("%.0f",@total_dia18_column.to_s)
+         row << sprintf("%.0f",@total_dia19_column.to_s)
+         row << sprintf("%.0f",@total_dia20_column.to_s)
+         row << sprintf("%.0f",@total_dia21_column.to_s)
+         row << sprintf("%.0f",@total_dia22_column.to_s)
+         row << sprintf("%.0f",@total_dia23_column.to_s)
+         row << sprintf("%.0f",@total_dia24_column.to_s)
+         row << sprintf("%.0f",@total_dia25_column.to_s)
+         row << sprintf("%.0f",@total_dia26_column.to_s)
+         row << sprintf("%.0f",@total_dia27_column.to_s)
+         row << sprintf("%.0f",@total_dia28_column.to_s)
+         row << sprintf("%.0f",@total_dia29_column.to_s)
+         row << sprintf("%.0f",@total_dia30_column.to_s)
+         row << sprintf("%.0f",@total_dia31_column.to_s)
          row << sprintf("%.2f",@total_linea_general.to_s)
+         row << " "
+         row << " "
+         row << " "
     table_content << row            
 
-        @tax =  @total_linea_general* 0.18
-         @importe = @total_linea_general + @tax 
-
-         row = []
-         row << ""       
-         row << ""         
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " " 
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << ""
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << "IGV. "         
-         row << sprintf("%.2f",@tax.to_s)
-             table_content << row            
-         row = []
-         row << ""       
-         row << ""         
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " " 
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << ""
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << " "
-         row << "TOTAL"         
-         row << sprintf("%.2f",@importe.to_s)
-
+      
          
-         table_content << row
 
 
       result = pdf.table table_content, {:position => :center,
@@ -777,7 +365,7 @@ if customerpayment_rpt.dia == '01'
                                           columns([34]).align=:right
                                         end                                          
       pdf.move_down 10    
-      pdf.text  "Nota : " + @orden.description
+      pdf.text  "Observaciones : " + @orden.description
 
 
       pdf
@@ -792,8 +380,31 @@ if customerpayment_rpt.dia == '01'
         totals = []
         services_subtotal = 0
         services_tax = 0
-        services_total = 0        
+        services_total = 0    
         
+        pdf.move_down 10      
+ lcTexto=     "Los espacios,fechas y ubicaciones no seran modificados sin permiso de la agencia.No se ubicarán en la misma tanda/página, al lado, al frente o a continuación de otra publicación de similares"
+ 
+data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
+               
+               ["","Firma."," "]          ]
+
+           
+            pdf.text " "
+            pdf.table invoice_summary, {
+        :position => :right,
+        :cell_style => {:border_width => 1},
+        :width => pdf.bounds.width/4
+      } do
+        columns([0]).font_style = :bold
+        columns([1]).align = :right
+        
+      end
+            pdf.table(data,:cell_style=> {:border_width=>1} , :width => pdf.bounds.width/4,:position => :center)
+            
+        
+        
+      
         pdf.text "" 
 
         pdf.bounding_box([0, 20], :width => 535, :height => 40) do
@@ -874,6 +485,7 @@ if customerpayment_rpt.dia == '01'
       if item != ""
         parts = item.split("|BRK|")        
         id = parts[0]
+             
 #item_id + "|BRK|"+fecha_dd + "|BRK|" + fecha_mm + "|BRK|" +fecha_yy + "|BRK|" + quantity + "|BRK|" + tarifa ;
        # fecha_dd   = parts[1]        
        # fecha_mm   = parts[2]        
@@ -910,9 +522,10 @@ if customerpayment_rpt.dia == '01'
         dia_30 = parts[30]
         dia_31 = parts[31]
         
-        tarifa     = parts[32]
-        price      = parts[33]        
-        total      = parts[34]        
+        
+        price      = parts[32]        
+        tarifa     = parts[33]
+        total      = parts[34]  
         
         product = Avisodetail.find(id.to_i)
 
@@ -953,8 +566,7 @@ if customerpayment_rpt.dia == '01'
         product[:d30] = dia_30.to_f
         product[:d31] = dia_31.to_f
         
-    
-        product[:total] = total
+  
         @products.push(product)
       end
       
@@ -1003,7 +615,7 @@ if customerpayment_rpt.dia == '01'
   end
   
   # Show ordens for a company
-  def list_invoices
+  def list_ordens
     @company = Company.find(params[:company_id])
     @pagetitle = "#{@company.name} - ordens"
     @filters_display = "block"
@@ -1191,6 +803,64 @@ if customerpayment_rpt.dia == '01'
     @pagetitle = "New orden"
     @action_txt = "Create"
     
+    #-------
+      if(params[:year] and params[:year].numeric?)
+      @year = params[:year].to_i
+    else
+      @year = Time.now.year
+    end
+    
+    if(params[:month] and params[:month].numeric?)
+      @month = params[:month].to_i
+    else
+      @month = Time.now.month
+    end
+    
+    if(@month < 10)
+      month_s = "0#{@month}"
+    else
+      month_s = @month.to_s
+    end
+    
+    curr_year = Time.now.year
+    c_year = curr_year
+    c_month = 1
+    
+    @years = []
+    @months = monthsArr
+    @month_name = @months[@month - 1][0]
+    
+    
+    
+    while(c_year > Time.now.year - 5)
+      @years.push(c_year)
+      c_year -= 1
+    end
+    
+    @dates = []
+    
+    last_day_of_month = last_day_of_month(@year, @month)
+    @date_cats = []
+    
+    i = 1
+    
+    while(i <= last_day_of_month)
+      if(i < 10)
+        i_s = "0#{i}"
+      else
+        i_s = i.to_s
+      end
+      
+      @dates.push("#{@year}-#{month_s}-#{i_s}")
+      @date_cats.push("'" + doDate(Time.parse("#{@year}-#{@month}-#{i_s}"), 5) + "'")
+      
+      i += 1
+    end
+    
+    #-------
+    
+    
+      
     items = params[:items].split(",")
     
     @orden = Orden.new(orden_params)
@@ -1449,6 +1119,34 @@ if customerpayment_rpt.dia == '01'
 #fin reporte de ingresos x producto 
 
 
+ def client_data_headers
+
+    #{@purchaseorder.description}
+      $lcContrato =  @orden.contrato.code
+     $lcMedio  = @orden.medio.descrip
+     $lcMarca  = @orden.marca.descrip
+     $lcVersion = @orden.version.descrip
+     $lcMoneda ="NUEVOS SOLES "
+     
+      client_headers  = [["Medio: ", $lcMedio]] 
+      client_headers << ["Marca: ", $lcMarca]
+      client_headers << ["Version  : ",$lcVersion]
+      client_headers << ["Emision campaña : ",$lcFechames]     
+      client_headers
+  end
+
+  def invoice_headers            
+      invoice_headers  = [["Fecha de emisión : ",$lcFecha1]]
+      invoice_headers <<  ["Cliente : ", $lcCli]
+      invoice_headers <<  ["RUC : ", $lcRuccli]
+      invoice_headers <<  ["Direccion : ", $lcRuccli]
+      invoice_headers <<  ["Contrato : ", $lcContrato]
+      invoice_headers <<  ["Estado  : ",$lcAprobado ]    
+      invoice_headers
+  end
+
+
+
   def client_data_headers_rpt
       client_headers  = [["Empresa  :", $lcCli ]]
       client_headers << ["Direccion :", $lcdir1]
@@ -1460,6 +1158,22 @@ if customerpayment_rpt.dia == '01'
       orden_headers
   end
 
+  def invoice_summary
+      invoice_summary = []
+      invoice_summary << ["SubTotal",  ActiveSupport::NumberHelper::number_to_delimited(@orden.subtotal,delimiter:",",separator:".").to_s]
+      invoice_summary << ["IGV",ActiveSupport::NumberHelper::number_to_delimited(@orden.tax,delimiter:",",separator:".").to_s]
+      invoice_summary << ["Total", ActiveSupport::NumberHelper::number_to_delimited(@orden.total ,delimiter:",",separator:".").to_s]
+      
+      invoice_summary
+    end
+  def invoice_summary2
+      invoice_summary2 = []
+      invoice_summary2 << ["SubTotal",  ActiveSupport::NumberHelper::number_to_delimited(@orden.subtotal,delimiter:",",separator:".").to_s]
+      invoice_summary2 << ["IGV",ActiveSupport::NumberHelper::number_to_delimited(@orden.tax,delimiter:",",separator:".").to_s]
+      invoice_summary2 << ["Total", ActiveSupport::NumberHelper::number_to_delimited(@orden.total ,delimiter:",",separator:".").to_s]
+      
+      invoice_summary2
+    end
 
 
   private
@@ -1472,7 +1186,7 @@ if customerpayment_rpt.dia == '01'
     def orden_params
 
     params.require(:orden).permit(:contrato_id,:fecha,:medio_id,:marca_id,:version_id,:fecha1,:fecha2,:tiempo,  
-    :code,:company_id,:subtotal,:tax,:total,:user_id,:processed,:customer_id,:description)
+    :code,:company_id,:subtotal,:tax,:total,:user_id,:processed,:customer_id,:description,:d01,:d02,:d03,:d04,:d05,:d06,:d07,:d08,:d09,:d10,:d11,:d12,:d13,:d14,:d15,:d16,:d17,:d18,:d19,:d20,:d21,:d22,:d23,:d24,:d25,:d26,:d27,:d28,:d29,:d30,:d31)
   
     end
 
