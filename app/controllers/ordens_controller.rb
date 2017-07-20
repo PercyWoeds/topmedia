@@ -14,8 +14,10 @@ class OrdensController < ApplicationController
      pdf.font "Helvetica" , :size => 6
       
      $lcCli  =  @orden.customer.name 
-
-     $lcMoneda ="NUEVOS SOLES "
+     $lcRucCli =  @orden.customer.ruc
+     $lcDirCli = ""  
+     
+       $lcMoneda ="NUEVOS SOLES "
      
      $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
      $lcHora  = Time.now.to_s    
@@ -1144,7 +1146,7 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
       invoice_headers  = [["Fecha de emisión : ",$lcFecha1]]
       invoice_headers <<  ["Cliente : ", $lcCli]
       invoice_headers <<  ["RUC : ", $lcRuccli]
-      invoice_headers <<  ["Direccion : ", $lcRuccli]
+      invoice_headers <<  ["Direccion : ", $lcDircli]
       invoice_headers <<  ["Contrato : ", $lcContrato]
       invoice_headers
   end
