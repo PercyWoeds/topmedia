@@ -861,41 +861,34 @@
     }
   }
 
-  function addItemToPurchase() {
+  function addItemTopurchaseorder() {
     var item = $("#ac_item").val();
     
     if(item != "") {
-      var company_id = $("#purchase_company_id").val();
+      var company_id = $("#purchaseorder_company_id").val();
       var item_id = $("#ac_item_id").val();
       
       var quantity = $("#ac_item_quantity").val();
       var price = $("#ac_item_price").val();
-      var inafecto = $("#ac_item_inafecto").val();    
       var discount = $("#ac_item_discount").val();    
       var items_arr = $("#items").val().split(",");
         
       if(quantity == "" || !isNumeric(quantity)) {
         alert("Por favor ingrese una cantidad validad");
-
       } else if(price == "" || !isNumeric(price)) {
         alert("Por favor ingrese un precio valido");
-      
-      } else if(inafecto == "" || !isNumeric(inafecto)) {
-        alert("Por favor ingrese un inafecto valido");
-        
       } else if(discount == "" || !isNumeric(discount)) {
         alert("Por favor ingrese un descuento valido");
       } else {
-        var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|"+ inafecto + "|BRK|" + discount;
+        var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount;
         
         $("#items").val($("#items").val() + "," + item_line);
-        listItemsPurchase();
+        listItemspurchaseorder();
         
         $("#ac_item_id").val("");
         $("#ac_item").val("");
         $("#ac_item_quantity").val("1");
-        $("#ac_item_price").val("0");
-        $("#ac_item_inafecto").val("0");
+        $("#ac_item_price").val("");
         $("#ac_item_discount").val("0");
         updateItemTotal5();
       }
