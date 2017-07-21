@@ -920,14 +920,17 @@
       
       var tax      = total1 - afecto
       
-      var total = total1 + inafecto 
+      var total = Number(total1) + Number(inafecto)
       
-
       
+      $("#ac_item_subtotal").html(total1);
+      $("#ac_item_tax").html(tax);
       $("#ac_item_total").html(total);
 
     } else {
-
+      
+      $("#ac_item_subtotal").html("0.00");
+      $("#ac_item_tax").html("0.00");
       $("#ac_item_total").html("0.00");
     }
   }  

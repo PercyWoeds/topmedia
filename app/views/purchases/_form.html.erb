@@ -175,12 +175,26 @@
     <input type="text" name="ac_item_discount" id="ac_item_discount" value="0" class="tf_short" />
     <div class="small">
       Descuento % del producto para agregar una factura.
+    
     </div>
+    
     <br />
+    <div>
+      <strong>Subtotal Gravado:</strong><br />
+      <span id="ac_item_subtotal">0.00</span>
+    </div>
+    
+    
+    
+    <br />
+    <div>
+      <strong>Impuesto (%):</strong><br />
+      <span id="ac_item_tax">0.00</span>
+    </div>
     
 
     <div>
-      <strong>Total:</strong><br />
+      <strong>Importe Total:</strong><br />
       <span id="ac_item_total">0.00</span>
     </div>
 
@@ -252,6 +266,9 @@
     });
     
     $("#ac_item_discount").bind("keyup", function() {
+      updateItemTotalPur();
+    });
+    $("#ac_item_inafecto").bind("keyup", function() {
       updateItemTotalPur();
     });
     

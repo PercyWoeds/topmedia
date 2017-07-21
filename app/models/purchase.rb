@@ -127,8 +127,8 @@ TABLE_HEADERS2  = ["ITEM ",
         id = parts[0]
         quantity = parts[1]
         price = parts[2]        
-        inafecto = parts[3]
-        discount = parts[4]
+        inafecto = parts[4]        
+        discount = parts[3]        
         
         total = price.to_f * quantity.to_i 
         total -= total * (discount.to_f / 100)
@@ -153,7 +153,7 @@ TABLE_HEADERS2  = ["ITEM ",
         id = parts[0]
         quantity = parts[1]
         
-        inafecto = parts[3]
+        inafecto = parts[4]
         
         
         total = inafecto.to_f * quantity.to_i 
@@ -170,19 +170,24 @@ TABLE_HEADERS2  = ["ITEM ",
   end
   
 
-  def get_tax(items, supplier_id)
+  def get_tax(items)
     tax = 0
-    
+    tax1= 0
+    total1=0
     for item in items
       if(item and item != "")
         parts = item.split("|BRK|")
         
         id = parts[0]
         quantity = parts[1]
-        price = parts[2]        
-        inafecto = parts[3]
-        discount = parts[4]        
-        total = inafecto.to_f * quantity.to_i 
+        afecto =parts[2]
+        impuesto  = parts[5]
+
+        total1 = (afecto.to_f) * (1 +   (impuesto.to_f) / 100) 
+        
+       tax1      = total1 - afecto.to_f        
+       
+        total = tax1 * quantity.to_i 
                 
         begin
           product = Product.find(id.to_i)
@@ -209,24 +214,29 @@ TABLE_HEADERS2  = ["ITEM ",
       if(item and item != "")
         parts = item.split("|BRK|")
         
+      # item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount+"|BRK|" + inafecto+"|BRK|" + impuesto;
+      
         id = parts[0]
         quantity = parts[1]
-        price = parts[2]
-        inafecto = parts[3]
-        discount = parts[4]
+        afecto = parts[2]
+        discount = parts[3]
+        inafecto = parts[4]
+        impuesto = parts[5]
         
-        total = price.to_f * quantity.to_i
+        total1 = afecto.to_f * (1 + ((impuesto.to_f) / 100) )
+        tax    = total1 - afecto.to_f
+        total  = (afecto.to_f) * quantity.to_f
         total -= total * (discount.to_f / 100)
         
-        begin
+      #  begin
           product = Product.find(id.to_i)
           
           new_pur_product = PurchaseDetail.new(:purchase_id => self.id, :product_id => product.id,
-          :price_without_tax => price.to_f, :inafecto=>inafecto.to_f,:quantity => quantity.to_i, :discount => discount.to_f,
-          :total => total.to_f)
+          :price_without_tax => afecto.to_f,:price_with_tax=>total1, :inafect=>inafecto.to_f,:quantity => quantity.to_i, :discount => discount.to_f,
+          :total => total ,:impuesto=> impuesto.to_f,:totaltax=>tax)
           new_pur_product.save
-        rescue
-        end
+        #rescue
+        #end
                
 
 
@@ -263,7 +273,7 @@ TABLE_HEADERS2  = ["ITEM ",
   
   def get_products    
     @itemproducts = PurchaseDetail.find_by_sql(['Select purchase_details.price_with_tax as price,purchase_details.quantity,
-      purchase_details.discount,purchase_details.price_without_tax as price2,purchase_details.inafect,purchase_details.total,
+      purchase_details.discount,purchase_details.price_without_tax as price2,purchase_details.inafect,purchase_details.total,purchase_details.impuesto,
       products.name  from purchase_details INNER JOIN products ON 
       purchase_details.product_id = products.id where purchase_details.purchase_id = ?', self.id ])
     puts self.id
@@ -330,53 +340,11 @@ TABLE_HEADERS2  = ["ITEM ",
 
     if(self.processed == "1" or self.processed == true)
 
-      purchase_details =PurchaseDetail.where(purchase_id: self.id)
-    
-      for ip in purchase_details
-                
-        #actualiza stock
-         stock_product =  Stock.find_by(:product_id => ip.product_id)
-
-        if stock_product 
-           $last_stock = stock_product.quantity + ip.quantity      
-           stock_product.quantity = $last_stock
-          if (self.moneda_id == 2)  
-              stock_product.unitary_cost = ip.price_without_tax   
-          else        
-              dolar = Tipocambio.find_by('dia = ?',self.date1)
-               if dolar 
-                   stock_product.unitary_cost = ip.price_without_tax * dolar.compra  
-               else 
-                   stock_product.unitary_cost = ip.price_without_tax   
-               end 
-          end   
-        else
-
-          $last_stock = 0
-
-          if (self.moneda_id == 2)  
-               $lcprice_tax = ip.price_without_tax   
-          else        
-               dolar = Tipocambio.find_by('dia = ?',self.date1)
-               if dolar 
-                   $lcprice_tax = ip.price_without_tax * dolar.compra  
-               else 
-                   $lcprice_tax = ip.price_without_tax   
-               end 
-          end   
-
-          stock_product= Stock.new(:store_id=>1,:state=>"Lima",:unitary_cost=> $lcprice_tax,
-          :quantity=> ip.quantity,:minimum=>0,:user_id=>@user_id,:product_id=>ip.product_id,
-          :document_id=>self.document_id,:documento=>self.documento)           
-        end 
-
-        stock_product.save
-
         self.date_processed = Time.now
         self.save
       
 
-      end
+    
     end   
   end
   

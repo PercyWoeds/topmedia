@@ -1752,8 +1752,6 @@ def newfactura2
         inafecto = parts[4]
         impuesto = parts[5]
         
-        
-              
         product = Product.find(id.to_i)
         product[:i] = i
         product[:quantity] = quantity.to_f
@@ -1942,13 +1940,18 @@ def newfactura2
     else
       @purchase[:payable_amount] = @purchase.get_subtotal(items)
     end    
+    if @tipodocumento == 3
+      @purchase[:inafect] = @purchase.get_inafecto(items)*-1
+    else
+      @purchase[:inafect] = @purchase.get_inafecto(items)
+    end    
     
 
     begin
        if @tipodocumento == 3
-        @purchase[:tax_amount] = @purchase.get_tax(items, @purchase[:supplier_id])*-1
+        @purchase[:tax_amount] = @purchase.get_tax(items)*-1
        else
-        @purchase[:tax_amount] = @purchase.get_tax(items, @purchase[:supplier_id])
+        @purchase[:tax_amount] = @purchase.get_tax(items)
        end 
     rescue
       @purchase[:tax_amount] = 0
@@ -1960,7 +1963,7 @@ def newfactura2
     @purchase[:division_id] = 1
     
 
-    @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]
+    @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]+@purchase[:inafect]
     @purchase[:charge]  = 0
     @purchase[:pago] = 0
     @purchase[:balance] =   @purchase[:total_amount]

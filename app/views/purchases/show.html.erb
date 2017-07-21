@@ -57,15 +57,23 @@
         Producto
       </th>
       <th>
-        Precio
+        Inafecto
       </th>
       <th>
-        Cantidad
+        Op.Gravada
+      </th>
+      <th>
+      Impuesto
       </th>
       
       <th>
+        Cantidad
+      </th>
+      <th>
         Descuento
       </th>
+      
+      
       <th>
         Total
       </th>
@@ -77,14 +85,21 @@
         <td class="bordered_bottom bordered_right">
           <%= link_to productItem.name   %>
         </td>
+        
+      
         <td class="bordered_bottom bordered_right">
-          <%= money(productItem.price) %>
+          <%= productItem.inafect %>
         </td>
+        <td class="bordered_bottom bordered_right">
+          <%= money(productItem.price2) %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= money(productItem.impuesto) %>
+        </td>
+        
         <td class="bordered_bottom bordered_right">
           <%= productItem.quantity %>
-        </td>
-
-
+        </td>  
         <td class="bordered_bottom bordered_right">
           <%= money(productItem.discount) %>%
         </td>
@@ -94,29 +109,38 @@
       </tr>
     <% end %>
     <tr>
-      <td colspan="5" class="bordered_bottom bordered_right">
+      <td colspan="7" class="bordered_bottom bordered_right">
         &nbsp;
       </td>
     </tr>
     <tr>
-      <td colspan="4" class="bordered_bottom bordered_right bold">
-        Subtotal:
+      <td colspan="6" class="bordered_bottom bordered_right bold">
+        Total Op.Inafecto:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@purchase.inafect) %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td colspan="6" class="bordered_bottom bordered_right bold">
+       Total Op.Gravadas:
       </td>
       <td class="bordered_bottom bordered_right bold right">
         <%= money(@purchase.payable_amount) %>
       </td>
     </tr>
     <tr>
-      <td colspan="4" class="bordered_bottom bordered_right bold">
-        Tax:
+      <td colspan="6" class="bordered_bottom bordered_right bold">
+        Total Impuestos:
       </td>
       <td class="bordered_bottom bordered_right bold right">
         <%= money(@purchase.tax_amount) %>
       </td>
     </tr>
     <tr>
-      <td colspan="4" class="bordered_bottom bordered_right bold">
-        Total:
+      <td colspan="6" class="bordered_bottom bordered_right bold">
+        Total General :
       </td>
       <td class="bordered_bottom bordered_right bold right">
         <%= money(@purchase.total_amount) %>
@@ -130,7 +154,7 @@
 
 <% if @purchase.comments != "" %>
   <div>
-    <b>Comments:</b>
+    <b>Comentarios :</b>
     <br />
     <br />
     <%= format_text(@purchase.comments) %>
