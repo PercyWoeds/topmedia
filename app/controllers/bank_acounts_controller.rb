@@ -1,4 +1,6 @@
 class BankAcountsController < ApplicationController
+  
+     before_action :set_bank_acount, only: [:show, :edit, :update, :destroy]
 
 	def index
     @companies = Company.where(user_id: current_user.id).order("name")
@@ -21,6 +23,9 @@ class BankAcountsController < ApplicationController
   
   def new
     @bank_acount = BankAcount.new
+    @monedas = @bank_acount.get_monedas
+    @bancos  = @bank_acount.get_bancos
+
   end
 
   # GET /deliverys/1/edit

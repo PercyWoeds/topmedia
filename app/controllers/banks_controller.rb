@@ -1,4 +1,6 @@
 class BanksController < ApplicationController
+   before_action :set_bank, only: [:show, :edit, :update, :destroy]
+
 
 def index
     @companies = Company.where(user_id: current_user.id).order("name")
@@ -71,7 +73,7 @@ def index
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_bank
-      @Bank = Bank.find(params[:id])
+      @bank = Bank.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

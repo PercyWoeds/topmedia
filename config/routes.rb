@@ -22,7 +22,7 @@
   end 
   resources :tipocambios
   resources :ubicas
-  resources :bank_acounts
+  
   resources :banks
   resources :bank_acounts
   resources :numeras
