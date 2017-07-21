@@ -931,7 +931,7 @@ end
   
   # Autocomplete for products
   def ac_suppliers
-    @supplier = Supplier.where(["company_id = ? AND (ruc LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])   
+    @suppliers = Supplier.where(["company_id = ? AND (ruc LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])   
     render :layout => false
   end
   
