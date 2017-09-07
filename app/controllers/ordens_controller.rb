@@ -779,11 +779,70 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
     @pagetitle = "Edit orden"
     @action_txt = "Update"
     
+    
     @orden = Orden.find(params[:id])
     @company = @orden.company
     @ac_customer = @orden.customer.name
     @ac_user = @orden.user.username
 
+
+#-------
+      if(params[:year] and params[:year].numeric?)
+      @year = params[:year].to_i
+    else
+      @year = Time.now.year
+    end
+    
+    if(params[:month] and params[:month].numeric?)
+      @month = params[:month].to_i
+    else
+      @month = Time.now.month
+    end
+    
+    if(@month < 10)
+      month_s = "0#{@month}"
+    else
+      month_s = @month.to_s
+    end
+    
+    curr_year = Time.now.year
+    c_year = curr_year
+    c_month = 1
+    
+    @years = []
+    @months = monthsArr
+    @month_name = @months[@month - 1][0]
+    
+    
+    
+    while(c_year > Time.now.year - 5)
+      @years.push(c_year)
+      c_year -= 1
+    end
+    
+    @dates = []
+    
+    last_day_of_month = last_day_of_month(@year, @month)
+    @date_cats = []
+    
+    i = 1
+    
+    while(i <= last_day_of_month)
+      if(i < 10)
+        i_s = "0#{i}"
+      else
+        i_s = i.to_s
+      end
+      
+      @dates.push("#{@year}-#{month_s}-#{i_s}")
+      @date_cats.push("'" + doDate(Time.parse("#{@year}-#{@month}-#{i_s}"), 5) + "'")
+      
+      i += 1
+    end
+    
+    #-------
+    
+    
     @customers = Customer.all
     @motivos =Motivo.all
     @medios = Medio.all
@@ -928,8 +987,8 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
 
     items = params[:items].split(",")
     
-    @orden = orden.find(params[:id])
-    @company = @orden.company
+    @orden =Orden.find(params[:id])
+    @company = Company.find(1)
     
     if(params[:ac_customer] and params[:ac_customer] != "")
       @ac_customer = params[:ac_customer]
@@ -947,7 +1006,7 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
     @orden[:total] = @orden[:subtotal] + @orden[:tax]
 
     respond_to do |format|
-      if @orden.update_attributes(params[:orden])
+      if @orden.update_attributes(orden_params)
         # Create products for kit
         @orden.delete_products()
         @orden.add_products(items)
@@ -967,7 +1026,7 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
   # DELETE /ordens/1
   # DELETE /ordens/1.xml
   def destroy
-    @orden = orden.find(params[:id])
+    @orden = Orden.find(params[:id])
     company_id = @orden[:company_id]
     @orden.destroy
 

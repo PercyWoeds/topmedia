@@ -1459,7 +1459,39 @@
         $("#ac_item_tarifa").val("0");
         $("#ac_item_price").val("");
         $("#ac_item_total").val("");
-      
+        
+        $("#ac_item_1").val("");
+        $("#ac_item_2").val("");
+        $("#ac_item_3").val("");
+        $("#ac_item_4").val("");
+        $("#ac_item_5").val("");
+        $("#ac_item_6").val("");
+        $("#ac_item_7").val("");
+        $("#ac_item_8").val("");
+        $("#ac_item_9").val("");
+        $("#ac_item_10").val("");
+        $("#ac_item_11").val("");
+        $("#ac_item_12").val("");
+        $("#ac_item_13").val("");
+        $("#ac_item_14").val("");
+        $("#ac_item_15").val("");
+        $("#ac_item_16").val("");
+        $("#ac_item_17").val("");
+        $("#ac_item_18").val("");
+        $("#ac_item_19").val("");
+        $("#ac_item_20").val("");
+        $("#ac_item_21").val("");
+        $("#ac_item_22").val("");
+        $("#ac_item_23").val("");
+        $("#ac_item_24").val("");
+        $("#ac_item_25").val("");
+        $("#ac_item_26").val("");
+        $("#ac_item_27").val("");
+        $("#ac_item_28").val("");
+        $("#ac_item_29").val("");
+        $("#ac_item_30").val("");
+        $("#ac_item_31").val("");
+        $("#ac_item_total").val("");
         updateItemOrden();
       }
     } else {

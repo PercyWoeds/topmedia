@@ -226,12 +226,44 @@ TABLE_HEADERS2 = ["ITEM",
     
     invoice_products.each do | ip |
 
-      ip.product[:price] = ip.price
-      ip.product[:quantity] = ip.quantity
-      ip.product[:tarifa] = ip.tarifa
-      ip.product[:total] = ip.total
-      #products.push("#{ip.product.id}|BRK|#{ip.product.curr_quantity}|BRK|#{ip.product.curr_price}|BRK|#{ip.product.curr_discount}")
-      products.push("#{ip.product.id}|BRK|#{ip.product.quantity}|BRK|#{ip.product.price}|BRK|#{ip.product.tarifa}")
+      ip.avisodetail[:descrip] = ip.avisodetail.descrip
+      ip.avisodetail[:d01] = ip.d01
+      ip.avisodetail[:d02] = ip.d02
+      ip.avisodetail[:d03] = ip.d03
+      ip.avisodetail[:d04] = ip.d04
+      ip.avisodetail[:d05] = ip.d05
+      ip.avisodetail[:d06] = ip.d06
+      ip.avisodetail[:d07] = ip.d07
+      ip.avisodetail[:d08] = ip.d08
+      ip.avisodetail[:d09] = ip.d09
+      ip.avisodetail[:d10] = ip.d10
+      
+      ip.avisodetail[:d11] = ip.d11
+      ip.avisodetail[:d12] = ip.d12
+      ip.avisodetail[:d13] = ip.d13
+      ip.avisodetail[:d14] = ip.d14
+      ip.avisodetail[:d15] = ip.d15
+      ip.avisodetail[:d16] = ip.d16
+      ip.avisodetail[:d17] = ip.d17
+      ip.avisodetail[:d18] = ip.d18
+      ip.avisodetail[:d19] = ip.d19
+      ip.avisodetail[:d20] = ip.d20
+      ip.avisodetail[:d21] = ip.d21
+      ip.avisodetail[:d22] = ip.d22
+      ip.avisodetail[:d23] = ip.d23
+      ip.avisodetail[:d24] = ip.d24
+      ip.avisodetail[:d25] = ip.d25
+      ip.avisodetail[:d26] = ip.d26
+      ip.avisodetail[:d27] = ip.d27
+      ip.avisodetail[:d28] = ip.d28
+      ip.avisodetail[:d29] = ip.d29
+      ip.avisodetail[:d30] = ip.d30
+      ip.avisodetail[:d31] = ip.d31
+      
+      ip.avisodetail[:tarifa] = ip.tarifa
+      ip.avisodetail[:price] = ip.price 
+      
+      products.push("#{ip.avisodetail.id}|BRK|#{ip.avisodetail.descrip}|BRK|#{ip.avisodetail.d01}|BRK|#{ip.avisodetail.d02}|BRK|#{ip.avisodetail.d03}|BRK|#{ip.avisodetail.d04}|BRK|#{ip.avisodetail.d05}|BRK|#{ip.avisodetail.d06}|BRK|#{ip.avisodetail.d07}|BRK|#{ip.avisodetail.d08}|BRK|#{ip.avisodetail.d09}|BRK|#{ip.avisodetail.d10}|BRK|#{ip.avisodetail.d11}|BRK|#{ip.avisodetail.d12}|BRK|#{ip.avisodetail.d13}|BRK|#{ip.avisodetail.d14}|BRK|#{ip.avisodetail.d15}|BRK|#{ip.avisodetail.d16}|BRK|#{ip.avisodetail.d17}|BRK|#{ip.avisodetail.d18}|BRK|#{ip.avisodetail.d19}|BRK|#{ip.avisodetail.d20}|BRK|#{ip.avisodetail.d21}|BRK|#{ip.avisodetail.d22}|BRK|#{ip.avisodetail.d23}|BRK|#{ip.avisodetail.d24}|BRK|#{ip.avisodetail.d25}|BRK|#{ip.avisodetail.d26}|BRK|#{ip.avisodetail.d27}|BRK|#{ip.avisodetail.d28}|BRK|#{ip.avisodetail.d29}|BRK|#{ip.avisodetail.d30}|BRK|#{ip.avisodetail.d31}|BRK|#{ip.avisodetail.tarifa}|BRK|#{ip.avisodetail.price}")
     end
 
 
