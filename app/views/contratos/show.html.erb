@@ -72,7 +72,9 @@
   <div class="col-md-12">
     <div class="contrato_cuota">
       <h3> Cuotas   </h3>
+      <% if @contrato.quotes %>
       <%= render @contrato.quotes %>
+      <% end %>
       <div>
       <%= link_to "Agregar cuota  ", new_contrato_quote_path(@contrato), class: "button" %>  
     
