@@ -41,6 +41,10 @@
   <%= @orden.tiempo %>
 </p>
 
+<b> Revision </b> 
+  <%= @orden.revision %>
+</p>
+
 <%= hr() %>
 
 <h3>
@@ -63,6 +67,10 @@
 <table>
   <thead>
     <tr>
+      <th>
+       Item 
+      </th>
+      
       <th>
         Descripcion/Programa 
       </th>
@@ -176,8 +184,12 @@
     </tr>
   </thead>
   <tbody>
-    <% for product in @orden.get_products() %>
+    <%  @ordens_products.each do |product| %>
     <tr>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.id %>    
+          </td>
+
           <td class="small bordered_bottom bordered_right">
             <%= product.avisodetail.descrip %>    
           </td>
@@ -284,6 +296,11 @@
           <td class="small bordered_bottom bordered_right">
             <%= money(product.total) %>
           </td>
+          <td><%= link_to 'Editar', edit_orden_orden_product_path(orden_id: @orden.id,id: product.id ) %></td>          
+          <td><%= link_to 'Eliminar',[@orden,product], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+          
+          
     </td>
     
     <% end %>
@@ -353,6 +370,7 @@
   <%= link_to 'Export to PDF', "/ordens/pdf/#{@orden.id} " %>
   <%= link_to 'Send orden via email', "/ordens/email/#{@orden.id}" %>
   <%= link_to 'Process orden', "/ordens/do_process/#{@orden.id}" %>
+  <%= link_to 'Agregar Item', new_orden_orden_product_path(@orden) %>
   <%= link_to 'Edit', edit_orden_path(@orden) %>
   <%= link_to 'Back', "/companies/ordens/#{@orden.company.id}" %>
 </div>

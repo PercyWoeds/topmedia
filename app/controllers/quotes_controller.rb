@@ -3,10 +3,16 @@ class QuotesController < ApplicationController
 before_action :find_quote
 
 def new
-    
-
+  a = @contrato
+  $lcCliente = a.customer.name 
+  $lcMedio = a.medio.descrip 
+  $lcComision1 = a.comision1
+  $lcComision2 = a.comision2
+  $lcTipoContrato = a.tipocontrato_id 
+  $lcNrocuotas = a.nrocuotas
+  $lcImporte  = a.importe 
+  
   @quote = Quote.new 
-
 
 end
 

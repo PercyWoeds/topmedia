@@ -5,5 +5,5 @@ class OrdenProduct < ActiveRecord::Base
 	belongs_to :orden 
 	belongs_to :avisodetail 
 
-	
+    
 end

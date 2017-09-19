@@ -9,7 +9,7 @@ class Orden < ActiveRecord::Base
   	belongs_to :medio
   	belongs_to :marca
   	belongs_to :version
-  	has_many :orden_products
+  	has_many :orden_products, :dependent => :destroy
 
 TABLE_HEADERS = ["ITEM",
 			     "CONTRATO",
@@ -79,14 +79,7 @@ TABLE_HEADERS2 = ["ITEM",
       
        
         total      = parts[34].to_f
-        
-        
-        
-       puts "get_subtotal"
-     
-       puts total
-       
-       
+
         begin
           product = Avisodetail.find(id.to_i)
           subtotal += total
@@ -113,20 +106,27 @@ TABLE_HEADERS2 = ["ITEM",
             parts = item.split("|BRK|")
         
             id = parts[0]
-                              
-           total      = parts[34] 
-        
+           puts "item "
+           puts item 
+           
+           total      = parts[34].to_f 
+           puts "parts 0 "
+           puts  parts[0] 
 
-            begin
+           puts "parts 35 "
+           puts  parts[34] 
+
+            
               product = Avisodetail.find(id.to_i)
-              
+          begin    
               if(product)
-                
+                              
                   tax += total * 0.18
                 
               end
-             rescue
-            end
+           rescue
+          end 
+          
 
           end
         end
@@ -248,6 +248,7 @@ TABLE_HEADERS2 = ["ITEM",
       ip.avisodetail[:d18] = ip.d18
       ip.avisodetail[:d19] = ip.d19
       ip.avisodetail[:d20] = ip.d20
+      
       ip.avisodetail[:d21] = ip.d21
       ip.avisodetail[:d22] = ip.d22
       ip.avisodetail[:d23] = ip.d23
@@ -262,8 +263,8 @@ TABLE_HEADERS2 = ["ITEM",
       
       ip.avisodetail[:tarifa] = ip.tarifa
       ip.avisodetail[:price] = ip.price 
-      
-      products.push("#{ip.avisodetail.id}|BRK|#{ip.avisodetail.descrip}|BRK|#{ip.avisodetail.d01}|BRK|#{ip.avisodetail.d02}|BRK|#{ip.avisodetail.d03}|BRK|#{ip.avisodetail.d04}|BRK|#{ip.avisodetail.d05}|BRK|#{ip.avisodetail.d06}|BRK|#{ip.avisodetail.d07}|BRK|#{ip.avisodetail.d08}|BRK|#{ip.avisodetail.d09}|BRK|#{ip.avisodetail.d10}|BRK|#{ip.avisodetail.d11}|BRK|#{ip.avisodetail.d12}|BRK|#{ip.avisodetail.d13}|BRK|#{ip.avisodetail.d14}|BRK|#{ip.avisodetail.d15}|BRK|#{ip.avisodetail.d16}|BRK|#{ip.avisodetail.d17}|BRK|#{ip.avisodetail.d18}|BRK|#{ip.avisodetail.d19}|BRK|#{ip.avisodetail.d20}|BRK|#{ip.avisodetail.d21}|BRK|#{ip.avisodetail.d22}|BRK|#{ip.avisodetail.d23}|BRK|#{ip.avisodetail.d24}|BRK|#{ip.avisodetail.d25}|BRK|#{ip.avisodetail.d26}|BRK|#{ip.avisodetail.d27}|BRK|#{ip.avisodetail.d28}|BRK|#{ip.avisodetail.d29}|BRK|#{ip.avisodetail.d30}|BRK|#{ip.avisodetail.d31}|BRK|#{ip.avisodetail.tarifa}|BRK|#{ip.avisodetail.price}")
+      ip.avisodetail[:total] = ip.total 
+      products.push("#{ip.avisodetail.id}|BRK|#{ip.avisodetail.d01}|BRK|#{ip.avisodetail.d02}|BRK|#{ip.avisodetail.d03}|BRK|#{ip.avisodetail.d04}|BRK|#{ip.avisodetail.d05}|BRK|#{ip.avisodetail.d06}|BRK|#{ip.avisodetail.d07}|BRK|#{ip.avisodetail.d08}|BRK|#{ip.avisodetail.d09}|BRK|#{ip.avisodetail.d10}|BRK|#{ip.avisodetail.d11}|BRK|#{ip.avisodetail.d12}|BRK|#{ip.avisodetail.d13}|BRK|#{ip.avisodetail.d14}|BRK|#{ip.avisodetail.d15}|BRK|#{ip.avisodetail.d16}|BRK|#{ip.avisodetail.d17}|BRK|#{ip.avisodetail.d18}|BRK|#{ip.avisodetail.d19}|BRK|#{ip.avisodetail.d20}|BRK|#{ip.avisodetail.d21}|BRK|#{ip.avisodetail.d22}|BRK|#{ip.avisodetail.d23}|BRK|#{ip.avisodetail.d24}|BRK|#{ip.avisodetail.d25}|BRK|#{ip.avisodetail.d26}|BRK|#{ip.avisodetail.d27}|BRK|#{ip.avisodetail.d28}|BRK|#{ip.avisodetail.d29}|BRK|#{ip.avisodetail.d30}|BRK|#{ip.avisodetail.d31}|BRK|#{ip.avisodetail.tarifa}|BRK|#{ip.avisodetail.price}|BRK|#{ip.avisodetail.total}")
     end
 
 

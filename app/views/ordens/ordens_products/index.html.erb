@@ -1,0 +1,103 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Orden Products</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Avisodetail</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Total</th>
+      <th>Fecha</th>
+      <th>Tarifa</th>
+      <th>I</th>
+      <th>Dia</th>
+      <th>D01</th>
+      <th>D02</th>
+      <th>D03</th>
+      <th>D04</th>
+      <th>D05</th>
+      <th>D06</th>
+      <th>D07</th>
+      <th>D08</th>
+      <th>D09</th>
+      <th>D10</th>
+      <th>D11</th>
+      <th>D12</th>
+      <th>D13</th>
+      <th>D14</th>
+      <th>D15</th>
+      <th>D16</th>
+      <th>D17</th>
+      <th>D18</th>
+      <th>D19</th>
+      <th>D20</th>
+      <th>D21</th>
+      <th>D22</th>
+      <th>D23</th>
+      <th>D24</th>
+      <th>D25</th>
+      <th>D26</th>
+      <th>D27</th>
+      <th>D28</th>
+      <th>D29</th>
+      <th>D30</th>
+      <th>D31</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @orden_products.each do |orden_product| %>
+      <tr>
+        <td><%= orden_product.avisodetail_id %></td>
+        <td><%= orden_product.price %></td>
+        <td><%= orden_product.quantity %></td>
+        <td><%= orden_product.total %></td>
+        <td><%= orden_product.fecha %></td>
+        <td><%= orden_product.tarifa %></td>
+        <td><%= orden_product.i %></td>
+        <td><%= orden_product.dia %></td>
+        <td><%= orden_product.d01 %></td>
+        <td><%= orden_product.d02 %></td>
+        <td><%= orden_product.d03 %></td>
+        <td><%= orden_product.d04 %></td>
+        <td><%= orden_product.d05 %></td>
+        <td><%= orden_product.d06 %></td>
+        <td><%= orden_product.d07 %></td>
+        <td><%= orden_product.d08 %></td>
+        <td><%= orden_product.d09 %></td>
+        <td><%= orden_product.d10 %></td>
+        <td><%= orden_product.d11 %></td>
+        <td><%= orden_product.d12 %></td>
+        <td><%= orden_product.d13 %></td>
+        <td><%= orden_product.d14 %></td>
+        <td><%= orden_product.d15 %></td>
+        <td><%= orden_product.d16 %></td>
+        <td><%= orden_product.d17 %></td>
+        <td><%= orden_product.d18 %></td>
+        <td><%= orden_product.d19 %></td>
+        <td><%= orden_product.d20 %></td>
+        <td><%= orden_product.d21 %></td>
+        <td><%= orden_product.d22 %></td>
+        <td><%= orden_product.d23 %></td>
+        <td><%= orden_product.d24 %></td>
+        <td><%= orden_product.d25 %></td>
+        <td><%= orden_product.d26 %></td>
+        <td><%= orden_product.d27 %></td>
+        <td><%= orden_product.d28 %></td>
+        <td><%= orden_product.d29 %></td>
+        <td><%= orden_product.d30 %></td>
+        <td><%= orden_product.d31 %></td>
+        <td><%= link_to 'Show', orden_product %></td>
+        <td><%= link_to 'Edit', edit_orden_product_path(orden_product) %></td>
+        <td><%= link_to 'Destroy', orden_product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Orden product', new_orden_product_path %>

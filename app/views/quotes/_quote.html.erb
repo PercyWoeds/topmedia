@@ -38,9 +38,11 @@
           <td class="bordered_right bordered_bottom">
             <%= quote.vventa  %>
           </td>
-          <td> 	
-          
-          </td>
+        
+          <td><%= link_to 'Edit', edit_quote_path(quote) %></td>
+          <td><%= link_to 'Destroy', quote, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+        
 
           
     </tbody>

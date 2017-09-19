@@ -4,7 +4,17 @@
 <div class="new-review-form"
 
   <h1> Nueva Cuota  </h1>
-
+  
+  <p><%= $lcCliente %> </p>
+  
+  <p><%= $lcMedio%> </p>
+  
+  <p><%=$lcComision1%> </p>
+  <p><%=$lcComision2 %></p>
+  <p><%=$lcTipoContrato%> </p>
+  <p><%=$lcNrocuotas %></p>
+  <p><%=$lcImporte  %></p>
+  
   <%= render 'form' %>
 
   <%= link_to 'Back', quotes_path %>

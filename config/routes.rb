@@ -1,8 +1,12 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :orden_products
   resources :quotes
-  resources :ordens
+  resources :ordens do
+      resources :orden_products, except: [:index,:show], controller: "ordens/ordens_products"
+  end 
+  
   resources :versions
   resources :tipoavisos do 
 

@@ -9,7 +9,7 @@ Mnygo::Application.configure do
   config.eager_load =false 
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
-
+  
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
   #config.action_view.debug_rjs             = true
@@ -25,7 +25,7 @@ Mnygo::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 
   #BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
-  
+  config.web_console.whitelisted_ips = ['10.0.0.0/8', '148.102.0.0/12', '192.168.0.0/16']
 
 
   

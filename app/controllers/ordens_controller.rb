@@ -6,7 +6,7 @@ class OrdensController < ApplicationController
   before_filter :authenticate_user!,:checkProducts
   
   
-  ##-------------------------------------------------------------------------------------
+##-------------------------------------------------------------------------------------
 ## REPORTE DE ESTADISTICA DE VENTAS
 ##-------------------------------------------------------------------------------------
   
@@ -44,6 +44,7 @@ class OrdensController < ApplicationController
       end
    
     pdf.text "Lima, " << @orden.fecha.strftime("%d/%m/%Y") ,:size =>10 ,:style=> :bold 
+    #pdf.text "Marca: " << $lcMarca ,:size =>10 ,:style=> :bold 
     pdf 
 
 
@@ -52,19 +53,20 @@ class OrdensController < ApplicationController
   def build_pdf_body_rpt2(pdf)
     
     
-   pdf.move_down 5 
+   pdf.move_down 2
     pdf.font "Helvetica" , :size => 6
     pdf.text "________________________________________________________________________________________________________", :size => 13, :spacing => 4
-    pdf.text " ", :size => 13, :spacing => 4
+    pdf.text " ", :size => 13
     pdf.font "Helvetica" , :size => 8
    pdf.move_down 5
-    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+    max_rows = [invoice_headers.length,client_data_headers.length, 0].max
       rows = []
       (1..max_rows).each do |row|
         rows_index = row - 1
         rows[rows_index] = []
-        rows[rows_index] += (client_data_headers.length >= row ? client_data_headers[rows_index] : ['',''])
         rows[rows_index] += (invoice_headers.length >= row ? invoice_headers[rows_index] : ['',''])
+        rows[rows_index] += (client_data_headers.length >= row ? client_data_headers[rows_index] : ['',''])
+        
       end
 
       if rows.present?
@@ -400,7 +402,8 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
         columns([1]).align = :right
         
       end
-            pdf.table(data,:cell_style=> {:border_width=>1} , :width => pdf.bounds.width/4,:position => :center)
+      
+      pdf.table(data,:cell_style=> {:border_width=>1} , :width => pdf.bounds.width/3,:position => :center)
             
         
         
@@ -579,7 +582,7 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
   
   # Autocomplete for products
   def ac_programs
-    @products = Avisodetail.where(["(descrip LIKE ?)", "%" +params[:q] + "%"])
+    @products = Avisodetail.where(["(descrip iLIKE ?)", "%" +params[:q] + "%"])
    
     render :layout => false
   end
@@ -609,7 +612,7 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
   
   # Autocomplete for customers
   def ac_customers
-    @customers = Customer.where(["company_id = ? AND (ruc  LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
+    @customers = Customer.where(["company_id = ? AND (ruc  iLIKE ? OR name iLIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
    
     render :layout => false
   end
@@ -684,6 +687,7 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
     @marcas= Marca.all 
     @versions = Version.all 
     
+    @ordens_products = @orden.orden_products
   end
 
   # GET /ordens/new
@@ -1194,16 +1198,14 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
      
      $lcMoneda ="NUEVOS SOLES "
      
-      client_headers  = [["Medio: ", $lcMedio]] 
-      client_headers << ["Marca: ", $lcMarca]
+      client_headers  = [["Marca: ", $lcMarca]] 
       client_headers << ["Version  : ",$lcVersion]
       client_headers << ["Emision campaña : ",@month_name ]     
       client_headers
   end
 
   def invoice_headers            
-      invoice_headers  = [["Fecha de emisión : ",$lcFecha1]]
-      invoice_headers <<  ["Cliente : ", $lcCli]
+      invoice_headers  = [["Cliente : ", $lcCli]]
       invoice_headers <<  ["RUC : ", $lcRucCli]
       invoice_headers <<  ["Direccion : ", $lcDircli]
       invoice_headers <<  ["Contrato : ", $lcContrato]
@@ -1251,7 +1253,7 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
     def orden_params
 
     params.require(:orden).permit(:contrato_id,:fecha,:medio_id,:marca_id,:version_id,:fecha1,:fecha2,:tiempo,  
-    :code,:company_id,:subtotal,:tax,:total,:user_id,:processed,:customer_id,:description,:d01,:d02,:d03,:d04,:d05,:d06,:d07,:d08,:d09,:d10,:d11,:d12,:d13,:d14,:d15,:d16,:d17,:d18,:d19,:d20,:d21,:d22,:d23,:d24,:d25,:d26,:d27,:d28,:d29,:d30,:d31)
+    :code,:company_id,:subtotal,:tax,:total,:user_id,:processed,:customer_id,:description,:d01,:d02,:d03,:d04,:d05,:d06,:d07,:d08,:d09,:d10,:d11,:d12,:d13,:d14,:d15,:d16,:d17,:d18,:d19,:d20,:d21,:d22,:d23,:d24,:d25,:d26,:d27,:d28,:d29,:d30,:d31,:revision )
   
     end
 
