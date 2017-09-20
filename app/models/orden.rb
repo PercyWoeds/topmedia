@@ -68,27 +68,25 @@ TABLE_HEADERS2 = ["ITEM",
 
   
   
-  def get_subtotal(items)
-    subtotal = 0
-    
-    for item in items
-      if(item and item != "")
-        parts = item.split("|BRK|")
-
-        id = parts[0]
+  def get_subtotal(value)
+    ret  = 0
+    items = OrdenProduct.where(["orden_id = ? ", self.id])
+     
+    if items
       
-       
-        total      = parts[34].to_f
-
-        begin
-          product = Avisodetail.find(id.to_i)
-          subtotal += total
-        rescue
-        end
+     for item in items 
+     if(value == "subtotal")
+        ret += item.total 
+      elsif(value == "tax")
+        ret += item.total*1.18 - item.total
+      else         
+        ret += item.total*1.18
       end
+       
+     end 
     end
     
-    return subtotal
+    return ret
   end
   
   def get_tax(items, customer_id)
@@ -100,7 +98,7 @@ TABLE_HEADERS2 = ["ITEM",
 
       if(customer.taxable == "1")
 
-        for item in items
+        for item   in items
           if(item and item != "")
 
             parts = item.split("|BRK|")

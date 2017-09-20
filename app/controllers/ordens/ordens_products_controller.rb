@@ -80,6 +80,9 @@ class Ordens::OrdensProductsController < ApplicationController
     
      respond_to do |format|
        if @orden_product.save
+         
+          
+        
          format.html { redirect_to @orden, notice: 'Orden product was successfully created.' }
          format.json { render :show, status: :created, location: @orden }
        else
@@ -114,6 +117,14 @@ class Ordens::OrdensProductsController < ApplicationController
       
     respond_to do |format|
       if @orden_product.update(orden_product_params)
+        
+           @orden[:subtotal] = @orden.get_subtotal("subtotal")
+           @orden[:tax] = @orden.get_subtotal("tax")
+           @orden[:total] = @orden[:subtotal] + @orden[:tax]
+          
+           @orden.update_attributes(:subtotal=> @orden[:subtotal])
+          
+          
         format.html { redirect_to @orden, notice: 'Orden product was successfully updated.' }
         format.json { render :show, status: :ok, location: @orden }
       else
