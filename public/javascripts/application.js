@@ -1544,9 +1544,11 @@
                      item_31;
       var total =  suma_dias * price;
       
+      $("#orden_product_quantity").html(suma_dias);
       $("#orden_product_price").html(price);
       $("#orden_product_total").html(total);
       
+      document.getElementById('orden_product_quantity').value = suma_dias;
       document.getElementById('orden_product_price').value = price;
       document.getElementById('order_product_total').value = total;
 
