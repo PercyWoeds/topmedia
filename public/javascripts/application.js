@@ -1502,6 +1502,9 @@
     var tarifa = $("#ac_item_tarifa").val();
     var duracion= $("#ac_item_duracion").val();  
     
+    alert("#ac_item_duracion");
+    
+    
       var item_1  =  $("#orden_product_d01").val();
       var item_2  =  $("#orden_product_d02").val();
       var item_3  =  $("#orden_product_d03").val();    
