@@ -1395,7 +1395,6 @@
 // Add an item to Orden
   function addItemToOrden() { 
 
-
     var item = $("#ac_item").val();
     
     if(item != "") {
@@ -1501,7 +1500,7 @@
   function updateItemOrden() {
     
     var tarifa = $("#ac_item_tarifa").val();
-    var duracion= $("ac_item_duracion").val();  
+    var duracion= $("#ac_item_duracion").val();  
     
       var item_1  =  $("#orden_product_d01").val();
       var item_2  =  $("#orden_product_d02").val();
@@ -1545,16 +1544,16 @@
                      item_31;
       var total =  suma_dias * price;
       
-      $("#ac_item_price").html(price);
-      $("#ac_item_total").html(total);
+      $("#orden_product_price").html(price);
+      $("#orden_product_total").html(total);
       
-      document.getElementById('ac_item_price').value = price;
-      document.getElementById('ac_item_total').value = total;
+      document.getElementById('orden_product_price').value = price;
+      document.getElementById('order_product_total').value = total;
 
     } else {
       
-      $("#ac_item_total").html("0.00");
-      $("#ac_item_price").html("0.00");
+      $("#orden_product_price").html("0.00");
+      $("#orden_product_total").html("0.00");
       
     }
   }
