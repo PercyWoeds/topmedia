@@ -1542,7 +1542,7 @@
       var suma_dias =parseInt(item_1)+parseInt(item_2)+parseInt(item_3)+parseInt(item_4)+ parseInt(item_5)+parseInt(item_6)+parseInt(item_7)+parseInt(item_8)+parseInt(item_9)+parseInt(item_10)+
                      parseInt(item_11)+parseInt(item_12)+parseInt(item_13)+parseInt(item_14)+ parseInt(item_15)+parseInt(item_16)+parseInt(item_17)+parseInt(item_18)+parseInt(item_19)+parseInt(item_20)+
                      parseInt(item_21)+parseInt(item_22)+parseInt(item_23)+parseInt(item_24)+ parseInt(item_25)+parseInt(item_26)+parseInt(item_27)+parseInt(item_28)+parseInt(item_29)+parseInt(item_30)+parseInt(item_31);
-      var total =  suma_dias * price;
+      var total =  suma_dias * parseFloat(price);
       
       $("#orden_product_quantity").html(suma_dias);
       $("#orden_product_price").html(price);
