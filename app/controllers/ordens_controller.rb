@@ -1191,6 +1191,7 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
      $lcMarca  = @orden.marca.descrip
      $lcVersion = @orden.version.descrip
      $lcFechaMes = @orden.month.to_i  
+     $lcDuracion = @orden.tiempo
      @months = monthsArr
      @month_name = @months[$lcFechaMes - 1][0] <<" - " <<@orden.year.to_s
     
@@ -1200,6 +1201,7 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
      
       client_headers  = [["Marca: ", $lcMarca]] 
       client_headers << ["Version  : ",$lcVersion]
+      client_headers << ["Version  : ",$lcDuracion]
       client_headers << ["Emision campaña : ",@month_name ]     
       client_headers
   end

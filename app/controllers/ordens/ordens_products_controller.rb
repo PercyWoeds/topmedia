@@ -94,9 +94,11 @@ class Ordens::OrdensProductsController < ApplicationController
   def update
     @orden = Orden.find(params[:orden_id])
     @orden_product = OrdenProduct.find(params[:id]) 
+    
     @orden_product[:avisodetail_id] = params[:ac_item_id]
     @orden_product[:price] = (@orden_product.tarifa / 30 * @orden.tiempo )
     @company = Company.find(1)
+    
     sum_dias = (@orden_product.d01 + @orden_product.d02 + @orden_product.d03 + @orden_product.d04+ 
                 @orden_product.d05 + @orden_product.d06 + @orden_product.d07 + @orden_product.d08+
                 @orden_product.d09 + @orden_product.d10 + @orden_product.d11 + @orden_product.d12+
@@ -108,11 +110,7 @@ class Ordens::OrdensProductsController < ApplicationController
                 
     @orden_product[:quantity] = sum_dias 
     @orden_product[:total] = @orden_product.price * sum_dias
-      puts "update"
-      puts @orden_product[:price]
-      puts @orden_product[:avisodetail_id] 
-      puts @orden_product[:quantity]
-      puts @orden_product[:total]
+    
       
     respond_to do |format|
       if @orden_product.update(orden_product_params)

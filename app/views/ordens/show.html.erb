@@ -173,6 +173,10 @@
         31
       </th>
       <th>
+        Cantidad 
+      </th>
+      
+      <th>
         Tarifa
       </th>
       <th>
@@ -286,6 +290,10 @@
           <td class="small bordered_bottom bordered_right">
             <%= product.d31 %>              
           </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= money(product.quantity) %>
+          </td>
+          
           <td class="small bordered_bottom bordered_right">
             <%= money(product.tarifa) %>
           </td>

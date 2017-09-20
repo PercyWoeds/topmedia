@@ -1536,8 +1536,8 @@
       var item_31 =  $("#orden_product_d31").val();
       
     if( isNumeric(tarifa) || isNumeric(duracion)) {
-
-      var price = (tarifa / 30 * duracion )
+    
+      var price = ((tarifa) / 30 * parseInt(duracion ));
       
       var suma_dias =parseInt(item_1)+parseInt(item_2)+parseInt(item_3)+parseInt(item_4)+ parseInt(item_5)+parseInt(item_6)+parseInt(item_7)+parseInt(item_8)+parseInt(item_9)+parseInt(item_10)+
                      parseInt(item_11)+parseInt(item_12)+parseInt(item_13)+parseInt(item_14)+ parseInt(item_15)+parseInt(item_16)+parseInt(item_17)+parseInt(item_18)+parseInt(item_19)+parseInt(item_20)+
@@ -1550,7 +1550,7 @@
       
       document.getElementById('orden_product_quantity').value = suma_dias;
       document.getElementById('orden_product_price').value = price;
-      document.getElementById('order_product_total').value = total;
+      document.getElementById('orden_product_total').value = total;
 
     } else {
       
