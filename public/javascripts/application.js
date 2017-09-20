@@ -1499,11 +1499,11 @@
   }
   function updateItemOrden() {
     
-    var tarifa = $("#ac_item_tarifa").val();
-    var duracion= $("#ac_item_duracion").val();  
+    var tarifa   = $("#orden_product_tarifa").val();
+    var duracion = $("#ac_item_duracion").val();  
     
-    alert("#ac_item_duracion");
-    
+    alert(tarifa);
+    alert(duracion);
     
       var item_1  =  $("#orden_product_d01").val();
       var item_2  =  $("#orden_product_d02").val();
