@@ -1502,8 +1502,6 @@
     var tarifa   = $("#orden_product_tarifa").val();
     var duracion = $("#ac_item_duracion").val();  
     
-    alert(tarifa);
-    alert(duracion);
     
       var item_1  =  $("#orden_product_d01").val();
       var item_2  =  $("#orden_product_d02").val();
@@ -1541,9 +1539,9 @@
 
       var price = (tarifa / 30 * duracion )
       
-      var suma_dias =item_1+item_2+item_3+item_4+ item_5+item_6+item_7+item_8+item_9+item_10+
-                     item_11+item_12+item_13+item_14+ item_15+item_16+item_17+item_18+item_19+item_20+
-                     item_21+item_22+item_23+item_24+ item_25+item_26+item_27+item_28+item_29+item_30+item_31;
+      var suma_dias =parseInt(item_1)+parseInt(item_2)+parseInt(item_3)+parseInt(item_4)+ parseInt(item_5)+parseInt(item_6)+parseInt(item_7)+parseInt(item_8)+parseInt(item_9)+parseInt(item_10)+
+                     parseInt(item_11)+parseInt(item_12)+parseInt(item_13)+parseInt(item_14)+ parseInt(item_15)+parseInt(item_16)+parseInt(item_17)+parseInt(item_18)+parseInt(item_19)+parseInt(item_20)+
+                     parseInt(item_21)+parseInt(item_22)+parseInt(item_23)+parseInt(item_24)+ parseInt(item_25)+parseInt(item_26)+parseInt(item_27)+parseInt(item_28)+parseInt(item_29)+parseInt(item_30)+parseInt(item_31);
       var total =  suma_dias * price;
       
       $("#orden_product_quantity").html(suma_dias);
