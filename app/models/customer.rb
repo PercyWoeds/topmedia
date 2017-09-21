@@ -6,7 +6,7 @@ class Customer < ActiveRecord::Base
   has_many :invoices
   has_many :manifests
   has_many :facturas
-  
+  has_many :addresses
   has_many :quotes , :dependent => :destroy
   
   

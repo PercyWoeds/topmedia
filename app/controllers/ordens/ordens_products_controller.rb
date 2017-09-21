@@ -99,6 +99,8 @@ class Ordens::OrdensProductsController < ApplicationController
     @orden_product = OrdenProduct.find(params[:id]) 
     
     @orden_product[:avisodetail_id] = params[:ac_item_id]
+    
+    
     @orden_product[:price] = (@orden_product.tarifa / 30 * @orden.tiempo )
     @company = Company.find(1)
     
@@ -123,7 +125,7 @@ class Ordens::OrdensProductsController < ApplicationController
            @orden[:total] = @orden[:subtotal] + @orden[:tax]
           
            @orden.update_attributes(:subtotal=> @orden[:subtotal])
-          
+           
           
         format.html { redirect_to @orden, notice: 'Orden product was successfully updated.' }
         format.json { render :show, status: :ok, location: @orden }

@@ -8,17 +8,36 @@
         <th class="bordered_right bordered_bottom" style="width: 20px;">
           Numero
         </th>
-        <th class="bordered_right bordered_bottom" style="width: 100px;">
+        <th class="bordered_right bordered_bottom" style="width: 50px;">
           Fecha
         </th>
-        <th class="bordered_right bordered_bottom" style="width: 20px;">
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
           Importe
         </th>
         
-        <th class="bordered_right bordered_bottom" style="width: 20px;">
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
           V.Venta
         </th>
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+          Comision1 
+        </th>
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+          Comision 2
+        </th>
         
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+          Total Comision 
+        </th>
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+          Factura Canal
+        </th>
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+          Factura 1
+        </th>
+        
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+         Factura 2
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -37,6 +56,24 @@
                     
           <td class="bordered_right bordered_bottom">
             <%= quote.vventa  %>
+          </td>
+           <td class="bordered_right bordered_bottom">
+            <%= quote.comision1  %>
+          </td>
+           <td class="bordered_right bordered_bottom">
+            <%= quote.comision2  %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= quote.total  %>
+          </td>
+        <td class="bordered_right bordered_bottom">
+            <%= quote.facturacanal  %>
+          </td>
+        <td class="bordered_right bordered_bottom">
+            <%= quote.factura1  %>
+          </td>
+        <td class="bordered_right bordered_bottom">
+            <%= quote.factura2 %>
           </td>
         
           <td><%= link_to 'Edit', edit_quote_path(quote) %></td>

@@ -44,7 +44,6 @@ class OrdensController < ApplicationController
       end
    
     pdf.text "Lima, " << @orden.fecha.strftime("%d/%m/%Y") ,:size =>10 ,:style=> :bold 
-    #pdf.text "Marca: " << $lcMarca ,:size =>10 ,:style=> :bold 
     pdf 
 
 
@@ -53,12 +52,10 @@ class OrdensController < ApplicationController
   def build_pdf_body_rpt2(pdf)
     
     
-   pdf.move_down 2
     pdf.font "Helvetica" , :size => 6
     pdf.text "________________________________________________________________________________________________________", :size => 13, :spacing => 4
-    pdf.text " ", :size => 13
     pdf.font "Helvetica" , :size => 8
-   pdf.move_down 5
+    pdf.move_down 2
     max_rows = [invoice_headers.length,client_data_headers.length, 0].max
       rows = []
       (1..max_rows).each do |row|
@@ -85,7 +82,7 @@ class OrdensController < ApplicationController
       end
         
          pdf.font "Helvetica" , :size => 6
-      pdf.move_down 10
+      pdf.move_down 2
       headers = []
       table_content = []
       total_general = 0
@@ -259,7 +256,6 @@ class OrdensController < ApplicationController
                            order.d11+order.d12+order.d13+order.d14+order.d15+order.d16+order.d17+order.d18+order.d19+order.d20+
                            order.d21+order.d22+order.d23+order.d24+order.d25+order.d26+order.d27+order.d28+order.d29+order.d30+order.d31
             row << sprintf("%.2f",@total_linea.to_s)
-            row << sprintf("%.2f",order.price.to_s)
             row << sprintf("%.2f",order.tarifa.to_s)
             row << sprintf("%.2f",order.total.to_s)
             
@@ -319,7 +315,7 @@ class OrdensController < ApplicationController
          row << sprintf("%.2f",@total_linea_general.to_s)
          row << " "
          row << " "
-         row << " "
+        
     table_content << row            
 
       
@@ -331,9 +327,12 @@ class OrdensController < ApplicationController
                                         :width => pdf.bounds.width
                                         } do 
                                           columns([0]).align=:center
+                                          columns([0]).width = 20
                                           columns([1]).align=:left
+                                          columns([1]).width = 80
                                           columns([2]).align=:right
                                           columns([3]).align=:right 
+                                          
                                           columns([4]).align=:right
                                           columns([5]).align=:right 
                                           columns([6]).align=:right
@@ -363,10 +362,15 @@ class OrdensController < ApplicationController
                                           columns([30]).align=:right
                                           columns([31]).align=:right
                                           columns([32]).align=:right
+                                          columns([33]).width=10
                                           columns([33]).align=:right
+                                          columns([33]).width=30
                                           columns([34]).align=:right
+                                          columns([35]).align=:right
+                                          
+                         
                                         end                                          
-      pdf.move_down 10    
+      pdf.move_down 5    
       pdf.text  "Observaciones : " + @orden.description
 
 
@@ -1000,23 +1004,24 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
       @ac_customer = @orden.customer.name
     end
     
-    @products_lines = @orden.products_lines
+    
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
+     @orden.calcularTarifa(@orden.tiempo)
+     
+     @orden[:subtotal] = @orden.get_subtotal("subtotal")
+     @orden[:tax] = @orden.get_subtotal("tax")
+     @orden[:total] = @orden[:subtotal] + @orden[:tax]
     
-    @orden[:subtotal] = @orden.get_subtotal(items)
-    @orden[:tax] = @orden.get_tax(items, @orden[:customer_id])
-    @orden[:total] = @orden[:subtotal] + @orden[:tax]
-
     respond_to do |format|
       if @orden.update_attributes(orden_params)
+         @orden_product = OrdenProduct.find_by(orden_id: params[:id])     
+         
         # Create products for kit
-        @orden.delete_products()
-        @orden.add_products(items)
-        
+         
         # Check if we gotta process the orden
-        @orden.process()
+         @orden.process()
         
         format.html { redirect_to(@orden, :notice => 'orden was successfully updated.') }
         format.xml  { head :ok }

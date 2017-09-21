@@ -5,16 +5,25 @@
 
   <h1> Nueva Cuota  </h1>
   
+  
   <p><%= $lcCliente %> </p>
   
   <p><%= $lcMedio%> </p>
   
-  <p><%=$lcComision1%> </p>
-  <p><%=$lcComision2 %></p>
-  <p><%=$lcTipoContrato%> </p>
-  <p><%=$lcNrocuotas %></p>
-  <p><%=$lcImporte  %></p>
-  
+<p>Importe 
+ <input type="text" name="ac_item_importe" id="ac_item_importe" value= "<%= @contrato.importe %>" readonly class="tf_short" />
+</p>  
+  <p>Comision 1 
+ <input type="text" name="ac_item_comision1" id="ac_item_comision1" value= "<%= @contrato.comision1 %>" readonly class="tf_short" />
+</p>
+<p>Comision 2 
+ <input type="text" name="ac_item_comision2" id="ac_item_comision2" value= "<%= @contrato.comision1 %>" readonly class="tf_short" />
+</p>
+<p>Nro Cuotas 
+ <input type="text" name="ac_item_cuotas" id="ac_item_cuotas" value= "<%= @contrato.nrocuotas %>" readonly class="tf_short" />
+</p>
+ 
+
   <%= render 'form' %>
 
   <%= link_to 'Back', quotes_path %>
