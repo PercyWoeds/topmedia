@@ -1562,23 +1562,19 @@
 
  function updateItemContrato() {
       
-      var c_importe   = $("#quote_importe").val();
+      var c_importe   = $("#contrato_detail_importe").val();
       var c_comision1 = $("#ac_item_comision1").val();
       var c_comision2 = $("#ac_item_comision2").val();
-   
    
       var vventa  =  ((c_importe) / 1.18 );
       var comision1  =  vventa * parseFloat(c_comision1)/100;
       var comision2  =  vventa * parseFloat(c_comision2)/100 ;
       var totalcomision = comision1 + comision2 ;
-   
-
-     
-      
-      document.getElementById('quote_vventa').value = vventa.toFixed(2);
-      document.getElementById('quote_comision1').value = comision1.toFixed(2);
-      document.getElementById('quote_comision2').value = comision2.toFixed(2);
-      document.getElementById('quote_total').value = totalcomision.toFixed(2);
+  
+      document.getElementById('contrato_detail_vventa').value = vventa.toFixed(2);
+      document.getElementById('contrato_detail_comision1').value = comision1.toFixed(2);
+      document.getElementById('contrato_detail_comision2').value = comision2.toFixed(2);
+      document.getElementById('contrato_detail_total').value = totalcomision.toFixed(2);
       
  
   }

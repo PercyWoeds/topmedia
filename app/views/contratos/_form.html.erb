@@ -24,6 +24,13 @@
     <%= f.label :code, "CODIGO *", :class => "bold" %><br />
     <%= f.text_field :code , :onclick => "$(this).select();"%>
     </div>
+    
+    <div class="field">
+    <%= f.label :codigointerno,"Codigo Interno :  " %><br />
+    <%= f.text_field :codigointerno  %>
+    </div>
+    
+    
     <div class="field">
 
     
@@ -95,10 +102,6 @@
     <%= f.text_field :comision2  %>
     </div>
     
-    <div class="field">
-    <%= f.label :codigointerno,"Codigo Interno :  " %><br />
-    <%= f.text_field :codigointerno  %>
-    </div>
     <div class="field">
     <%= f.label :description,"Descripcion :  " %><br />
     <%= f.text_field :description  %>

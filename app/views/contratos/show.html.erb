@@ -72,18 +72,143 @@
   <div class="col-md-12">
     <div class="contrato_cuota">
       <h3> Cuotas   </h3>
-      <% if @contrato.quotes %>
-      <%= render @contrato.quotes %>
-      <% end %>
-      <div>
-      <%= link_to "Agregar cuota  ", new_contrato_quote_path(@contrato), class: "button" %>  
-    
+      <table>
+    <thead>
+      <tr>
+        <th class="bordered_right bordered_bottom" style="width: 20px;">
+          Numero
+        </th>
+        <th class="bordered_right bordered_bottom" style="width: 50px;">
+          Fecha
+        </th>
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+          Importe
+        </th>
+        
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+          V.Venta
+        </th>
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+          Comision1 
+        </th>
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+          Comision 2
+        </th>
+        
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+          Total Comision 
+        </th>
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+          Factura Canal
+        </th>
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+          Factura 1
+        </th>
+        
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+         Factura 2
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      
+   <% t_importe = 0    %>
+   <% t_vventa = 0    %>
+   <% t_comision1 = 0    %>
+   <% t_comision2 = 0    %>
+   <% t_total = 0    %>
+   
+   <%  @contrato_details.each do |quote| %>
+        <tr>
+          <td class="bordered_right bordered_bottom">
+            <%= quote.nro %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= quote.fecha.strftime("%d/%m/%Y")  %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= quote.importe %>
+          </td>
+                    
+          <td class="bordered_right bordered_bottom">
+            <%= quote.vventa  %>
+          </td>
+           <td class="bordered_right bordered_bottom">
+            <%= quote.comision1  %>
+          </td>
+           <td class="bordered_right bordered_bottom">
+            <%= quote.comision2  %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= quote.total  %>
+          </td>
+        <td class="bordered_right bordered_bottom">
+            <%= quote.facturacanal  %>
+          </td>
+        <td class="bordered_right bordered_bottom">
+            <%= quote.factura1  %>
+          </td>
+        <td class="bordered_right bordered_bottom">
+            <%= quote.factura2 %>
+          </td>
+        <% t_importe += quote.importe    %>        
+        <% t_vventa += quote.vventa    %>        
+        <% t_comision1 += quote.comision1    %>        
+        <% t_comision2 += quote.comision2   %>        
+        <% t_total += quote.total   %>        
+        
+          <td><%= link_to 'Editar', edit_contrato_contrato_detail_path(contrato_id: @contrato.id,id: quote.id ) %></td>          
+          <td><%= link_to 'Eliminar',[@contrato,quote], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+  <%end %>        
+  
+  <tr>
+          <td class="bordered_right bordered_bottom">
+           
+          </td>
+          <td class="bordered_right bordered_bottom">
+            Totales 
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= t_importe %>
+          </td>
+                    
+          <td class="bordered_right bordered_bottom">
+            <%= t_vventa  %>
+          </td>
+           <td class="bordered_right bordered_bottom">
+            <%= t_comision1  %>
+          </td>
+           <td class="bordered_right bordered_bottom">
+            <%= t_comision2  %>
+          </td>
+          <td class="bordered_right bordered_bottom">
+            <%= t_total  %>
+          </td>
+        <td class="bordered_right bordered_bottom">
+            
+          </td>
+        <td class="bordered_right bordered_bottom">
+            
+          </td>
+        <td class="bordered_right bordered_bottom">
+            
+          </td>
+        
+  
+    </tbody>
+  </table>
+
       </div>
     </div>
 
+
   </div>  
-</div>
-
-
-<%= link_to 'Editar', edit_contrato_path(@contrato) %> |
+  
+  
+<div class="button">
+<%= link_to 'Agregar Item', new_contrato_contrato_detail_path(@contrato) %>
+<%= link_to 'Editar', edit_contrato_path(@contrato) %> 
 <%= link_to 'Regresar', contratos_path %>
+</div>
+</div>

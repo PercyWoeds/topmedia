@@ -64,6 +64,7 @@ class Ordens::OrdensProductsController < ApplicationController
     
     @orden_product = OrdenProduct.new(orden_product_params)
     @orden_product.orden_id  = @orden.id 
+    
     @orden_product.avisodetail_id = params[:ac_item_id]
     @orden_product.price = (@orden_product.tarifa / 30 * @orden.tiempo )
     @company = Company.find(1)

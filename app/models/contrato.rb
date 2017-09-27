@@ -9,11 +9,8 @@ class Contrato < ActiveRecord::Base
   belongs_to :medio
   belongs_to :orden
   
-
-  has_many :quotes , :dependent => :destroy
-  
-  accepts_nested_attributes_for :quotes, :reject_if => lambda { |a| a[:importe].blank? }, :allow_destroy => true
-
+  has_many :contrato_details, :dependent => :destroy
+ 
 
   TABLE_HEADERS = ["ITEM",
                      "NRO.",

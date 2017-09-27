@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nro:</strong>
+  <%= @contrato_detail.nro %>
+</p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @contrato_detail.fecha %>
+</p>
+
+<p>
+  <strong>Importe:</strong>
+  <%= @contrato_detail.importe %>
+</p>
+
+<p>
+  <strong>Vventa:</strong>
+  <%= @contrato_detail.vventa %>
+</p>
+
+<p>
+  <strong>Comision1:</strong>
+  <%= @contrato_detail.comision1 %>
+</p>
+
+<p>
+  <strong>Comision2:</strong>
+  <%= @contrato_detail.comision2 %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @contrato_detail.total %>
+</p>
+
+<p>
+  <strong>Facturacanal:</strong>
+  <%= @contrato_detail.facturacanal %>
+</p>
+
+<p>
+  <strong>Fecha2:</strong>
+  <%= @contrato_detail.fecha2 %>
+</p>
+
+<p>
+  <strong>Factura1:</strong>
+  <%= @contrato_detail.factura1 %>
+</p>
+
+<p>
+  <strong>Factura2:</strong>
+  <%= @contrato_detail.factura2 %>
+</p>
+
+<%= link_to 'Edit', edit_contrato_detail_path(@contrato_detail) %> |
+<%= link_to 'Back', contrato_details_path %>

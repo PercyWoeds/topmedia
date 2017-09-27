@@ -272,7 +272,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
   def build_pdf_body_rpt8(pdf)
     
-    pdf.text "Facturas de compra : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
+    pdf.text "Documentos de compra : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
     pdf.text ""
     pdf.font "Helvetica" , :size => 6
 
@@ -290,7 +290,6 @@ WHERE purchase_details.product_id = ?',params[:id] ])
       nroitem=1
       lcmonedasoles   = 2
       lcmonedadolares = 1
-    
 
       lcDoc='FT'      
 
@@ -299,14 +298,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
        for  product in @facturas_rpt
         
           if lcCliente == product.supplier_id
-
-             #if product.payment_id == nil 
-              fechas2 = product.date2 
-             #else 
-             # days = product.payment.day 
-             # fechas2 = product.fechas2 + days.days              
-             #end 
-
+            fechas2 = product.date2 
             row = []          
             row << lcDoc
             row << product.documento 
@@ -1010,7 +1002,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
   def build_pdf_body_rpt(pdf)
     
-    pdf.text "Facturas  Emitidas : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
+    pdf.text "Documentos  Emitidas : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
     pdf.text ""
     pdf.font "Helvetica" , :size => 6
 

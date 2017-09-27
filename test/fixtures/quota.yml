@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nro: MyString
+  fecha: 2017-09-21 21:05:01
+  importe: 1.5
+  vventa: 1.5
+  comision1: 1.5
+  comision2: 1.5
+  total: 1.5
+  facturacanal: MyString
+  fecha2: 2017-09-21 21:05:01
+  factura1: MyString
+  factura2: MyString
+
+two:
+  nro: MyString
+  fecha: 2017-09-21 21:05:01
+  importe: 1.5
+  vventa: 1.5
+  comision1: 1.5
+  comision2: 1.5
+  total: 1.5
+  facturacanal: MyString
+  fecha2: 2017-09-21 21:05:01
+  factura1: MyString
+  factura2: MyString

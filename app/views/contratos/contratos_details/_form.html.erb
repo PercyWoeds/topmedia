@@ -1,0 +1,100 @@
+
+
+<%=  simple_form_for([@contrato , @contrato_detail]) do |f| %>
+
+
+  <%= f.error_notification %>
+
+    <div class="field">
+      <%= f.label :nro, "Nro*", :class => "bold" %><br />
+      <%= f.text_field :nro %>      
+    </div>
+    
+    <div class="field">
+      
+      <%= f.label :fecha, "Fecha *", :class => "bold" %><br />
+      <%= f.date_field :fecha %>
+
+    </div>
+
+    <div class="field">
+      <%= f.label :importe, "Importe*", :class => "bold" %><br />
+      <%= f.number_field :importe,:step => 0.01 %>      
+    </div>
+
+    <div class="field">
+      <%= f.label :vventa, "V.Venta*", :class => "bold" %><br />
+      <%= f.text_field :vventa , :readonly => true %>      
+    </div>
+
+    <div class="field">
+      <%= f.label :comision1, "Comision 1*", :class => "bold" %><br />
+      <%= f.text_field :comision1  , :readonly => true%>      
+    </div>
+
+    <div class="field">
+      <%= f.label :comision2, "Comision 2*", :class => "bold" %><br />
+      <%= f.text_field :comision2 , :readonly => true %>      
+    </div>
+
+    <div class="field">
+      <%= f.label :total, "Total *", :class => "bold" %><br />
+      <%= f.text_field :total , :readonly => true %>      
+    </div>
+
+    <div class="field">
+      <%= f.label :facturacanal, "Factura canal*", :class => "bold" %><br />
+      <%= f.text_field :facturacanal %>      
+    </div>
+    <div class="field">
+      <%= f.label :fecha2, "Fecha Factura *", :class => "bold" %><br />
+      <%= f.text_field :fecha2 %>      
+    </div>
+
+    <div class="field">
+      <%= f.label :factura1, "factura 1*", :class => "bold" %><br />
+      <%= f.text_field :factura1 %>      
+    </div>
+
+    <div class="field">
+      <%= f.label :factura2, "factura 2*", :class => "bold" %><br />
+      <%= f.text_field :factura2 %>      
+    </div>
+   
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+
+<% end %>
+
+
+  <script type="text/javascript">
+  $(document).ready(function() {
+      
+    $("#contrato_detail_importe").bind("keyup", function() {
+  
+     var c_importe   = $("#contrato_detail_importe").val();
+      var c_comision1 = $("#ac_item_comision1").val();
+      var c_comision2 = $("#ac_item_comision2").val();
+   
+      var vventa  =  ((c_importe) / 1.18 );
+      var comision1  =  vventa * parseFloat(c_comision1)/100;
+      var comision3  =  vventa - comision1;
+      
+      var comision2  =  comision3 * parseFloat(c_comision2)/100  ;
+      
+      var totalcomision = comision1 + comision2 ;
+  
+      document.getElementById('contrato_detail_vventa').value = vventa.toFixed(2);
+      document.getElementById('contrato_detail_comision1').value = comision1.toFixed(2);
+      document.getElementById('contrato_detail_comision2').value = comision2.toFixed(2);
+      document.getElementById('contrato_detail_total').value = totalcomision.toFixed(2);
+      
+    });
+    
+  
+ 
+  });
+  
+
+</script>

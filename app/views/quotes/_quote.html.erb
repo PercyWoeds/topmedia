@@ -41,7 +41,6 @@
       </tr>
     </thead>
     <tbody>
-    
    
         <tr>
           <td class="bordered_right bordered_bottom">
@@ -76,10 +75,8 @@
             <%= quote.factura2 %>
           </td>
         
-          <td><%= link_to 'Edit', edit_quote_path(quote) %></td>
-          <td><%= link_to 'Destroy', quote, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-
-        
+          <td><%= link_to 'Editar', edit_contrato_quote_path(contrato_id: quote.contrato_id,id: quote) %></td>
+          <td><%= link_to 'Eliminar', quote, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
           
     </tbody>

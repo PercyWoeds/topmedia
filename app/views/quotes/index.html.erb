@@ -20,6 +20,12 @@
   </thead>
 
   <tbody>
+    <% q_importe = 0 %>
+    <% q_vventa = 0 %>
+    <% q_comision1 = 0 %>
+    <% q_comision2 = 0 %>
+    <% q_total = 0 %>
+    
     <% @quotes.each do |quote| %>
       <tr>
         <td><%= quote.nro %></td>
@@ -32,11 +38,34 @@
         <td><%= quote.facturacanal %></td>
         <td><%= quote.factura1 %></td>
         <td><%= quote.factura2 %></td>
+        <% importe += quote.importe   %>
+        <%  %>
         <td><%= link_to 'Show', quote %></td>
         <td><%= link_to 'Edit', edit_quote_path(quote) %></td>
         <td><%= link_to 'Destroy', quote, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
+      
     <% end %>
+    
+      <tr>
+        <td> " "</td>
+        <td> ""</td>
+        <td><%= q_importe %></td>
+        <td><%= q_vventa %></td>
+        <td><%= q_comision1 %></td>
+        <td><%= q_comision2 %></td>
+        <td><%= q_total %></td>
+        <td>" "</td>
+        <td>" "</td>
+        <td>""</td>
+        
+        <%  %>
+        <td><%= link_to 'Show', quote %></td>
+        <td><%= link_to 'Edit', edit_quote_path(quote) %></td>
+        <td><%= link_to 'Destroy', quote, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    
+    
   </tbody>
 </table>
 

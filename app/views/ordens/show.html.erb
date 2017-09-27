@@ -197,6 +197,7 @@
           <td class="small bordered_bottom bordered_right">
             <%= product.avisodetail.descrip %>    
           </td>
+          
           <td class="small bordered_bottom bordered_right">
             <%= product.d01 %>              
           </td>
@@ -308,7 +309,6 @@
           <td><%= link_to 'Eliminar',[@orden,product], method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
           
-          
     </td>
     
     <% end %>
@@ -379,6 +379,6 @@
   <%= link_to 'Send orden via email', "/ordens/email/#{@orden.id}" %>
   <%= link_to 'Process orden', "/ordens/do_process/#{@orden.id}" %>
   <%= link_to 'Agregar Item', new_orden_orden_product_path(@orden) %>
-  <%= link_to 'Edit', edit_orden_path(@orden) %>
-  <%= link_to 'Back', "/companies/ordens/#{@orden.company.id}" %>
+  <%= link_to 'Editar', edit_orden_path(@orden) %>
+  <%= link_to 'Regresar', "/companies/ordens/#{@orden.company.id}" %>
 </div>

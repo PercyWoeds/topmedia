@@ -1,6 +1,9 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :contrato_details
+  resources :quota
+  resources :quota
   resources :orden_products
   resources :quotes
   resources :ordens do
@@ -17,7 +20,10 @@
   resources :motivos
   resources :medios
   resources :contrato_cuota
-  resources :contratos
+  
+  resources :contratos do
+    resources :contrato_details, except: [:index,:show], controller: "contratos/contratos_details"
+  end 
   resources :ciudads
   resources :campania
   resources :avisodetails do 

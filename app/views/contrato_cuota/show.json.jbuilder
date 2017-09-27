@@ -1,1 +1,0 @@
-json.partial! "contrato_cuota/contrato_cuotum", contrato_cuotum: @contrato_cuotum

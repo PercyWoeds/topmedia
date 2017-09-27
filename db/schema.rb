@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170912155524) do
+ActiveRecord::Schema.define(version: 20170921214222) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -215,6 +215,23 @@ ActiveRecord::Schema.define(version: 20170912155524) do
     t.string   "factura2"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+  end
+
+  create_table "contrato_details", force: :cascade do |t|
+    t.string   "nro"
+    t.datetime "fecha"
+    t.float    "importe"
+    t.float    "vventa"
+    t.float    "comision1"
+    t.float    "comision2"
+    t.float    "total"
+    t.string   "facturacanal"
+    t.datetime "fecha2"
+    t.string   "factura1"
+    t.string   "factura2"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "contrato_id"
   end
 
   create_table "contratos", force: :cascade do |t|
@@ -1252,6 +1269,22 @@ ActiveRecord::Schema.define(version: 20170912155524) do
     t.datetime "updated_at",      null: false
   end
 
+  create_table "quota", force: :cascade do |t|
+    t.string   "nro"
+    t.datetime "fecha"
+    t.float    "importe"
+    t.float    "vventa"
+    t.float    "comision1"
+    t.float    "comision2"
+    t.float    "total"
+    t.string   "facturacanal"
+    t.datetime "fecha2"
+    t.string   "factura1"
+    t.string   "factura2"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
   create_table "quotations", force: :cascade do |t|
     t.datetime "fecha1"
     t.string   "code"
@@ -1473,3 +1506,189 @@ ActiveRecord::Schema.define(version: 20170912155524) do
     t.string   "code"
   end
 
+  create_table "suppliers", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "phone1"
+    t.string   "phone2"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.string   "country"
+    t.text     "comments"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "company_id"
+    t.string   "ruc",        limit: 11
+    t.string   "taxable"
+    t.string   "account"
+  end
+
+  create_table "tanks", force: :cascade do |t|
+    t.string   "comments"
+    t.integer  "product_id"
+    t.integer  "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "tanks", ["company_id"], name: "index_tanks_on_company_id", using: :btree
+  add_index "tanks", ["product_id"], name: "index_tanks_on_product_id", using: :btree
+
+  create_table "tipoavisos", force: :cascade do |t|
+    t.string   "descrip"
+    t.text     "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float    "duracion"
+  end
+
+  create_table "tipocambios", force: :cascade do |t|
+    t.datetime "dia"
+    t.float    "compra"
+    t.float    "venta"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tipofacturas", force: :cascade do |t|
+    t.string   "descrip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "company_id"
+  end
+
+  create_table "tranportorders", force: :cascade do |t|
+    t.string   "code"
+    t.integer  "employee_id"
+    t.integer  "truck_id"
+    t.integer  "employee2_id"
+    t.integer  "truck2_id"
+    t.integer  "ubication_id"
+    t.integer  "ubication2_id"
+    t.datetime "fecha1"
+    t.datetime "fecha2"
+    t.text     "description"
+    t.text     "comments"
+    t.string   "processed"
+    t.integer  "company_id"
+    t.integer  "location_id"
+    t.integer  "division_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "user_id"
+  end
+
+  create_table "transferencia_detalles", force: :cascade do |t|
+    t.integer  "item_id"
+    t.integer  "transferencia_id"
+    t.float    "cantidad"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "transferencias", force: :cascade do |t|
+    t.integer  "almacen_origen_id"
+    t.integer  "almacen_destino_id"
+    t.datetime "fecha"
+    t.float    "total"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "trucks", force: :cascade do |t|
+    t.string   "code"
+    t.string   "placa"
+    t.string   "clase"
+    t.integer  "marca_id"
+    t.integer  "modelo_id"
+    t.string   "certificado"
+    t.integer  "ejes"
+    t.string   "licencia"
+    t.string   "neumatico"
+    t.string   "config"
+    t.string   "carroceria"
+    t.integer  "anio"
+    t.string   "estado"
+    t.string   "propio"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "ubicas", force: :cascade do |t|
+    t.string   "descrip"
+    t.text     "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "ubications", force: :cascade do |t|
+    t.string   "descrip"
+    t.integer  "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "unidads", force: :cascade do |t|
+    t.string   "descrip"
+    t.float    "valorconversion"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "company_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "username"
+    t.string   "level"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "password"
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+  end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "users_packages", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "package_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "companies"
+    t.integer  "locations"
+    t.integer  "users"
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string   "descrip"
+    t.text     "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "voideds", force: :cascade do |t|
+    t.string   "serie"
+    t.string   "numero"
+    t.string   "texto"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "tanks", "companies"
+  add_foreign_key "tanks", "products"
+end
