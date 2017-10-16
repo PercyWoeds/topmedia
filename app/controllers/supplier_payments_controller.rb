@@ -922,16 +922,19 @@ end
     render :layout => false
   end
   
-
+ def ac_facturas
+    @docs = Purchase.where(["company_id =  ? and (documento iLIKE ? )",params[:company_id], "%" + params[:q] + "%"])   
+    render :layout => false
+  end
   # Autocomplete for documents
   def ac_documentos
-    @docs = Purchase.where(["company_id = ? AND (documento LIKE ? )", params[:company_id], "%" + params[:q] + "%"])   
+    @docs = Purchase.where(["company_id = ? AND (documento iLIKE ? )", params[:company_id], "%" + params[:q] + "%"])   
     render :layout => false
   end
   
   # Autocomplete for products
   def ac_suppliers
-    @suppliers = Supplier.where(["company_id = ? AND (ruc LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])   
+    @suppliers = Supplier.where(["company_id = ? AND (ruc iLIKE ? OR name iLIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])   
     render :layout => false
   end
   
@@ -1043,11 +1046,11 @@ end
 
     @company = Company.find(@supplierpayment.company_id)
 
-    
     @bank_acounts = @company.get_bank_acounts()        
     @monedas  = @company.get_monedas()
     @documents  = @company.get_documents()
-
+    
+    @supplierpayment_details = @supplierpayment.supplierpayment_details
 
   end
 
@@ -1061,7 +1064,7 @@ end
     @supplierpayment = SupplierPayment.new
     @supplierpayment[:code] = "#{generate_guid9()}"
     @supplierpayment[:processed] = false
-    
+    @supplierpayment[:fecha1] =  Date.today
     @company = Company.find(params[:company_id])
     @supplierpayment.company_id = @company.id
     
@@ -1071,10 +1074,10 @@ end
     @bank_acounts = @company.get_bank_acounts()        
     @monedas  = @company.get_monedas()
     @documents  = @company.get_documents()
-
+  
     @ac_user = getUsername()
     @supplierpayment[:user_id] = getUserId()
-
+  
   end
 
   # GET /supplierpayments/1/edit
@@ -1090,9 +1093,8 @@ end
     @servicebuys  = @company.get_servicebuys()
     @payments = @company.get_payments()
     @monedas  = @company.get_monedas()
-    
-    @products_lines = @supplierpayment.services_lines
-    
+    @bank_acounts = @company.get_bank_acounts()       
+     @documents  = @company.get_documents()
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
   end

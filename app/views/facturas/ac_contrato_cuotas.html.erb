@@ -1,0 +1,5 @@
+<% if @contrato_cuotas %>
+  <% for contrato in @contrato_cuotas %>  
+  <%= contrato.nro %>|BRK|<%= contrato.comision1 %>|BRK|<%= contrato.comision2 %>|BRK|<%= contrato.id %>|BRK|<%= contrato.total %>
+  <% end %>
+<% end %>

@@ -93,6 +93,11 @@
 
     </tr>
   </thead>
+  
+<div class="button">  
+<%= link_to 'Agregar Item', new_supplier_payment_supplierpayment_detail_path(@supplierpayment) %>  
+</div> 
+
   <tbody>
       <tr>
         <td class="bordered_bottom bordered_right">
@@ -117,22 +122,22 @@
         </td>
 
       </tr>
+      
+        
+    <%    @supplierpayment_details.each do |productItem| %>
     
-
-
-    <% for productItem in @supplierpayment.get_payments() %>
       <tr>
         <td class="bordered_bottom bordered_right">
-          <%= productItem.get_document(productItem.document_id)   %>
+          <%= productItem.document.descripshort   %>
         </td>
         
               
         <td class="bordered_bottom bordered_right">
-          <%=  productItem.documento   %>
+          <%=  productItem.purchase.documento  %>
         </td>
 
         <td class="bordered_bottom bordered_right">
-          <%=  productItem.get_supplier(productItem.supplier_id)   %>
+          <%=  productItem.supplier.name    %>
         </td>
         
          <td class="bordered_bottom bordered_right">
@@ -143,8 +148,13 @@
           <%= money(productItem.total) %>
         </td>
 
+          <td><%= link_to 'Editar', edit_supplier_payment_supplierpayment_detail_path(supplier_payment_id: @supplierpayment.id,id: productItem.id ) %></td>          
+          <td><%= link_to 'Eliminar',[@supplierpayment,productItem], method: :delete, data: { confirm: 'Estas seguro?' } %></td>
+
       </tr>
     <% end %>
+    
+    
     <tr>
       <td colspan="5" class="bordered_bottom bordered_right">
         &nbsp;

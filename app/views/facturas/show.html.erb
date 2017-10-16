@@ -1,51 +1,51 @@
 <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
-  <%= link_to @invoice.company.name, @invoice.company %> &raquo;
-  <%= link_to "Facturas", "/companies/facturas/#{@invoice.company.id}" %>
+  <%= link_to @factura.company.name, @factura.company %> &raquo;
+  <%= link_to "Facturas", "/companies/facturas/#{@factura.company.id}" %>
 </div>
 
 <h1>
-  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
-  <%= @invoice.identifier %>
+  <%= image_tag("factura_48.png", :class => "vmiddle") %>
+  <%= @factura.identifier %>
 </h1>
 
 <%= hr() %>
 
-<% if @invoice.location %>
+<% if @factura.location %>
   <p>
     <b>Location:</b>
-    <%= link_to @invoice.location.name, @invoice.location %>
+    <%= link_to @factura.location.name, @factura.location %>
   </p>
 <% end %>
 
-<% if @invoice.division %>
+<% if @factura.division %>
   <p>
     <b>Division:</b>
-    <%= link_to @invoice.division.name, @invoice.division %>
+    <%= link_to @factura.division.name, @factura.division %>
   </p>
 <% end %>
 
-<% if @invoice.payment %>
+<% if @factura.payment %>
   <p>
     <b>Payment:</b>
-    <%= link_to @invoice.payment.descrip, @invoice.payment %>
+    <%= link_to @factura.payment.descrip, @factura.payment %>
   </p>
 <% end %>
 
 <p>
   <b>Code:</b>
-  <%= @invoice.code %>
+  <%= @factura.code %>
 </p>
 
 <p>
   <b>Fecha :</b>
-  <%= @invoice.fecha %>
+  <%= @factura.fecha %>
 </p>
 
 
 <p>
   <b>Moneda :</b>
-  <%= @invoice.moneda.description  %>
+  <%= @factura.moneda.description  %>
 </p>
 
 <%= hr() %>
@@ -56,10 +56,10 @@
 
 <p>
   <b>Name:</b>
-  <%= link_to @customer.name, @customer %>
+  <%= link_to @factura.code, @factura %>
 </p>
 
-<%= render "customers/show" %>
+<%= render "contratos/show" %>
 
 <%= hr() %>
 
@@ -71,40 +71,50 @@
   <thead>
     <tr>
       <th>
-        Servicio
+        Cuota 
       </th>
       <th>
-        Precio
+        Monto Original
       </th>
       <th>
-        Cantidad
+        Moneda
       </th>
       <th>
-        Dscto
+        Tipo Cambio
       </th>
       <th>
         Total
       </th>
     </tr>
   </thead>
+  <div class="button">
+ 
+  
+  <%= link_to "Agregar Item","/facturas/newfactura2/#{@factura.id}" %>
+  
+  </div>  
   <tbody>
-    <% for productItem in @invoice.get_products() %>
+    <%  @factura_details.each do |quote| %>
       <tr>
         <td class="bordered_bottom bordered_right">
-          <%= link_to productItem.name   %>
+          <%= link_to quote.contrato_detail.nro    %>
         </td>
         <td class="bordered_bottom bordered_right">
-          <%= money(productItem.price) %>
+          <%= money(quote.total) %>
         </td>
         <td class="bordered_bottom bordered_right">
-          <%= productItem.quantity %>
+          <%= quote.moneda_id %>
         </td>
         <td class="bordered_bottom bordered_right">
-          <%= money(productItem.discount) %>%
+          <%= money(quote.tipocambio) %>%
         </td>
         <td class="bordered_bottom bordered_right">
-          <%= money(productItem.total) %>
+          <%= money(quote.total) %>
         </td>
+        
+        
+          
+          <td><%= link_to 'Eliminar',[@factura,quote], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
     <tr>
@@ -117,7 +127,7 @@
         Subtotal:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        <%= money(@invoice.subtotal) %>
+        <%= money(@factura.subtotal) %>
       </td>
     </tr>
     <tr>
@@ -125,7 +135,7 @@
         Tax:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        <%= money(@invoice.tax) %>
+        <%= money(@factura.tax) %>
       </td>
     </tr>
     <tr>
@@ -133,104 +143,33 @@
         Total:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        <%= money(@invoice.total) %>
+        <%= money(@factura.total) %>
       </td>
     </tr>
   </tbody>
 </table>
 <br />
 
-<h3>
-  Detalle guias
-</h3>
 
-<table>
-  <thead>
-    <tr>
-      <th>
-        Guias Transportista.
-       </th>
-      <th>
-        Guias Remision 
-       </th>
-        
-    </tr>
-  </thead>
-  <tbody>
-    <% for productItem in @invoice.get_guias() %>
-      <tr>
-        <td class="bordered_bottom bordered_right">
-          <%= link_to productItem.code   %>
-        </td>
-      </tr>
-
-      <% for guias in  @invoice.get_guias_remision(productItem.id) %>
-      <tr>
-        <td>
-        </td>
-        <td>
-          <%= guias.delivery.code  %>
-        <td>
-      </tr>    
-      <%end %>
-
-
-    <% end %>
-    <tr>
-      <td colspan="5" class="bordered_bottom bordered_right">
-        &nbsp;
-      </td>
-    </tr>
-    
-  </tbody>
-
-</table>
-<table>
-  <thead>
-    <tr>
-      <th>
-        Guias Remision....
-       </th> 
-    </tr>
-  </thead>
-
-    <tbody>
-    <% for productItem in @invoice.get_guiasremision() %>
-      <tr>
-        <td class="bordered_bottom bordered_right">
-          <%= link_to productItem.code   %>
-        </td>
-      </tr>
-    <% end %>
-    <tr>
-      <td colspan="5" class="bordered_bottom bordered_right">
-        &nbsp;
-      </td>
-    </tr>
-    
-  </tbody>
-
-</table>
-<br />
 
 <%= hr() %>
 
-<% if @invoice.description != "" %>
+<% if @factura.description != "" %>
   <div>
     <b>Description:</b>
     <br />
     <br />
-    <%= format_text(@invoice.description) %>
+    <%= format_text(@factura.description) %>
   </div>
   <%= hr() %>
 <% end %>
 
-<% if @invoice.comments != "" %>
+<% if @factura.comments != "" %>
   <div>
     <b>Comments:</b>
     <br />
     <br />
-    <%= format_text(@invoice.comments) %>
+    <%= format_text(@factura.comments) %>
   </div>
   <%= hr() %>
 <% end %>
@@ -238,33 +177,34 @@
 <br />
 
 <div>
-  <strong><%= @invoice.get_processed %></strong>
-  <% if @invoice.processed == "1" and @invoice.date_processed %>
-    <%= doDate(@invoice.date_processed) %>
+  <strong><%= @factura.get_processed %></strong>
+  <% if @factura.processed == "1" and @factura.date_processed %>
+    <%= doDate(@factura.date_processed) %>
   <% end %>
 </div>
 
 <p>
   <b>Return:</b>
-  <%= @invoice.get_return %>
+  <%= @factura.get_return %>
 </p>
 
 <p>
   <strong>Seller:</strong>
-  <%= link_to @invoice.user.username, @invoice.user %>
+  <%= link_to @factura.user.username, @factura.user %>
 </p>
 
 <%= hr() %>
 
 <div class="button">
-  <%= link_to 'Exportar to PDF', "/facturas/pdf/#{@invoice.id}.pdf" %>
-  <%= link_to 'Send invoice via email', "/facturas/email/#{@invoice.id}" %>
   
-<% if @invoice.processed =="0" || @invoice.processed==nil %>
-  <%= link_to 'Procesar factura', "/facturas/do_process/#{@invoice.id}" %>
-  <%= link_to 'Editar', edit_factura_path(@invoice) %>
-<% elsif @invoice.processed =="1" %>  
-  <%= link_to 'Anular', "/facturas/do_anular/#{@invoice.id}" %>
+  <%= link_to 'Exportar to PDF', "/facturas/pdf/#{@factura.id}.pdf" %>
+  <%= link_to 'Send factura via email', "/facturas/email/#{@factura.id}" %>
+  
+<% if @factura.processed =="0" || @factura.processed==nil %>
+  <%= link_to 'Procesar factura', "/facturas/do_process/#{@factura.id}" %>
+  <%= link_to 'Editar', edit_factura_path(@factura) %>
+<% elsif @factura.processed =="1" %>  
+  <%= link_to 'Anular', "/facturas/do_anular/#{@factura.id}" %>
 <% end %>
-<%= link_to 'Regresar', "/companies/facturas/#{@invoice.company.id}" %>
+<%= link_to 'Regresar', "/companies/facturas/#{@factura.company.id}" %>
 </div>

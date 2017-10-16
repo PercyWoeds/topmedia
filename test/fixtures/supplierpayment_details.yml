@@ -7,6 +7,9 @@ one:
   tm: MyString
   total: 1.5
   descrip: MyText
+  purchase_id: 1
+  supplier_payment_id: 1
+  tipocambio: 1.5
 
 two:
   document_id: 1
@@ -15,3 +18,6 @@ two:
   tm: MyString
   total: 1.5
   descrip: MyText
+  purchase_id: 1
+  supplier_payment_id: 1
+  tipocambio: 1.5

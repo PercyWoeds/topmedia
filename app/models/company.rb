@@ -1338,6 +1338,7 @@ def get_supplier_payments2(moneda)
   
   # Get profit, cost and taxes for a series of invoices in an exact date
   def get_ptc_value_exact_date(date, value)
+    
     invoices = Invoice.where(["invoices.return = '0' AND company_id = ? AND date_processed >= ? AND date_processed <= ?", self.id, "#{date} 00:00:00", "#{date} 23:59:59"])
     ret = 0
     

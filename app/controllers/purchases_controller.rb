@@ -1796,7 +1796,7 @@ def newfactura2
   
   # Autocomplete for suppliers
   def ac_suppliers
-    @suppliers =  Supplier.where(["company_id = ? AND (ruc LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
+    @suppliers =  Supplier.where(["company_id = ? AND (ruc ILIKE ? OR name ILIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
    
     render :layout => false
   end

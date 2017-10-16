@@ -1,0 +1,97 @@
+
+
+<%= simple_form_for  [ @factura , @factura_detail ] do |f| %>
+
+<div class="form-inputs">
+    <!--<% if @contrato_cuotas %>-->
+    
+     <label for="ac_contrato_cuota" class="bold">Nro Cuota *</label><br />
+     <input type="text" name="ac_contrato_cuota" id="ac_contrato_cuota" value="<% if @ac_contrato_cuota %><%= @ac_contrato_cuota %> <% end %>" />
+      
+      <div class="small">
+        Ingrese una termino de busqueda para encontrar una cuota
+      </div>
+      <br />
+  
+     <div >  
+     <strong>Comision Id :</strong>
+     
+      <strong>Seleccionar Comision 1  :</strong>
+      <span id="selected_contrato_comision1" value="selected_contrato_comision1"></span>
+      <br>
+      <strong>Seleccionar Comision 2  :</strong>   
+      <span id="selected_contrato_comision2" value="selected_contrato_comision2"></span>
+      
+      <br>
+      <strong>Total Comision  :</strong>
+      <span id="selected_total_comision" value="selected_total_comision"></span>
+      
+      <br>
+     </div>
+    
+    <br />
+    <div class="field">
+    <%= f.label :total, "Importe*", :class => "bold" %><br />
+    <%= f.number_field :total,:step => 0.01 %>   
+    </div>
+
+   <div class="field">
+    <%= f.label :tipocambio, "Tipo Cambio*", :class => "bold" %><br />
+    <%= f.number_field :tipocambio,:step => 0.01 %>   
+   </div>
+     <%= hr() %>
+  </div>
+  
+   <div class="form-actions">
+    
+    <%= f.hidden_field :contrato_cuota_id, :id => "ac_contrato_cuota_id" %>      
+    <%= f.submit %>
+    
+   </div>
+    
+       
+    <!--<% else %>-->
+    <!-- <div class="field">-->
+    <!--<p>  No existe informacion para facturar </p>  -->
+    <!-- </div>-->
+    <!--<% end %>-->
+
+  
+<% end %>
+
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+    
+    $("#ac_contrato_cuota").autocomplete("/facturas/ac_contrato_cuotas/<%= @factura.contrato_id %>", {
+	  matchSubset: 1,
+	  matchContains: 1,
+      selectFirst: false
+    });
+    
+      $("#ac_contrato_cuota").result(function(event, data, formatted) {
+      $("#ac_contrato_cuota_id").html(data[6]);
+      $("#selected_contrato_comision1").html(data[4]);
+      $("#selected_contrato_comision2").html(data[2]);
+      $("#selected_contrato_numero").html(data[0]);
+      $("#selected_total_comision").html(data[8]);  
+      
+    });        
+    
+    $("#factura_detail_total").bind("blur", function() {
+  
+      var c_importe   = $("#factura_detail_total").val();
+      var c_comision1 = $("#selected_total_comision").val();
+     
+      if (parseFloat(c_importe) >  parseFloat(c_comision1) ) {
+          alert("Total Importe es mayor a cuota de comisiones ");
+      }   
+      
+      
+      
+     });
+  });
+</script>

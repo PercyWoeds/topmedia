@@ -1,0 +1,58 @@
+
+
+<% if @contrato.code %>
+  <p>
+    <b>Contrato Nro:</b>
+    <%= link_to @contrato.code, @contrato.code %>
+  </p>
+<% end %>
+
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @contrato.fecha %>
+</p>
+
+<p>
+  <strong>Customer:</strong>
+  <%= @contrato.customer.name %>
+</p>
+
+<p>
+  <strong>Medio:</strong>
+  <%= @contrato.medio.descrip %>
+</p>
+
+<p>
+  <strong>Importe:</strong>
+  <%= @contrato.importe %>
+</p>
+
+<p>
+  <strong>Moneda:</strong>
+
+  <%= @contrato.get_moneda %>
+
+</p>
+
+<p>
+  <strong>Tipocontrato:</strong>
+  
+ <%= @contrato.get_contrato %>
+
+</p>
+
+<p>
+  <strong>Nrocuotas:</strong>
+  <%= @contrato.nrocuotas %>
+</p>
+
+<p>
+  <strong>Comision1:</strong>
+  <%= @contrato.comision1 %>
+</p>
+
+<p>
+  <strong>Comision2:</strong>
+  <%= @contrato.comision2 %>
+</p>

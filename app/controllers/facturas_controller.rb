@@ -9,19 +9,52 @@ class FacturasController < ApplicationController
 
   def discontinue
     
-      @facturasselect = Factura.find(params[:products_ids])
+      @facturasselect = ContratoDetail.find(params[:products_ids])
 
-    for item in @guiasselect
+    for item in @facturasselect
         begin
           a = item.id
-          b = item.remite_id               
+          b = item.contrato_id             
 
-          new_invoice_guia = Deliverymine.new(:mine_id =>$minesid, :delivery_id =>item.id)          
-          new_invoice_guia.save
+          new_invoice_detail = FacturaDetail.new(:factura_id=>$lcFacturaId ,:contrato_detail_id => a, :total =>item.total,:contrato_id => b )          
+          new_invoice_detail.save
            
-        
-         end              
+        end              
     end
+    
+    @invoice = Invoice.find($lcFacturaId)
+    
+    @invoice[:subtotal] = @invoice.get_subtotal
+    
+    begin
+      @invoice[:tax] = @invoice.get_tax( @invoice[:customer_id])
+    rescue
+      @invoice[:tax] = 0
+    end
+    
+    @invoice[:total] = @invoice[:subtotal] + @invoice[:tax]
+    @invoice[:balance] = @invoice[:total]
+    @invoice[:pago] = 0
+    @invoice[:charge] = 0
+    
+    respond_to do |format|
+      if @invoice.save
+        # Create products for kit
+        
+        @invoice.correlativo
+        # Check if we gotta process the invoice
+        
+        format.html { redirect_to(@invoice, :notice => 'Invoice was successfully created.') }
+        format.xml  { render :xml => @invoice, :status => :created, :location => @invoice }
+      else
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @invoice.errors, :status => :unprocessable_entity }
+      end
+    end
+    
+    
+    
+     
   end  
   def excel
 
@@ -201,11 +234,29 @@ class FacturasController < ApplicationController
   
   # Autocomplete for customers
   def ac_customers
-    @customers = Customer.where(["company_id = ? AND (ruc LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
+    @customers = Customer.where(["company_id = ? AND (ruc iLIKE ? OR name iLIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
    
     render :layout => false
   end
+   def ac_contrato_cuotas
+    
+     @contrato_cuotas = ContratoDetail.where(:contrato_id =>[ params[:q] + "%" ]) 
+    
   
+    render :layout => false
+  end
+
+  def ac_contratos
+     @contratos = Contrato.find_by_sql(['Select medios.descrip,customers.name as name,contratos.code,contratos.id  
+     from contratos 
+     INNER JOIN customers ON contratos.customer_id = customers.id
+     INNER JOIN medios on contratos.medio_id = medios.id 
+     WHERE contratos.code like  ?  ',"%" + params[:q] + "%" ]) 
+  
+    render :layout => false
+  end
+  
+
   # Show invoices for a company
   def list_invoices
     @company = Company.find(params[:company_id])
@@ -263,6 +314,25 @@ class FacturasController < ApplicationController
     @company = Company.find(params[:company_id])
     @facturas  = Factura.all
   end
+  
+  def newfactura2
+    
+    @company = Company.find(1)
+    @factura = Factura.find(params[:factura_id])
+    @contrato_cuotas= ContratoDetail.where(:contrato_id => params[:factura_id]) 
+    @contrato = Contrato.find(@factura.contrato_id)
+    
+    $lcContratoId = @contrato.id
+    $lcCode  = @contrato.code
+    $lcFacturaId= @factura.id 
+    @detalleitems =  @contrato.get_contrato_cuotas(@contrato.id)
+
+    @factura_detail = Factura.new
+
+  
+  end 
+
+
 
   def generar4
     
@@ -520,8 +590,18 @@ new_invoice_item.save
   # GET /invoices/1
   # GET /invoices/1.xml
   def show
-    @invoice = Factura.find(params[:id])
-    @customer = @invoice.customer
+    @factura = Factura.find(params[:id])
+    @contrato = @factura.contrato 
+    @factura_details = @factura.factura_details 
+   
+    
+    
+     respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @factura   }
+    end
+    
+    
     
   end
 
@@ -575,7 +655,8 @@ new_invoice_item.save
   def create
     @pagetitle = "Nueva factura "
     @action_txt = "Create"
-    
+   
+  
     items = params[:items].split(",")
 
     items2 = params[:items2].split(",")
@@ -588,6 +669,8 @@ new_invoice_item.save
     @divisions = @company.get_divisions()
     @payments = @company.get_payments()    
     @services = @company.get_services()
+    @tipofacturas = @company.get_tipofacturas() 
+    @monedas = @company.get_monedas()
 
     @invoice[:subtotal] = @invoice.get_subtotal(items)
     
@@ -612,8 +695,7 @@ new_invoice_item.save
     respond_to do |format|
       if @invoice.save
         # Create products for kit
-        @invoice.add_products(items)
-        @invoice.add_guias(items2)
+        
         @invoice.correlativo
         # Check if we gotta process the invoice
         @invoice.process()
@@ -1238,7 +1320,7 @@ new_invoice_item.save
 
   private
   def factura_params
-    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id)
+    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:contrato_id)
   end
 
 end

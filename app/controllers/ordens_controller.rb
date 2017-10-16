@@ -926,12 +926,9 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
     
     #-------
     
-    
-      
     items = params[:items].split(",")
     
     @orden = Orden.new(orden_params)
-    
     @company = Company.find(params[:orden][:company_id])
     
     @locations = @company.get_locations()

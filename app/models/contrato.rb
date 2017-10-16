@@ -5,9 +5,10 @@ class Contrato < ActiveRecord::Base
   validates_numericality_of :importe,:nrocuotas,:comision1,:comision2
 
   
-  belongs_to :customer
+  belongs_to :customer 
   belongs_to :medio
   belongs_to :orden
+   has_many :facturas
   
   has_many :contrato_details, :dependent => :destroy
  
@@ -37,6 +38,11 @@ class Contrato < ActiveRecord::Base
   	end
 
   end 	
+  
+  def get_contrato_cuotas(id)
+      @contrato_cuotas = ContratoDetail.where(:contrato_id=>id)
+      return @contrato_cuotas
+  end 
 
   def get_moneda
   	if self.moneda_id == 1

@@ -63,6 +63,7 @@ class Ordens::OrdensProductsController < ApplicationController
     
     
     @orden_product = OrdenProduct.new(orden_product_params)
+    
     @orden_product.orden_id  = @orden.id 
     
     @orden_product.avisodetail_id = params[:ac_item_id]
@@ -97,6 +98,7 @@ class Ordens::OrdensProductsController < ApplicationController
   # PATCH/PUT /orden_products/1.json
   def update
     @orden = Orden.find(params[:orden_id])
+    
     @orden_product = OrdenProduct.find(params[:id]) 
     
     @orden_product[:avisodetail_id] = params[:ac_item_id]

@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Supplierpayment Details</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Document</th>
+      <th>Documento</th>
+      <th>Supplier</th>
+      <th>Tm</th>
+      <th>Total</th>
+      <th>Descrip</th>
+      <th>Purchase</th>
+      <th>Supplier payment</th>
+      <th>Tipocambio</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @supplierpayment_details.each do |supplierpayment_detail| %>
+      <tr>
+        <td><%= supplierpayment_detail.document_id %></td>
+        <td><%= supplierpayment_detail.documento %></td>
+        <td><%= supplierpayment_detail.supplier_id %></td>
+        <td><%= supplierpayment_detail.tm %></td>
+        <td><%= supplierpayment_detail.total %></td>
+        <td><%= supplierpayment_detail.descrip %></td>
+        <td><%= supplierpayment_detail.purchase_id %></td>
+        <td><%= supplierpayment_detail.supplier_payment_id %></td>
+        <td><%= supplierpayment_detail.tipocambio %></td>
+        <td><%= link_to 'Show', supplierpayment_detail %></td>
+        <td><%= link_to 'Edit', edit_supplierpayment_detail_path(supplierpayment_detail) %></td>
+        <td><%= link_to 'Destroy', supplierpayment_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Supplierpayment detail', new_supplierpayment_detail_path %>

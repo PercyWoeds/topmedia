@@ -2,12 +2,12 @@ class Factura < ActiveRecord::Base
   self.per_page = 20
 
 
-  validates_presence_of :company_id, :customer_id, :code, :user_id
+  validates_presence_of :company_id, :contrato_id, :code, :user_id
   
   belongs_to :company
   belongs_to :location
   belongs_to :division
-  belongs_to :customer
+  belongs_to :contrato 
   belongs_to :payment 
   belongs_to :user
   belongs_to :moneda 
@@ -16,6 +16,7 @@ class Factura < ActiveRecord::Base
   has_many   :deliveryship
   has_many   :delivery 
   has_many   :invoice_services
+  has_many   :factura_details 
   
    TABLE_HEADERS = ["TD",
                       "Documento",
@@ -52,9 +53,8 @@ class Factura < ActiveRecord::Base
       where("code LIKE ?", "%#{search}%") 
         
   end
-
-
-
+  
+  
   def self.to_csv(result)
     unless result.nil?
       CSV.generate do |csv|
@@ -95,28 +95,24 @@ class Factura < ActiveRecord::Base
   end
 
 
-  def get_subtotal(items)
+  def get_subtotal
     subtotal = 0
     
-    for item in items
-      if(item and item != "")
-        parts = item.split("|BRK|")
-        
-        id = parts[0]
-        quantity = parts[1]
-        price = parts[2]
-        discount = parts[3]
-        
-        total = price.to_f * quantity.to_f
-        total -= total * (discount.to_f / 100)
-        
-        begin
-          product = Service.find(id.to_i)
-          subtotal += total
-        rescue
-        end
-      end
+    invoices = FacturaDetail.where(["id = ? ", self.id ])
+    ret = 0
+    
+    for invoice in invoices
+      
+      
+     
+        if(value == "total")
+          ret += product.profit * product.curr_quantity
+        elsif(value == "tax")
+          ret += product.tax * product.curr_quantity
+        end 
+    
     end
+   
     
     return subtotal
   end
@@ -229,7 +225,7 @@ class Factura < ActiveRecord::Base
   end
 
   def identifier
-    return "#{self.code} - #{self.customer.name}"
+    return "#{self.code} - #{self.contrato.code}"
   end
 
   def get_invoices

@@ -46,8 +46,8 @@
     <%= hr() %>
     
 
-      <label for="ac_customer" class="bold">Cliente*</label><br />
-      <input type="text" name="ac_customer" id="ac_customer" value="<% if @ac_customer %><%= @ac_customer %><% end %>" />
+      <label for="ac_contrato" class="bold">Contrato *</label><br />
+      <input type="text" name="ac_contrato" id="ac_contrato" value="<% if @ac_contrato %><%= @ac_contrato %><% end %>" />
       
       
       <div class="small">
@@ -56,8 +56,12 @@
       <br />
 
       <div class="small">
-        <strong>Seleccionar cliente:</strong>
-        <span id="selected_customer"><% if @ac_customer %><%= @ac_customer %><% else %><!-- i --><% end %></span>
+        <strong>Seleccionar Contrato :</strong>
+        <span id="selected_contrato"><% if @ac_contrato %><%= @ac_contrato %><% else %><!-- i --><% end %></span>
+        <span id="selected_contrato_name"><% if @ac_contrato %><%= @ac_contrato %><% else %><!-- i --><% end %></span>
+        <br>
+        <strong>Seleccionar Medio :</strong>
+        <span id="selected_contrato_descrip"><% if @ac_contrato %><%= @ac_contrato %><% else %><!-- i --><% end %></span>
       </div>
      </div>
 
@@ -138,7 +142,9 @@
       <input type="hidden" name="items2" id="items2" value="<% if @guias_lines %><%= @guias_lines %><% end %>" />
       
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
-      <%= f.hidden_field :customer_id, :id => "ac_customer_id" %>
+      <%= f.hidden_field :contrato_id, :id => "ac_contrato_id" %>
+     
+      
       <%= f.hidden_field :company_id %>      
       <%= f.submit %>
     </div>
@@ -149,74 +155,7 @@
   <% end %>
 </div>
 
-<div class="mid_box">
-  <h4>
-    Agregar Servicios  
-  </h4>
-  
-  <form method="get" action="/services" onsubmit="addItemToInvoice2(); return false;">
-    
-    <strong>Servicio:</strong><br />
-    <%= select_tag(:ac_item_id,options_from_collection_for_select(@services,'id','name') ) %>
-    <div class="small">
-      Ingrese un termino de busqueda para encontrar un producto.
-    </div>
-    <br />
-    
-    <strong>Precio:</strong><br />
-    <input type="text" name="ac_item_price" id="ac_item_price" value="" class="tf_short" />
-    <div class="small">
-      Precio del  producto para agregar una factura.
-    </div>
-    <br />
-    
-    <strong>Cantidad:</strong><br />
-    <input type="text" name="ac_item_quantity" id="ac_item_quantity" value="1" class="tf_short" />
-    <div class="small">
-     Cantidad del producto para agregar una factura.
-    </div>
-    <br />
-    
-    <strong>Descuento %:</strong><br />
-    <input type="text" name="ac_item_discount" id="ac_item_discount" value="0" class="tf_short" />
-    <div class="small">
-      Descuento % del producto para agregar una factura.
-    </div>
-    <br />
-    
-    <div>
-      <strong>Total:</strong><br />
-      <span id="ac_item_total">0.00</span>
-    </div>
-    
-    <br />
-    <input type="submit" value="Agregar item a Factura" />
-    
-  </form>
-  
-  <%= hr() %>
-  
 
-  <h4>
-    Agregar guias 
-  </h4>
-  
-  <form method="get" action="/facturas" onsubmit="addItemTodelivery2(); return false;">
-
-    <input type="hidden" name="ac_item_guia" id="ac_item_guia" value="" />
-    <strong>Guia :</strong><br />
-
-    <input type="text" name="ac_item3" id="ac_item3" value="" />
-        <div class="small">
-          Ingrese un termino de busqueda para encontrar un producto.
-        </div>
-    <br />    
-    
-    <input type="submit" value="Agregar Guias" />
-
-  </form>
-
-</div>
 
 
 <%= br() %>
@@ -225,7 +164,21 @@
 <%= render 'layouts/autocomplete' %>
 
 <script type="text/javascript">
+
   $(document).ready(function() {
+    $("#ac_contrato").autocomplete("/facturas/ac_contratos/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_contrato").result(function(event, data, formatted) {
+      $("#ac_contrato_id").val(data[6]);
+      $("#selected_contrato").html(data[4]);
+      $("#selected_contrato_descrip").html(data[2]);
+      $("#selected_contrato_name").html(data[0]);
+    });        
+    
     $("#ac_customer").autocomplete("/facturas/ac_customers/<%= @company.id %>", {
 			matchSubset: 1,
 			matchContains: 1,
@@ -233,8 +186,10 @@
     });
     
     $("#ac_customer").result(function(event, data, formatted) {
+      
       $("#ac_customer_id").val(data[2]);
       $("#selected_customer").html(data[0]);
+
     });        
     
     $("#ac_user").autocomplete("/facturas/ac_user/<%= @company.id %>", {

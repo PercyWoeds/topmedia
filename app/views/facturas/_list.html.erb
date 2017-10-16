@@ -30,7 +30,7 @@
             <%= link_to invoice.code, invoice, :title => "Ir a factura" %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= money(invoice.customer.name) %>
+            <%= money(invoice.contrato.code) %>
           </td>
           <td class="bordered_right bordered_bottom right">
             <%= money(invoice.total) %>

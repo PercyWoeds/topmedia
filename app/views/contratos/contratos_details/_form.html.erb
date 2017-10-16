@@ -78,11 +78,9 @@
       var c_comision2 = $("#ac_item_comision2").val();
    
       var vventa  =  ((c_importe) / 1.18 );
-      var comision1  =  vventa * parseFloat(c_comision1)/100;
+      var comision1  =  vventa * parseFloat(c_comision1)/100 ;
       var comision3  =  vventa - comision1;
-      
-      var comision2  =  comision3 * parseFloat(c_comision2)/100  ;
-      
+      var comision2  =  comision3 * parseFloat(c_comision2)/100 ;
       var totalcomision = comision1 + comision2 ;
   
       document.getElementById('contrato_detail_vventa').value = vventa.toFixed(2);

@@ -1,6 +1,8 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :supplierpayment_details
+  resources :factura_details
   resources :contrato_details
   resources :quota
   resources :quota
@@ -24,6 +26,14 @@
   resources :contratos do
     resources :contrato_details, except: [:index,:show], controller: "contratos/contratos_details"
   end 
+  
+  resources :facturas do
+    resources :factura_details, except: [:index,:show], controller: "facturas/facturas_details"
+  end 
+  resources :supplier_payments do
+      resources :supplierpayment_details, except: [:index,:show], controller: "supplier_payments/supplierpayment_details"
+  end 
+
   resources :ciudads
   resources :campania
   resources :avisodetails do 
@@ -132,7 +142,7 @@ end
     collection { get :generar  }
     collection { post :import }
     collection { get :excel }
-
+    collection { post :discontinue }
     collection do 
       put :discontinue 
     end 
@@ -203,7 +213,8 @@ end
     collection { post :import }
   end 
   #Manifiesto busqueda de guias
-
+ 
+  
   get 'search_mines', to: 'deliveries#search'
   post 'add_mine', to: 'delliveries#add_mine'
 
@@ -384,12 +395,16 @@ end
   match 'facturas/ac_services/:company_id' => 'facturas#ac_services', via: [:get, :post]
   match 'facturas/ac_user/:company_id' => 'facturas#ac_user', via: [:get, :post]
   match 'facturas/ac_customers/:company_id' => 'facturas#ac_customers', via: [:get, :post]
+  match 'facturas/ac_contratos/:company_id' => 'facturas#ac_contratos', via: [:get, :post]
+  match 'facturas/ac_contrato_cuotas/:id' => 'facturas#ac_contrato_cuotas', via: [:get, :post]
   match 'facturas/ac_guias/:company_id' => 'facturas#ac_guias', via: [:get, :post]
   match 'facturas/new/:company_id' => 'facturas#new', via: [:get, :post]
   match 'facturas/export/:company_id' => 'facturas#export', via: [:get, :post]
   match 'facturas/export2/:company_id' => 'facturas#export2', via: [:get, :post]
   match 'facturas/export3/:company_id' => 'facturas#export3', via: [:get, :post]
   match 'facturas/export4/:company_id' => 'facturas#export4', via: [:get, :post]
+  
+  match 'facturas/newfactura2/:factura_id' => 'facturas#newfactura2', via: [:get, :post]
 
   match 'facturas/rpt_facturas_all/:company_id' => 'facturas#rpt_facturas_all_pdf', via: [:get, :post]
   match 'facturas/rpt_facturas_all2/:company_id' => 'facturas#rpt_facturas_all2_pdf', via: [:get, :post]
@@ -787,6 +802,10 @@ end
   match 'inventories/email/:id' => 'inventories#email', via: [:get, :post]
   match 'inventories/pdf/:id' => 'inventories#pdf', via: [:get, :post]
   match 'companies/inventarios/:company_id' => 'inventarios#index', via: [:get, :post]
+  
+  
+  match 'supplier_payments/ac_facturas/:company_id' => 'supplier_payments#ac_facturas', via: [:get, :post]
+  
   
   resources :inventarios
 

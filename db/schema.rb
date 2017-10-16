@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170921214222) do
+ActiveRecord::Schema.define(version: 20171014162903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -496,6 +496,18 @@ ActiveRecord::Schema.define(version: 20170921214222) do
     t.string   "full_name"
   end
 
+  create_table "factura_details", force: :cascade do |t|
+    t.integer  "factura_id"
+    t.integer  "contrato_cuota_id"
+    t.float    "total"
+    t.integer  "moneda_id"
+    t.float    "tipocambio"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "contrato_detail_id"
+    t.integer  "contrato_id"
+  end
+
   create_table "facturas", force: :cascade do |t|
     t.integer  "company_id"
     t.integer  "location_id"
@@ -517,7 +529,6 @@ ActiveRecord::Schema.define(version: 20170921214222) do
     t.string   "serie"
     t.string   "numero"
     t.string   "payment_id"
-    t.integer  "factura_id"
     t.string   "tipo"
     t.float    "pago"
     t.float    "charge"
@@ -526,6 +537,7 @@ ActiveRecord::Schema.define(version: 20170921214222) do
     t.text     "observ"
     t.datetime "fecha2"
     t.string   "year_mounth"
+    t.integer  "contrato_id"
   end
 
   create_table "histories", force: :cascade do |t|
@@ -1504,6 +1516,20 @@ ActiveRecord::Schema.define(version: 20170921214222) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.string   "code"
+  end
+
+  create_table "supplierpayment_details", force: :cascade do |t|
+    t.integer  "document_id"
+    t.string   "documento"
+    t.integer  "supplier_id"
+    t.string   "tm"
+    t.float    "total"
+    t.text     "descrip"
+    t.integer  "purchase_id"
+    t.integer  "supplier_payment_id"
+    t.float    "tipocambio"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   create_table "suppliers", force: :cascade do |t|

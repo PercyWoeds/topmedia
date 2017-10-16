@@ -1,0 +1,5 @@
+<% if @contratos %>
+  <% for contrato in @contratos %>  
+  <%= contrato.name %>|BRK|<%= contrato.descrip   %>|BRK|<%= contrato.code %>|BRK|<%= contrato.id %>
+  <% end %>
+<% end %>

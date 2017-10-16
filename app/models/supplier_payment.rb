@@ -1,7 +1,7 @@
 class SupplierPayment < ActiveRecord::Base
 self.per_page = 20
    
-  validates_presence_of :company_id, :total,:user_id
+  validates_presence_of :company_id, :total,:user_id,:fecha1,:code 
   
   belongs_to :company
   belongs_to :location
@@ -11,7 +11,7 @@ self.per_page = 20
   belongs_to :payment
   belongs_to :bank_acount
 
-  has_many :supplier_payment_details
+  has_many :supplierpayment_details
   
   TABLE_HEADERS = ["ITEM",
                      "TIPO",
@@ -50,7 +50,10 @@ self.per_page = 20
         lcnumero = numero.to_s
         Voided.where(:id=>'11').update_all(:numero =>lcnumero)        
   end
-              
+
+
+
+   
   def get_subtotal(items)
     subtotal = 0
     
@@ -79,7 +82,7 @@ self.per_page = 20
   
   
   def delete_products()
-    invoice_products = SupplierPaymentDetail.where(supplier_payment_id: self.id)
+    invoice_products = SupplierpaymentDetail.where(supplier_payment_id: self.id)
     
     for ip in invoice_products
 
@@ -124,8 +127,8 @@ self.per_page = 20
         begin
           purchase = Purchase.find(id.to_i)          
 
-new_purchase = SupplierPaymentDetail.new(:supplier_payment_id => self.id, 
-  :purchase_id => purchase.id, :total => balance.to_f )
+          new_purchase = SupplierpaymentDetail.new(:supplier_payment_id => self.id, 
+          :purchase_id => purchase.id, :total => balance.to_f )
           new_purchase.save
 
           if purchase.payment == nil
@@ -134,8 +137,6 @@ new_purchase = SupplierPaymentDetail.new(:supplier_payment_id => self.id,
           if purchase.balance == nil
              purchase.balance =0 
           end 
-
-
           @last_payment = purchase.pago + balance.to_f.round(2) 
           @last_balance = purchase.balance 
           @newbalance = @last_balance - balance.to_f.round(2) 
@@ -181,7 +182,7 @@ new_purchase = SupplierPaymentDetail.new(:supplier_payment_id => self.id,
   end
 
   def get_payments    
- @itemproducts =SupplierPaymentDetail.find_by_sql(['Select supplier_payment_details.total,
+ @itemproducts =SupplierpaymentDetail.find_by_sql(['Select supplier_payment_details.total,
       purchases.documento,purchases.document_id,purchases.supplier_id  from supplier_payment_details   
       INNER JOIN purchases ON   supplier_payment_details.purchase_id = purchases.id
       WHERE  supplier_payment_details.supplier_payment_id = ?', self.id ])
@@ -190,13 +191,13 @@ new_purchase = SupplierPaymentDetail.new(:supplier_payment_id => self.id,
   end
   
   def get_payments_supplier
-    invoice_products = SupplierPaymentDetail.where(supplierpayment_id:  self.id)                                                                                                                                                                                                                                                                                        
+    invoice_products = SupplierpaymentDetail.where(supplierpayment_id:  self.id)                                                                                                                                                                                                                                                                                        
     return invoice_products
   end
   
   def products_lines
     purchases = []
-    invoice_products = SupplierPaymentDetail.where(supplierpayment_id:  self.id)
+    invoice_products = SupplierpaymentDetail.where(supplierpayment_id:  self.id)
     
     invoice_products.each do | ip |
                                                                                                                                                                                                                                                                                                               
@@ -236,9 +237,7 @@ new_purchase = SupplierPaymentDetail.new(:supplier_payment_id => self.id,
   def process
 
     if(self.processed == "1" or self.processed == true)
-      invoice_products = SupplierPaymentDetail.where(supplier_payment_id: self.id)
-    
-      
+      invoice_products = SupplierpaymentDetail.where(supplier_payment_id: self.id)
       self.date_processed = Time.now
       self.save
     end

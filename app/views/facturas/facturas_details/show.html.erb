@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Factura:</strong>
+  <%= @factura_detail.factura_id %>
+</p>
+
+<p>
+  <strong>Contrato cuota:</strong>
+  <%= @factura_detail.contrato_cuota_id %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @factura_detail.total %>
+</p>
+
+<p>
+  <strong>Moneda:</strong>
+  <%= @factura_detail.moneda_id %>
+</p>
+
+<p>
+  <strong>Tipocambio:</strong>
+  <%= @factura_detail.tipocambio %>
+</p>
+
+<%= link_to 'Edit', edit_factura_detail_path(@factura_detail) %> |
+<%= link_to 'Back', factura_details_path %>
