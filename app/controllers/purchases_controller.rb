@@ -1930,20 +1930,20 @@ def newfactura2
 
     @tipodocumento = @purchase[:document_id]
     
-    if @tipodocumento == 3
+    if @tipodocumento == 7
       @purchase[:payable_amount] = @purchase.get_subtotal(items)*-1
     else
       @purchase[:payable_amount] = @purchase.get_subtotal(items)
     end    
-    if @tipodocumento == 3
-      @purchase[:inafect] = @purchase.get_inafecto(items)*-1
+    if @tipodocumento == 7
+      @purchase[:inafect] = @purchase.get_inafecto(items) *-1
     else
       @purchase[:inafect] = @purchase.get_inafecto(items)
     end    
     
 
     begin
-       if @tipodocumento == 3
+       if @tipodocumento == 7
         @purchase[:tax_amount] = @purchase.get_tax(items)*-1
        else
         @purchase[:tax_amount] = @purchase.get_tax(items)
