@@ -916,11 +916,10 @@
 
     if(isNumeric(impuesto) && isNumeric(inafecto) && isNumeric(afecto)) {
 
-      var total1 = Number(afecto) * (1 + (Number(impuesto) / 100) )
+      var total1 = Number(afecto) ;
       
-      var tax      = round(total1,2) - round(afecto,2)
-      
-      var total = Number(total1) + Number(inafecto)
+      var tax      = round(total1,2) - round(afecto,2);
+      var total = Number(total1) + Number(inafecto);
       
       
       $("#ac_item_subtotal").html(total1);
