@@ -918,7 +918,7 @@
 
       var total1 = Number(afecto) * (1 + (Number(impuesto) / 100) )
       
-      var tax      = total1 - afecto
+      var tax      = round(total1,2) - round(afecto,2)
       
       var total = Number(total1) + Number(inafecto)
       
@@ -935,6 +935,9 @@
     }
   }  
   
+  function round(value, decimals) {
+  return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+}
 
   // List items in a kit
   function listItemsPurchase() {

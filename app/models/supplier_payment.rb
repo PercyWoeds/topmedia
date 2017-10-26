@@ -1,7 +1,7 @@
 class SupplierPayment < ActiveRecord::Base
 self.per_page = 20
    
-  validates_presence_of :company_id, :total,:user_id,:fecha1,:code 
+  validates_presence_of :company_id, :total,:user_id,:fecha1,:code ,:supplier_id
   
   belongs_to :company
   belongs_to :location

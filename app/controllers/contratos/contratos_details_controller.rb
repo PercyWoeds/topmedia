@@ -26,6 +26,8 @@ class Contratos::ContratosDetailsController < ApplicationController
   $lcNrocuotas = a.nrocuotas
   $lcImporte  = a.importe 
     @contrato_detail = ContratoDetail.new
+    @contrato_detail[:fecha]= Date.today 
+    @contrato_detail[:importe]= 0.00
   end
 
   # GET /contrato_details/1/edit

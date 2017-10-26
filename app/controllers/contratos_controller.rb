@@ -26,7 +26,7 @@ class ContratosController < ApplicationController
 
     @medios =Medio.all 
     @contrato[:code] = "#{generate_guid11()}"
-    
+    @contrato[:importe]=0.00
 
   end
 
@@ -35,8 +35,9 @@ class ContratosController < ApplicationController
 
       @contrato = Contrato.find(params[:id])
       
+      #@contrato[:importe] = @contrato.importe 
       @edit = true
-      
+            
       @customers = Customer.all 
       @medios =Medio.all 
         

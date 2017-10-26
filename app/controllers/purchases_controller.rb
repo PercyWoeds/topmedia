@@ -1870,6 +1870,9 @@ def newfactura2
     @purchase = Purchase.new
     
     @purchase[:processed] = false
+    @purchase[:date1] = Date.today
+    @purchase[:date2] = Date.today 
+    @purchase[:date3] = Date.today 
     
     @company = Company.find(params[:company_id])
     @purchase.company_id = @company.id
@@ -1891,7 +1894,7 @@ def newfactura2
   def edit
     @pagetitle = "Editar factura"
     @action_txt = "Actualizacion"
-    
+  
     @purchase = Purchase.find(params[:id])
     @company = @purchase.company
     @ac_supplier = @purchase.supplier.name
