@@ -79,10 +79,10 @@
     <%= f.label :tipocontrato_id ,"TIPO CONTRATO "%><br />
 
     <% if @edit %>
-      <%= f.select :tipocontrato_id,options_for_select([["CUOTAS",1],["CONTRA AVISO",2]],:selected => @contrato.tipocontrato_id)%>
+      <%= f.select :tipocontrato_id,options_for_select([["CUOTAS",1],["CONTRA CONSUMO",2],["LETRAS",3]],:selected => @contrato.tipocontrato_id)%>
     <% else %>
     
-    <%= f.select :tipocontrato_id, options_for_select([["CUOTAS",1],["CONTRA AVISO",2]]) %>
+    <%= f.select :tipocontrato_id, options_for_select([["CUOTAS",1],["CONTRA AVISO",2],["LETRAS",3]]) %>
      <% end %> 
     
     </div>

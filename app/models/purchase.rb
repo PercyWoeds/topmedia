@@ -58,6 +58,9 @@ TABLE_HEADERS2  = ["ITEM ",
   end 
 
 
+  
+  	
+  	
   def not_purchase_with?()
     document_tipo = self.document_id
     document_numero=  self.documento
