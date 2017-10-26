@@ -672,10 +672,10 @@ new_invoice_item.save
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
 
-    @invoice[:subtotal] = @invoice.get_subtotal(items)
+    @invoice[:subtotal] = 0
     
     begin
-      @invoice[:tax] = @invoice.get_tax(items, @invoice[:customer_id])
+      @invoice[:tax] = 0
     rescue
       @invoice[:tax] = 0
     end
