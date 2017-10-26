@@ -48,7 +48,7 @@ class ContratosController < ApplicationController
   def create
     @contrato = Contrato.new(contrato_params)
     @customers = Customer.all 
-    @medios =Medio.all 
+    @medios =  Medio.all 
     
     respond_to do |format|
       if @contrato.save

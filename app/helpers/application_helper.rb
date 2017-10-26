@@ -211,7 +211,7 @@ module ApplicationHelper
 # Contrato 
   def generate_guid11
     @voidedlast = Voided.find(13)
-    correlative_number =@voidedlast.serie + "-"+@voidedlast.numero.to_s
+    correlative_number = "2017-"+@voidedlast.numero.to_s
     return correlative_number
   end
 

@@ -52,11 +52,11 @@ class Contrato < ActiveRecord::Base
   	end
 
   end 
-def correlativo        
+  
+  def correlativo        
         numero = Voided.find(13).numero.to_i + 1
         lcnumero = numero.to_s
         Voided.where(:id=>'13').update_all(:numero =>lcnumero)        
-        
   end
 
 
