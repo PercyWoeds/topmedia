@@ -19,8 +19,9 @@ TABLE_HEADERS = ["ITEM",
 			     "MARCA",
 			     "VERSION",
 			     "TIEMPO",
-			     "FECHA1",
-			     "FECHA2"]	           
+			     "SUBTOTAL",
+			     "IGV",
+			     "TOTAL"]	           
 
 TABLE_HEADERS2 = ["Nº",
                      "Programa",   

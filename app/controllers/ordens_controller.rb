@@ -1112,8 +1112,10 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
             row << product.marca.descrip            
             row << product.version.descrip
             row << product.tiempo 
-            row << product.fecha1.strftime("%d/%m/%Y")
-            row << product.fecha2.strftime("%d/%m/%Y")
+            row << product.subtotal 
+            row << product.tax
+            row << product.total 
+            
             
             table_content << row
 
