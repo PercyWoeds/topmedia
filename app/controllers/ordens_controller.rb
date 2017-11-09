@@ -961,7 +961,7 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
     respond_to do |format|
       if @orden.save
         # Create products for kit
-        @orden.add_products(items)
+        #@orden.add_products(items)
         
         # Check if we gotta process the orden
         @orden.process()
