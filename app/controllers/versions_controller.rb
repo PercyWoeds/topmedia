@@ -3,6 +3,11 @@ class VersionsController < ApplicationController
 
   # GET /versions
   # GET /versions.json
+   def import
+     Version.import(params[:file])
+       redirect_to root_url, notice: "importadas."
+   end 
+  
   def index
     @versions = Version.all
   end
