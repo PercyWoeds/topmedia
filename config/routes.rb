@@ -12,7 +12,10 @@
       resources :orden_products, except: [:index,:show], controller: "ordens/ordens_products"
   end 
   
-  resources :versions
+  resources :versions do 
+     collection { post :import }
+  end 
+  
   resources :tipoavisos do 
 
 

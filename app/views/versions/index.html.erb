@@ -26,4 +26,13 @@
 
 <br>
 
+
 <%= link_to 'New Version', new_version_path %>
+
+
+
+<%= form_tag import_versions_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
