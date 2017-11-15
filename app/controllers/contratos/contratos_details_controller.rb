@@ -6,7 +6,7 @@ class Contratos::ContratosDetailsController < ApplicationController
   # GET /contrato_details
   # GET /contrato_details.json
   def index
-    @contrato_details = ContratoDetail.all
+    @contrato_details = ContratoDetail.orden(:nro)
   end
 
   # GET /contrato_details/1
