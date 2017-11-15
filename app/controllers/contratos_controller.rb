@@ -460,7 +460,7 @@ class ContratosController < ApplicationController
       headers = []
       table_content = []
 
-      Contrato::TABLE_HEADERS.each do |header|
+      Contrato::TABLE_HEADERS3.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -489,31 +489,32 @@ class ContratosController < ApplicationController
             row << product.medio.descrip
             row << product.get_moneda
             row << product.get_contrato
-            row << sprintf("%.2f",product.nrocuotas.to_s)
-            row << sprintf("%.2f",product.comision1.to_s)
-            row << sprintf("%.2f",product.comision2.to_s)
+            row << " "
+            row << " "
             row << sprintf("%.2f",product.importe.to_s)
-          
+            @importe = product.importe 
+            
             table_content << row
             
             for detalle in   @orden_details 
               row = []          
+                row << " "
               row << detalle.code
-              row << detalle.marca.descrip
-              row << detalle.version.descrip
               if detalle.fecha != nil 
                 row << detalle.fecha.strftime("%d/%m/%Y")
               else
                 row << " "
               end 
-              row << sprintf("%.2f",detalle.tiempo.to_s)
               
+              row << detalle.marca.descrip
+              row << detalle.version.descrip
+              
+              row << sprintf("%.2f",detalle.tiempo.to_s)
+              row << " "          
               row << sprintf("%.2f",detalle.subtotal.to_s)
               row << " "
-              row << " "
-              row << " "
-              row << " "
-              
+              @importe -= detalle.subtotal 
+              row << sprintf("%.2f",@importe.to_s)
               
               table_content << row
             end 
@@ -531,7 +532,7 @@ class ContratosController < ApplicationController
       row << ""
       row << ""
       row << ""
-      row << ""    
+    
       row << ""      
       row << "TOTALES => "
       row << " "

@@ -25,6 +25,16 @@ class Contrato < ActiveRecord::Base
                      "COMISION 2",
                      "IMPORTE"]
 
+  TABLE_HEADERS3 = ["ITEM",
+                     "NRO.",
+                     "FECHA",
+                     "MOTIVOS",
+                     "AVISO",
+                     "SEG",
+                     "ABONOS",
+                     "CARGOS",                     
+                     "CARGOS ACUM",
+                     "SALDO"]
 
             
 
