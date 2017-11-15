@@ -1336,6 +1336,12 @@ class ReportsController < ApplicationController
     @customers = @company.get_customers()
     @monedas=@company.get_monedas    
   end
+  def rpt_contratos3_pdf
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Reportes de Contratos "    
+    @customers = @company.get_customers()
+    @monedas=@company.get_monedas    
+  end
   
   
   def rpt_ordenes1_pdf
