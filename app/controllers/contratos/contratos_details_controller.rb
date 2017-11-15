@@ -6,7 +6,7 @@ class Contratos::ContratosDetailsController < ApplicationController
   # GET /contrato_details
   # GET /contrato_details.json
   def index
-    @contrato_details = ContratoDetail.orden(:nro)
+    @contrato_details = ContratoDetail.orden(:fecha)
   end
 
   # GET /contrato_details/1
@@ -78,7 +78,6 @@ class Contratos::ContratosDetailsController < ApplicationController
   # DELETE /contrato_details/1.json
   def destroy
     @contrato_detail.destroy
-    
     
     if @contrato_detail.destroy
       flash[:notice]= "Item fue eliminado satisfactoriamente "
