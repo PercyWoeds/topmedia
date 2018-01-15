@@ -1,7 +1,7 @@
 class CreateMarcas < ActiveRecord::Migration
   def change
     create_table :marcas do |t|
-      t.string :descrip
+      t.string :name
 
       t.timestamps null: false
     end

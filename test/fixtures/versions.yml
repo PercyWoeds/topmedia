@@ -2,8 +2,8 @@
 
 one:
   descrip: MyString
-  comments: MyText
+  producto_id: 1
 
 two:
   descrip: MyString
-  comments: MyText
+  producto_id: 1

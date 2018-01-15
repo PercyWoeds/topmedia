@@ -9,6 +9,8 @@ class Orden < ActiveRecord::Base
   	belongs_to :medio
   	belongs_to :marca
   	belongs_to :version
+  	belongs_to :producto 
+  	
   	has_many :orden_products, :dependent => :destroy
 
 TABLE_HEADERS = ["ITEM",
@@ -232,8 +234,8 @@ TABLE_HEADERS2 = ["Nº",
     
   for ip in items
         
-        if tiempo > 0
-          ip.price = (ip.tarifa / 30 * tiempo )  
+        if tiempo.to_i > 0
+          ip.price = (ip.tarifa / 30 * tiempo.to_i )  
           ip.total = ip.price * ip.quantity
           ip.save
        end 

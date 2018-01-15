@@ -6,113 +6,17 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
-@free_package = Package.new     
 
-#if free_package.new_record?
-  @free_package.title = 'Free'
-  @free_package.slug = 'free'
-  @free_package.price = 0
-  @free_package.description = 'Free Package'
-  @free_package.companies = 1
-  @free_package.locations = 1
-  @free_package.users = 1
-  @free_package.save
-#end
-
-
-@v = Voided.new
-@v.serie ='001'
-@v.numero='1'
-@v.save
-
-@v = Voided.new
-@v.serie ='001'
-@v.numero='1'
-@v.save
-
-@v = Voided.new
-@v.serie ='001'
-@v.numero='1'
-@v.save
-
-@v = Moneda.new
-@v.description="DOLARES"
-@v.symbol= "US$"
-@v.company_id =1
-@v.save
-
-@v = Moneda.new
-@v.description= "SOLES"
-@v.symbol= "S/."
-@v.company_id= 1
-@v.save
-
-@c =Company.new
-@c.user_id= 4
-@c.name= "MASA S.A."
-@c.address1= "MIRAFLORES"
-@c.address2= "LIMA"
-@c.city= "LIMA"
-@c.state= "LIMA"
-@c.zip= "92"
-@c.country= "Peru", 
-@c.website= "http://www.masa.com.pe"
-@c.save
-
-@l =Location.new
-@l.company_id= 1
-@l.name="LIMA"
-@l.address1= "MIRAFLORES"
-@l.address2= "LIMA"
-@l.city= "LIMA"
-@l.state= ""
-@l.country= "Peru"
-@l.save
-@l.company_id= 1
-
-
- @d =Division.new
- @d.company_id= 1 
- @d.location_id= 1 
- @d.name= "ADMINISTRACION" 
- @d.description= "ADMINISTRACION"
-@d.save
-
-@d =Division.new
- @d.company_id= 1 
- @d.location_id= 1 
- @d.name= "COMPRAS" 
- @d.description= "COMPRAS"
-@d.save
-
-
-@d =Division.new
- @d.company_id= 1 
- @d.location_id= 1 
- @d.name= "OPERACIONES" 
- @d.description= "OPERACIONES"
-@d.save
-
-
-@u=User.new
-@u.username= "percywoeds"
-@u.level= "admin"
-@u.first_name= "percy"
-@u.last_name= "woeds",
-@u.email= "percywoeds@gmail.com"
-@u.password= "ycrep2016"
-@u.password_confirmation = "ycrep2016"
-@u.save
-
-@c=CompanyUser.new
-@c.company_id= 1
-@c.user_id= 1
-@c.save
-
-
-
-
-
-
-
-
+3.times do |x|
+  genre  = Marca.find_or_create_by(:name => "Marca #{x}")
+  puts "marca"
+  puts genre.id 
+  3.times do |y|
+    artist = Producto.find_or_create_by(:name => "Producto #{x}.#{y}", :marca_id => genre.id)
+    puts "version"
+    puts artist.id 
+    3.times do |z|
+      Version.find_or_create_by(:descrip => "Version #{x}.#{y}.#{z}",  :producto_id => artist.id)
+    end
+  end
+end

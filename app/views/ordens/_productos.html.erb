@@ -1,0 +1,5 @@
+<%= collection_select(nil, :producto_id, productos, :id, :name,
+                     {:prompt   => "Select an Producto"},
+                     {:onchange => "#{ link_to(:url  => {:action => "update_versions"},
+                                                      :with => "'producto_id='+value")}"}) %>
+<br/>

@@ -28,8 +28,9 @@ class Contrato < ActiveRecord::Base
   TABLE_HEADERS3 = ["ITEM",
                      "NRO.",
                      "FECHA",
-                     "MOTIVOS",
-                     "AVISO",
+                     "MEDIO",
+                     "MONEDA",
+                     " ",
                      "SEG",
                      "ABONOS",
                      "CARGOS",                     
@@ -37,6 +38,17 @@ class Contrato < ActiveRecord::Base
                      "SALDO"]
 
             
+ TABLE_HEADERS4 = ["",
+                     "NRO.",
+                     "FECHA",
+                     "MARCA",
+                     "PRODUCTO",
+                     "VERSION",
+                     "TIEMPO",
+                     "",
+                     "",                     
+                     "",
+                     ""]
 
 
   def get_contrato

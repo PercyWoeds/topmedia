@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171109225913) do
+ActiveRecord::Schema.define(version: 20171207171805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -814,10 +814,9 @@ ActiveRecord::Schema.define(version: 20171109225913) do
   end
 
   create_table "marcas", force: :cascade do |t|
-    t.string   "descrip"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "company_id"
   end
 
   create_table "medios", force: :cascade do |t|
@@ -998,6 +997,7 @@ ActiveRecord::Schema.define(version: 20171109225913) do
     t.integer  "month"
     t.integer  "year"
     t.integer  "revision"
+    t.integer  "producto_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -1096,6 +1096,13 @@ ActiveRecord::Schema.define(version: 20171109225913) do
   create_table "periodos", force: :cascade do |t|
     t.string   "descrip"
     t.text     "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "productos", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "marca_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -1708,9 +1715,9 @@ ActiveRecord::Schema.define(version: 20171109225913) do
 
   create_table "versions", force: :cascade do |t|
     t.string   "descrip"
-    t.text     "comments"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "producto_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "voideds", force: :cascade do |t|

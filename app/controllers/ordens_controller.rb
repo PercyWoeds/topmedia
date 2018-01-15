@@ -678,7 +678,7 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
     @companies = Company.where(user_id: current_user.id).order("name")
     @path = 'ordens'
     @pagetitle = "ordens"
-
+     
   end
 
   # GET /ordens/1
@@ -690,6 +690,7 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
     @medios = Medio.all
     @marcas= Marca.all 
     @versions = Version.all 
+    @productos = Producto.all 
     
     @ordens_products = @orden.orden_products
   end
@@ -763,13 +764,14 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
     @marcas= Marca.all 
     @versions = Version.all 
     @contratos = Contrato.all 
+    @productos = Producto.all 
 
     @orden = Orden.new
     @orden[:code] = "#{generate_guid12()}"
     
     @orden[:processed] = false
     @orden[:tiempo] = 30
-    
+    @orden[:fecha] = Date.today 
     @company = Company.find(params[:company_id])
     @orden.company_id = @company.id
     
@@ -857,6 +859,8 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
     @marcas= Marca.all 
     @versions = Version.all 
     @contratos = Contrato.all 
+    @productos = Producto.all 
+    
 
     @products_lines = @orden.products_lines
     
@@ -940,6 +944,7 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
     @marcas= Marca.all 
     @versions = Version.all 
     @contratos = Contrato.all 
+    @productos = Producto.all 
     @orden[:month]= @month 
     @orden[:year]= @year
     
@@ -982,7 +987,6 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
   def update
     @pagetitle = "Edit orden"
     @action_txt = "Update"
-
     @customers = Customer.all
     @motivos =Motivo.all
     @medios = Medio.all
@@ -1002,23 +1006,22 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
     end
     
     
-    
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
-     @orden.calcularTarifa(@orden.tiempo)
-     
+     puts "tiempo "
+     puts params[:orden][:tiempo]
+       
+     @orden.calcularTarifa(params[:orden][:tiempo])
+    
      @orden[:subtotal] = @orden.get_subtotal("subtotal")
      @orden[:tax] = @orden.get_subtotal("tax")
      @orden[:total] = @orden[:subtotal] + @orden[:tax]
     
     respond_to do |format|
       if @orden.update_attributes(orden_params)
-         @orden_product = OrdenProduct.find_by(orden_id: params[:id])     
-         
-        # Create products for kit
-         
-        # Check if we gotta process the orden
-         @orden.process()
+        
+          #@orden.calcularTarifa(@orden.tiempo)    
+          @orden.process()
         
         format.html { redirect_to(@orden, :notice => 'orden was successfully updated.') }
         format.xml  { head :ok }
@@ -1108,8 +1111,8 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
             row << product.contrato.code
             row << product.fecha.strftime("%d/%m/%Y")
             row << ""
-            row << product.medio.descrip
-            row << product.marca.descrip            
+            row << product.medio.descrip 
+            row << product.marca.name             
             row << product.version.descrip
             row << product.tiempo 
             row << product.subtotal 
@@ -1239,7 +1242,8 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
       
       invoice_summary
     end
-  def invoice_summary2
+    
+   def invoice_summary2
       invoice_summary2 = []
       invoice_summary2 << ["SubTotal",  ActiveSupport::NumberHelper::number_to_delimited(@orden.subtotal,delimiter:",",separator:".").to_s]
       invoice_summary2 << ["IGV",ActiveSupport::NumberHelper::number_to_delimited(@orden.tax,delimiter:",",separator:".").to_s]
@@ -1247,6 +1251,20 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
       
       invoice_summary2
     end
+
+
+  def update_productos
+    # updates artists and songs based on genre selected
+    marca = Marca.find(params[:marca_id])
+    @productos = marca.productos.map{|a| [a.name, a.id]}.insert(0, "Select an Producto")
+    @versions   = marca.versions.map{|s| [s.descrip, s.id]}.insert(0, "Select a version") 
+  end
+
+  def update_versions
+    # updates songs based on artist selected
+    producto = Producto.find(params[:producto_id])
+    @versions = producto.versions.map{|s| [s.descrip, s.id]}.insert(0, "Select a Verson")
+  end
 
 
   private
@@ -1258,7 +1276,7 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
     # Never trust parameters from the scary internet, only allow the white list through.
     def orden_params
 
-    params.require(:orden).permit(:contrato_id,:fecha,:medio_id,:marca_id,:version_id,:fecha1,:fecha2,:tiempo,  
+    params.require(:orden).permit(:contrato_id,:fecha,:medio_id,:marca_id,:version_id,:producto_id,:fecha1,:fecha2,:tiempo,  
     :code,:company_id,:subtotal,:tax,:total,:user_id,:processed,:customer_id,:description,:d01,:d02,:d03,:d04,:d05,:d06,:d07,:d08,:d09,:d10,:d11,:d12,:d13,:d14,:d15,:d16,:d17,:d18,:d19,:d20,:d21,:d22,:d23,:d24,:d25,:d26,:d27,:d28,:d29,:d30,:d31,:revision )
   
     end

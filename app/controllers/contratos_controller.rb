@@ -453,11 +453,12 @@ class ContratosController < ApplicationController
 
   def build_pdf_body_rpt5(pdf)
     
-    pdf.text "Listado de Contratos desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
+    pdf.text "Estado de Cuenta Contratos: "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
   
     pdf.font "Helvetica" , :size => 6
 
       headers = []
+      headers2 = []
       table_content = []
 
       Contrato::TABLE_HEADERS3.each do |header|
@@ -468,6 +469,12 @@ class ContratosController < ApplicationController
 
       table_content << headers
 
+      Contrato::TABLE_HEADERS4.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers2 << cell
+      end
+
       
       nroitem=1
 
@@ -476,7 +483,7 @@ class ContratosController < ApplicationController
       nroitem = 1
 
        for  product in @contratos_rpt
-       
+           
        
             @contrato= Contrato.find(product.id)
             @orden_details = Orden.where(contrato_id: @contrato.id)
@@ -488,15 +495,32 @@ class ContratosController < ApplicationController
             row << product.customer.name 
             row << product.medio.descrip
             row << product.get_moneda
-            row << product.get_contrato
+            row << " "
+            row << sprintf("%.2f",product.importe.to_s)
             row << " "
             row << " "
             row << sprintf("%.2f",product.importe.to_s)
             @importe = product.importe 
             
             table_content << row
+           row =[] 
+             row <<""
+             row << "NRO."
+             row <<  "FECHA"
+              row << "MARCA"
+              row << "PRODUCTO"
+              row << "VERSION"
+              row <<  "TIEMPO"
+              row << ""
+              row << ""
+              row << ""
+              row <<  ""
+              
+           table_content << row
+            
             
             for detalle in   @orden_details 
+            
               row = []          
                 row << " "
               row << detalle.code
@@ -506,7 +530,12 @@ class ContratosController < ApplicationController
                 row << " "
               end 
               
-              row << detalle.marca.descrip
+              row << detalle.marca.name 
+              if detalle.producto == nil
+                row << ""
+              else
+                row << detalle.producto.name 
+              end 
               row << detalle.version.descrip
               
               row << sprintf("%.2f",detalle.tiempo.to_s)
@@ -518,6 +547,7 @@ class ContratosController < ApplicationController
               
               table_content << row
             end 
+            
 
             @totales += product.importe 
             
@@ -535,6 +565,7 @@ class ContratosController < ApplicationController
     
       row << ""      
       row << "TOTALES => "
+      row << " "
       row << " "
       row << " "
       row << sprintf("%.2f",@totales.to_s)

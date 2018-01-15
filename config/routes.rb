@@ -1,6 +1,7 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :productos
   resources :supplierpayment_details
   resources :factura_details
   resources :contrato_details
@@ -216,11 +217,12 @@ end
     collection { post :import }
   end 
   #Manifiesto busqueda de guias
- 
-  
   get 'search_mines', to: 'deliveries#search'
-  post 'add_mine', to: 'delliveries#add_mine'
-
+  post 'add_mine', to: 'deliveries#add_mine'
+  
+  
+  get 'update_productos' , to: 'ordens#update_productos'
+  get 'update_versions' , to: 'ordens#update_versions'
 
   get 'my_declarations', to: 'declarations#my_deliveries'
  # get 'search_friends', to: 'deliveries#search'
