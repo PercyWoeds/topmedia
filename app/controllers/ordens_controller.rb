@@ -1204,7 +1204,6 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
      @month_name = @months[$lcFechaMes - 1][0] <<" - " <<@orden.year.to_s
     
      
-     
      $lcMoneda ="NUEVOS SOLES "
      
       client_headers  = [["Marca: ", $lcMarca]] 

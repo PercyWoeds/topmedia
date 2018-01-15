@@ -15,7 +15,7 @@
     <% @versions.each do |version| %>
       <tr>
         <td><%= version.descrip %></td>
-        <td><%= version.comments %></td>
+        
         <td><%= link_to 'Show', version %></td>
         <td><%= link_to 'Edit', edit_version_path(version) %></td>
         <td><%= link_to 'Destroy', version, method: :delete, data: { confirm: 'Are you sure?' } %></td>

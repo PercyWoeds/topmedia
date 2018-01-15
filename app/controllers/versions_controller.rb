@@ -74,6 +74,6 @@ class VersionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def version_params
-      params.require(:version).permit(:descrip, :comments,:producto_id)
+      params.require(:version).permit(:descrip,:producto_id)
     end
 end
