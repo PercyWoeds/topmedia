@@ -82,7 +82,13 @@ class Ordens::OrdensProductsController < ApplicationController
     
      respond_to do |format|
        if @orden_product.save
-         
+           @orden[:subtotal] = @orden.get_subtotal("subtotal")
+           @orden[:tax] = @orden.get_subtotal("tax")
+           @orden[:total] = @orden[:subtotal] + @orden[:tax]
+          
+           @orden.update_attributes(:subtotal=> @orden[:subtotal])
+           
+          
           
         
          format.html { redirect_to @orden, notice: 'Orden product was successfully created.' }
