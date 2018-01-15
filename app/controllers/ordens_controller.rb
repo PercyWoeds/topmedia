@@ -1195,7 +1195,8 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
     #{@purchaseorder.description}
       $lcContrato =  @orden.contrato.code
      $lcMedio  = @orden.medio.descrip
-     $lcMarca  = @orden.marca.descrip
+     $lcMarca  = @orden.marca.name
+     $lcProducto = @orden.producto.name 
      $lcVersion = @orden.version.descrip
      $lcFechaMes = @orden.month.to_i  
      $lcDuracion = @orden.tiempo
@@ -1207,8 +1208,9 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
      $lcMoneda ="NUEVOS SOLES "
      
       client_headers  = [["Marca: ", $lcMarca]] 
+      client_headers << ["Producto  : ",$lcProducto]
       client_headers << ["Version  : ",$lcVersion]
-      client_headers << ["Version  : ",$lcDuracion]
+      client_headers << ["Duracion  : ",$lcDuracion]
       client_headers << ["Emision campaña : ",@month_name ]     
       client_headers
   end
