@@ -34,9 +34,9 @@
         <td><%= contrato_detail.fecha2 %></td>
         <td><%= contrato_detail.factura1 %></td>
         <td><%= contrato_detail.factura2 %></td>
-        <td><%= link_to 'Show', contrato_detail %></td>
-        <td><%= link_to 'Edit', edit_contrato_detail_path(contrato_detail) %></td>
-        <td><%= link_to 'Destroy', contrato_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Ver', contrato_detail %></td>
+        <td><%= link_to 'Editar', edit_contrato_detail_path(contrato_detail) %></td>
+        <td><%= link_to 'Eliminar', contrato_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

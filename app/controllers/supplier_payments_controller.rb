@@ -436,7 +436,7 @@ class SupplierPaymentsController < ApplicationController
   def build_pdf_header(pdf)
 
     
-      pdf.image "#{Dir.pwd}/public/images/logo.png", :width => 270
+      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 160
         
       pdf.move_down 6
         
@@ -856,6 +856,7 @@ end
     @payments = @company.get_payments()    
     @monedas  = @company.get_monedas()    
 
+
     ##Cerrar la order de servicio
     @supplierpayment[:processed]='3'
     documento =  @supplierpayment[:documento]
@@ -974,6 +975,8 @@ end
     @company = Company.find(params[:company_id])
     @pagetitle = "#{@company.name} - supplierpayments"
     @filters_display = "block"
+    @bank_acounts = @company.get_bank_acounts()
+    
     
     @locations = Location.where(company_id: @company.id).order("name ASC")
     @divisions = Division.where(company_id: @company.id).order("name ASC")
@@ -1065,15 +1068,17 @@ end
     @supplierpayment[:code] = "#{generate_guid9()}"
     @supplierpayment[:processed] = false
     @supplierpayment[:fecha1] =  Date.today
-    @company = Company.find(params[:company_id])
+    @company = Company.find(1)
     @supplierpayment.company_id = @company.id
+    banco_id = params[:id]
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @suppliers = @company.get_suppliers()
-    @bank_acounts = @company.get_bank_acounts()        
+    
+    @bank_acounts = @company.get_bank_acount_by($lcId)        
     @monedas  = @company.get_monedas()
-    @documents  = @company.get_documents()
+    @documents  = @company.get_documents_cheque()
   
     @ac_user = getUsername()
     @supplierpayment[:user_id] = getUserId()
@@ -1517,6 +1522,17 @@ def list_receive_supplierpayments
       invoice_headers  = [["Fecha : ",$lcHora]]    
       invoice_headers
   end
+  def go_bancos 
+    lcProcesado='1'
+    $lcId = params[:id]    
+    
+    @company = Company.find(1)
+    
+    @supplierpayments = SupplierPayment.where(["bank_acount_id = ?",$lcId])
+    
+    return @supplierpayments
+
+  end   
 
   
 
@@ -1530,4 +1546,3 @@ def list_receive_supplierpayments
   end
 
 end
-

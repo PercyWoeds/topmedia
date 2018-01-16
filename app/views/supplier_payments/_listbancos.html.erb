@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Banco </th>    
+      <th>Numero </th>    
+      <th>Moneda </th>    
+      <th>Opciones </th>    
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @bank_acounts.each do |bank_acount| %>
+      <tr>
+
+        <td><%= bank_acount.bank.name  %></td>
+        <td><%= bank_acount.number     %></td>
+        <td><%= bank_acount.moneda.description  %></td>
+        <td><%= link_to "Seleccionar ", "/supplier_payments/go_bancos/#{bank_acount.id}" %></td>
+        
+      </tr>
+    <% end %>
+  </tbody>
+</table>_
+
+<div class="button">
+  <%= link_to 'Regresar', "/companies/cpagar/#{@company.id}" %>
+</div>

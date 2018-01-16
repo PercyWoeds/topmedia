@@ -60,7 +60,14 @@
       <%= f.label :factura2, "factura 2*", :class => "bold" %><br />
       <%= f.text_field :factura2 %>      
     </div>
-   
+   <div class="field">
+      <%= f.check_box :sit %>
+      <%= f.label :sit ,"Situación", :class => "bold" %>
+      <div class="small">
+        Factura cancelada ?
+      </div>
+    </div>
+  
   <div class="form-actions">
     <%= f.button :submit %>
   </div>

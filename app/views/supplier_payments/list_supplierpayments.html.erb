@@ -67,13 +67,10 @@
 </div>
 
 <br />
-<%= render "supplier_payments/list" %>
+<%= render "supplier_payments/listbancos" %>
 
 <br />
 
-<div class="button">
-  <%= link_to 'Nueva Cancelacion ', "/supplier_payments/new/#{@company.id}" %>
-</div>
 
 <%= will_paginate @supplierpayments %>
 

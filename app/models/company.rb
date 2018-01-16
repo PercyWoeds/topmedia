@@ -83,6 +83,10 @@ class Company < ActiveRecord::Base
      bank_acounts = BankAcount.all      
     return bank_acounts
   end
+  def get_bank_acount_by(id)
+     bank_acounts = BankAcount.where("id = ?", id )
+    return bank_acounts
+  end
   
   def get_marcas()
      marcas = Marca.all      
@@ -100,7 +104,11 @@ class Company < ActiveRecord::Base
 
   def get_documents()
      documents = Document.where(company_id: self.id)
-       
+    return documents
+  end
+  
+  def get_documents_cheque()
+     documents = Document.where("company_id = ? and  tipo = ? ",self.id , "H")
     return documents
   end
 

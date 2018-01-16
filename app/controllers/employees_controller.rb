@@ -1,9 +1,7 @@
 class EmployeesController < ApplicationController
   before_action :set_employee, only: [:show, :edit, :update, :destroy]
 
-
-
-   def import
+  def import
       Employee.import(params[:file])
        redirect_to root_url, notice: "Empleados importadas."
   end 
@@ -35,6 +33,13 @@ class EmployeesController < ApplicationController
 
     respond_to do |format|
       if @employee.save
+        @supplier = Supplier.new
+        @supplier.name  = @employee.full_name
+        @supplier.company_id  =@employee.company_id
+        @supplier.taxable     = "1"
+        @supplier.tipo        = "E"
+        @supplier.save 
+        
         format.html { redirect_to @employee, notice: 'Employee was successfully created.' }
         format.json { render :show, status: :created, location: @employee }
       else
