@@ -28,20 +28,14 @@ totals = []
   <div class="field">
     <input type="date" name="fecha2" value="2017-01-15" style = "width: 150px" >
   </div>
+    
+  <input type="submit" value="To PDF"  />
 
-  <div class="field">
-      
-  <%= select_tag(:moneda_id, options_from_collection_for_select(@monedas,'id','description')) %>
-  </div>
-    
-    
-  <input type="submit" value="Ver" class="small_btn" />
-  <a href="/supplier_payments/rpt_cpagar5_pdf/<%= @company.id %>" class="small_btn">Hoy</a>
 </form>
 
 <br />
 
 
 <div class="button">
-  <%= link_to 'Back', "/companies/cpagar/#{@company.id}" %>
+  <%= link_to  'Regresar', "/companies/cpagar/#{@company.id}" %>
 </div>

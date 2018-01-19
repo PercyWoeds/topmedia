@@ -96,25 +96,20 @@ class Factura < ActiveRecord::Base
 
 
   def get_subtotal
-    subtotal = 0
+  
     
-    invoices = FacturaDetail.where(["id = ? ", self.id ])
+    invoices = FacturaDetail.where(["factura_id = ? ", self.id ])
     ret = 0
     
     for invoice in invoices
-      
-      
-     
-        if(value == "total")
-          ret += product.profit * product.curr_quantity
-        elsif(value == "tax")
-          ret += product.tax * product.curr_quantity
-        end 
-    
+
+        
+          ret += invoice.total 
+        
     end
    
     
-    return subtotal
+    return ret
   end
   
   def get_tax(items, customer_id)

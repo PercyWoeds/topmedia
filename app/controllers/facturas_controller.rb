@@ -9,7 +9,7 @@ class FacturasController < ApplicationController
 
   def discontinue
     
-      @facturasselect = ContratoDetail.find(params[:products_ids])
+    @facturasselect = ContratoDetail.find(params[:products_ids])
 
     for item in @facturasselect
         begin
@@ -22,17 +22,14 @@ class FacturasController < ApplicationController
         end              
     end
     
-    @invoice = Invoice.find($lcFacturaId)
+    @invoice = Factura.find($lcFacturaId)
+    @invoice[:subtotal] = @invoice.get_subtotal.round(2)
+    lcTotal = @invoice[:subtotal] * 1.18
+    @invoice[:total] = lcTotal.round(2)
     
-    @invoice[:subtotal] = @invoice.get_subtotal
+    lcTax =@invoice[:total] - @invoice[:subtotal]
+    @invoice[:tax] = lcTax.round(2)
     
-    begin
-      @invoice[:tax] = @invoice.get_tax( @invoice[:customer_id])
-    rescue
-      @invoice[:tax] = 0
-    end
-    
-    @invoice[:total] = @invoice[:subtotal] + @invoice[:tax]
     @invoice[:balance] = @invoice[:total]
     @invoice[:pago] = 0
     @invoice[:charge] = 0
@@ -42,6 +39,8 @@ class FacturasController < ApplicationController
         # Create products for kit
         
         @invoice.correlativo
+        
+        
         # Check if we gotta process the invoice
         
         format.html { redirect_to(@invoice, :notice => 'Invoice was successfully created.') }
@@ -319,14 +318,15 @@ class FacturasController < ApplicationController
     
     @company = Company.find(1)
     @factura = Factura.find(params[:factura_id])
+    
     @contrato_cuotas= ContratoDetail.where(:contrato_id => params[:factura_id]) 
     @contrato = Contrato.find(@factura.contrato_id)
     
     $lcContratoId = @contrato.id
     $lcCode  = @contrato.code
     $lcFacturaId= @factura.id 
+    
     @detalleitems =  @contrato.get_contrato_cuotas(@contrato.id)
-
     @factura_detail = Factura.new
 
   

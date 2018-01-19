@@ -21,14 +21,16 @@ self.per_page = 20
                      "IMPORTE  "]
   
   TABLE_HEADERS1 = ["ITEM",
-                     "FECHA",
-                     "RECEP.",
-                     "VENCE",
-                     "",
-                     "",
-                     "DOCUMENTO",
-                     "PROVEEDOR",
-                     "IMPORTE  " ]
+                     "R.U.C.",
+                     "PROVEEDOR.",
+                     "NRO.
+                      DOCUMENTO",
+                     "FECHA
+                      DMCTO",
+                     "VALOR 
+                      VENTA",
+                     "I.G.V.",
+                     "TOTAL" ]
 
 
 

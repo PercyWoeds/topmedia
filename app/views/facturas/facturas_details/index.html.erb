@@ -18,6 +18,7 @@
     <% @factura_details.each do |factura_detail| %>
       <tr>
         <td><%= factura_detail.factura_id %></td>
+        
         <td><%= factura_detail.contrato_cuota_id %></td>
         <td><%= factura_detail.total %></td>
         <td><%= factura_detail.moneda_id %></td>

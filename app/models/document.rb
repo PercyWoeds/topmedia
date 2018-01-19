@@ -1,6 +1,7 @@
 class Document < ActiveRecord::Base
 
-
+  
+  
   has_many :movement_details
 	has_many :locations
   has_many :suppliers

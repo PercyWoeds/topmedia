@@ -610,6 +610,8 @@ end
   match 'supplier_payments/search/:id' => 'supplier_payments#search', via: [:get, :post]
   match 'supplier_payments/rpt_purchases_all/:id' => 'supplier_payments#rpt_purchases_all', via: [:get, :post]
   match 'supplier_payments/rpt_cpagar4_pdf/:id' => 'supplier_payments#rpt_cpagar4_pdf', via: [:get, :post]
+  match 'supplier_payments/rpt_cpagar5_pdf/:id' => 'supplier_payments#rpt_cpagar5_pdf', via: [:get, :post]
+  
   match 'supplier_payments/go_bancos/:id' => 'supplier_payments#go_bancos', via: [:get, :post]
   
   match 'companies/supplier_payments/:company_id' => 'supplier_payments#list_supplierpayments', via: [:get, :post]  

@@ -689,7 +689,7 @@ def get_paymentsD_day_value(fecha1,fecha2,value = "total")
     ret = 0
       for factura in facturas      
                 
-          @detail = SupplierPaymentDetail.where(:supplier_payment_id => factura.id)
+          @detail = SupplierpaymentDetail.where(:supplier_payment_id => factura.id)
 
           for d in @detail 
             if(value == "ajuste")
@@ -919,18 +919,22 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
     @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda , ]).order(:id,:moneda_id)    
     return @purchases 
   end
+  def get_purchases_by_day_detalle(fecha1,fecha2)
+    @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ?  ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:moneda_id,:document_id)
+    return @purchases 
+  end
 
   def get_purchases_by_day_value(fecha1,fecha2,moneda,value='total_amount')
   
-    purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda , ]).order(:id,:moneda_id)    
+    purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda ]).order(:moneda_id,:document_id)    
 
     ret = 0
     for purchase in purchases
       
-      if(value == "subtotal")
-        ret += purchase.subtotal
-      elsif(value == "tax")
-        ret += purchase.tax
+      if(value == "payable_amount")
+        ret += purchase.payable_amount
+      elsif(value == "tax_amount")
+        ret += purchase.tax_amount
       else
         ret += purchase.total_amount
       end
@@ -940,6 +944,29 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
 
 
   end
+  
+  def get_purchases_by_doc_value(fecha1,fecha2,moneda,doc,value='total_amount')
+  
+    purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and moneda_id  =?   and document_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda, doc ]).order(:moneda_id,:document_id)    
+
+    ret = 0
+    for purchase in purchases
+      
+      if(value == "payable_amount")
+        ret += purchase.payable_amount
+      elsif(value == "tax_amount")
+        ret += purchase.tax_amount
+      else
+        ret += purchase.total_amount
+      end
+    end
+    
+    return ret
+
+
+  end
+  
+  
   
  def get_purchases_by_day_value_supplier(fecha1,fecha2,moneda,value='total_amount',supplier)
   

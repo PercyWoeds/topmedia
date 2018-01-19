@@ -14,7 +14,6 @@ class Purchase < ActiveRecord::Base
   belongs_to :payment
   belongs_to :purchaseorder
   
-
   has_many :purchase_details
   has_many :supplierpayment_details
 

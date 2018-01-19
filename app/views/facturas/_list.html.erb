@@ -8,6 +8,10 @@
         <th class="bordered_right bordered_bottom" style="width: 350px;">
           Cliente
         </th>
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+          Contrato 
+        </th>
+        
         <th class="bordered_right bordered_bottom">
           Total
         </th>
@@ -30,13 +34,17 @@
             <%= link_to invoice.code, invoice, :title => "Ir a factura" %>
           </td>
           <td class="bordered_right bordered_bottom">
+          <%= invoice.contrato.customer.name %>
+          </td>
+          
+          <td class="bordered_right bordered_bottom">
             <%= money(invoice.contrato.code) %>
           </td>
           <td class="bordered_right bordered_bottom right">
             <%= money(invoice.total) %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= invoice.fecha %>
+            <%= invoice.fecha.strftime("%d-%m-%Y") %>
           </td>
           <td class="bordered_right bordered_bottom <%= invoice.processed_color %>">
             <%= invoice.get_processed_short %>

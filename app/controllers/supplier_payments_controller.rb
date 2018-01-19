@@ -745,14 +745,37 @@ end
     @fecha2 = params[:fecha2]
     @tipomoneda = params[:moneda_id]
 
+    @customerpayment_rpt = @company.get_supplier_payments0(@fecha1,@fecha2)
+    @total_soles   = @company.get_paymentsD_day_value(@fecha1,@fecha2,"total")
+    @total_dolares = @company.get_paymentsC_day_value(@fecha1,@fecha2,"total")
+      
+    Prawn::Document.generate("app/pdf_output/rpt_supplierpayment2.pdf") do |pdf|        
+        pdf.font "Helvetica"
+        pdf = build_pdf_header_rpt3(pdf)
+        pdf = build_pdf_body_rpt3(pdf)
+        build_pdf_footer_rpt3(pdf)
+        $lcFileName =  "app/pdf_output/rpt_supplierpayment2.pdf"      
+        
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+  
+  end
+
+def rpt_cpagar5_pdf
+
+    @company=Company.find(params[:id])      
+    @fecha1 = params[:fecha1]
+    @fecha2 = params[:fecha2]
+    @tipomoneda = params[:moneda_id]
+
     
     @customerpayment_rpt = @company.get_supplier_payments0(@fecha1,@fecha2)
     @total_soles   = @company.get_paymentsD_day_value(@fecha1,@fecha2,"total")
     @total_dolares = @company.get_paymentsC_day_value(@fecha1,@fecha2,"total")
       
     Prawn::Document.generate("app/pdf_output/rpt_supplierpayment2.pdf") do |pdf|        
-
-        
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt3(pdf)
         pdf = build_pdf_body_rpt3(pdf)
@@ -1235,14 +1258,11 @@ end
   def rpt_purchases_all
     @company=Company.find(params[:id])      
     
-    
     @fecha1=params[:fecha1]
     @fecha2=params[:fecha2]
     @moneda = params[:moneda_id]
       
-
-    @purchases_all_rpt = @company.get_purchases_by_day(@fecha1,@fecha2,@moneda)  
-    
+    @purchases_all_rpt = @company.get_purchases_by_day_detalle(@fecha1,@fecha2)  
     @rpt = "rpt_#{generate_guid()}"
 
     Prawn::Document.generate("app/pdf_output/#{@rpt}.pdf") do |pdf|
@@ -1251,7 +1271,6 @@ end
         pdf = build_pdf_body_rpt(pdf)
         build_pdf_footer_rpt(pdf)
         $lcFileName =  "app/pdf_output/#{@rpt}.pdf"      
-        
     end     
 
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
@@ -1396,25 +1415,236 @@ def list_receive_supplierpayments
       table_content << headers
       nroitem=1
 
-
+       lcMoneda = @purchases_all_rpt.first.moneda_id
+       lcDocumento = @purchases_all_rpt.first.document_id
+       a = @purchases_all_rpt.first
+       
+            row = []
+            row << ""
+            row << "MONEDA  :"
+            row << a.moneda.description 
+            row << a.moneda.symbol
+            
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            
+            table_content << row
+            
+       
+            row = []
+            row << ""
+            row << "DOCUMENTO :"
+            row << a.document.description 
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            
+            table_content << row
+            
+       
        for  product in @purchases_all_rpt
-
+      
+        if lcMoneda == product.moneda_id
+          if lcDocumento == product.document_id
             row = []
             row << nroitem.to_s
-            row << product.date1.strftime("%d/%m/%Y")
-            row << product.date2.strftime("%d/%m/%Y")
-            row << product.date3.strftime("%d/%m/%Y")
-            row << product.payment.day 
-            row << product.document.descripshort 
-            row << product.documento
+            row << product.supplier.ruc 
             row << product.supplier.name  
+            row << product.documento
+            row << product.date1.strftime("%d/%m/%Y")
+            row <<  sprintf("%.2f",product.payable_amount.to_s)
+            row <<  sprintf("%.2f",product.tax_amount.to_s)
             row <<  sprintf("%.2f",product.total_amount.to_s)
             table_content << row
 
             nroitem=nroitem + 1
-            puts nroitem 
-        end
+          else
+            totals = []            
+            total_cliente_doc_payable   = 0
+            total_cliente_doc_tax   = 0
+            total_cliente_doc_total   = 0
+            
+            total_cliente_doc_payable = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"payable_amount")
+            total_cliente_doc_tax     = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"tax_amount")
+            total_cliente_doc_total   = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"total_amount")
+            
+            row =[]
+            row << ""
+            row << ""
+            row << ""
+            row << "TOTALES POR DOCUMENTO => "            
+            row << ""
+            row << sprintf("%.2f",total_cliente_doc_payable.to_s)
+            row << sprintf("%.2f",total_cliente_doc_tax.to_s)
+            row << sprintf("%.2f",total_cliente_doc_total.to_s)
+            
+            table_content << row
+            
+            lcDocumento = product.document_id
+            
+            row = []
+            row << ""
+            row << "DOCUMENTO :"
+            row << product.document.description 
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            
+            table_content << row
+            
+            row = []
+            row << nroitem.to_s
+            row << product.supplier.ruc 
+            row << product.supplier.name  
+            row << product.documento
+            row << product.date1.strftime("%d/%m/%Y")
+            row <<  sprintf("%.2f",product.payable_amount.to_s)
+            row <<  sprintf("%.2f",product.tax_amount.to_s)
+            row <<  sprintf("%.2f",product.total_amount.to_s)
+            table_content << row
 
+            nroitem=nroitem + 1
+            
+          end 
+            
+        else
+            total_cliente_doc_payable   = 0
+            total_cliente_doc_tax   = 0
+            total_cliente_doc_total   = 0
+            
+            total_cliente_doc_payable = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"payable_amount")
+            total_cliente_doc_tax     = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"tax_amount")
+            total_cliente_doc_total   = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"total_amount")
+            
+            row =[]
+            row << ""
+            row << ""
+            row << ""
+            row << "TOTALES POR DOCUMENTO => "            
+            row << ""
+            row << sprintf("%.2f",total_cliente_doc_payable.to_s)
+            row << sprintf("%.2f",total_cliente_doc_tax.to_s)
+            row << sprintf("%.2f",total_cliente_doc_total.to_s)
+            
+            table_content << row
+          
+          
+            totals = []            
+            total_cliente_moneda_payable   = 0
+            total_cliente_moneda_tax   = 0
+            total_cliente_moneda_total   = 0
+            
+            total_cliente_moneda_payable = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcMoneda,"payable_amount")
+            total_cliente_moneda_tax     = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcMoneda,"tax_amount")
+            total_cliente_moneda_total   = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcMoneda,"total_amount")
+            
+            row =[]
+            row << ""
+            row << ""
+            row << ""
+            row << "TOTALES POR MONEDA => "            
+            row << ""
+            row << sprintf("%.2f",total_cliente_moneda_payable.to_s)
+            row << sprintf("%.2f",total_cliente_moneda_tax.to_s)
+            row << sprintf("%.2f",total_cliente_moneda_total.to_s)
+            
+            table_content << row
+            
+            row = []
+            row << ""
+            row << "MONEDA :"
+            row << product.moneda.description 
+            row << product.moneda.symbol
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            table_content << row
+            
+          
+            row = []
+            row << ""
+            row << "DOCUMENTO  :"
+            row << a.document.description 
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            
+            table_content << row
+            
+
+            row = []
+            row << nroitem.to_s
+            row << product.supplier.ruc 
+            row << product.supplier.name  
+            row << product.documento
+            row << product.date1.strftime("%d/%m/%Y")
+            row <<  sprintf("%.2f",product.payable_amount.to_s)
+            row <<  sprintf("%.2f",product.tax_amount.to_s)
+            row <<  sprintf("%.2f",product.total_amount.to_s)
+            table_content << row
+            
+            lcMoneda = product.moneda_id
+            nroitem=nroitem + 1
+            
+        end 
+        
+            
+        
+        
+        end
+        
+          total_cliente_doc_payable   = 0
+            total_cliente_doc_tax   = 0
+            total_cliente_doc_total   = 0
+            
+            total_cliente_doc_payable = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"payable_amount")
+            total_cliente_doc_tax     = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"tax_amount")
+            total_cliente_doc_total   = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"total_amount")
+            
+            row =[]
+            row << ""
+            row << ""
+            row << ""
+            row << "TOTALES POR DOCUMENTO => "            
+            row << ""
+            row << sprintf("%.2f",total_cliente_doc_payable.to_s)
+            row << sprintf("%.2f",total_cliente_doc_tax.to_s)
+            row << sprintf("%.2f",total_cliente_doc_total.to_s)
+            
+            table_content << row
+          
+
+           lcMoneda = @purchases_all_rpt.last.moneda_id
+            
+            total_cliente_moneda_payable   = 0
+            total_cliente_moneda_tax   = 0
+            total_cliente_moneda_total   = 0
+            
+            total_cliente_moneda_payable = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcMoneda,"payable_amount")
+            total_cliente_moneda_tax     = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcMoneda,"tax_amount")
+            total_cliente_moneda_total   = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcMoneda,"total_amount")
+            
+            row =[]
+            row << ""
+            row << ""
+            row << ""
+            row << "TOTALES POR MONEDA => "            
+            row << ""
+            row << sprintf("%.2f",total_cliente_moneda_payable.to_s)
+            row << sprintf("%.2f",total_cliente_moneda_tax.to_s)
+            row << sprintf("%.2f",total_cliente_moneda_total.to_s)
+            
+            table_content << row
+      
         
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
@@ -1423,11 +1653,17 @@ def list_receive_supplierpayments
                                           columns([0]).align=:center
                                           columns([1]).align=:left
                                           columns([2]).align=:left
+                                          columns([2]).width= 150 
                                           columns([3]).align=:left
-                                          columns([4]).align=:left 
-                                          columns([5]).align=:left
-                                          columns([6]).align=:left
+                                          columns([3]).width= 60 
+                                          columns([4]).align=:right
+                                          columns([4]).width= 60 
+                                          columns([5]).align=:right
+                                          columns([5]).width= 60 
+                                          columns([6]).align=:right
+                                          columns([6]).width= 60 
                                           columns([7]).align=:right
+                                          columns([7]).width= 60 
                                           
                                         end                                          
       pdf.move_down 10      
@@ -1437,24 +1673,8 @@ def list_receive_supplierpayments
 
 
     def build_pdf_footer_rpt(pdf)
-      subtotals = []
-      taxes = []
-      totals = []
-      services_subtotal = 0
-      services_tax = 0
-      services_total = 0
-
-
-          
-          total = @company.get_purchases_by_day_value(@fecha1,@fecha2,@moneda,"total_amount")
-          totals.push(total)
-          services_total += total
-        
-          pdf.text total.to_s
-        
         
         pdf.text "" 
-
         pdf.bounding_box([0, 20], :width => 535, :height => 40) do
         pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
 
