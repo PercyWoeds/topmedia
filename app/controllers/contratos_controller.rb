@@ -451,7 +451,7 @@ class ContratosController < ApplicationController
      $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
 
      $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
-     $lcHora  = Time.now.to_s
+     $lcHora  = Time.strftime('%H:%M').to_s
 
     max_rows = [client_data_headers_rpt.length, invoice_headers_rpt.length, 0].max
       rows = []
