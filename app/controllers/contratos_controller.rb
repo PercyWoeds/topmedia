@@ -487,7 +487,21 @@ class ContratosController < ApplicationController
        
             @contrato= Contrato.find(product.id)
             @orden_details = Orden.where(contrato_id: @contrato.id)
-      
+           row =[] 
+              row <<""
+              row << ""
+              row << ""
+              row << ""
+              row << ""
+              row << ""
+              row << ""
+              row << ""
+              row << ""
+              row << ""
+              row << ""
+            
+            table_content << row
+            
             row = []         
             row << nroitem.to_s
             row << product.code
@@ -503,10 +517,11 @@ class ContratosController < ApplicationController
             @importe = product.importe 
             
             table_content << row
-           row =[] 
-             row <<""
-             row << "NRO."
-             row <<  "FECHA"
+            
+              row =[] 
+              row <<""
+              row << "NRO."
+              row <<  "FECHA"
               row << "MARCA"
               row << "PRODUCTO"
               row << "VERSION"
@@ -547,31 +562,28 @@ class ContratosController < ApplicationController
               
               table_content << row
             end 
-            
-
             @totales += product.importe 
             
-
             nroitem=nroitem + 1
        
         end
       
-      row =[]
-      row << ""
-      row << ""
-      row << ""
-      row << ""
-      row << ""
+      # row =[]
+      # row << ""
+      # row << ""
+      # row << ""
+      # row << ""
+      # row << ""
     
-      row << ""      
-      row << "TOTALES => "
-      row << " "
-      row << " "
-      row << " "
-      row << sprintf("%.2f",@totales.to_s)
+      # row << ""      
+      # row << "TOTALES => "
+      # row << " "
+      # row << " "
+      # row << " "
+      # row << sprintf("%.2f",@totales.to_s)
 
 
-      table_content << row
+      #table_content << row
       
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
