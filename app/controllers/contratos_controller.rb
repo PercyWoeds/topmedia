@@ -88,10 +88,11 @@ class ContratosController < ApplicationController
   end
 
   # reporte completo
+  
   def build_pdf_header_rpt5(pdf)
       pdf.font "Helvetica" , :size => 8
-     $lcCli  =  @company.name 
-     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+     $lcCli  = @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city
 
      $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
      $lcHora  = Time.now.to_s
@@ -671,7 +672,8 @@ class ContratosController < ApplicationController
   end
 
   def invoice_headers_rpt            
-      invoice_headers  = [["Fecha : ",$lcHora]]    
+      invoice_headers  = [["Fecha : ",$lcFecha1]]    
+      client_headers << ["Hora :", $lcHora]
       invoice_headers
   end
 
