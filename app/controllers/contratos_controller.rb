@@ -319,12 +319,15 @@ class ContratosController < ApplicationController
           
             table_content << row
             
+            if @contrato_details != nil
             for detalle in   @contrato_details 
               row = []          
               row << detalle.nro
               row << " "
               row << detalle.fecha.strftime("%d/%m/%Y")
+              
               row << sprintf("%.2f",detalle.importe.to_s)
+              
               row << sprintf("%.2f",detalle.vventa.to_s)
               row << sprintf("%.2f",detalle.comision1.to_s)
               row << sprintf("%.2f",detalle.comision2.to_s)
@@ -340,6 +343,7 @@ class ContratosController < ApplicationController
               
               table_content << row
             end 
+          end 
 
             @totales += product.importe 
             
@@ -484,7 +488,6 @@ class ContratosController < ApplicationController
 
        for  product in @contratos_rpt
            
-       
             @contrato= Contrato.find(product.id)
             @orden_details = Orden.where(contrato_id: @contrato.id)
            row =[] 
@@ -521,7 +524,7 @@ class ContratosController < ApplicationController
               row =[] 
               row <<""
               row << "NRO."
-              row <<  "FECHA"
+              row << "FECHA"
               row << "MARCA"
               row << "PRODUCTO"
               row << "VERSION"
