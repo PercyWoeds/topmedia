@@ -319,19 +319,27 @@ class ContratosController < ApplicationController
           
             table_content << row
             
-            if @contrato_details != nil
+            
+              
             for detalle in   @contrato_details 
               row = []          
               row << detalle.nro
               row << " "
               row << detalle.fecha.strftime("%d/%m/%Y")
-              
+              if detalle.importe.to_s != ""
               row << sprintf("%.2f",detalle.importe.to_s)
-              
               row << sprintf("%.2f",detalle.vventa.to_s)
               row << sprintf("%.2f",detalle.comision1.to_s)
               row << sprintf("%.2f",detalle.comision2.to_s)
               row << sprintf("%.2f",detalle.total.to_s)
+              else
+              row << ""
+              row << ""
+              row << ""
+              row << ""
+              row << "" 
+              
+              end 
               row << detalle.facturacanal
               if detalle.fecha2 != nil
                row << detalle.fecha2.strftime("%d/%m/%Y") 
@@ -343,7 +351,7 @@ class ContratosController < ApplicationController
               
               table_content << row
             end 
-          end 
+        
 
             @totales += product.importe 
             
