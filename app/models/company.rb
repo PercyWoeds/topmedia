@@ -2413,61 +2413,63 @@ def get_ordenes_cliente(fecha1,fecha2,cliente)
    sql_dato6 =""
    
   if cliente != ""
-    sql_dato1 <<  "customer_id = " << cliente 
+    sql_dato <<  "customer_id = " << cliente 
   end 
   
   if marca != ""
-    if sql_dato1 != ""
+    if sql_dato != ""
     txt_and = " and "
     else 
       txt_and = ""
     end 
-    sql_dato2 << txt_and << "marca_id =" << marca
+    
+    sql_dato << txt_and << "marca_id =" << marca
   end 
   
   if producto != ""
-     if sql_dato2 != ""
+    
+     if sql_dato != ""
     txt_and = " and "
     else 
       txt_and = ""
     end 
    
-    sql_dato3 << txt_and << "producto_id =" << producto
+    sql_dato << txt_and << "producto_id =" << producto
   end 
   
   if version != ""
-     if sql_dato4 != ""
+     if sql_dato != ""
     txt_and = " and "
     else 
       txt_and = ""
     end 
    
-    sql_dato4 << txt_and << "version_id =" << version 
+    sql_dato << txt_and << "version_id =" << version 
   end 
   
   if ciudad != ""
-     if sql_dato6 != ""
+     if sql_dato != ""
     txt_and = " and "
     else 
       txt_and = ""
     end 
    
-    sql_dato5 << txt_and << "ciudad_id =" << ciudad 
+    sql_dato << txt_and << "ciudad_id =" << ciudad 
   end 
   
   if tipoorden != "3"
     if tipoorden == "2"
        tipo= "D"
-      sql_dato6 << "tipo = 'D' "  
+      sql_dato << "tipo = 'D' "  
     end 
     if tipoorden == "1"
        tipo= "N"
-      sql_dato6 << "tipo = 'N'  "  
+      sql_dato << "tipo = 'N'  "  
       
     end 
   end 
   
-  sql_dato = sql_dato1 << sql_dato2 << sql_dato3 << sql_dato4 << sql_dato5 << sql_dato6
+  
   puts "sql_Dato"
   puts sql_dato 
   
