@@ -6,7 +6,9 @@
   <thead>
     <tr>
       <th>Descripcion</th>
-      <th>Comentario </th>
+      <th>Categoria  </th>
+      
+      
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -15,10 +17,11 @@
     <% @avisodetails.each do |avisodetail| %>
       <tr>
         <td><%= avisodetail.descrip %></td>
-        <td><%= avisodetail.comments %></td>
-        <td><%= link_to 'Show', avisodetail %></td>
-        <td><%= link_to 'Edit', edit_avisodetail_path(avisodetail) %></td>
-        <td><%= link_to 'Destroy', avisodetail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= avisodetail.category_program.descrip %></td>
+        
+        <td><%= link_to 'Ver', avisodetail %></td>
+        <td><%= link_to 'Editar', edit_avisodetail_path(avisodetail) %></td>
+        <td><%= link_to 'Eliminar', avisodetail, method: :delete, data: { confirm: 'Esta seguro eliminar ?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,7 +33,7 @@
 
 
 
-<h2>Importar Archivo  "*.csv"</h2>
+<h4>Importar Archivo  "*.csv"</h4>
 
 <%= form_tag import_avisodetails_path, multipart: true do %>
   <%= file_field_tag :file %>

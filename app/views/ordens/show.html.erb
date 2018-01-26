@@ -62,6 +62,11 @@
 
 <%= hr() %>
 
+<% if @orden.tipo == "N" %>
+<div class="button">
+<%= link_to 'Agregar Item', new_orden_orden_product_path(@orden) %>
+</div> 
+<% end %>
 <h3>
   Detalle
 </h3>
@@ -308,9 +313,10 @@
           <td class="small bordered_bottom bordered_right">
             <%= money(product.total) %>
           </td>
+          <% if @orden.tipo == "N" %>
           <td><%= link_to 'Editar', edit_orden_orden_product_path(orden_id: @orden.id,id: product.id ) %></td>          
           <td><%= link_to 'Eliminar',[@orden,product], method: :delete, data: { confirm: 'Are you sure?' } %></td>
-
+          <% end %>
           
     </td>
     
@@ -380,8 +386,12 @@
 <div class="button">
   <%= link_to 'Export to PDF', "/ordens/pdf/#{@orden.id} " %>
   <%= link_to 'Send orden via email', "/ordens/email/#{@orden.id}" %>
-  <%= link_to 'Process orden', "/ordens/do_process/#{@orden.id}" %>
-  <%= link_to 'Agregar Item', new_orden_orden_product_path(@orden) %>
+  
+  
+  <% if  @orden.processed != "1" %>
+  <%= link_to 'Procesar orden', "/ordens/do_process/#{@orden.id}" %>
+  <%end %>
+  
   <%= link_to 'Editar', edit_orden_path(@orden) %>
   <%= link_to 'Regresar', "/companies/ordens/#{@orden.company.id}" %>
 </div>

@@ -50,6 +50,7 @@ class ContratosController < ApplicationController
     @customers = Customer.all 
     @medios =  Medio.all 
     
+    
     respond_to do |format|
       if @contrato.save
          @contrato.correlativo 
@@ -445,10 +446,11 @@ class ContratosController < ApplicationController
 
 # reporte completo EECC
 
+
   def build_pdf_header_rpt5(pdf)
       pdf.font "Helvetica" , :size => 8
      $lcCli  =  @company.name 
-     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+     $lcdir1 = @company.address1+@company.address2+@company.city
 
      $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
      $lcHora  = Time.now.strftime('%H:%M').to_s
@@ -470,6 +472,7 @@ class ContratosController < ApplicationController
           :width => pdf.bounds.width
         }) do
           columns([0, 2]).font_style = :bold
+          
 
         end
 
@@ -488,20 +491,7 @@ class ContratosController < ApplicationController
       headers2 = []
       table_content = []
 
-      Contrato::TABLE_HEADERS3.each do |header|
-        cell = pdf.make_cell(:content => header)
-        cell.background_color = "FFFFCC"
-        headers << cell
-      end
-
-      table_content << headers
-
-      Contrato::TABLE_HEADERS4.each do |header|
-        cell = pdf.make_cell(:content => header)
-        cell.background_color = "FFFFCC"
-        headers2 << cell
-      end
-
+      
       
       nroitem=1
 
@@ -509,57 +499,23 @@ class ContratosController < ApplicationController
       @cantidad = 0
       nroitem = 1
 
+      data = [ ["Item", "Nro.", "Fecha","Cliente","Medio","Moneda","","Abonos","Cargos","Cargos Acum","Saldo"]]
+      pdf.table data, :cell_style => { :font => "Times-Roman", :font_style => :bold ,:size=>11},:width=> 540
+      pdf.move_down 20
+      
+
        for  product in @contratos_rpt
            
             @contrato= Contrato.find(product.id)
             @orden_details = Orden.where(contrato_id: @contrato.id)
-           row =[] 
-              row <<""
-              row << ""
-              row << ""
-              row << ""
-              row << ""
-              row << ""
-              row << ""
-              row << ""
-              row << ""
-              row << ""
-              row << ""
-            
-            table_content << row
-            
-            row = []         
-            row << nroitem.to_s
-            row << product.code
-            row << product.fecha.strftime("%d/%m/%Y")
-            row << product.customer.name 
-            row << product.medio.descrip
-            row << product.get_moneda
-            row << " "
-            row << sprintf("%.2f",product.importe.to_s)
-            row << " "
-            row << " "
-            row << sprintf("%.2f",product.importe.to_s)
-            @importe = product.importe 
-            
-            table_content << row
-            
-              row =[] 
-              row <<""
-              row << "NRO."
-              row << "FECHA"
-              row << "MARCA"
-              row << "PRODUCTO"
-              row << "VERSION"
-              row <<  "TIEMPO"
-              row << ""
-              row << ""
-              row << ""
-              row <<  ""
+            @importe = product.importe
+          
+            data = [ [nroitem.to_s, product.code, product.fecha.strftime("%d/%m/%Y"),product.customer.name ,product.medio.descrip,product.get_moneda,"",sprintf("%.2f",product.importe.to_s),"","",sprintf("%.2f",product.importe.to_s)]]
+            pdf.table data, :cell_style => { :font => "Times-Roman", :font_style => :bold ,:size=>11 },:width=> 540
               
-           table_content << row
-            
-            
+            data =  [ ["", "Nro.", "Fecha","Marca","Producto","Version","Tiempo","","","",""]]
+            pdf.table data, :cell_style => { :font => "Times-Roman", :font_style => :bold ,:size=>10 },:width=> 540
+      
             for detalle in   @orden_details 
             
               row = []          
@@ -585,7 +541,6 @@ class ContratosController < ApplicationController
               row << " "
               @importe -= detalle.subtotal 
               row << sprintf("%.2f",@importe.to_s)
-              
               table_content << row
             end 
             @totales += product.importe 
@@ -612,7 +567,7 @@ class ContratosController < ApplicationController
       #table_content << row
       
       result = pdf.table table_content, {:position => :center,
-                                        :header => true,
+                                        :header => false,
                                         :width => pdf.bounds.width
                                         } do 
                                           columns([0]).align=:center

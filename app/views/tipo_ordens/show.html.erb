@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @tipo_orden.code %>
+</p>
+
+<p>
+  <strong>Descrip:</strong>
+  <%= @tipo_orden.descrip %>
+</p>
+
+<%= link_to 'Edit', edit_tipo_orden_path(@tipo_orden) %> |
+<%= link_to 'Back', tipo_ordens_path %>

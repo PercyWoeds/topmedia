@@ -1,11 +1,22 @@
 <%= simple_form_for(@avisodetail) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :descrip %>
-    <%= f.input :comments %>
-  </div>
 
+    <div class="field">
+      <%= f.label :descrip, "Descripcion ", :class => "bold" %><br />
+      <%= f.text_field :descrip %>      
+    </div>
+    <div class="field">
+     <%= f.label :category_program_id ,"Categoria" %><br />
+     <%= f.collection_select :category_program_id, CategoryProgram.order(:id), :id, :descrip,{:prompt   => "Selecione una categoria "} %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :comments, "Comentarios*", :class => "bold" %><br />
+      <%= f.text_area :comments %>      
+    </div>
+    
+    
   <div class="form-actions">
     <%= f.button :submit %>
   </div>

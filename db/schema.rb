@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180116162207) do
+ActiveRecord::Schema.define(version: 20180126145352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,8 +89,8 @@ ActiveRecord::Schema.define(version: 20180116162207) do
   create_table "avisodetails", force: :cascade do |t|
     t.string   "descrip"
     t.string   "comments"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.float    "quantity"
     t.float    "price"
     t.float    "total"
@@ -129,6 +129,8 @@ ActiveRecord::Schema.define(version: 20180116162207) do
     t.integer  "d29"
     t.integer  "d30"
     t.integer  "d31"
+    t.integer  "category_program"
+    t.integer  "category_program_id"
   end
 
   create_table "bank_acounts", force: :cascade do |t|
@@ -160,6 +162,14 @@ ActiveRecord::Schema.define(version: 20180116162207) do
   create_table "carts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "category_programs", force: :cascade do |t|
+    t.string   "code"
+    t.string   "descrip"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "avisodetail_id"
   end
 
   create_table "ciudads", force: :cascade do |t|
@@ -984,8 +994,8 @@ ActiveRecord::Schema.define(version: 20180116162207) do
     t.datetime "fecha1"
     t.datetime "fecha2"
     t.float    "tiempo"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.string   "code"
     t.integer  "company_id"
     t.float    "subtotal"
@@ -1000,6 +1010,14 @@ ActiveRecord::Schema.define(version: 20180116162207) do
     t.integer  "year"
     t.integer  "revision"
     t.integer  "producto_id"
+    t.integer  "ciudad_id"
+    t.datetime "date_processed"
+    t.datetime "fecha_inicio"
+    t.datetime "fecha_fin"
+    t.float    "tarifa"
+    t.integer  "aviso_detail_id"
+    t.integer  "avisodetail_id"
+    t.string   "tipo"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -1578,6 +1596,13 @@ ActiveRecord::Schema.define(version: 20180116162207) do
 
   add_index "tanks", ["company_id"], name: "index_tanks_on_company_id", using: :btree
   add_index "tanks", ["product_id"], name: "index_tanks_on_product_id", using: :btree
+
+  create_table "tipo_ordens", force: :cascade do |t|
+    t.string   "code"
+    t.string   "descrip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "tipoavisos", force: :cascade do |t|
     t.string   "descrip"

@@ -5,10 +5,17 @@
   <%= @avisodetail.descrip %>
 </p>
 
+
+<p>
+  <strong>Comentario :</strong>
+  <%= @avisodetail.category_program.descrip %>
+</p>
+
 <p>
   <strong>Comentario :</strong>
   <%= @avisodetail.comments %>
 </p>
+
 
 <%= link_to 'Editar', edit_avisodetail_path(@avisodetail) %> |
 <%= link_to 'Regresar', avisodetails_path %>

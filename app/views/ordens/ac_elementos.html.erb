@@ -1,0 +1,5 @@
+<% if @elementos %>
+  <% for customer in @elementos %>
+    <%= customer.descrip %>|BRK|<%= customer.id %>
+  <% end %>
+<% end %>

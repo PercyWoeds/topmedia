@@ -1,3 +1,4 @@
+
 <% if @orden.errors.any? %>
   <div id="error_explanation">
     <h2><%= pluralize(@orden.errors.count, "error") %> prohibited this orden from being saved:</h2>
@@ -9,7 +10,6 @@
     </ul>
   </div>
 <% end %>
-
 
 
 <div>
@@ -67,7 +67,6 @@
     </div>
    
    
-   
     <div class="field">
       <%= f.label :producto_id %><br />
       <%= f.collection_select :producto_id, @productos, :id, :name,{:prompt   => "Selec un producto"} %>
@@ -90,7 +89,12 @@
     <div class="field">
       <%= select_tag(:month, options_for_select(@months, @month)) %>
     </div>
-
+    
+     <div class="field">
+      <%= f.label :ciudad_id, "Ciudad*", :class => "bold"   %><br />
+      <%= f.select :ciudad_id,options_from_collection_for_select(@ciudad,'id','descrip') %>
+    </div>
+    
     <%= hr() %>
 
     <div class="field">
@@ -139,7 +143,7 @@
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
       <%= f.hidden_field :customer_id, :id => "ac_customer_id" %>
       <%= f.hidden_field :company_id %>
-      <%= f.submit %>
+      <%= f.submit   %>
     </div>
     
     <div class="small">

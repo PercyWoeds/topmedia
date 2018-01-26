@@ -1346,9 +1346,14 @@ class ReportsController < ApplicationController
   
   
   def rpt_ordenes1_pdf
-    @company = Company.find(params[:company_id])    
+    @company   = Company.find(params[:company_id])    
     @pagetitle = "Reportes de Ordenes "    
     @customers = @company.get_customers()
+    @productos = @company.get_productos()
+    @marcas    = @company.get_marcas()
+    @versions  = @company.get_versions()
+    @ciudads  = @company.get_ciudads()
+    @tipoordens  = @company.get_tipoordens()
     @monedas=@company.get_monedas    
   end
   def rpt_ordenes2_pdf

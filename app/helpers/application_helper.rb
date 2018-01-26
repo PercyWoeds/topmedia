@@ -1,4 +1,12 @@
 module ApplicationHelper
+  def check_if_true(item)
+  if(item == 'true' or item == true or item == 1 or item == '1')
+    return true
+  else
+    return false
+  end
+  end
+  
   def getAppName()
     return 'wds'
   end
@@ -549,6 +557,7 @@ module ApplicationHelper
     return str
   end
   
+  
   # Handles header info for csv
   def render_csv(filename = nil)
     filename ||= params[:action]
@@ -567,4 +576,6 @@ module ApplicationHelper
 
     render :layout => false
   end
+  
+  
 end

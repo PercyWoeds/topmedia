@@ -56,8 +56,10 @@
 <br />
 
 <div class="button">
-  <%= link_to 'Nueva orden', "/ordens/new/#{@company.id}" %>
+  <%= link_to 'Orden TV/Radio/Otros', "/ordens/new/#{@company.id}" %>
+  <%= link_to 'Orden Digital', "/ordens/neworden/#{@company.id}" %>
 </div>
+
 
 <%= will_paginate @ordens %>
 

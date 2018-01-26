@@ -1,0 +1,347 @@
+
+<% if @orden.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@orden.errors.count, "error") %> prohibited this orden from being saved:</h2>
+
+    <ul>
+    <% @orden.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+<div>
+  
+  <%= form_for(@orden, :url  => crear_ordens_path , method: :get ) do |f| %>
+  
+
+    <%= hr() %>
+
+    <h3>
+       Informacion Orden 
+    </h3>
+
+    <div class="field">
+      <%= f.label :code, "Code*", :class => "bold" %><br />
+      <%= f.text_field :code  %>
+    </div>
+
+    <div class="field">
+    
+      <label for="ac_customer" class="bold">Cliente*</label><br />
+      
+      <input type="text" name="ac_customer" id="ac_customer" value="<% if @ac_customer %><%= @ac_customer %><% end %>" />
+      
+      
+      <div class="small">
+          Ingrese una termino de busqueda para encontrar un cliente.
+      </div>
+
+      <br />
+
+      <div class="small">
+        <strong>Seleccionar cliente:</strong>
+        <span id="selected_customer"><% if @ac_customer %><%= @ac_customer %><% else %><!-- i --><% end %></span>
+      </div>
+    </div>
+          
+ 
+    <div class="field">
+      <%= f.label :medio_id %><br />
+      <%= f.select :medio_id,options_from_collection_for_select(@medios,'id','descrip') %>
+    </div>
+
+    <div class="field">
+      <%= f.label :contrato_id %><br />
+      <%= f.select :contrato_id,options_from_collection_for_select(@contratos,'id','code') %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :fecha, "Fecha Emision*", :class => "bold" %><br />
+      <%= f.date_field :fecha %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :marca_id %><br />
+      <%= f.collection_select :marca_id, Marca.order(:id), :id, :name,{:prompt   => "Selec una marca"} %>
+    </div>
+   
+   
+    <div class="field">
+      <%= f.label :producto_id %><br />
+      <%= f.collection_select :producto_id, @productos, :id, :name,{:prompt   => "Selec un producto"} %>
+    </div>
+     
+    <div class="field">
+      <%= f.label :version_id %><br />
+      <%= f.collection_select :version_id, @versions, :id, :descrip,{:prompt   => "Selec una version"} %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :tiempo, "Duracion*", :class => "bold"   %><br />
+      <%= f.number_field :tiempo, :readonly => true    %>
+    </div>
+
+    <div class="field">
+      <%= f.label :ciudad_id, "Ciudad*", :class => "bold"   %><br />
+      <%= f.select :ciudad_id,options_from_collection_for_select(@ciudad,'id','descrip') %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :revision, "Revision ", :class => "bold" %><br />
+      <%= f.number_field   :revision, :value=> 0  %>
+    </div>
+
+  
+    <%= hr() %>
+    
+    <div class="field">
+    
+      <label for="ac_elemento" class="bold"> Elemento Digital*</label><br />
+      <input type="text" name="ac_elemento" id="ac_elemento" value="<% if @ac_elemento %><%= @ac_elemento %><% end %>" />
+      
+      <div class="small">
+          Ingrese una termino de busqueda para encontrar un elemento digital.
+      </div>
+      
+
+      <br />
+
+      <div class="small">
+        <strong>Seleccionar elemento digital:</strong>
+        <span id="selected_elemento"><% if @ac_elemento %><%= @ac_elemento %><% else %><!-- i --><% end %></span>
+      </div>
+    </div>
+    
+    
+    
+    <div class="field">
+      <%= f.label :fecha, "Fecha Inicio: ", :class => "bold" %><br />
+      <%= f.date_field :fecha_inicio %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :fecha, "Fecha Fin:", :class => "bold" %><br />
+      <%= f.date_field :fecha_fin %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :tarifa, "Tarifa*", :class => "bold"   %><br />
+      <%= f.number_field :tarifa, :skip =>  0.01 %>
+    </div>
+     
+    <%= hr() %>
+
+    <div class="field">
+      <label for="ac_user" class="bold">Usuario*</label><br />
+      <input type="text" name="ac_user" id="ac_user" value="<% if @ac_user %><%= @ac_user %><% end %>" />
+
+      <div class="small">
+        Enter a search term to find a user.
+      </div>
+      <br />
+
+      <div class="small">
+        <strong>Selected user:</strong>
+        <span id="selected_seller"><% if @ac_user %><%= @ac_user %><% else %><!-- i --><% end %></span>
+      </div>
+    </div>
+  
+    <%= hr() %>
+
+    <div class="field">
+      <%= f.label :description,"Descripcion " %><br />
+      <%= f.text_area :description %>
+    </div>
+
+    
+    <%= hr() %>
+  
+    <div class="actions">
+      <input type="hidden" name="items" id="items" value="<% if @products_lines %><%= @products_lines %><% end %>" />
+      <%= f.hidden_field :user_id, :id => "ac_user_id" %>
+      <%= f.hidden_field :customer_id, :id => "ac_customer_id" %>
+      <%= f.hidden_field :avisodetail_id, :id => "ac_elemento_id" %>
+      
+      <%= f.hidden_field :company_id %>
+      <%= f.submit  %>
+    </div>
+    
+    <div class="small">
+      Once you're done adding products, don't forget to <strong><%= @action_txt %></strong> your orden.
+    </div>
+  
+    
+  <% end %>
+</div>
+
+
+<%= br() %>
+
+<br />
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#ac_customer").autocomplete("/ordens/ac_customers/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_customer").result(function(event, data, formatted) {
+      $("#ac_customer_id").val(data[2]);
+      $("#selected_customer").html(data[0]);
+    });
+    
+    $("#ac_elemento").autocomplete("/ordens/ac_programs/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_elemento").result(function(event, data, formatted) {
+      $("#ac_elemento_id").val(data[2]);
+      $("#selected_elemento").html(data[0]);
+    });
+    
+    
+    $("#ac_user").autocomplete("/ordens/ac_user/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_user").result(function(event, data, formatted) {
+      $("#ac_user_id").val(data[2]);
+      $("#selected_seller").html(data[0]);
+    });
+    
+    $("#ac_item").autocomplete("/ordens/ac_programs/<%= @company.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item").result(function(event, data, formatted) {
+      $("#ac_item_id").val(data[2]);      
+      
+      updateItemOrden();
+    });
+    
+    $("#ac_item_quantity").bind("keyup", function() {
+      updateItemOrden();
+    });
+    
+    
+    $("#ac_item_tarifa").bind("keyup", function() {
+      updateItemOrden();
+    });
+    
+    $("#ac_item_1").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_2").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_3").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_4").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_5").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_6").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_7").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_8").bind("keyup", function() {
+      updateItemOrden();
+    });
+    
+    $("#ac_item_9").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_10").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_11").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_12").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_13").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_14").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_15").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_16").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_17").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_18").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_19").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_20").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_21").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_22").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_23").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_24").bind("keyup", function() {
+      updateItemOrden();
+    });
+    
+    $("#ac_item_25").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_26").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_27").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_28").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_29").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_30").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#ac_item_31").bind("keyup", function() {
+      updateItemOrden();
+    });
+    
+    
+    <% if @products_lines %>
+      
+      listItemsOrden();
+    <% end %>
+  });
+    
+</script>

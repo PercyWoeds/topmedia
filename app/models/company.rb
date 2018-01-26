@@ -87,11 +87,24 @@ class Company < ActiveRecord::Base
      bank_acounts = BankAcount.where("id = ?", id )
     return bank_acounts
   end
+  def get_productos()
+     productos = Producto.all      
+    return productos
+  end
   
   def get_marcas()
      marcas = Marca.all      
     return marcas
   end
+  def get_versions()
+     versions = Version.all      
+    return versions
+  end
+  def get_ciudads()
+     ciudad = Ciudad.all      
+    return ciudad 
+  end
+  
   def get_modelos()
      modelos = Modelo.all      
     return modelos
@@ -102,6 +115,10 @@ class Company < ActiveRecord::Base
     return instruccions
   end
 
+  def get_tipoordens()
+     documents = TipoOrden.all 
+    return documents
+  end
   def get_documents()
      documents = Document.where(company_id: self.id)
     return documents
@@ -198,7 +215,11 @@ class Company < ActiveRecord::Base
      return category
   end 
 
-def get_categoria_name(id)
+  def get_cliente_name(id)
+     cliente = Customer.find(id)
+     return cliente.name 
+  end 
+  def get_categoria_name(id)
      category = ProductsCategory.find(id)
      return category.category
   end 
@@ -2375,7 +2396,89 @@ def get_ordenes_day(fecha1,fecha2)
     
  end 
 
+def get_ordenes_cliente(fecha1,fecha2,cliente)    
+    @ordenes = Orden.where(["fecha >= ? and fecha <= ?  and customer_id = ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",cliente ])
+    return @ordenes
+    
+ end 
 
+ def get_ordenes_cliente_all(fecha1,fecha2,cliente,marca,producto,version,ciudad,tipoorden)    
+   
+   sql_dato =""
+   sql_dato1 =""
+   sql_dato2 =""
+   sql_dato3 =""
+   sql_dato4 =""
+   sql_dato5 =""
+   sql_dato6 =""
+   
+  if cliente != ""
+    sql_dato1 <<  "customer_id = " << cliente 
+  end 
+  
+  if marca != ""
+    if sql_dato1 != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+    sql_dato2 << txt_and << "marca_id =" << marca
+  end 
+  
+  if producto != ""
+     if sql_dato2 != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+   
+    sql_dato3 << txt_and << "producto_id =" << producto
+  end 
+  
+  if version != ""
+     if sql_dato4 != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+   
+    sql_dato4 << txt_and << "version_id =" << version 
+  end 
+  
+  if ciudad != ""
+     if sql_dato6 != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+   
+    sql_dato5 << txt_and << "ciudad_id =" << ciudad 
+  end 
+  
+  if tipoorden != "3"
+    if tipoorden == "2"
+       tipo= "D"
+      sql_dato6 << "tipo = 'D' "  
+    end 
+    if tipoorden == "1"
+       tipo= "N"
+      sql_dato6 << "tipo = 'N'  "  
+      
+    end 
+  end 
+  
+  sql_dato = sql_dato1 << sql_dato2 << sql_dato3 << sql_dato4 << sql_dato5 << sql_dato6
+  puts "sql_Dato"
+  puts sql_dato 
+  
+  if sql_dato ==  ""
+   @ordenes = Orden.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+  else
+   @ordenes = Orden.where(["fecha >= ? and fecha <= ? and #{sql_dato}", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+ end 
+  return @ordenes
+    
+ end 
 
 end
 

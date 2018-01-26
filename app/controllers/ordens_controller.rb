@@ -586,7 +586,7 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
   
   # Autocomplete for products
   def ac_programs
-    @products = Avisodetail.where(["(descrip iLIKE ?)", "%" +params[:q] + "%"])
+    @products = Avisodetail.where(["(descrip iLIKE ? and category_program_id = 3 )", "%" +params[:q] + "%"])
    
     render :layout => false
   end
@@ -691,6 +691,7 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
     @marcas= Marca.all 
     @versions = Version.all 
     @productos = Producto.all 
+    @ciudad = Ciudad.all
     
     @ordens_products = @orden.orden_products
   end
@@ -777,11 +778,96 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
-    
+    @ciudad = Ciudad.all
     
     @ac_user = getUsername()
     @orden[:user_id] = getUserId()
   end
+
+  def neworden 
+      @pagetitle = "New orden"
+      @action_txt = "Create"
+  
+      if(params[:year] and params[:year].numeric?)
+        @year = params[:year].to_i
+      else
+        @year = Time.now.year
+      end
+      
+      if(params[:month] and params[:month].numeric?)
+        @month = params[:month].to_i
+      else
+        @month = Time.now.month
+      end
+      
+      if(@month < 10)
+        month_s = "0#{@month}"
+      else
+        month_s = @month.to_s
+      end
+      
+      curr_year = Time.now.year
+      c_year = curr_year
+      c_month = 1
+      
+      @years = []
+      @months = monthsArr
+      @month_name = @months[@month - 1][0]
+      
+
+      while(c_year > Time.now.year - 5)
+        @years.push(c_year)
+        c_year -= 1
+      end
+      
+      @dates = []
+      
+      last_day_of_month = last_day_of_month(@year, @month)
+      @date_cats = []
+      
+      i = 1
+      
+      while(i <= last_day_of_month)
+        if(i < 10)
+          i_s = "0#{i}"
+        else
+          i_s = i.to_s
+        end
+        
+        @dates.push("#{@year}-#{month_s}-#{i_s}")
+        @date_cats.push("'" + doDate(Time.parse("#{@year}-#{@month}-#{i_s}"), 5) + "'")
+        
+        i += 1
+      end
+      
+      @customers = Customer.all
+      @motivos =Motivo.all
+      @medios = Medio.all    
+      @marcas= Marca.all 
+      @versions = Version.all 
+      @contratos = Contrato.all 
+      @productos = Producto.all 
+  
+      @orden = Orden.new
+      @orden[:code] = "#{generate_guid12()}"
+      
+      @orden[:processed] = false
+      @orden[:tiempo] = 0
+      @orden[:fecha] = Date.today 
+      @orden[:fecha_inicio] = Date.today 
+      @orden[:fecha_fin] = Date.today 
+      @company = Company.find(1)
+      @orden.company_id = @company.id
+      @orden[:tarifa] = 0.00
+      
+      @locations = @company.get_locations()
+      @divisions = @company.get_divisions()
+      @ciudad = Ciudad.all
+      
+      @ac_user = getUsername()
+      @orden[:user_id] = getUserId()
+    end
+
 
 
   # GET /ordens/1/edit
@@ -860,6 +946,7 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
     @versions = Version.all 
     @contratos = Contrato.all 
     @productos = Producto.all 
+    @ciudad = Ciudad.all
     
 
     @products_lines = @orden.products_lines
@@ -945,6 +1032,8 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
     @versions = Version.all 
     @contratos = Contrato.all 
     @productos = Producto.all 
+    @ciudad = Ciudad.all
+    
     @orden[:month]= @month 
     @orden[:year]= @year
     
@@ -962,7 +1051,11 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
       curr_seller = User.find(params[:orden][:user_id])
       @ac_user = curr_seller.username
     end
-
+    
+    @orden[:processed] = "1"
+    @orden[:tipo] = "N"
+        
+    
     respond_to do |format|
       if @orden.save
         # Create products for kit
@@ -1046,11 +1139,128 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
 
 
 
+####################################################################
+
+def crear 
+    @pagetitle = "Nueva Orden Digital "
+    @action_txt = "Create"
+    
+    #-------
+      if(params[:year] and params[:year].numeric?)
+      @year = params[:year].to_i
+    else
+      @year = Time.now.year
+    end
+    
+    if(params[:month] and params[:month].numeric?)
+      @month = params[:month].to_i
+    else
+      @month = Time.now.month
+    end
+    
+    if(@month < 10)
+      month_s = "0#{@month}"
+    else
+      month_s = @month.to_s
+    end
+    
+    curr_year = Time.now.year
+    c_year = curr_year
+    c_month = 1
+    
+    @years = []
+    @months = monthsArr
+    @month_name = @months[@month - 1][0]
+    
+    
+    
+    while(c_year > Time.now.year - 5)
+      @years.push(c_year)
+      c_year -= 1
+    end
+    
+    @dates = []
+    
+    last_day_of_month = last_day_of_month(@year, @month)
+    @date_cats = []
+    
+    i = 1
+    
+    while(i <= last_day_of_month)
+      if(i < 10)
+        i_s = "0#{i}"
+      else
+        i_s = i.to_s
+      end
+      
+      @dates.push("#{@year}-#{month_s}-#{i_s}")
+      @date_cats.push("'" + doDate(Time.parse("#{@year}-#{@month}-#{i_s}"), 5) + "'")
+      
+      i += 1
+    end
+    
+    #-------
+    
+    items = params[:items].split(",")
+    
+    @orden = Orden.new(orden_params)
+    @company = Company.find(params[:orden][:company_id])
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+    
+    @customers = Customer.all
+    @motivos =Motivo.all
+    @medios = Medio.all
+    @marcas= Marca.all 
+    @versions = Version.all 
+    @contratos = Contrato.all 
+    @productos = Producto.all 
+    @ciudad = Ciudad.all
+    
+    @orden[:month]= @month 
+    @orden[:year]= @year
+    @orden[:customer_id]= params[:orden][:customer_id]
+    @orden[:avisodetail_id]= params[:orden][:avisodetail_id]
+    @orden[:processed] = "1"
+    @orden[:tipo] = "D"
+    @orden[:subtotal] = params[:orden][:tarifa]
+    
+    @orden[:total] = @orden[:subtotal] * 1.18
+    
+    @orden[:tax] = @orden[:total] - @orden[:subtotal]
+    
+    if(params[:orden][:user_id] and params[:orden][:user_id] != "")
+      curr_seller = User.find(params[:orden][:user_id])
+      @ac_user = curr_seller.username
+    end
+
+    respond_to do |format|
+    if  @orden.save
+        
+        @orden.add_digital()
+        
+        @orden.process()
+        @orden.correlativo()
+        
+        format.html { redirect_to(@orden, :notice => 'Orden fue creada con exito.') }
+        format.xml  { render :xml => @orden, :status => :created, :location => @orden }
+      else
+        format.html { render :action => "neworden" }
+        format.xml  { render :xml => @orden.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+  
+
+
+####################################################################
+
   # reporte completo
   def build_pdf_header_rpt5(pdf)
       pdf.font "Helvetica" , :size => 8
      $lcCli  =  @company.name 
-     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+     $lcdir1 = @company.address1+@company.address2+@company.city
 
      $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
      $lcHora  = Time.now.to_s
@@ -1083,7 +1293,9 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
   def build_pdf_body_rpt5(pdf)
     
     pdf.text "Listado de Ordenes desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
-  
+    
+    pdf.text "Cliente : " + @customer_name 
+    
     pdf.font "Helvetica" , :size => 6
 
       headers = []
@@ -1101,6 +1313,11 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
 
       @totales = 0
       @cantidad = 0
+      
+      @subtotal = 0
+      @tax = 0
+      @total  = 0
+      
       nroitem = 1
 
 
@@ -1110,9 +1327,11 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
             row << nroitem.to_s
             row << product.contrato.code
             row << product.fecha.strftime("%d/%m/%Y")
-            row << ""
             row << product.medio.descrip 
-            row << product.marca.name             
+            row << product.marca.name 
+            
+            row << product.producto.name 
+            
             row << product.version.descrip
             row << product.tiempo 
             row << product.subtotal 
@@ -1122,14 +1341,28 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
             
             table_content << row
 
-            @totales += 0
-            
+            @subtotal += product.subtotal
+            @tax += product.tax
+            @total += product.total
 
             nroitem=nroitem + 1
        
         end
       
       
+            row = []         
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            row << "TOTAL => "
+            row << ""
+            row << @subtotal 
+            row << @tax 
+            row << @total 
+            table_content << row
       
       
       result = pdf.table table_content, {:position => :center,
@@ -1150,6 +1383,7 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
                                         end                                          
       pdf.move_down 10      
       #totales 
+      
       pdf 
 
     end
@@ -1172,8 +1406,57 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
     
-    @ordenes_rpt = @company.get_ordenes_day(@fecha1,@fecha2)
-
+    
+    @cliente_check = params[:check_cliente]   
+    @producto_check = params[:check_producto]   
+    @marca_check = params[:check_marca]   
+    @version_check = params[:check_version]
+    @ciudad_check = params[:check_ciudad]   
+    @tipoorden_check = params[:check_tipoorden]   
+    puts "cliente_check"
+    puts @cliente_check
+    
+    
+    if @cliente_check == "true"
+      @customer = ""
+      @customer_name = ""
+    else
+      @customer = params[:customer_id]     
+      @customer_name =  @company.get_cliente_name(@customer)
+    end 
+    
+    if @producto_check == "true"
+      @producto=""
+    else 
+      @producto =params[:producto_id]     
+    end 
+    
+    if @marca_check == "true"
+        @marca=""
+    else
+        @marca =params[:marca_id]     
+    end 
+    
+    if @version_check == "true"
+      @version = ""
+    else
+      @version =params[:version_id]     
+    end 
+    if @ciudad_check == "true"
+      @ciudad = ""
+    else
+      @ciudad =params[:ciudad_id]     
+    end 
+    
+    if @tipoorden_check == "true"
+      @tipoorden =""
+    else
+      @tipoorden = params[:tipo]     
+    end 
+    
+    
+    @ordenes_rpt = @company.get_ordenes_cliente_all(@fecha1,@fecha2,@customer,@marca,@producto,@version,@ciudad,@tipoorden)
+    
     Prawn::Document.generate("app/pdf_output/rpt_ordenes1.pdf") do |pdf|
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt5(pdf)
@@ -1278,10 +1561,7 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
     def orden_params
 
     params.require(:orden).permit(:contrato_id,:fecha,:medio_id,:marca_id,:version_id,:producto_id,:fecha1,:fecha2,:tiempo,  
-    :code,:company_id,:subtotal,:tax,:total,:user_id,:processed,:customer_id,:description,:d01,:d02,:d03,:d04,:d05,:d06,:d07,:d08,:d09,:d10,:d11,:d12,:d13,:d14,:d15,:d16,:d17,:d18,:d19,:d20,:d21,:d22,:d23,:d24,:d25,:d26,:d27,:d28,:d29,:d30,:d31,:revision )
-  
+    :code,:company_id,:subtotal,:tax,:total,:user_id,:processed,:customer_id,:description,:d01,:d02,:d03,:d04,:d05,:d06,:d07,:d08,:d09,:d10,:d11,:d12,:d13,:d14,:d15,:d16,:d17,:d18,:d19,:d20,:d21,:d22,:d23,:d24,:d25,:d26,:d27,:d28,:d29,:d30,:d31,:revision,:ciudad_id,:fecha_inicio,:fecha_fin,:tarifa )
     end
-
-  
 
 end

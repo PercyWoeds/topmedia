@@ -1,6 +1,7 @@
 class Orden < ActiveRecord::Base  	
 
    	validates_uniqueness_of :code 
+   	validates_presence_of :marca_id, :medio_id,:producto_id, :version_id,:tiempo ,:code 
 	
   	belongs_to :company
   	belongs_to :customer
@@ -16,9 +17,9 @@ class Orden < ActiveRecord::Base
 TABLE_HEADERS = ["ITEM",
 			     "CONTRATO",
 			     "FECHA",
-			     "",
 			     "MEDIO",
 			     "MARCA",
+			     "PRODUCTO",
 			     "VERSION",
 			     "TIEMPO",
 			     "SUBTOTAL",
@@ -244,7 +245,202 @@ TABLE_HEADERS2 = ["Nº",
      
     
   end 
-  
+  def add_digital
+        detalle = OrdenProduct.new
+        detalle.orden_id = self.id 
+        detalle.avisodetail_id = self.avisodetail_id
+        detalle.price = self.tarifa 
+        detalle.quantity = 1
+        detalle.total  =self.tarifa 
+        detalle.tarifa = self.tarifa 
+        
+        a = self.fecha_inicio
+        b = self.fecha_fin 
+        
+        
+        parts0 = b.strftime("%Y-%m-%d") 
+        parts = parts0.split("-")
+        
+        yy = parts[0]
+        mm = parts[1]
+        dd = parts[2].to_i 
+        #dd = "d" << parts[2].to_s.rjust(2, '0')
+        
+        puts "dd"
+        puts dd
+        if dd == 1
+           detalle.d01 = 1
+          else
+           detalle.d01 = 0   
+        end
+        if dd == 2
+           detalle.d02 = 1
+          else
+           detalle.d02 = 0   
+        end
+        
+        if dd == 3
+           detalle.d03 = 1
+          else
+           detalle.d03 = 0   
+        end
+        
+        if dd == 4
+           detalle.d04 = 1
+          else
+           detalle.d04 = 0   
+        end
+        if dd == 5
+           detalle.d05 = 1
+          else
+           detalle.d05 = 0   
+        end
+        
+        if dd == 6
+           detalle.d06 = 1
+          else
+           detalle.d06 = 0   
+        end
+        if dd == 7
+           detalle.d07 = 1
+          else
+           detalle.d07 = 0   
+        end
+        if dd == 8
+           detalle.d08 = 1
+          else
+           detalle.d08 = 0   
+        end
+        
+        if dd == 9
+           detalle.d09 = 1
+          else
+           detalle.d09 = 0   
+        end
+        
+        if dd == 10
+           detalle.d10 = 1
+          else
+           detalle.d10 = 0   
+        end
+        
+        if dd == 11
+           detalle.d11 = 1
+          else
+           detalle.d11 = 0   
+        end
+        
+        if dd == 12
+           detalle.d12 = 1
+          else
+           detalle.d12 = 0   
+        end
+        
+        
+        if dd == 13
+           detalle.d13 = 1
+          else
+           detalle.d13 = 0   
+        end
+        
+        if dd == 14
+           detalle.d14 = 1
+          else
+           detalle.d14 = 0   
+        end
+        if dd == 15
+           detalle.d15 = 1
+          else
+           detalle.d15 = 0   
+        end
+        
+        if dd == 16
+           detalle.d16 = 1
+          else
+           detalle.d16 = 0   
+        end
+        
+        if dd == 17
+           detalle.d17 = 1
+          else
+           detalle.d17 = 0   
+        end
+        if dd == 18
+           detalle.d18 = 1
+          else
+           detalle.d18 = 0   
+        end
+        if dd == 19
+           detalle.d19 = 1
+          else
+           detalle.d19 = 0   
+        end
+        
+        if dd == 20
+           detalle.d20 = 1
+          else
+           detalle.d20 = 0   
+        end
+        if dd == 21
+           detalle.d21 = 1
+          else
+           detalle.d21 = 0   
+        end
+        if dd == 22
+           detalle.d22 = 1
+          else
+           detalle.d22 = 0   
+        end
+        if dd == 23
+           detalle.d23 = 1
+          else
+           detalle.d23 = 0   
+        end
+        if dd == 24
+           detalle.d24 = 1
+          else
+           detalle.d24 = 0   
+        end
+        if dd == 25
+           detalle.d25 = 1
+          else
+           detalle.d25 = 0   
+        end
+        if dd == 26
+           detalle.d26 = 1
+          else
+           detalle.d26 = 0   
+        end
+        if dd == 27
+           detalle.d27 = 1
+          else
+           detalle.d27 = 0   
+        end
+        if dd == 28
+           detalle.d28 = 1
+          else
+           detalle.d28 = 0   
+        end
+        if dd == 29
+           detalle.d29 = 1
+          else
+           detalle.d29 = 0   
+        end
+        if dd == 30
+           detalle.d30 = 1
+          else
+           detalle.d30 = 0   
+        end
+        if dd == 31
+           detalle.d31 = 1
+          else
+           detalle.d31 = 0   
+        end
+        
+        
+        detalle.save
+        
+  end 
   # Process the invoice
   def process
     if(self.processed == "1" or self.processed == true)          

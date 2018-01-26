@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @category_program.code %>
+</p>
+
+<p>
+  <strong>Descrip:</strong>
+  <%= @category_program.descrip %>
+</p>
+
+<%= link_to 'Edit', edit_category_program_path(@category_program) %> |
+<%= link_to 'Back', category_programs_path %>
