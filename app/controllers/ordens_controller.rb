@@ -24,12 +24,11 @@ class OrdensController < ApplicationController
         
       pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 120
         
-      pdf.move_down 25
+      pdf.move_down 5
         
       #pdf.text supplier.street, :size => 10
       #pdf.text supplier.district, :size => 10
       #pdf.text supplier.city, :size => 1
-    
        
        pdf.bounding_box([555, 525], :width => 170, :height => 70) do
         pdf.stroke_bounds
@@ -471,8 +470,6 @@ class OrdensController < ApplicationController
                                           
                          
                                         end                                          
-      pdf.move_down 5    
-      pdf.text  "Observaciones : " + @orden.description
       pdf
 
     end
@@ -490,9 +487,9 @@ class OrdensController < ApplicationController
         pdf.move_down 2      
         lcTexto=     "Los espacios,fechas y ubicaciones no seran modificados sin permiso de la agencia.No se ubicarán en la misma tanda/página, al lado, al frente o a continuación de otra publicación de similares"
  
-        data =[ [lcTexto," ",""],
+        data =[ ["Observaciones:" + @orden.description," ",""],
                
-               ["","Departamento de  medios.
+               [lcTexto,"Departamento de  medios.
                Firma.
                ","Recibido por el medio. "]          ]
 
