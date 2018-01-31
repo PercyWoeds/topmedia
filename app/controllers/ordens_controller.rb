@@ -1236,7 +1236,9 @@ class OrdensController < ApplicationController
     @divisions = @company.get_divisions()
        
      @orden.calcularTarifa(params[:orden][:tiempo])
-    
+     @orden[:month] = params[:month]
+     @orden[:year] = params[:year]
+     
      @orden[:subtotal] = @orden.get_subtotal("subtotal")
      @orden[:tax] = @orden.get_subtotal("tax")
      @orden[:total] = @orden[:subtotal] + @orden[:tax]
