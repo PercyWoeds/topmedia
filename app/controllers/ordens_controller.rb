@@ -214,14 +214,14 @@ class OrdensController < ApplicationController
       fechadia26 = anio.to_s << "-" << mes.to_s << "-" << "26"
       fechadia27 = anio.to_s << "-" << mes.to_s << "-" << "27"
       if days_mes >=28
-      fechadia28 = anio.to_s << "-" << mes.to_s << "-" << "28"
+        fechadia28 = anio.to_s << "-" << mes.to_s << "-" << "28"
       else 
         fechadia28=""
       end 
       if days_mes >=29
-      fechadia29 = anio.to_s << "-" << mes.to_s << "-" << "29"
-    else
-      fechadia29=""
+        fechadia29 = anio.to_s << "-" << mes.to_s << "-" << "29"
+      else
+        fechadia29=""
       end 
       if days_mes >=30
         fechadia30 = anio.to_s << "-" << mes.to_s << "-" << "30"
@@ -267,10 +267,21 @@ class OrdensController < ApplicationController
       row << "26"+"\n"+get_name_dia(fechadia26)
       row << "27"+"\n"+get_name_dia(fechadia27)
       row << "28"+"\n"+get_name_dia(fechadia28)
-      row << "29"+"\n"+get_name_dia(fechadia29)
-      row << "30"+"\n"+get_name_dia(fechadia30)
-      row << "31"+"\n"+get_name_dia(fechadia31)
-      
+      if fechadia29 != ""
+        row << "29"+"\n"+get_name_dia(fechadia29)
+      else 
+        row << ""
+      end 
+      if fechadia30 != ""
+        row << "30"+"\n"+get_name_dia(fechadia30)
+      else
+        row << ""
+      end 
+      if fechadia31 != ""
+        row << "31"+"\n"+get_name_dia(fechadia31)
+      else  
+        row << ""
+      end 
       row << "TOTAL"
       row << "TARIFA"
       row << "IMPORTE"
@@ -353,8 +364,8 @@ class OrdensController < ApplicationController
                            order.d21+order.d22+order.d23+order.d24+order.d25+order.d26+order.d27+order.d28+order.d29+order.d30+order.d31
             row << sprintf("%.2f",@total_linea.to_s)
             
-            row << ActiveSupport::NumberHelper::number_to_delimited(order.price ,delimiter:",",separator:".").to_s
-            row << ActiveSupport::NumberHelper::number_to_delimited(order.total ,delimiter:",",separator:".").to_s
+            row << sprintf("%.2f",ActiveSupport::NumberHelper::number_to_delimited(order.price ,delimiter:",",separator:".").to_s)
+            row << sprintf("%.2f",ActiveSupport::NumberHelper::number_to_delimited(order.total ,delimiter:",",separator:".").to_s)
             
             
             table_content << row            
@@ -1664,8 +1675,8 @@ def foot_data_headers_1
 
   def invoice_summary
       invoice_summary = []
-      invoice_summary << ["IGV    : ",ActiveSupport::NumberHelper::number_to_delimited(@orden.tax,delimiter:",",separator:".").to_s]
-      invoice_summary << ["Total  : ",ActiveSupport::NumberHelper::number_to_delimited(@orden.total ,delimiter:",",separator:".").to_s]
+      invoice_summary << ["IGV    : ",sprintf("%.2f",ActiveSupport::NumberHelper::number_to_delimited(@orden.tax,delimiter:",",separator:".").to_s)]
+      invoice_summary << ["Total  : ",sprintf("%.2f",ActiveSupport::NumberHelper::number_to_delimited(@orden.total ,delimiter:",",separator:".").to_s)]
       
       invoice_summary
     end

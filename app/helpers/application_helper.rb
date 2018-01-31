@@ -599,7 +599,7 @@ module ApplicationHelper
     
     
     fweek1 = DateTime.parse(fecha).strftime("%A")
-    puts fweek1
+  
     if fweek1 == "Monday"
       ret ="L "
     end 
