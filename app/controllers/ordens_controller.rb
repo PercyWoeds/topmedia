@@ -492,9 +492,11 @@ class OrdensController < ApplicationController
         pdf.move_down 10      
         lcTexto=     "Los espacios,fechas y ubicaciones no seran modificados sin permiso de la agencia.No se ubicarán en la misma tanda/página, al lado, al frente o a continuación de otra publicación de similares"
  
-        data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
+        data =[ [lcTexto,"Dpto. Medios ","Recibido por el medios."],
                
-               ["","Firma."," "]          ]
+               ["","
+               Firma.
+               "," "]          ]
 
             pdf.text " "
             
@@ -505,7 +507,7 @@ class OrdensController < ApplicationController
         pdf.table invoice_summary, {
             :position => :right,
             :cell_style => {:border_width => 1},
-            :width => pdf.bounds.width/4
+            :width => pdf.bounds.width/4.5
           } do
             columns([0]).font_style = :bold
             columns([1]).align = :right
@@ -513,11 +515,13 @@ class OrdensController < ApplicationController
           end
       
       
-        pdf.table(data,:cell_style=> {:border_width=>1} , :width => pdf.bounds.width/3,:position => :center)
+        pdf.table(data,:cell_style=> {:border_width=>1} ,:width => pdf.bounds.width/2,:position => :center,:at => [pdf.bounds.left, pdf.bounds.bottom])
+        
         pdf.text "" 
-        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
-        pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
-
+        pdf.bounding_box([0, 40],:width => pdf.bounds.width/2, :height => 100) do
+        #pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom ]
+          pdf.table(data,:cell_style=> {:border_width=>1} ,:position => :center,:at => [pdf.bounds.left, pdf.bounds.bottom])
+        
       end
 
       pdf
