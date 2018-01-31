@@ -473,8 +473,6 @@ class OrdensController < ApplicationController
                                         end                                          
       pdf.move_down 5    
       pdf.text  "Observaciones : " + @orden.description
-
-
       pdf
 
     end
@@ -489,7 +487,7 @@ class OrdensController < ApplicationController
         services_tax = 0
         services_total = 0    
         
-        pdf.move_down 10      
+        pdf.move_down 2      
         lcTexto=     "Los espacios,fechas y ubicaciones no seran modificados sin permiso de la agencia.No se ubicarán en la misma tanda/página, al lado, al frente o a continuación de otra publicación de similares"
  
         data =[ [lcTexto," ",""],
