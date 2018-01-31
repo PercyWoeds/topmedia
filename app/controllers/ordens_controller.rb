@@ -1234,8 +1234,6 @@ class OrdensController < ApplicationController
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
-     puts "tiempo "
-     puts params[:orden][:tiempo]
        
      @orden.calcularTarifa(params[:orden][:tiempo])
     
@@ -1724,7 +1722,7 @@ def foot_data_headers_1
     def orden_params
 
     params.require(:orden).permit(:contrato_id,:fecha,:medio_id,:marca_id,:version_id,:producto_id,:fecha1,:fecha2,:tiempo,  
-    :code,:company_id,:subtotal,:tax,:total,:user_id,:processed,:customer_id,:description,:d01,:d02,:d03,:d04,:d05,:d06,:d07,:d08,:d09,:d10,:d11,:d12,:d13,:d14,:d15,:d16,:d17,:d18,:d19,:d20,:d21,:d22,:d23,:d24,:d25,:d26,:d27,:d28,:d29,:d30,:d31,:revision,:ciudad_id,:fecha_inicio,:fecha_fin,:tarifa )
+    :code,:company_id,:subtotal,:tax,:total,:user_id,:processed,:customer_id,:description,:d01,:d02,:d03,:d04,:d05,:d06,:d07,:d08,:d09,:d10,:d11,:d12,:d13,:d14,:d15,:d16,:d17,:d18,:d19,:d20,:d21,:d22,:d23,:d24,:d25,:d26,:d27,:d28,:d29,:d30,:d31,:revision,:ciudad_id,:fecha_inicio,:fecha_fin,:tarifa,:month,:year )
     end
 
 end
