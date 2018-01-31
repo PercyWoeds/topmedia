@@ -17,7 +17,7 @@ class OrdensController < ApplicationController
      $lcRucCli =  @orden.customer.ruc
      $lcDirCli = ""  
      
-       $lcMoneda ="NUEVOS SOLES "
+       
      
      $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
      $lcHora  = Time.now.to_s    
@@ -31,13 +31,14 @@ class OrdensController < ApplicationController
       #pdf.text supplier.city, :size => 1
     
        
-       pdf.bounding_box([555, 525], :width => 200, :height => 80) do
+       pdf.bounding_box([555, 525], :width => 170, :height => 70) do
         pdf.stroke_bounds
         pdf.move_down 15
         pdf.font "Helvetica", :style => :bold do
-          pdf.text "R.U.C: 20100040009008", :align => :center,:size => 10
+          pdf.text "R.U.C: 20545232031", :align => :center,:size => 10
           pdf.text "ORDEN DE TRANSMISION", :align => :center,:size  =>10
-          pdf.text "#{@orden.code}", :align => :center,:size  =>10,
+          pdf.text "#{@orden.code}"+" REV."+"#{@orden.revision}", :align => :center,:size  =>10
+          pdf.text @month_name, :align => :center,:size  =>10,
                                  :style => :bold
           
         end
@@ -53,16 +54,17 @@ class OrdensController < ApplicationController
     
     
     pdf.font "Helvetica" , :size => 6
-    pdf.text "________________________________________________________________________________________________________", :size => 13, :spacing => 4
+    pdf.stroke_horizontal_rule
     pdf.font "Helvetica" , :size => 8
     pdf.move_down 2
-    max_rows = [invoice_headers.length,client_data_headers.length, 0].max
+    max_rows = [client_data_headers_1.length, invoice_headers_1.length,invoice_headers_2.length, 0].max
       rows = []
       (1..max_rows).each do |row|
         rows_index = row - 1
         rows[rows_index] = []
-        rows[rows_index] += (invoice_headers.length >= row ? invoice_headers[rows_index] : ['',''])
-        rows[rows_index] += (client_data_headers.length >= row ? client_data_headers[rows_index] : ['',''])
+        rows[rows_index] += (client_data_headers_1.length >= row ? client_data_headers_1[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_1.length >= row ? invoice_headers_1[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_2.length >= row ? invoice_headers_2[rows_index] : ['',''])
         
       end
 
@@ -73,7 +75,7 @@ class OrdensController < ApplicationController
           :cell_style => {:border_width => 0},
           :width => pdf.bounds.width
         }) do
-          columns([0, 2]).font_style = :bold
+          columns([0, 2,4]).font_style = :bold
 
         end
 
@@ -96,6 +98,7 @@ class OrdensController < ApplicationController
       table_content << headers
 
       nroitem = 1
+      
 
       # tabla pivoteadas
       # hash of hashes
@@ -177,8 +180,103 @@ class OrdensController < ApplicationController
 
       lcCli = @orden_detalle.first.avisodetail_id
       $lcCliName = ""
-    
-
+      
+      mes = @orden.month 
+      anio = @orden.year
+      days_mes = days_of_month(mes,anio)
+      
+      
+      fechadia1 = anio.to_s << "-" << mes.to_s.rjust(2, '0') << "-" << "01"
+      fechadia2 = anio.to_s << "-" << mes.to_s << "-" << "02"
+      fechadia3 = anio.to_s << "-" << mes.to_s << "-" << "03"
+      fechadia4 = anio.to_s << "-" << mes.to_s << "-" << "04"
+      fechadia5 = anio.to_s << "-" << mes.to_s << "-" << "05"
+      fechadia6 = anio.to_s << "-" << mes.to_s << "-" << "06"
+      fechadia7 = anio.to_s << "-" << mes.to_s << "-" << "07"
+      fechadia8 = anio.to_s << "-" << mes.to_s << "-" << "08"
+      fechadia9 = anio.to_s << "-" << mes.to_s << "-" << "09"
+      fechadia10 = anio.to_s << "-" << mes.to_s << "-" << "10"
+      fechadia11 = anio.to_s << "-" << mes.to_s << "-" << "11"
+      fechadia12 = anio.to_s << "-" << mes.to_s << "-" << "12"
+      fechadia13 = anio.to_s << "-" << mes.to_s << "-" << "13"
+      fechadia14 = anio.to_s << "-" << mes.to_s << "-" << "14"
+      fechadia15 = anio.to_s << "-" << mes.to_s << "-" << "15"
+      fechadia16 = anio.to_s << "-" << mes.to_s << "-" << "16"
+      fechadia17 = anio.to_s << "-" << mes.to_s << "-" << "17"
+      fechadia18 = anio.to_s << "-" << mes.to_s << "-" << "18"
+      fechadia19 = anio.to_s << "-" << mes.to_s << "-" << "19"
+      fechadia20 = anio.to_s << "-" << mes.to_s << "-" << "20"
+      fechadia21 = anio.to_s << "-" << mes.to_s << "-" << "21"
+      fechadia22 = anio.to_s << "-" << mes.to_s << "-" << "22"
+      fechadia23 = anio.to_s << "-" << mes.to_s << "-" << "23"
+      fechadia24 = anio.to_s << "-" << mes.to_s << "-" << "24"
+      fechadia25 = anio.to_s << "-" << mes.to_s << "-" << "25"
+      fechadia26 = anio.to_s << "-" << mes.to_s << "-" << "26"
+      fechadia27 = anio.to_s << "-" << mes.to_s << "-" << "27"
+      if days_mes >=28
+      fechadia28 = anio.to_s << "-" << mes.to_s << "-" << "28"
+      else 
+        fechadia28=""
+      end 
+      if days_mes >=29
+      fechadia29 = anio.to_s << "-" << mes.to_s << "-" << "29"
+    else
+      fechadia29=""
+      end 
+      if days_mes >=30
+        fechadia30 = anio.to_s << "-" << mes.to_s << "-" << "30"
+      else
+        fechadia30=""
+      end 
+      if days_mes >=31
+        fechadia31 = anio.to_s << "-" << mes.to_s << "-" << "31"
+      else
+        fechadia31=""
+      end 
+      
+      row = []
+      
+      row << ""
+      row << ""
+      row << get_name_dia(fechadia1)
+      row << get_name_dia(fechadia2)
+      row << get_name_dia(fechadia3)
+      row << get_name_dia(fechadia4)
+      row << get_name_dia(fechadia5)
+      row << get_name_dia(fechadia6)
+      row << get_name_dia(fechadia7)
+      row << get_name_dia(fechadia8)
+      row << get_name_dia(fechadia9)
+      row << get_name_dia(fechadia10)
+      row << get_name_dia(fechadia11)
+      row << get_name_dia(fechadia12)
+      row << get_name_dia(fechadia13)
+      row << get_name_dia(fechadia14)
+      row << get_name_dia(fechadia15)
+      row << get_name_dia(fechadia16)
+      row << get_name_dia(fechadia17)
+      row << get_name_dia(fechadia18)
+      row << get_name_dia(fechadia19)
+      row << get_name_dia(fechadia20)
+      row << get_name_dia(fechadia21)
+      row << get_name_dia(fechadia22)
+      row << get_name_dia(fechadia23)
+      row << get_name_dia(fechadia24)
+      row << get_name_dia(fechadia25)
+      row << get_name_dia(fechadia26)
+      row << get_name_dia(fechadia27)
+      row << get_name_dia(fechadia28)
+      row << get_name_dia(fechadia29)
+      row << get_name_dia(fechadia30)
+      row << get_name_dia(fechadia31)
+      
+      row << ""
+      row << ""
+      row << ""
+      
+     
+     table_content << row            
+     
      for  order in @orden_detalle 
 
         
@@ -187,39 +285,40 @@ class OrdensController < ApplicationController
             row << nroitem.to_s        
             row << order.avisodetail.descrip 
             
-            row << sprintf("%.0f",order.d01.to_s)
-            row << sprintf("%.0f",order.d02.to_s)
-            row << sprintf("%.0f",order.d03.to_s)
-            row << sprintf("%.0f",order.d04.to_s)
-            row << sprintf("%.0f",order.d05.to_s)
-            row << sprintf("%.0f",order.d06.to_s)
-            row << sprintf("%.0f",order.d07.to_s)
-            row << sprintf("%.0f",order.d08.to_s)
-            row << sprintf("%.0f",order.d09.to_s)
-            row << sprintf("%.0f",order.d10.to_s)
-            row << sprintf("%.0f",order.d11.to_s)
-            row << sprintf("%.0f",order.d12.to_s)
-            row << sprintf("%.0f",order.d13.to_s)
-            row << sprintf("%.0f",order.d14.to_s)
-            row << sprintf("%.0f",order.d15.to_s)
-            row << sprintf("%.0f",order.d16.to_s)
-            row << sprintf("%.0f",order.d17.to_s)
-            row << sprintf("%.0f",order.d18.to_s)
-            row << sprintf("%.0f",order.d19.to_s)
-            row << sprintf("%.0f",order.d20.to_s)
-            row << sprintf("%.0f",order.d21.to_s)
-            row << sprintf("%.0f",order.d22.to_s)
-            row << sprintf("%.0f",order.d23.to_s)
-            row << sprintf("%.0f",order.d24.to_s)
-            row << sprintf("%.0f",order.d25.to_s)
-            row << sprintf("%.0f",order.d26.to_s)
-            row << sprintf("%.0f",order.d27.to_s)
-            row << sprintf("%.0f",order.d28.to_s)
-            row << sprintf("%.0f",order.d29.to_s)
-            row << sprintf("%.0f",order.d30.to_s)
-            row << sprintf("%.0f",order.d31.to_s)
+            row << formatea_number(order.d01)
+            row << formatea_number(order.d02)
+            row << formatea_number(order.d03)
+            row << formatea_number(order.d04)
+            row << formatea_number(order.d05)
+            row << formatea_number(order.d06)
+            row << formatea_number(order.d07)
+            row << formatea_number(order.d08)
+            row << formatea_number(order.d09)
+            row << formatea_number(order.d10)
+            row << formatea_number(order.d11)
+            row << formatea_number(order.d12)
+            row << formatea_number(order.d13)
+            row << formatea_number(order.d14)
+            row << formatea_number(order.d15)
+            row << formatea_number(order.d16)
+            row << formatea_number(order.d17)
+            row << formatea_number(order.d18)
+            row << formatea_number(order.d19)
+            row << formatea_number(order.d20)
+            row << formatea_number(order.d21)
+            row << formatea_number(order.d22)
+            row << formatea_number(order.d23)
+            row << formatea_number(order.d24)
+            row << formatea_number(order.d25)
+            row << formatea_number(order.d26)
+            row << formatea_number(order.d27)
+            row << formatea_number(order.d28)
+            row << formatea_number(order.d29)
+            row << formatea_number(order.d30)
+            row << formatea_number(order.d31)
             
             
+          
             @total_dia01_column += order.d01
             @total_dia02_column += order.d02
             @total_dia03_column += order.d03
@@ -281,37 +380,39 @@ class OrdensController < ApplicationController
         row = []
          row << ""       
          row << " TOTAL GENERAL => "         
-         row << sprintf("%.0f",@total_dia01_column.to_s)
-         row << sprintf("%.0f",@total_dia02_column.to_s)
-         row << sprintf("%.0f",@total_dia03_column.to_s)
-         row << sprintf("%.0f",@total_dia04_column.to_s)
-         row << sprintf("%.0f",@total_dia05_column.to_s)
-         row << sprintf("%.0f",@total_dia06_column.to_s)
-         row << sprintf("%.0f",@total_dia07_column.to_s)
-         row << sprintf("%.0f",@total_dia08_column.to_s)
-         row << sprintf("%.0f",@total_dia09_column.to_s)
-         row << sprintf("%.0f",@total_dia10_column.to_s)
-         row << sprintf("%.0f",@total_dia11_column.to_s)
-         row << sprintf("%.0f",@total_dia12_column.to_s)
-         row << sprintf("%.0f",@total_dia13_column.to_s)
-         row << sprintf("%.0f",@total_dia14_column.to_s)
-         row << sprintf("%.0f",@total_dia15_column.to_s)
-         row << sprintf("%.0f",@total_dia16_column.to_s)
-         row << sprintf("%.0f",@total_dia17_column.to_s)
-         row << sprintf("%.0f",@total_dia18_column.to_s)
-         row << sprintf("%.0f",@total_dia19_column.to_s)
-         row << sprintf("%.0f",@total_dia20_column.to_s)
-         row << sprintf("%.0f",@total_dia21_column.to_s)
-         row << sprintf("%.0f",@total_dia22_column.to_s)
-         row << sprintf("%.0f",@total_dia23_column.to_s)
-         row << sprintf("%.0f",@total_dia24_column.to_s)
-         row << sprintf("%.0f",@total_dia25_column.to_s)
-         row << sprintf("%.0f",@total_dia26_column.to_s)
-         row << sprintf("%.0f",@total_dia27_column.to_s)
-         row << sprintf("%.0f",@total_dia28_column.to_s)
-         row << sprintf("%.0f",@total_dia29_column.to_s)
-         row << sprintf("%.0f",@total_dia30_column.to_s)
-         row << sprintf("%.0f",@total_dia31_column.to_s)
+         row << formatea_number(@total_dia01_column)
+         row << formatea_number(@total_dia02_column)
+         row << formatea_number(@total_dia03_column)
+         row << formatea_number(@total_dia04_column)
+         row << formatea_number(@total_dia05_column)
+         row << formatea_number(@total_dia06_column)
+         row << formatea_number(@total_dia07_column)
+         row << formatea_number(@total_dia08_column)
+         row << formatea_number(@total_dia09_column)
+         row << formatea_number(@total_dia10_column)
+         row << formatea_number(@total_dia11_column)
+         row << formatea_number(@total_dia12_column)
+         row << formatea_number(@total_dia13_column)
+         row << formatea_number(@total_dia14_column)
+         row << formatea_number(@total_dia15_column)
+         row << formatea_number(@total_dia16_column)
+         row << formatea_number(@total_dia17_column)
+         row << formatea_number(@total_dia18_column)
+         row << formatea_number(@total_dia19_column)
+         row << formatea_number(@total_dia20_column)
+         row << formatea_number(@total_dia21_column)
+         row << formatea_number(@total_dia22_column)
+         row << formatea_number(@total_dia23_column)
+         row << formatea_number(@total_dia24_column)
+         row << formatea_number(@total_dia25_column)
+         row << formatea_number(@total_dia26_column)
+         row << formatea_number(@total_dia27_column)
+         row << formatea_number(@total_dia28_column)
+         row << formatea_number(@total_dia29_column)
+         row << formatea_number(@total_dia30_column)
+         row << formatea_number(@total_dia31_column)
+         
+         
          row << sprintf("%.2f",@total_linea_general.to_s)
          row << " "
          row << " "
@@ -389,31 +490,31 @@ class OrdensController < ApplicationController
         services_total = 0    
         
         pdf.move_down 10      
- lcTexto=     "Los espacios,fechas y ubicaciones no seran modificados sin permiso de la agencia.No se ubicarán en la misma tanda/página, al lado, al frente o a continuación de otra publicación de similares"
+        lcTexto=     "Los espacios,fechas y ubicaciones no seran modificados sin permiso de la agencia.No se ubicarán en la misma tanda/página, al lado, al frente o a continuación de otra publicación de similares"
  
-data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
+        data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
                
                ["","Firma."," "]          ]
 
-           
             pdf.text " "
-            pdf.table invoice_summary, {
-        :position => :right,
-        :cell_style => {:border_width => 1},
-        :width => pdf.bounds.width/4
-      } do
-        columns([0]).font_style = :bold
-        columns([1]).align = :right
-        
-      end
-      
-      pdf.table(data,:cell_style=> {:border_width=>1} , :width => pdf.bounds.width/3,:position => :center)
             
+            
+        table_content = [["This table"], ["covers the"], ["whole page width"]]
         
-        
+  
+        pdf.table invoice_summary, {
+            :position => :right,
+            :cell_style => {:border_width => 1},
+            :width => pdf.bounds.width/4
+          } do
+            columns([0]).font_style = :bold
+            columns([1]).align = :right
+            
+          end
       
+      
+        pdf.table(data,:cell_style=> {:border_width=>1} , :width => pdf.bounds.width/3,:position => :center)
         pdf.text "" 
-
         pdf.bounding_box([0, 20], :width => 535, :height => 40) do
         pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
 
@@ -430,10 +531,25 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
   def pdf
     @orden = Orden.find(params[:id])
     @company = Company.find(1)        
-    Prawn::Document.generate("app/pdf_output/rpt_orden2.pdf") do |pdf|        
+     $lcContrato =  @orden.contrato.code
+     $lcMedio  = @orden.medio.descrip
+     $lcMarca  = @orden.marca.name
+     $lcProducto = @orden.producto.name 
+     $lcVersion = @orden.version.descrip
+     $lcFechaMes = @orden.month.to_i  
+     $lcDuracion = @orden.tiempo
+     @months = monthsArr
+     @month_name = @months[$lcFechaMes - 1][0] <<" - " <<@orden.year.to_s
+    
+     $lcMoneda = @orden.get_moneda(@orden.contrato.moneda_id)
+     $lcMedio = @orden.medio.descrip
+     $lcCobertura = @orden.ciudad.descrip 
+     
+    
+    Prawn::Document.generate "app/pdf_output/rpt_orden2.pdf" , :page_layout => :landscape,:size=> "A4" do |pdf|        
+    #Prawn::Document.generate("app/pdf_output/rpt_orden2.pdf") do |pdf|        
 
-        pdf.start_new_page(:size => "A4", :layout => :landscape)
-
+        
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt2(pdf)
         pdf = build_pdf_body_rpt2(pdf)
@@ -586,7 +702,11 @@ data =[ [lcTexto,"Dpto.Medios","Recibido por el medios."],
   
   # Autocomplete for products
   def ac_programs
-    @products = Avisodetail.where(["(descrip iLIKE ? and category_program_id = 3 )", "%" +params[:q] + "%"])
+    if params[:orden_id] == "D"
+     @products = Avisodetail.where(["(descrip iLIKE ? and category_program_id = 3 )", "%" +params[:q] + "%"])
+    else
+     @products = Avisodetail.where(["(descrip iLIKE ? and category_program_id <> 3 )", "%" +params[:q] + "%"])
+    end 
    
     render :layout => false
   end
@@ -1457,7 +1577,8 @@ def crear
     
     @ordenes_rpt = @company.get_ordenes_cliente_all(@fecha1,@fecha2,@customer,@marca,@producto,@version,@ciudad,@tipoorden)
     
-    Prawn::Document.generate("app/pdf_output/rpt_ordenes1.pdf") do |pdf|
+      Prawn::Document.generate("app/pdf_output/rpt_ordenes1.pdf") do |pdf|
+      
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt5(pdf)
         pdf = build_pdf_body_rpt5(pdf)
@@ -1473,38 +1594,69 @@ def crear
 #fin reporte de ingresos x producto 
 
 
- def client_data_headers
+def foot_data_headers_1
 
     #{@purchaseorder.description}
-      $lcContrato =  @orden.contrato.code
-     $lcMedio  = @orden.medio.descrip
-     $lcMarca  = @orden.marca.name
-     $lcProducto = @orden.producto.name 
-     $lcVersion = @orden.version.descrip
-     $lcFechaMes = @orden.month.to_i  
-     $lcDuracion = @orden.tiempo
-     @months = monthsArr
-     @month_name = @months[$lcFechaMes - 1][0] <<" - " <<@orden.year.to_s
-    
      
-     $lcMoneda ="NUEVOS SOLES "
-     
-      client_headers  = [["Marca: ", $lcMarca]] 
-      client_headers << ["Producto  : ",$lcProducto]
-      client_headers << ["Version  : ",$lcVersion]
-      client_headers << ["Duracion  : ",$lcDuracion]
-      client_headers << ["Emision campaña : ",@month_name ]     
-      client_headers
+     client_data_headers_1  = [["Cliente : ", $lcCli]]
+      client_data_headers_1 <<  ["RUC : ", $lcRucCli]
+      client_data_headers_1 <<  ["Direccion : ", $lcDircli]
+      client_data_headers_1 <<  ["Contrato : ", $lcContrato]
+      client_data_headers_1
+      
+      
   end
 
-  def invoice_headers            
-      invoice_headers  = [["Cliente : ", $lcCli]]
-      invoice_headers <<  ["RUC : ", $lcRucCli]
-      invoice_headers <<  ["Direccion : ", $lcDircli]
-      invoice_headers <<  ["Contrato : ", $lcContrato]
-      invoice_headers
+  def invoice_headers_1            
+      invoice_headers_1  = [["Medio : ", $lcMedio]]
+      invoice_headers_1 <<  ["Cobertura : ", $lcCobertura]
+      invoice_headers_1 <<  ["Moneda : ", $lcMoneda]
+      invoice_headers_1
   end
 
+ def invoice_headers_2
+      invoice_headers_2  = [["Marca: ", $lcMarca]] 
+      invoice_headers_2 << ["Producto  : ",$lcProducto]
+      invoice_headers_2 << ["Version  : ",$lcVersion]
+      invoice_headers_2 << ["Duracion  : ",$lcDuracion]
+          
+      invoice_headers_2
+      
+      
+  end
+
+
+
+ def client_data_headers_1
+
+    #{@purchaseorder.description}
+     
+     client_data_headers_1  = [["Cliente : ", $lcCli]]
+      client_data_headers_1 <<  ["RUC : ", $lcRucCli]
+      client_data_headers_1 <<  ["Direccion : ", $lcDircli]
+      client_data_headers_1 <<  ["Contrato : ", $lcContrato]
+      client_data_headers_1
+      
+      
+  end
+
+  def invoice_headers_1            
+      invoice_headers_1  = [["Medio : ", $lcMedio]]
+      invoice_headers_1 <<  ["Cobertura : ", $lcCobertura]
+      invoice_headers_1 <<  ["Moneda : ", $lcMoneda]
+      invoice_headers_1
+  end
+
+ def invoice_headers_2
+      invoice_headers_2  = [["Marca: ", $lcMarca]] 
+      invoice_headers_2 << ["Producto  : ",$lcProducto]
+      invoice_headers_2 << ["Version  : ",$lcVersion]
+      invoice_headers_2 << ["Duracion  : ",$lcDuracion]
+          
+      invoice_headers_2
+      
+      
+  end
 
 
   def client_data_headers_rpt
@@ -1520,9 +1672,9 @@ def crear
 
   def invoice_summary
       invoice_summary = []
-      invoice_summary << ["SubTotal",  ActiveSupport::NumberHelper::number_to_delimited(@orden.subtotal,delimiter:",",separator:".").to_s]
-      invoice_summary << ["IGV",ActiveSupport::NumberHelper::number_to_delimited(@orden.tax,delimiter:",",separator:".").to_s]
-      invoice_summary << ["Total", ActiveSupport::NumberHelper::number_to_delimited(@orden.total ,delimiter:",",separator:".").to_s]
+      invoice_summary << ["SubTotal",sprintf("%.2f",@orden.subtotal.to_s)]
+      invoice_summary << ["IGV",sprintf("%.2f",@orden.tax.to_s)]
+      invoice_summary << ["Total",sprintf("%.2f",@orden.total.to_s)]
       
       invoice_summary
     end

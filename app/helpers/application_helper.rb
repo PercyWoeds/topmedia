@@ -1,4 +1,7 @@
 module ApplicationHelper
+  
+  include ActionView::Helpers::NumberHelper
+  
   def check_if_true(item)
   if(item == 'true' or item == true or item == 1 or item == '1')
     return true
@@ -226,7 +229,7 @@ module ApplicationHelper
 # orden
   def generate_guid12
     @voidedlast = Voided.find(14)
-    correlative_number =@voidedlast.serie + "-"+@voidedlast.numero.to_s
+    correlative_number = @voidedlast.numero.to_s.rjust(6, '0') 
     return correlative_number
   end
 
@@ -576,6 +579,49 @@ module ApplicationHelper
 
     render :layout => false
   end
+  def formatea_number(number)
+      ret = ""
+      if number>0
+        ret =  sprintf("%.0f",number.to_s)
+        else
+      ret = ""        
+    end 
+    return ret 
+  end 
   
+  def days_of_month(month, year)
+   Date.new(year, month, -1).day
+  end
+  def get_name_dia(fecha)
+    
+    
+    ret = ""
+    
+    
+    fweek1 = DateTime.parse(fecha).strftime("%A")
+    puts fweek1
+    if fweek1 == "Monday"
+      ret ="L "
+    end 
+    if fweek1 =="Tuesday"
+      ret ="M "
+    end 
+    if fweek1 =="Wednesday"
+      ret ="M "
+    end 
+    if fweek1 =="Thursday"
+      ret ="J "
+    end 
+    if fweek1 =="Friday"
+      ret ="V "
+    end 
+    if fweek1 =="Saturday"
+      ret ="S "
+    end 
+    if fweek1 =="Sunday"
+      ret ="D "
+    end 
+   return ret   
+  end 
   
 end

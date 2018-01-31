@@ -11,6 +11,7 @@ class Orden < ActiveRecord::Base
   	belongs_to :marca
   	belongs_to :version
   	belongs_to :producto 
+  	belongs_to :ciudad 
   	
   	has_many :orden_products, :dependent => :destroy
 
@@ -441,6 +442,17 @@ TABLE_HEADERS2 = ["Nº",
         detalle.save
         
   end 
+  
+  def get_moneda(id)
+      texto = ""
+      if id == 1
+          texto = "MONEDA NACIONAL"
+      else
+          texto = "MONEDA EXTRANJERA"
+      end 
+      
+      return texto 
+  end 
   # Process the invoice
   def process
     if(self.processed == "1" or self.processed == true)          
@@ -473,5 +485,6 @@ TABLE_HEADERS2 = ["Nº",
       return "red"
     end
   end
-
+  
+  
 end

@@ -280,7 +280,7 @@
       $("#selected_seller").html(data[0]);
     });
     
-    $("#ac_item").autocomplete("/ordens/ac_programs/<%= @company.id %>", {
+    $("#ac_item").autocomplete("/ordens/ac_programs/<%= @orden.id %>", {
 			matchSubset: 1,
 			matchContains: 1,
       selectFirst: false

@@ -333,7 +333,7 @@ end
 #  ordens
   
   match 'ordens/list_items/:company_id' => 'ordens#list_items', via: [:get, :post]  
-  match 'ordens/ac_programs/:company_id' => 'ordens#ac_programs', via: [:get, :post]
+  match 'ordens/ac_programs/:orden_id' => 'ordens#ac_programs', via: [:get, :post]
   match 'ordens/ac_user/:company_id' => 'ordens#ac_user', via: [:get, :post]
   match 'ordens/ac_customers/:company_id' => 'ordens#ac_customers', via: [:get, :post]
   match 'ordens/new/:company_id' => 'ordens#new', via: [:get, :post]
