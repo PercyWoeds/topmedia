@@ -34,9 +34,9 @@
             <%= link_to invoice.code, invoice, :title => "Ir a factura" %>
           </td>
           <td class="bordered_right bordered_bottom">
-          <%%>  
+          <%if invoice.contrato != nil %>
           <%= invoice.contrato.customer.name %>
-          
+          <% end %>
           </td>
           
           <td class="bordered_right bordered_bottom">

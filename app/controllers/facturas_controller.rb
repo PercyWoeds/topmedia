@@ -5,7 +5,7 @@ include ServicesHelper
 class FacturasController < ApplicationController
 
   before_filter :authenticate_user!, :checkServices
-
+  
 
   def discontinue
     
