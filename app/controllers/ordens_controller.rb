@@ -269,18 +269,12 @@ class OrdensController < ApplicationController
       row << "28"+"\n"+get_name_dia(fechadia28)
       if fechadia29 != ""
         row << "29"+"\n"+get_name_dia(fechadia29)
-      else 
-        row << ""
       end 
       if fechadia30 != ""
         row << "30"+"\n"+get_name_dia(fechadia30)
-      else
-        row << ""
       end 
       if fechadia31 != ""
         row << "31"+"\n"+get_name_dia(fechadia31)
-      else  
-        row << ""
       end 
       row << "TOTAL"
       row << "TARIFA"
@@ -321,10 +315,15 @@ class OrdensController < ApplicationController
             row << formatea_number(order.d26)
             row << formatea_number(order.d27)
             row << formatea_number(order.d28)
-            row << formatea_number(order.d29)
-            row << formatea_number(order.d30)
-            row << formatea_number(order.d31)
-            
+            if fechadia29 != ""
+              row << formatea_number(order.d29)
+            end 
+            if fechadia30 != ""
+              row << formatea_number(order.d30)
+            end 
+            if fechadia31 != ""
+              row << formatea_number(order.d31)
+            end 
             
           
             @total_dia01_column += order.d01
@@ -363,7 +362,7 @@ class OrdensController < ApplicationController
                            order.d11+order.d12+order.d13+order.d14+order.d15+order.d16+order.d17+order.d18+order.d19+order.d20+
                            order.d21+order.d22+order.d23+order.d24+order.d25+order.d26+order.d27+order.d28+order.d29+order.d30+order.d31
             row << sprintf("%.2f",@total_linea.to_s)
-            row << ActiveSupport::NumberHelper::number_to_delimited(order.price.round(2),delimiter:",",separator:".").to_s
+            row << ActiveSupport::NumberHelper::number_to_delimited(order.price.round(2),delimiter_pattern: /(\d+?)(?=(\d\d)+(\d)(?!\d))/).to_s
             
             row << ActiveSupport::NumberHelper::number_to_delimited(order.total.round(2),delimiter:",",separator:".").to_s
             
@@ -408,12 +407,17 @@ class OrdensController < ApplicationController
          row << formatea_number(@total_dia26_column)
          row << formatea_number(@total_dia27_column)
          row << formatea_number(@total_dia28_column)
-         row << formatea_number(@total_dia29_column)
-         row << formatea_number(@total_dia30_column)
-         row << formatea_number(@total_dia31_column)
-         
-         
-         row << sprintf("%.2f",@total_linea_general.to_s)
+          if fechadia29 != ""
+             row << formatea_number(@total_dia29_column)
+          end 
+             if fechadia30 != ""
+           row << formatea_number(@total_dia30_column)
+         end 
+            if fechadia31 != ""
+           row << formatea_number(@total_dia31_column)
+         end 
+           
+           row << sprintf("%.2f",@total_linea_general.to_s)
          row << "SUBTOTAL:"
          row << ActiveSupport::NumberHelper::number_to_delimited(@orden.subtotal.round(2),delimiter:",",separator:".").to_s
         
@@ -457,13 +461,18 @@ class OrdensController < ApplicationController
                                           columns([28]).align=:center 
                                           columns([29]).align=:center 
                                           columns([30]).align=:center
+                                          
+                                          
                                           columns([31]).align=:center
+                                          
                                           columns([32]).align=:right
-                                          columns([33]).width=10
+                                          
                                           columns([33]).align=:right
+                                          
                                           columns([33]).width=30
                                           columns([34]).align=:right
                                           columns([34]).width=44
+                                          
                                           columns([35]).align=:right
                                           columns([35]).width=45
                                         end                                          
