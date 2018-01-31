@@ -492,11 +492,11 @@ class OrdensController < ApplicationController
         pdf.move_down 10      
         lcTexto=     "Los espacios,fechas y ubicaciones no seran modificados sin permiso de la agencia.No se ubicarán en la misma tanda/página, al lado, al frente o a continuación de otra publicación de similares"
  
-        data =[ [lcTexto,"Dpto. Medios ","Recibido por el medios."],
+        data =[ [lcTexto," ",""],
                
-               ["","
+               ["","Departamento de  medios.
                Firma.
-               "," "]          ]
+               ","Recibido por el medio. "]          ]
 
             pdf.text " "
             
@@ -515,19 +515,27 @@ class OrdensController < ApplicationController
           end
       
       
-        pdf.table(data,:cell_style=> {:border_width=>1} ,:width => pdf.bounds.width/2,:position=> :center )
+       # pdf.table(data,:cell_style=> {:border_width=>1} ,:width => pdf.bounds.width/2,:position=> :center )
         
         pdf.text "" 
-        pdf.bounding_box([0, 50],:width => pdf.bounds.width/2, :height => 60) do
-        pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom ]
-         # pdf.table(data,:cell_style=> {:border_width=>1} ,:position => :center,:at => [pdf.bounds.left, pdf.bounds.bottom])
-        #
+        pdf.bounding_box([0, 70],:width => pdf.bounds.width, :height => 70,:position=> :center) do
+        #pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom ]
+            pdf.table data, {
+            :position => :center,
+            :cell_style => {:border_width => 1},
+            :width => pdf.bounds.width
+          } do
+            columns([0]).font_style = :bold
+            columns([0]).width  = 250
+            columns([1]).align = :center
+            columns([2]).align = :center
+          end
+          
       end
 
       pdf
-      
+      #
   end
-
 
 
 
