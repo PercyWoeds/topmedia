@@ -357,17 +357,13 @@ class OrdensController < ApplicationController
             
             table_content << row            
              @total_linea_general += @total_linea
-
-              @total_linea = 0 
-
+             @total_linea = 0 
           nroitem = nroitem + 1 
 
-         
        end   
 
-      #fin for
-          #ultimo cliente 
-   
+
+
         row = []
          row << ""       
          row << " TOTAL => "         
@@ -419,36 +415,36 @@ class OrdensController < ApplicationController
                                           columns([0]).width = 20
                                           columns([1]).align=:left
                                           columns([1]).width = 80
-                                          columns([2]).align=:right
-                                          columns([3]).align=:right 
-                                          columns([4]).align=:right
-                                          columns([5]).align=:right 
-                                          columns([6]).align=:right
-                                          columns([7]).align=:right 
-                                          columns([8]).align=:right
-                                          columns([9]).align=:right 
-                                          columns([10]).align=:right
-                                          columns([11]).align=:right 
-                                          columns([12]).align=:right
-                                          columns([13]).align=:right 
-                                          columns([14]).align=:right 
-                                          columns([15]).align=:right
-                                          columns([16]).align=:left
-                                          columns([17]).align=:right
-                                          columns([18]).align=:right 
-                                          columns([19]).align=:right
-                                          columns([20]).align=:right 
-                                          columns([21]).align=:right
-                                          columns([22]).align=:right 
-                                          columns([23]).align=:right
-                                          columns([24]).align=:right 
-                                          columns([25]).align=:right
-                                          columns([26]).align=:right 
-                                          columns([27]).align=:right
-                                          columns([28]).align=:right 
-                                          columns([29]).align=:right 
-                                          columns([30]).align=:right
-                                          columns([31]).align=:right
+                                          columns([2]).align=:center
+                                          columns([3]).align=:center
+                                          columns([4]).align=:center
+                                          columns([5]).align=:center 
+                                          columns([6]).align=:center
+                                          columns([7]).align=:center
+                                          columns([8]).align=:center
+                                          columns([9]).align=:center
+                                          columns([10]).align=:center
+                                          columns([11]).align=:center 
+                                          columns([12]).align=:center
+                                          columns([13]).align=:center
+                                          columns([14]).align=:center
+                                          columns([15]).align=:center
+                                          columns([16]).align=:center
+                                          columns([17]).align=:center
+                                          columns([18]).align=:center
+                                          columns([19]).align=:center
+                                          columns([20]).align=:center
+                                          columns([21]).align=:center
+                                          columns([22]).align=:center
+                                          columns([23]).align=:center
+                                          columns([24]).align=:center
+                                          columns([25]).align=:center
+                                          columns([26]).align=:center
+                                          columns([27]).align=:center
+                                          columns([28]).align=:center 
+                                          columns([29]).align=:center 
+                                          columns([30]).align=:center
+                                          columns([31]).align=:center
                                           columns([32]).align=:right
                                           columns([33]).width=10
                                           columns([33]).align=:right
@@ -456,7 +452,7 @@ class OrdensController < ApplicationController
                                           columns([34]).align=:right
                                           columns([34]).width=44
                                           columns([35]).align=:right
-                                          columns([35]).width=40
+                                          columns([35]).width=45
                                         end                                          
       pdf
 
@@ -1666,8 +1662,8 @@ def foot_data_headers_1
 
   def invoice_summary
       invoice_summary = []
-      invoice_summary << ["IGV Neto      : ",sprintf("%.2f",@orden.tax.to_s)]
-      invoice_summary << ["Total a Pagar : ",sprintf("%.2f",@orden.total.to_s)]
+      invoice_summary << ["IGV    : ",sprintf("%.2f",@orden.tax.to_s)]
+      invoice_summary << ["Total  : ",sprintf("%.2f",@orden.total.to_s)]
       
       invoice_summary
     end
