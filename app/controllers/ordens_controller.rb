@@ -515,13 +515,13 @@ class OrdensController < ApplicationController
           end
       
       
-        pdf.table(data,:cell_style=> {:border_width=>1} ,:width => pdf.bounds.width/2,:position => :center,:at => [pdf.bounds.left, pdf.bounds.bottom])
+        pdf.table(data,:cell_style=> {:border_width=>1} ,:width => pdf.bounds.width/2,:position=> :center )
         
         pdf.text "" 
-        pdf.bounding_box([0, 40],:width => pdf.bounds.width/2, :height => 100) do
-        #pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom ]
-          pdf.table(data,:cell_style=> {:border_width=>1} ,:position => :center,:at => [pdf.bounds.left, pdf.bounds.bottom])
-        
+        pdf.bounding_box([0, 50],:width => pdf.bounds.width/2, :height => 60) do
+        pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom ]
+         # pdf.table(data,:cell_style=> {:border_width=>1} ,:position => :center,:at => [pdf.bounds.left, pdf.bounds.bottom])
+        #
       end
 
       pdf
