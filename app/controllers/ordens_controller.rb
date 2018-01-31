@@ -363,9 +363,9 @@ class OrdensController < ApplicationController
                            order.d11+order.d12+order.d13+order.d14+order.d15+order.d16+order.d17+order.d18+order.d19+order.d20+
                            order.d21+order.d22+order.d23+order.d24+order.d25+order.d26+order.d27+order.d28+order.d29+order.d30+order.d31
             row << sprintf("%.2f",@total_linea.to_s)
+            row << ActiveSupport::NumberHelper::number_to_delimited(order.price.round(2),delimiter:",",separator:".").to_s
             
-            row << sprintf("%.2f",ActiveSupport::NumberHelper::number_to_delimited(order.price ,delimiter:",",separator:".").to_s)
-            row << sprintf("%.2f",ActiveSupport::NumberHelper::number_to_delimited(order.total ,delimiter:",",separator:".").to_s)
+            row << ActiveSupport::NumberHelper::number_to_delimited(order.total.round(2),delimiter:",",separator:".").to_s
             
             
             table_content << row            
@@ -415,7 +415,7 @@ class OrdensController < ApplicationController
          
          row << sprintf("%.2f",@total_linea_general.to_s)
          row << "SUBTOTAL:"
-         row << sprintf("%.2f",@orden.subtotal.to_s)
+         row << ActiveSupport::NumberHelper::number_to_delimited(@orden.subtotal.round(2),delimiter:",",separator:".").to_s
         
          table_content << row            
 
@@ -1675,8 +1675,8 @@ def foot_data_headers_1
 
   def invoice_summary
       invoice_summary = []
-      invoice_summary << ["IGV    : ",sprintf("%.2f",ActiveSupport::NumberHelper::number_to_delimited(@orden.tax,delimiter:",",separator:".").to_s)]
-      invoice_summary << ["Total  : ",sprintf("%.2f",ActiveSupport::NumberHelper::number_to_delimited(@orden.total ,delimiter:",",separator:".").to_s)]
+      invoice_summary << ["IGV    : ",ActiveSupport::NumberHelper::number_to_delimited(@orden.tax.round(2),delimiter:",",separator:".").to_s]
+      invoice_summary << ["Total  : ",ActiveSupport::NumberHelper::number_to_delimited(@orden.total.round(2),delimiter:",",separator:".").to_s]
       
       invoice_summary
     end
