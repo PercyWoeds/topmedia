@@ -1628,7 +1628,6 @@ def foot_data_headers_1
      
      client_data_headers_1  = [["Cliente : ", $lcCli]]
       client_data_headers_1 <<  ["RUC : ", $lcRucCli]
-      client_data_headers_1 <<  ["Direccion : ", $lcDircli]
       client_data_headers_1 <<  ["Contrato : ", $lcContrato]
       client_data_headers_1
       
