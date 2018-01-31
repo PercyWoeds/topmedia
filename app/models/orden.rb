@@ -446,9 +446,9 @@ TABLE_HEADERS2 = ["Nº",
   def get_moneda(id)
       texto = ""
       if id == 1
-          texto = "MONEDA NACIONAL"
+          texto = "SOLES"
       else
-          texto = "MONEDA EXTRANJERA"
+          texto = "DOLARES"
       end 
       
       return texto 

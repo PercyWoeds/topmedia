@@ -17,12 +17,10 @@ class OrdensController < ApplicationController
      $lcRucCli =  @orden.customer.ruc
      $lcDirCli = ""  
      
-       
-     
      $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
      $lcHora  = Time.now.to_s    
         
-      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 120
+      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 130
         
       pdf.move_down 5
         
@@ -71,11 +69,12 @@ class OrdensController < ApplicationController
 
         pdf.table(rows, {
           :position => :center,
-          :cell_style => {:border_width => 0},
+          :cell_style => {:border_width => 0,:height => 17 },
           :width => pdf.bounds.width
+        
         }) do
           columns([0, 2,4]).font_style = :bold
-
+          
         end
 
         pdf.move_down 5
@@ -88,13 +87,15 @@ class OrdensController < ApplicationController
       table_content = []
       total_general = 0
       total_factory = 0
+      
 
       Orden::TABLE_HEADERS2.each do |header|
+        
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
       end
-      table_content << headers
+      #table_content << headers
 
       nroitem = 1
       
@@ -233,57 +234,54 @@ class OrdensController < ApplicationController
         fechadia31=""
       end 
       
-      row = []
       
-      row << ""
-      row << ""
-      row << get_name_dia(fechadia1)
-      row << get_name_dia(fechadia2)
-      row << get_name_dia(fechadia3)
-      row << get_name_dia(fechadia4)
-      row << get_name_dia(fechadia5)
-      row << get_name_dia(fechadia6)
-      row << get_name_dia(fechadia7)
-      row << get_name_dia(fechadia8)
-      row << get_name_dia(fechadia9)
-      row << get_name_dia(fechadia10)
-      row << get_name_dia(fechadia11)
-      row << get_name_dia(fechadia12)
-      row << get_name_dia(fechadia13)
-      row << get_name_dia(fechadia14)
-      row << get_name_dia(fechadia15)
-      row << get_name_dia(fechadia16)
-      row << get_name_dia(fechadia17)
-      row << get_name_dia(fechadia18)
-      row << get_name_dia(fechadia19)
-      row << get_name_dia(fechadia20)
-      row << get_name_dia(fechadia21)
-      row << get_name_dia(fechadia22)
-      row << get_name_dia(fechadia23)
-      row << get_name_dia(fechadia24)
-      row << get_name_dia(fechadia25)
-      row << get_name_dia(fechadia26)
-      row << get_name_dia(fechadia27)
-      row << get_name_dia(fechadia28)
-      row << get_name_dia(fechadia29)
-      row << get_name_dia(fechadia30)
-      row << get_name_dia(fechadia31)
+     row = []
       
-      row << ""
-      row << ""
-      row << ""
+      row << "Nº"
+      row << "PROGRAMA "
+      row << "01"+"\n"+get_name_dia(fechadia1)
+      row << "02"+"\n"+get_name_dia(fechadia2)
+      row << "03"+"\n"+get_name_dia(fechadia3)
+      row << "04"+"\n"+get_name_dia(fechadia4)
+      row << "05"+"\n"+get_name_dia(fechadia5)
+      row << "06"+"\n"+get_name_dia(fechadia6)
+      row << "07"+"\n"+get_name_dia(fechadia7)
+      row << "08"+"\n"+get_name_dia(fechadia8)
+      row << "09"+"\n"+get_name_dia(fechadia9)
+      row << "10"+"\n"+get_name_dia(fechadia10)
+      row << "11"+"\n"+get_name_dia(fechadia11)
+      row << "12"+"\n"+get_name_dia(fechadia12)
+      row << "13"+"\n"+get_name_dia(fechadia13)
+      row << "14"+"\n"+get_name_dia(fechadia14)
+      row << "15"+"\n"+get_name_dia(fechadia15)
+      row << "16"+"\n"+get_name_dia(fechadia16)
+      row << "17"+"\n"+get_name_dia(fechadia17)
+      row << "18"+"\n"+get_name_dia(fechadia18)
+      row << "19"+"\n"+get_name_dia(fechadia19)
+      row << "20"+"\n"+get_name_dia(fechadia20)
+      row << "21"+"\n"+get_name_dia(fechadia21)
+      row << "22"+"\n"+get_name_dia(fechadia22)
+      row << "23"+"\n"+get_name_dia(fechadia23)
+      row << "24"+"\n"+get_name_dia(fechadia24)
+      row << "25"+"\n"+get_name_dia(fechadia25)
+      row << "26"+"\n"+get_name_dia(fechadia26)
+      row << "27"+"\n"+get_name_dia(fechadia27)
+      row << "28"+"\n"+get_name_dia(fechadia28)
+      row << "29"+"\n"+get_name_dia(fechadia29)
+      row << "30"+"\n"+get_name_dia(fechadia30)
+      row << "31"+"\n"+get_name_dia(fechadia31)
+      
+      row << "TOTAL"
+      row << "TARIFA"
+      row << "IMPORTE"
       
      
      table_content << row            
      
      for  order in @orden_detalle 
-
-        
-            
             row = []
             row << nroitem.to_s        
             row << order.avisodetail.descrip 
-            
             row << formatea_number(order.d01)
             row << formatea_number(order.d02)
             row << formatea_number(order.d03)
@@ -354,7 +352,7 @@ class OrdensController < ApplicationController
                            order.d11+order.d12+order.d13+order.d14+order.d15+order.d16+order.d17+order.d18+order.d19+order.d20+
                            order.d21+order.d22+order.d23+order.d24+order.d25+order.d26+order.d27+order.d28+order.d29+order.d30+order.d31
             row << sprintf("%.2f",@total_linea.to_s)
-            row << sprintf("%.2f",order.tarifa.to_s)
+            row << sprintf("%.2f",order.price.to_s)
             row << sprintf("%.2f",order.total.to_s)
             
             table_content << row            
@@ -369,16 +367,10 @@ class OrdensController < ApplicationController
 
       #fin for
           #ultimo cliente 
-
-          
-     
-
-           
-            
-        
+   
         row = []
          row << ""       
-         row << " TOTAL GENERAL => "         
+         row << " TOTAL => "         
          row << formatea_number(@total_dia01_column)
          row << formatea_number(@total_dia02_column)
          row << formatea_number(@total_dia03_column)
@@ -413,18 +405,15 @@ class OrdensController < ApplicationController
          
          
          row << sprintf("%.2f",@total_linea_general.to_s)
-         row << " "
-         row << " "
+         row << "SUBTOTAL:"
+         row << sprintf("%.2f",@orden.subtotal.to_s)
         
-    table_content << row            
+         table_content << row            
 
-      
-         
-
-
-      result = pdf.table table_content, {:position => :center,
+        result = pdf.table table_content, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width
+                                        
                                         } do 
                                           columns([0]).align=:center
                                           columns([0]).width = 20
@@ -432,7 +421,6 @@ class OrdensController < ApplicationController
                                           columns([1]).width = 80
                                           columns([2]).align=:right
                                           columns([3]).align=:right 
-                                          
                                           columns([4]).align=:right
                                           columns([5]).align=:right 
                                           columns([6]).align=:right
@@ -466,9 +454,9 @@ class OrdensController < ApplicationController
                                           columns([33]).align=:right
                                           columns([33]).width=30
                                           columns([34]).align=:right
+                                          columns([34]).width=44
                                           columns([35]).align=:right
-                                          
-                         
+                                          columns([35]).width=40
                                         end                                          
       pdf
 
@@ -502,7 +490,7 @@ class OrdensController < ApplicationController
         pdf.table invoice_summary, {
             :position => :right,
             :cell_style => {:border_width => 1},
-            :width => pdf.bounds.width/4.5
+            :width => pdf.bounds.width/8
           } do
             columns([0]).font_style = :bold
             columns([1]).align = :right
@@ -1679,9 +1667,8 @@ def foot_data_headers_1
 
   def invoice_summary
       invoice_summary = []
-      invoice_summary << ["SubTotal",sprintf("%.2f",@orden.subtotal.to_s)]
-      invoice_summary << ["IGV",sprintf("%.2f",@orden.tax.to_s)]
-      invoice_summary << ["Total",sprintf("%.2f",@orden.total.to_s)]
+      invoice_summary << ["IGV Neto      : ",sprintf("%.2f",@orden.tax.to_s)]
+      invoice_summary << ["Total a Pagar : ",sprintf("%.2f",@orden.total.to_s)]
       
       invoice_summary
     end
