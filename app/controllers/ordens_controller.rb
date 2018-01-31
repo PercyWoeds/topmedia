@@ -352,8 +352,10 @@ class OrdensController < ApplicationController
                            order.d11+order.d12+order.d13+order.d14+order.d15+order.d16+order.d17+order.d18+order.d19+order.d20+
                            order.d21+order.d22+order.d23+order.d24+order.d25+order.d26+order.d27+order.d28+order.d29+order.d30+order.d31
             row << sprintf("%.2f",@total_linea.to_s)
-            row << sprintf("%.2f",order.price.to_s)
-            row << sprintf("%.2f",order.total.to_s)
+            
+            row << ActiveSupport::NumberHelper::number_to_delimited(order.price ,delimiter:",",separator:".").to_s
+            row << ActiveSupport::NumberHelper::number_to_delimited(order.total ,delimiter:",",separator:".").to_s
+            
             
             table_content << row            
              @total_linea_general += @total_linea
@@ -1662,8 +1664,8 @@ def foot_data_headers_1
 
   def invoice_summary
       invoice_summary = []
-      invoice_summary << ["IGV    : ",sprintf("%.2f",@orden.tax.to_s)]
-      invoice_summary << ["Total  : ",sprintf("%.2f",@orden.total.to_s)]
+      invoice_summary << ["IGV    : ",ActiveSupport::NumberHelper::number_to_delimited(@orden.tax,delimiter:",",separator:".").to_s]
+      invoice_summary << ["Total  : ",ActiveSupport::NumberHelper::number_to_delimited(@orden.total ,delimiter:",",separator:".").to_s]
       
       invoice_summary
     end
