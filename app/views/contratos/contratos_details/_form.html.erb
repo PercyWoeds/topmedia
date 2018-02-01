@@ -14,9 +14,6 @@
 
 <%=  simple_form_for([@contrato , @contrato_detail]) do |f| %>
 
-
-  
-
     <div class="field">
       <%= f.label :nro, "Nro*", :class => "bold" %><br />
       <%= f.text_field :nro %>      
@@ -47,6 +44,10 @@
     <div class="field">
       <%= f.label :comision2, "Comision 2*", :class => "bold" %><br />
       <%= f.text_field :comision2 , :readonly => true %>      
+    </div>
+    <div class="field">
+      <%= f.label :comision3, "Comision 3*", :class => "bold" %><br />
+      <%= f.text_field :comision3 , :readonly => true %>      
     </div>
 
     <div class="field">
@@ -105,16 +106,20 @@
      var c_importe   = $("#contrato_detail_importe").val();
       var c_comision1 = $("#ac_item_comision1").val();
       var c_comision2 = $("#ac_item_comision2").val();
-       
+      var c_comision4 = $("#ac_item_comision3").val();
+      
       var vventa  =  ((c_importe) / 1.18 );
       var comision1  =  vventa * parseFloat(c_comision1)/100 ;
       var comision3  =  vventa - comision1;
       var comision2  =  comision3 * parseFloat(c_comision2)/100 ;
+      var comision4  =  vventa * parseFloat(c_comision4)/100 ;
+      
       var totalcomision = comision1 + comision2 ;
   
       document.getElementById('contrato_detail_vventa').value = vventa.toFixed(2);
       document.getElementById('contrato_detail_comision1').value = comision1.toFixed(2);
       document.getElementById('contrato_detail_comision2').value = comision2.toFixed(2);
+      document.getElementById('contrato_detail_comision3').value = comision4.toFixed(2);
       document.getElementById('contrato_detail_total').value = totalcomision.toFixed(2);
       
     });

@@ -27,8 +27,11 @@ class ContratosController < ApplicationController
 
     @medios =Medio.all 
     @contrato[:code] = "#{generate_guid11()}"
+    @contrato[:nrocuotas]=0
+    @contrato[:comision1]=0.00
+    @contrato[:comision2]=0.00
+    @contrato[:comision3]=0.00
     @contrato[:importe]=0.00
-
   end
 
   # GET /contratos/1/edit
@@ -643,6 +646,6 @@ class ContratosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def contrato_params
-      params.require(:contrato).permit(:code, :fecha, :customer_id, :medio_id, :importe, :moneda_id, :tipocontrato_id, :nrocuotas, :comision1, :comision2,:description,:codigointerno)
+      params.require(:contrato).permit(:code, :fecha, :customer_id, :medio_id, :importe, :moneda_id, :tipocontrato_id, :nrocuotas, :comision1, :comision2,:description,:codigointerno,:comision3)
     end
 end

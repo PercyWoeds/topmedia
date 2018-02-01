@@ -22,7 +22,7 @@
     <div class="field">
     
     <%= f.label :code, "CODIGO *", :class => "bold" %><br />
-    <%= f.text_field :code , :onclick => "$(this).select();"%>
+    <%= f.text_field :code , :onclick => "$(this).select();" %>
     </div>
     
     <div class="field">
@@ -61,7 +61,7 @@
 
     <div class="field">
     <%= f.label :importe,"Importe " %><br />
-    <%= f.text_field :importe %>
+    <%= f.number_field :importe, :step => 0.1 %>
     </div>
 
 
@@ -94,14 +94,18 @@
 
     <div class="field">
     <%= f.label :comision1,"Comision 1:  " %><br />
-    <%= f.text_field :comision1  %>
+    <%= f.number_field :comision1  %>
     </div>
 
     <div class="field">
     <%= f.label :comision2,"Comision 2:  " %><br />
-    <%= f.text_field :comision2  %>
+    <%= f.number_field :comision2  %>
     </div>
     
+    <div class="field">
+    <%= f.label :comision3,"Comision 3:  " %><br />
+    <%= f.number_field :comision3  %>
+    </div>
     <div class="field">
     <%= f.label :description,"Descripcion :  " %><br />
     <%= f.text_field :description  %>

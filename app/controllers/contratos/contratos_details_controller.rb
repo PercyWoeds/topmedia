@@ -110,6 +110,6 @@ class Contratos::ContratosDetailsController < ApplicationController
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def contrato_detail_params
-      params.require(:contrato_detail).permit(:nro, :fecha, :importe, :vventa, :comision1, :comision2, :total, :facturacanal, :fecha2, :factura1, :factura2,:contrato_id,:sit,:fechafac1,:fechafac2)
+      params.require(:contrato_detail).permit(:nro, :fecha, :importe, :vventa, :comision1, :comision2, :comision3,:total, :facturacanal, :fecha2, :factura1, :factura2,:contrato_id,:sit,:fechafac1,:fechafac2)
     end
 end
