@@ -25,9 +25,15 @@ class Contratos::ContratosDetailsController < ApplicationController
   $lcTipoContrato = a.tipocontrato_id 
   $lcNrocuotas = a.nrocuotas
   $lcImporte  = a.importe 
+  
+  
     @contrato_detail = ContratoDetail.new
     @contrato_detail[:fecha]= Date.today 
     @contrato_detail[:importe]= 0.00
+    @contrato_detail[:vventa]= 0.00
+    @contrato_detail[:comision1]= 0.00
+    @contrato_detail[:comision2]= 0.00
+    @contrato_detail[:total]= 0.00
   end
 
   # GET /contrato_details/1/edit
@@ -104,6 +110,6 @@ class Contratos::ContratosDetailsController < ApplicationController
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def contrato_detail_params
-      params.require(:contrato_detail).permit(:nro, :fecha, :importe, :vventa, :comision1, :comision2, :total, :facturacanal, :fecha2, :factura1, :factura2,:contrato_id,:sit)
+      params.require(:contrato_detail).permit(:nro, :fecha, :importe, :vventa, :comision1, :comision2, :total, :facturacanal, :fecha2, :factura1, :factura2,:contrato_id,:sit,:fechafac1,:fechafac2)
     end
 end

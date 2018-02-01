@@ -1,9 +1,21 @@
+ <% if @contrato_detail.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@contrato_detail.errors.count, "error") %> prohibited this invoice from being saved:</h2>
+
+    <ul>
+    <% @contrato_detail.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
 
 
 <%=  simple_form_for([@contrato , @contrato_detail]) do |f| %>
 
 
-  <%= f.error_notification %>
+  
 
     <div class="field">
       <%= f.label :nro, "Nro*", :class => "bold" %><br />
@@ -48,18 +60,28 @@
     </div>
     <div class="field">
       <%= f.label :fecha2, "Fecha Factura *", :class => "bold" %><br />
-      <%= f.text_field :fecha2 %>      
+      <%= f.date_field :fecha2 %>      
     </div>
 
     <div class="field">
       <%= f.label :factura1, "factura 1*", :class => "bold" %><br />
       <%= f.text_field :factura1 %>      
     </div>
+    <div class="field">
+      <%= f.label :fechafac1, "Fecha Factura 1*", :class => "bold" %><br />
+      <%= f.date_field :fechafac1 %>      
+    </div>
+
 
     <div class="field">
-      <%= f.label :factura2, "factura 2*", :class => "bold" %><br />
+      <%= f.label :factura2, "Factura 2*", :class => "bold" %><br />
       <%= f.text_field :factura2 %>      
     </div>
+    <div class="field">
+      <%= f.label :fechafac2, "Fecha Factura 2*", :class => "bold" %><br />
+      <%= f.date_field :fechafac2 %>      
+    </div>
+
    <div class="field">
       <%= f.check_box :sit %>
       <%= f.label :sit ,"Situación", :class => "bold" %>
@@ -83,7 +105,7 @@
      var c_importe   = $("#contrato_detail_importe").val();
       var c_comision1 = $("#ac_item_comision1").val();
       var c_comision2 = $("#ac_item_comision2").val();
-   
+       
       var vventa  =  ((c_importe) / 1.18 );
       var comision1  =  vventa * parseFloat(c_comision1)/100 ;
       var comision3  =  vventa - comision1;

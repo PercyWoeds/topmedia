@@ -1355,6 +1355,41 @@ class ReportsController < ApplicationController
     @ciudads  = @company.get_ciudads()
     @tipoordens  = @company.get_tipoordens()
     @monedas=@company.get_monedas    
+    if(params[:year] and params[:year].numeric?)
+      @year = params[:year].to_i
+    else
+      @year = Time.now.year
+    end
+    
+    if(params[:month] and params[:month].numeric?)
+      @month = params[:month].to_i
+    else
+      @month = Time.now.month
+    end
+    
+    if(@month < 10)
+      month_s = "0#{@month}"
+    else
+      month_s = @month.to_s
+    end
+    
+    curr_year = Time.now.year
+    c_year = curr_year
+    c_month = 1
+    
+    @years = []
+    @months = monthsArr
+    @month_name = @months[@month - 1][0]
+    
+    
+    
+    while(c_year > Time.now.year - 2)
+      @years.push(c_year)
+      c_year -= 1
+    end
+    
+    
+    
   end
   def rpt_ordenes2_pdf
     @company = Company.find(params[:company_id])    

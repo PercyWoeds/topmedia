@@ -2402,7 +2402,7 @@ def get_ordenes_cliente(fecha1,fecha2,cliente)
     
  end 
 
- def get_ordenes_cliente_all(fecha1,fecha2,cliente,marca,producto,version,ciudad,tipoorden)    
+ def get_ordenes_cliente_all(mes,anio,cliente,marca,producto,version,ciudad,tipoorden)    
    
    sql_dato =""
    sql_dato1 =""
@@ -2469,15 +2469,12 @@ def get_ordenes_cliente(fecha1,fecha2,cliente)
     end 
   end 
   
-  
-  puts "sql_Dato"
-  puts sql_dato 
-  
   if sql_dato ==  ""
-   @ordenes = Orden.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
+   @ordenes = Orden.where(["month = ? and year = ? ", "#{mes}","#{anio}" ])
   else
-   @ordenes = Orden.where(["fecha >= ? and fecha <= ? and #{sql_dato}", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
- end 
+   @ordenes = Orden.where(["month = ? and year = ? and #{sql_dato}", "#{mes} 00:00:00","#{anio} 23:59:59" ])
+  end 
+ 
   return @ordenes
     
  end 

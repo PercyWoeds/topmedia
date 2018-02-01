@@ -21,14 +21,9 @@ totals = []
 
 <form method="get" action="/ordens/rpt_ordenes1/<%= @company.id %>">
 
-  <div class="field">
-    Desde <input type="date" name="fecha1" value="2017-03-01" style = "width: 150px" >
-  </div>
-
-	<div class="field">
-    Hasta <input type="date" name="fecha2" value="2018-01-24" style = "width: 150px" >
-  </div>
-
+  <%= select_tag(:year, options_for_select(@years, @year)) %>
+  <%= select_tag(:month, options_for_select(@months, @month)) %>
+  
   <table>
     <tr>
       <td>

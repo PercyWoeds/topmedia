@@ -1,6 +1,7 @@
 class ContratosController < ApplicationController
   before_action :set_contrato, only: [:show, :edit, :update, :destroy]
 
+
   # GET /contratos
   # GET /contratos.json
   def index

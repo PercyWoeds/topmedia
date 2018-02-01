@@ -1279,7 +1279,7 @@ def crear
     @action_txt = "Create"
     
     #-------
-      if(params[:year] and params[:year].numeric?)
+    if(params[:year] and params[:year].numeric?)
       @year = params[:year].to_i
     else
       @year = Time.now.year
@@ -1425,7 +1425,7 @@ def crear
 
   def build_pdf_body_rpt5(pdf)
     
-    pdf.text "Listado de Ordenes desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
+    pdf.text "Listado de Ordenes.   Mes:"+ @mes.to_s + " Año : "+@anio.to_s , :size => 8 
     
     pdf.text "Cliente : " + @customer_name 
     
@@ -1459,7 +1459,7 @@ def crear
             row = []         
             row << nroitem.to_s
             row << product.contrato.code
-            row << product.fecha.strftime("%d/%m/%Y")
+            row << product.contrato.customer.name 
             row << product.medio.descrip 
             row << product.marca.name 
             
@@ -1468,8 +1468,6 @@ def crear
             row << product.version.descrip
             row << product.tiempo 
             row << product.subtotal 
-            row << product.tax
-            row << product.total 
             
             
             table_content << row
@@ -1536,9 +1534,8 @@ def crear
   def rpt_ordenes1
   
     @company=Company.find(params[:company_id])          
-    @fecha1 = params[:fecha1]    
-    @fecha2 = params[:fecha2]    
-    
+    @mes = params[:month]    
+    @anio = params[:year]    
     
     @cliente_check = params[:check_cliente]   
     @producto_check = params[:check_producto]   
@@ -1546,9 +1543,7 @@ def crear
     @version_check = params[:check_version]
     @ciudad_check = params[:check_ciudad]   
     @tipoorden_check = params[:check_tipoorden]   
-    puts "cliente_check"
-    puts @cliente_check
-    
+  
     
     if @cliente_check == "true"
       @customer = ""
@@ -1587,8 +1582,7 @@ def crear
       @tipoorden = params[:tipo]     
     end 
     
-    
-    @ordenes_rpt = @company.get_ordenes_cliente_all(@fecha1,@fecha2,@customer,@marca,@producto,@version,@ciudad,@tipoorden)
+    @ordenes_rpt = @company.get_ordenes_cliente_all(@mes,@anio,@customer,@marca,@producto,@version,@ciudad,@tipoorden)
     
       Prawn::Document.generate("app/pdf_output/rpt_ordenes1.pdf") do |pdf|
       

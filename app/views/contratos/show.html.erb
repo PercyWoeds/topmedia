@@ -1,7 +1,7 @@
 
 <h1>
   <%= image_tag("supplier_48.png", :class => "vmiddle") %>
-    <%= @contrato.code  %>
+    <%= @contrato.codigointerno  %>
 </h1>
 
 <%= hr() %>
@@ -12,11 +12,13 @@
 
 <% if @contrato.code %>
   <p>
-    <b>Contrato Nro:</b>
+    <b>Codigo  :</b>
     <%= link_to @contrato.code, @contrato.code %>
   </p>
 <% end %>
 
+
+<p>
 
 <p>
   <strong>Fecha:</strong>

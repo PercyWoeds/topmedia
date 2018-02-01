@@ -1,8 +1,8 @@
 class Contrato < ActiveRecord::Base
-
   validates_uniqueness_of :code
 
   validates_numericality_of :importe,:nrocuotas,:comision1,:comision2
+  
 
   
   belongs_to :customer 

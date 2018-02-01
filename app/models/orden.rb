@@ -16,16 +16,14 @@ class Orden < ActiveRecord::Base
   	has_many :orden_products, :dependent => :destroy
 
 TABLE_HEADERS = ["ITEM",
-			     "CONTRATO",
+			     "CONTRATO", 
 			     "FECHA",
 			     "MEDIO",
 			     "MARCA",
 			     "PRODUCTO",
 			     "VERSION",
 			     "TIEMPO",
-			     "SUBTOTAL",
-			     "IGV",
-			     "TOTAL"]	           
+			     "SUBTOTAL"]	           
 
 TABLE_HEADERS2 = ["Nº",
                      "Programa",   
