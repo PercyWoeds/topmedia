@@ -451,7 +451,7 @@ class ContratosController < ApplicationController
 # reporte completo EECC
 
 
-  def build_pdf_header_rpt5(pdf)
+  def build_pdf_header_rpt3(pdf)
       pdf.font "Helvetica" , :size => 8
      $lcCli  =  @company.name 
      $lcdir1 = @company.address1+@company.address2+@company.city
@@ -485,17 +485,15 @@ class ContratosController < ApplicationController
       pdf 
   end   
 
-  def build_pdf_body_rpt5(pdf)
+  def build_pdf_body_rpt3(pdf)
     
-    pdf.text "Estado de Cuenta Contratos: "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
+    pdf.text "Contratos : "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
   
     pdf.font "Helvetica" , :size => 6
 
       headers = []
       headers2 = []
       table_content = []
-
-      
       
       nroitem=1
 
@@ -503,72 +501,226 @@ class ContratosController < ApplicationController
       @cantidad = 0
       nroitem = 1
 
-      data = [ ["Item", "Nro.", "Fecha","Cliente","Medio","Moneda","","Abonos","Cargos","Cargos Acum","Saldo"]]
-      pdf.table data, :cell_style => { :font => "Times-Roman", :font_style => :bold ,:size=>11},:width=> 540
-      pdf.move_down 20
+      data = [ ["Cuota ", "Valor", "I.G.V.","Total","Factura","Factura","Fecha",""],
+      ["Nro. Vcmto ", "Venta", "","Cuota","Canal","Masa","Cancela.","Sit."]]
       
-
+      pdf.table data, :cell_style => { :font => "Times-Roman", :font_style => :bold ,:size=>11},:width=> 540
+      pdf.move_down 10
+      
+        
+       lcCanal = @contratos_rpt.first.medio_id
+       lcCliente = @contratos_rpt.first.customer_id
+       
+       a = @contratos_rpt.first
+       
+            row = []
+            row <<  "CANAL  :"
+            row <<  a.medio.code
+            row <<  a.moneda.sigla 
+            table_content << row
+            
+            
+            row = []
+            row <<  "CLIENTE :"
+            row <<  a.customer.ruc 
+            row <<  a.customer.descrip 
+            table_content << row
+            
        for  product in @contratos_rpt
            
             @contrato= Contrato.find(product.id)
             @orden_details = Orden.where(contrato_id: @contrato.id)
             @importe = product.importe
-          
-            data = [ [nroitem.to_s, product.code, product.fecha.strftime("%d/%m/%Y"),product.customer.name ,product.medio.descrip,product.get_moneda,"",sprintf("%.2f",product.importe.to_s),"","",sprintf("%.2f",product.importe.to_s)]]
-            pdf.table data, :cell_style => { :font => "Times-Roman", :font_style => :bold ,:size=>11 },:width=> 540
               
-            data =  [ ["", "Nro.", "Fecha","Marca","Producto","Version","Tiempo","","","",""]]
-            pdf.table data, :cell_style => { :font => "Times-Roman", :font_style => :bold ,:size=>10 },:width=> 540
-      
-            for detalle in   @orden_details 
-            
-              row = []          
-                row << " "
-              row << detalle.code
-              if detalle.fecha != nil 
-                row << detalle.fecha.strftime("%d/%m/%Y")
-              else
-                row << " "
-              end 
-              
-              row << detalle.marca.name 
-              if detalle.producto == nil
-                row << ""
-              else
-                row << detalle.producto.name 
-              end 
-              row << detalle.version.descrip
-              
-              row << sprintf("%.2f",detalle.tiempo.to_s)
-              row << " "          
-              row << sprintf("%.2f",detalle.subtotal.to_s)
-              row << " "
-              @importe -= detalle.subtotal 
-              row << sprintf("%.2f",@importe.to_s)
-              table_content << row
-            end 
-            @totales += product.importe 
-            
+        if lcCanal == product.medio_id
+          if lcCliente == product.customer_id
+            row = []
+            row << ""
+            row << product.nrocuotas
+            row << product.fecha.strftime("%d/%m/%Y") 
+            row << product.vventa
+            row << ""
+            row << product.importe 
+            row << product.facturacanal 
+            row << product.fecha2.strftime("%d/%m/%Y")  
+            row << product.sit 
+            row <<  sprintf("%.2f",product.payable_amount.to_s)
+            row <<  sprintf("%.2f",product.tax_amount.to_s)
+            row <<  sprintf("%.2f",product.total_amount.to_s)
+            table_content << row
+
             nroitem=nroitem + 1
-       
+          else
+            totals = []            
+            total_cliente_doc_payable   = 0
+            total_cliente_doc_tax   = 0
+            total_cliente_doc_total   = 0
+            
+            #total_cliente_doc_payable = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"payable_amount")
+            #otal_cliente_doc_tax     = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"tax_amount")
+            #total_cliente_doc_total   = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"total_amount")
+            
+            row =[]
+            row << ""
+            row << ""
+            row << ""
+            row << "TOTALES POR CLIENTE  => "            
+            row << ""
+            
+            table_content << row
+            
+            lcDocumento = product.document_id
+            
+            row = []
+            row << ""
+            row << "CLIENTE :"
+            row << product.customer.name  
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            
+            table_content << row
+            
+            row << ""
+            row << product.nrocuotas
+            row << product.fecha.strftime("%d/%m/%Y") 
+            row << product.vventa
+            row << ""
+            row << product.importe 
+            row << product.facturacanal 
+            row << product.fecha2.strftime("%d/%m/%Y")  
+            row << product.sit 
+            row <<  sprintf("%.2f",product.payable_amount.to_s)
+            row <<  sprintf("%.2f",product.tax_amount.to_s)
+            row <<  sprintf("%.2f",product.total_amount.to_s)
+            table_content << row
+
+            nroitem=nroitem + 1
+            
+          end 
+            
+        else
+            total_cliente_doc_payable   = 0
+            total_cliente_doc_tax   = 0
+            total_cliente_doc_total   = 0
+            
+        #    total_cliente_doc_payable = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"payable_amount")
+        #    total_cliente_doc_tax     = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"tax_amount")
+        #    total_cliente_doc_total   = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"total_amount")
+            
+            row =[]
+            row << ""
+            row << ""
+            row << ""
+            row << "TOTALES POR CLIENTE => "            
+            row << ""
+            
+            table_content << row
+          
+          
+            totals = []            
+            total_cliente_moneda_payable   = 0
+            total_cliente_moneda_tax   = 0
+            total_cliente_moneda_total   = 0
+            
+            #total_cliente_moneda_payable = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcMoneda,"payable_amount")
+            #total_cliente_moneda_tax     = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcMoneda,"tax_amount")
+            #total_cliente_moneda_total   = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcMoneda,"total_amount")
+            
+            row =[]
+            row << ""
+            row << ""
+            row << ""
+            row << "TOTALES POR MEDIO  => "            
+            row << ""
+            
+            table_content << row
+            
+            row = []
+            row << ""
+            row << "MEDIO  :"
+            row << product.medio.descrip
+            row << product.medio.sigla 
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            table_content << row
+            
+          
+            row = []
+            row << ""
+            row << "CLIENTE  :"
+            row << a.customer.name 
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            row << ""
+            
+            table_content << row
+            
+
+            row << ""
+            row << product.nrocuotas
+            row << product.fecha.strftime("%d/%m/%Y") 
+            row << product.vventa
+            row << ""
+            row << product.importe 
+            row << product.facturacanal 
+            row << product.fecha2.strftime("%d/%m/%Y")  
+            row << product.sit 
+            row <<  sprintf("%.2f",product.payable_amount.to_s)
+            row <<  sprintf("%.2f",product.tax_amount.to_s)
+            row <<  sprintf("%.2f",product.total_amount.to_s)
+            table_content << row
+
+            lcMoneda = product.moneda_id
+            nroitem=nroitem + 1
+            
+        end 
+        
         end
+        
+          total_cliente_doc_payable   = 0
+            total_cliente_doc_tax   = 0
+            total_cliente_doc_total   = 0
+            
+          #  total_cliente_doc_payable = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"payable_amount")
+           # total_cliente_doc_tax     = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"tax_amount")
+          #  total_cliente_doc_total   = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"total_amount")
+            
+            row =[]
+            row << ""
+            row << ""
+            row << ""
+            row << "TOTALES POR CLIENTE  => "            
+            row << ""
+            
+            table_content << row
+          
+
+           lcMedio = @purchases_all_rpt.last.medio_id
+            
+            total_cliente_moneda_payable   = 0
+            total_cliente_moneda_tax   = 0
+            total_cliente_moneda_total   = 0
+            
+            #total_cliente_moneda_payable = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcMoneda,"payable_amount")
+            #total_cliente_moneda_tax     = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcMoneda,"tax_amount")
+            #total_cliente_moneda_total   = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcMoneda,"total_amount")
+            
+            row =[]
+            row << ""
+            row << ""
+            row << ""
+            row << "TOTALES POR MEDIO => "            
+            row << ""
+            
+            table_content << row
       
-      # row =[]
-      # row << ""
-      # row << ""
-      # row << ""
-      # row << ""
-      # row << ""
-    
-      # row << ""      
-      # row << "TOTALES => "
-      # row << " "
-      # row << " "
-      # row << " "
-      # row << sprintf("%.2f",@totales.to_s)
-
-
-      #table_content << row
       
       result = pdf.table table_content, {:position => :center,
                                         :header => false,
@@ -592,7 +744,7 @@ class ContratosController < ApplicationController
 
     end
 
-    def build_pdf_footer_rpt5(pdf)            
+    def build_pdf_footer_rpt3(pdf)            
       pdf.text "" 
       pdf.bounding_box([0, 30], :width => 535, :height => 40) do
       pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
@@ -606,14 +758,15 @@ class ContratosController < ApplicationController
   
     @company=Company.find(params[:company_id])          
     @fecha1 = params[:fecha1]    
-    @fecha2 = params[:fecha2]    
+    @fecha2 = params[:fecha2]  
+    
     @contratos_rpt = @company.get_contratos_day(@fecha1,@fecha2)
 
     Prawn::Document.generate("app/pdf_output/rpt_contrato3.pdf") do |pdf|
         pdf.font "Helvetica"
-        pdf = build_pdf_header_rpt5(pdf)
-        pdf = build_pdf_body_rpt5(pdf)
-        build_pdf_footer_rpt5(pdf)
+        pdf = build_pdf_header_rpt3(pdf)
+        pdf = build_pdf_body_rpt3(pdf)
+        build_pdf_footer_rpt3(pdf)
         $lcFileName =  "app/pdf_output/rpt_contrato3.pdf"              
     end     
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              

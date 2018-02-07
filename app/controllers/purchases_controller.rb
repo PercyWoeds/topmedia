@@ -54,8 +54,6 @@ WHERE purchase_details.product_id = ?',params[:id] ])
      for f in @facturas
         
         $lcFecha =f.fecha.strftime("%Y-%m-%d")   
-        
-
 
       newsubdia =Csubdiario.new(:csubdia=>$lcSubdiario,:ccompro=>$lastcompro1,:cfeccom=>$lcFecha, :ccodmon=>"MN",
         :csitua=>"F",:ctipcam=>"0.00",:cglosa=>f.code,:csubtotal=>f.subtotal,:ctax=>f.tax,:ctotal=>f.total,

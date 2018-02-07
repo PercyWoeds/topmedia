@@ -1,7 +1,7 @@
 class Purchase < ActiveRecord::Base
   self.per_page = 20
   
-  validates_presence_of :company_id, :supplier_id, :documento,:document_id,:date1,:date2,:date3
+  validates_presence_of :company_id, :supplier_id, :documento,:document_id,:date1
         
     
   belongs_to :company

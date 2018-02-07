@@ -910,20 +910,20 @@
 
     var impuesto  = $("#ac_item_impuesto").val();
     var inafecto  = $("#ac_item_inafecto").val();
-    var afecto  = $("#ac_item_price").val();
+    var afecto    = $("#ac_item_price").val();
     total = 0 ;
     total1 = 0 ;
 
     if(isNumeric(impuesto) && isNumeric(inafecto) && isNumeric(afecto)) {
 
-      var total1 = Number(afecto) ;
-      
-      var tax      = round(total1,2) - round(afecto,2);
-      
+      var totaligv = Number(afecto) * (1 + Number(impuesto)/100) ;
+      var total1   = Math.round(totaligv* 100)/100  ;
+      var total2   = total1 - Math.round(afecto * 100)/100;
+      var tax      = Math.round(total2 * 100)/100  ;
       var total = Number(total1) + Number(inafecto);
       
       
-      $("#ac_item_subtotal").html(total1);
+      $("#ac_item_subtotal").html(afecto);
       $("#ac_item_tax").html(tax);
       $("#ac_item_total").html(total);
 
