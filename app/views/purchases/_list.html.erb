@@ -34,7 +34,11 @@
         <td><%= purchase.documento %></td>
         <td><%= purchase.supplier.name  %></td>         
         <td><%= purchase.date1.strftime("%d/%m/%Y") %></td>
+        <%if purchase.date3 != nil %>
         <td><%= purchase.date3.strftime("%d/%m/%Y") %></td>
+        <%else%>
+        <td> </td>
+        <%end%>
         <td><%= purchase.moneda.symbol %></td>            
 
         <td><%= money(purchase.discount) %></td>      
@@ -51,9 +55,9 @@
             
     
         <td><%= link_to 'Ver', purchase %></td>
-       <% if purchase.processed != "1" %>
+       
         <td><%= link_to 'Eliminar', purchase, method: :delete, data: { confirm: 'Are you sure?' } %>
-        <% end %> 
+       
         </td>
       </tr>
     <% end %>

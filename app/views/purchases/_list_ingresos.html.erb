@@ -51,9 +51,9 @@
         <td><%= money(purchase.pago) %></td> 
         <td><%= money(purchase.balance) %></td>
         <td><%= link_to 'Ver', purchase %></td>
-       <% if purchase.processed != "1" %>
+       
         <td><%= link_to 'Eliminar', purchase, method: :delete, data: { confirm: 'Are you sure?' } %>
-        <% end %> 
+       
         </td>
       </tr>
     <% end %>
