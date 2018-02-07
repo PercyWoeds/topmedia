@@ -1402,7 +1402,7 @@ def list_receive_supplierpayments
     
     pdf.text "LISTADO DE COMPRAS : Desde "+@fecha1.to_s+ " Hasta : "+@fecha2.to_s , :size => 11 ,:align => :center
     pdf.text ""
-    pdf.font "Helvetica" , :size => 6
+    pdf.font "Helvetica" , :size => 8
 
       headers = []
       table_content = []
@@ -1648,7 +1648,8 @@ def list_receive_supplierpayments
         
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
-                                        :width => pdf.bounds.width
+                                        :width => pdf.bounds.width,
+                                        :cell_style => {:border_width => 0 ,:height => 17 },
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:left
