@@ -8,22 +8,25 @@ class Contrato < ActiveRecord::Base
   belongs_to :customer 
   belongs_to :medio
   belongs_to :orden
+  belongs_to :moneda 
+  
    has_many :facturas
   
   has_many :contrato_details, :dependent => :destroy
  
 
-  TABLE_HEADERS = ["ITEM",
-                     "NRO.",
-                     "FECHA",
-                     "CLIENTE",
-                     "MEDIO",
-                     "MONEDA",
-                     "CONTRATO",
-                     "NRO.CUOTA",                     
-                     "COMISION 1",
-                     "COMISION 2",
-                     "IMPORTE"]
+  TABLE_HEADERS = [ "CUOTA","VALOR VENTA",
+                     "IGV.",
+                     "TOTAL
+                     CUOTA",
+                     "FACTURA
+                     CANAL",
+                     "FACTURA
+                     MASA",
+                     "FECHA
+                     CANCELA",                     
+                      "SIT"]
+                     
 
   TABLE_HEADERS3 = ["ITEM",
                      "NRO.",

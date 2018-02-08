@@ -24,7 +24,7 @@ class ContratosController < ApplicationController
   def new
     @contrato = Contrato.new
     @customers = Customer.all 
-
+    @monedas = Moneda.all
     @medios =Medio.all 
     @contrato[:code] = "#{generate_guid11()}"
     @contrato[:nrocuotas]=0
@@ -36,7 +36,8 @@ class ContratosController < ApplicationController
 
   # GET /contratos/1/edit
   def edit
-
+    
+    
       @contrato = Contrato.find(params[:id])
       
       #@contrato[:importe] = @contrato.importe 
@@ -44,7 +45,7 @@ class ContratosController < ApplicationController
             
       @customers = Customer.all 
       @medios =Medio.all 
-        
+      @monedas = Moneda.all     
   end
 
   # POST /contratos
@@ -459,13 +460,15 @@ class ContratosController < ApplicationController
      $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
      $lcHora  = Time.now.strftime('%H:%M').to_s
 
-    max_rows = [client_data_headers_rpt.length, invoice_headers_rpt.length, 0].max
+    max_rows = [client_data_headers_rpt.length, invoice_headers_rpt2.length,invoice_headers_rpt.length, 0].max
       rows = []
       (1..max_rows).each do |row|
         rows_index = row - 1
         rows[rows_index] = []
         rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
-        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt2.length >= row ? invoice_headers_rpt2[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt.length >= row  ? invoice_headers_rpt[rows_index] : ['',''])
+        
       end
 
       if rows.present?
@@ -489,11 +492,13 @@ class ContratosController < ApplicationController
     
     pdf.text "Contratos : "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
   
-    pdf.font "Helvetica" , :size => 6
+    pdf.font "Helvetica" , :size => 8
 
       headers = []
       headers2 = []
       table_content = []
+       
+    
       
       nroitem=1
 
@@ -501,13 +506,6 @@ class ContratosController < ApplicationController
       @cantidad = 0
       nroitem = 1
 
-      data = [ ["Cuota ", "Valor", "I.G.V.","Total","Factura","Factura","Fecha",""],
-      ["Nro. Vcmto ", "Venta", "","Cuota","Canal","Masa","Cancela.","Sit."]]
-      
-      pdf.table data, :cell_style => { :font => "Times-Roman", :font_style => :bold ,:size=>11},:width=> 540
-      pdf.move_down 10
-      
-        
        lcCanal = @contratos_rpt.first.medio_id
        lcCliente = @contratos_rpt.first.customer_id
        
@@ -515,41 +513,49 @@ class ContratosController < ApplicationController
        
             row = []
             row <<  "CANAL  :"
-            row <<  a.medio.code
-            row <<  a.moneda.sigla 
+            row <<  a.medio.descrip 
+            row <<  a.moneda.symbol 
             table_content << row
             
             
             row = []
             row <<  "CLIENTE :"
             row <<  a.customer.ruc 
-            row <<  a.customer.descrip 
+            row <<  a.customer.name 
             table_content << row
             
        for  product in @contratos_rpt
            
             @contrato= Contrato.find(product.id)
-            @orden_details = Orden.where(contrato_id: @contrato.id)
+            @contrato_details = ContratoDetail.where(contrato_id: @contrato.id)
             @importe = product.importe
               
         if lcCanal == product.medio_id
           if lcCliente == product.customer_id
-            row = []
-            row << ""
-            row << product.nrocuotas
-            row << product.fecha.strftime("%d/%m/%Y") 
-            row << product.vventa
-            row << ""
-            row << product.importe 
-            row << product.facturacanal 
-            row << product.fecha2.strftime("%d/%m/%Y")  
-            row << product.sit 
-            row <<  sprintf("%.2f",product.payable_amount.to_s)
-            row <<  sprintf("%.2f",product.tax_amount.to_s)
-            row <<  sprintf("%.2f",product.total_amount.to_s)
+            
+            for product_detail  in @contrato_details 
+              
+              row = []
+              row << product_detail.nro
+              tax = product_detail.importe - product_detail.vventa 
+              row <<  sprintf("%.2f",product_detail.vventa.to_s)  
+              row <<  sprintf("%.2f",tax.to_s)  
+              row <<  sprintf("%.2f",product_detail.importe.to_s)  
+              row << product_detail.facturacanal 
+              row << product_detail.factura1
+              if product_detail.fechafac1 != nil
+              row << product_detail.fechafac1.strftime("%d/%m/%Y") 
+              else
+              row << ""
+              end 
+              
+              
+            row << product_detail.sit 
+            
             table_content << row
 
             nroitem=nroitem + 1
+           end 
           else
             totals = []            
             total_cliente_doc_payable   = 0
@@ -569,11 +575,12 @@ class ContratosController < ApplicationController
             
             table_content << row
             
-            lcDocumento = product.document_id
+            lcCliente = product.customer_id
             
             row = []
-            row << ""
+            
             row << "CLIENTE :"
+            row << product.customer.ruc 
             row << product.customer.name  
             row << ""
             row << ""
@@ -583,21 +590,25 @@ class ContratosController < ApplicationController
             
             table_content << row
             
-            row << ""
-            row << product.nrocuotas
-            row << product.fecha.strftime("%d/%m/%Y") 
-            row << product.vventa
-            row << ""
-            row << product.importe 
-            row << product.facturacanal 
-            row << product.fecha2.strftime("%d/%m/%Y")  
-            row << product.sit 
-            row <<  sprintf("%.2f",product.payable_amount.to_s)
-            row <<  sprintf("%.2f",product.tax_amount.to_s)
-            row <<  sprintf("%.2f",product.total_amount.to_s)
-            table_content << row
-
-            nroitem=nroitem + 1
+            for product_detail  in @contrato_details 
+              
+              row = []
+              row << product_detail.nro
+              tax = product_detail.importe - product_detail.vventa 
+              row <<  sprintf("%.2f",product_detail.vventa.to_s)  
+              row <<  sprintf("%.2f",tax.to_s)  
+              row <<  sprintf("%.2f",product_detail.importe.to_s)  
+              row << product_detail.facturacanal 
+              row << product_detail.factura1
+              if product_detail.fechafac1 != nil
+              row << product_detail.fechafac1.strftime("%d/%m/%Y") 
+              else
+              row << ""
+              end 
+              row << product_detail.sit 
+              table_content << row
+              nroitem=nroitem + 1
+            end 
             
           end 
             
@@ -639,10 +650,10 @@ class ContratosController < ApplicationController
             table_content << row
             
             row = []
-            row << ""
-            row << "MEDIO  :"
-            row << product.medio.descrip
-            row << product.medio.sigla 
+            
+             row <<  "CANAL  :"
+            row <<  product.medio.descrip 
+            row <<  product.moneda.symbol 
             row << ""
             row << ""
             row << ""
@@ -651,9 +662,9 @@ class ContratosController < ApplicationController
             
           
             row = []
-            row << ""
+            
             row << "CLIENTE  :"
-            row << a.customer.name 
+            row << product.customer.name 
             row << ""
             row << ""
             row << ""
@@ -663,26 +674,16 @@ class ContratosController < ApplicationController
             table_content << row
             
 
-            row << ""
-            row << product.nrocuotas
-            row << product.fecha.strftime("%d/%m/%Y") 
-            row << product.vventa
-            row << ""
-            row << product.importe 
-            row << product.facturacanal 
-            row << product.fecha2.strftime("%d/%m/%Y")  
-            row << product.sit 
-            row <<  sprintf("%.2f",product.payable_amount.to_s)
-            row <<  sprintf("%.2f",product.tax_amount.to_s)
-            row <<  sprintf("%.2f",product.total_amount.to_s)
-            table_content << row
-
-            lcMoneda = product.moneda_id
+            
+            lcCanal= product.medio_id
+            lcCliente = product.customer_id 
+            
             nroitem=nroitem + 1
             
         end 
         
         end
+       a = @contratos_rpt.last 
         
           total_cliente_doc_payable   = 0
             total_cliente_doc_tax   = 0
@@ -691,7 +692,28 @@ class ContratosController < ApplicationController
           #  total_cliente_doc_payable = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"payable_amount")
            # total_cliente_doc_tax     = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"tax_amount")
           #  total_cliente_doc_total   = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"total_amount")
+        
+        for product_detail  in @contrato_details 
+              
+              row = []
+              row << product_detail.nro
+              tax = product_detail.importe - product_detail.vventa 
+              row <<  sprintf("%.2f",product_detail.vventa.to_s)  
+              row <<  sprintf("%.2f",tax.to_s)  
+              row <<  sprintf("%.2f",product_detail.importe.to_s)  
+              row << product_detail.facturacanal 
+              row << product_detail.factura1
+              if product_detail.fechafac1 != nil
+              row << product_detail.fechafac1.strftime("%d/%m/%Y") 
+              else
+              row << ""
+              end 
+              row << product_detail.sit 
+              table_content << row
+              nroitem=nroitem + 1
+            end 
             
+                
             row =[]
             row << ""
             row << ""
@@ -702,7 +724,7 @@ class ContratosController < ApplicationController
             table_content << row
           
 
-           lcMedio = @purchases_all_rpt.last.medio_id
+           lcMedio = @contratos_rpt.last.medio_id
             
             total_cliente_moneda_payable   = 0
             total_cliente_moneda_tax   = 0
@@ -723,8 +745,9 @@ class ContratosController < ApplicationController
       
       
       result = pdf.table table_content, {:position => :center,
-                                        :header => false,
-                                        :width => pdf.bounds.width
+                                        :header => true,
+                                        :width => pdf.bounds.width,
+                                        :cell_style => {:border_width => 0 ,:height => 17 }
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:left
@@ -788,6 +811,12 @@ class ContratosController < ApplicationController
       invoice_headers << ["Hora :", $lcHora]
       invoice_headers
   end
+  def invoice_headers_rpt2            
+      invoice_headers2  =[["",""]]    
+      invoice_headers2 << ["",""]
+      invoice_headers2
+  end
+  
 
 
 

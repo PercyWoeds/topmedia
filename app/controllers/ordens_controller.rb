@@ -1427,8 +1427,6 @@ def crear
     
     pdf.text "Listado de Ordenes.   Mes:"+ @mes.to_s + " Año : "+@anio.to_s , :size => 8 
     
-    pdf.text "Cliente : " + @customer_name 
-    
     pdf.font "Helvetica" , :size => 6
 
       headers = []
@@ -1455,11 +1453,20 @@ def crear
 
 
        for  product in @ordenes_rpt
- 
+            
+            
             row = []         
             row << nroitem.to_s
+            if product.contrato != nil 
             row << product.contrato.code
+            else 
+            row << ""
+            end
+            if product.contrato != nil
             row << product.contrato.customer.name 
+            else 
+              row << ""
+            end 
             row << product.medio.descrip 
             row << product.marca.name 
             
@@ -1491,8 +1498,6 @@ def crear
             row << "TOTAL => "
             row << ""
             row << @subtotal 
-            row << @tax 
-            row << @total 
             table_content << row
       
       
@@ -1583,6 +1588,7 @@ def crear
     end 
     
     @ordenes_rpt = @company.get_ordenes_cliente_all(@mes,@anio,@customer,@marca,@producto,@version,@ciudad,@tipoorden)
+    
     
       Prawn::Document.generate("app/pdf_output/rpt_ordenes1.pdf") do |pdf|
       

@@ -3,6 +3,7 @@ validates_presence_of :company_id, :description
 
   belongs_to :company
   
+  
   has_many :divisions
   has_many :invoices
   has_many :purchases
@@ -10,6 +11,7 @@ validates_presence_of :company_id, :description
   has_many :purchaseorders
   has_many :serviceorders
   has_many :bank_acounts
+  has_many :contratos 
   
 
 end
