@@ -12,7 +12,7 @@ class ContratosController < ApplicationController
   # GET /contratos/1.json
   def show
     @contrato= Contrato.find(params[:id])
-    @contrato_details = @contrato.contrato_details 
+    @contrato_details = @contrato.contrato_details
     
      respond_to do |format|
       format.html # show.html.erb
