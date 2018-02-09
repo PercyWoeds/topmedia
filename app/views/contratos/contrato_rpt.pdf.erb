@@ -2,8 +2,8 @@
 <body>
     
   
-  <h4> Contratos  </h4>
-  <h5><%= @fecha1.to_s %>  Hasta: <%= @fecha2.to_s %> </h5>
+  <h4 ><center>Contratos </center>   </h4>
+  <h5><center> Desde: <%= @fecha1.to_s %>  Hasta: <%= @fecha2.to_s %> </center></h5>
   <font size="2" face="Courier New" >  
   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
@@ -52,7 +52,7 @@
   <tr bgcolor="#B4D7F7">
     
     <td> Contrato </td>
-    <td> <%= a.code %> </td>
+    <td> <%= a.codigointerno %> </td>
     <td>  <%= a.tipocontrato_id %> </td>
     <td>Mon: <%= a.get_moneda %></td>
     <td><%= a.importe %> </td>
@@ -101,7 +101,7 @@
                     <table style=  'font-size:80% ;width:100%'>
                     <tr>
                     <td></td>
-                    <td>Total x Contrato </td>
+                    <td>Canceladas :</td>
                     <td> </td>
                     <td></td>
                     <td></td>
@@ -110,7 +110,30 @@
                     <td></td>
                     <td></td>
                     </tr>
-                      
+                    <tr>
+                    <td></td>
+                    <td>p.Cobrar : </td>
+                    <td> </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    </tr>
+                
+                    <tr>
+                    <td></td>
+                    <td>p.Facturar: </td>
+                    <td> </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    </tr>
+                
                       
                     <tr>
                     <td></td>
@@ -146,7 +169,7 @@
               <tr bgcolor="#B4D7F7">
                 
                 <td> Contrato </td>
-                <td> <%= product.code %> </td>
+                <td> <%= product.codigointerno %> </td>
                 <td>  <%= product.tipocontrato_id %> </td>
                 <td>Mon: <%= product.get_moneda %></td>
                 <td><%= product.importe %> </td>
@@ -187,10 +210,10 @@
           <%else%>
           
             <table style=  'font-size:80% ;width:100%'>
+
                     <tr>
                     <td></td>
-                    
-                    <td>Total X Contrato </td>
+                    <td>Canceladas :</td>
                     <td> </td>
                     <td></td>
                     <td></td>
@@ -199,6 +222,43 @@
                     <td></td>
                     <td></td>
                     </tr>
+                    <tr>
+                    <td></td>
+                    <td>p.Cobrar : </td>
+                    <td> </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    </tr>
+                
+                    <tr>
+                    <td></td>
+                    <td>p.Facturar: </td>
+                    <td> </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    </tr>
+                
+                      
+                    <tr>
+                    <td></td>
+                    <td>Total x Contrato </td>
+                    <td> </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    </tr>
+                    
                     </table>
                      <hr>   
                      <table style=  'font-size:80% ;width:100%'>
@@ -249,7 +309,7 @@
               <tr bgcolor="#B4D7F7">
                 
                 <td> Contrato </td>
-                <td> <%= product.code %> </td>
+                <td> <%= product.codigointerno %> </td>
                 <td>  <%= product.tipocontrato_id %> </td>
                 <td>Mon: <%= product.get_moneda %></td>
                 <td><%= product.importe %> </td>
@@ -298,18 +358,56 @@
         <%end%>
         
        <table style=  'font-size:80% ;width:100%'>
-        <tr>
-        <td> </td>
-        <td> </td>
-        <td>Total x Contrato </td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        </tr>
-        </table> 
+
+                    <tr>
+                    <td></td>
+                    <td>Canceladas :</td>
+                    <td> </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    </tr>
+                    <tr>
+                    <td></td>
+                    <td>p.Cobrar : </td>
+                    <td> </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    </tr>
+                
+                    <tr>
+                    <td></td>
+                    <td>p.Facturar: </td>
+                    <td> </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    </tr>
+                
+                      
+                    <tr>
+                    <td></td>
+                    <td>Total x Contrato </td>
+                    <td> </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    </tr>
+                    
+                    </table>
         <hr>  
        <table style=  'font-size:80% ;width:100%'>
         <tr>
