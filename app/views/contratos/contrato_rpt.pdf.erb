@@ -1,0 +1,239 @@
+<html>
+<body>
+    
+  
+  <h3> Contratos  </h3>
+  <h4><%= @fecha1.to_s %>  Hasta: <%= @fecha2.to_s %> </h4>
+  <font size="2" face="Courier New" >  
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr bgcolor="#B4D7F7">
+    
+    <th>Cuota</th>
+    <th>Valor Venta</th>
+    <th>IGV</th>
+    <th>Total</th>
+    <th>Cuota</th>
+    <th>Fact.Canal</th>
+    <th>Fact.Masa</th>
+    <th>Fec.Cancela</th>
+    <th>SIT.</th>
+  </tr>
+  
+ 
+
+    <% a = @contratos_rpt.first %>
+   
+    <tr style="font-weight:bold">
+    <td>CANAL</td>
+    <td> <%= a.medio.descrip %></td>
+    <td> <%= a.moneda.symbol %></td>
+    
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    </tr>
+  
+    <tr style="font-weight:bold">
+    <td>CLIENTE</td>
+    <td><%= a.customer.ruc %> </td>
+    <td><%= a.customer.name %> </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    </tr>
+     
+            <% lcCanal = "" %>
+            <% lcCliente = "" %>
+       <% for  product in @contratos_rpt %>
+           
+            <% @contrato= Contrato.find(product.id)%>
+            <% @contrato_details = ContratoDetail.where(contrato_id: @contrato.id)%>
+        <%if lcCanal == product.medio_id%>
+          <%if lcCliente == product.customer_id %>
+            
+            <% for product_detail  in @contrato_details %>
+                <tr>
+                <td><%=product_detail.nro %></td>
+                <% tax = product_detail.importe - product_detail.vventa  %>
+                <td><%= sprintf("%.2f",product_detail.vventa.to_s)   %> </td>
+                <td><%= sprintf("%.2f",tax.to_s)   %> </td>
+                <td><%= sprintf("%.2f",product_detail.importe.to_s)   %></td>
+                <td><%= product_detail.facturacanal %></td>
+                <td><%= product_detail.factura1%></td>
+                <%if product_detail.fechafac1 != nil%>
+                <td> <%= product_detail.fechafac1.strftime("%d/%m/%Y") %></td>
+                <%else%>
+                <td></td>
+                <%end %>
+                <td></td>
+                <td><%= product_detail.sit%> </td>
+                </tr>
+           <%end %>
+          <% else %>
+            
+            <tr>
+    <td></td>
+    <td>TOTAL X CLIENTE </td>
+    <td> </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    </tr>
+            <% lcCliente = product.customer_id %>
+            
+            <tr style="font-weight:bold">
+    <td>CLIENTE</td>
+    <td><%= a.customer.ruc %> </td>
+    <td><%= a.customer.name %> </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    </tr>
+             <% for product_detail  in @contrato_details %>
+                <tr>
+                  <td><%=product_detail.nro %></td>
+                <% tax = product_detail.importe - product_detail.vventa  %>
+                <td><%= sprintf("%.2f",product_detail.vventa.to_s)   %> </td>
+                <td><%= sprintf("%.2f",tax.to_s)   %> </td>
+                <td><%= sprintf("%.2f",product_detail.importe.to_s)   %></td>
+                <td><%= product_detail.facturacanal %></td>
+                <td><%= product_detail.factura1%></td>
+                <%if product_detail.fechafac1 != nil%>
+                <td> <%= product_detail.fechafac1.strftime("%d/%m/%Y") %></td>
+                <%else%>
+                <td></td>
+                <%end %>
+                <td></td>
+                <td><%= product_detail.sit%> </td>
+                </tr>
+           <%end %>
+          <%end %>
+            
+        <%else%>
+            
+             <tr>
+    <td></td>
+    <td>TOTAL X CLIENTE </td>
+    <td> </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    </tr>
+          
+            
+             <tr>
+    <td></td>
+    <td>TOTAL X MEDIO </td>
+    <td> </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    </tr>
+            
+            
+           <tr style="font-weight:bold">
+    <td>CANAL</td>
+    <td> <%= a.medio.descrip %></td>
+    <td> <%= a.moneda.symbol %></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    </tr>
+  
+    <tr style="font-weight:bold">
+    <td>CLIENTE</td>
+    <td><%= a.customer.ruc %> </td>
+    <td><%= a.customer.name %> </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    </tr>
+
+            
+            <%   lcCanal= product.medio_id %>
+            <%   lcCliente = product.customer_id %>
+            
+            
+            
+        <%end %>
+        
+        <%end%>
+        
+       <% a = @contratos_rpt.last %>
+        
+          
+       <% for product_detail  in @contrato_details %>
+                <tr>
+                  <td><%=product_detail.nro %></td>
+                <% tax = product_detail.importe - product_detail.vventa  %>
+                <td><%= sprintf("%.2f",product_detail.vventa.to_s)   %> </td>
+                <td><%= sprintf("%.2f",tax.to_s)   %> </td>
+                <td><%= sprintf("%.2f",product_detail.importe.to_s)   %></td>
+                <td><%= product_detail.facturacanal %></td>
+                <td><%= product_detail.factura1%></td>
+                <%if product_detail.fechafac1 != nil%>
+                <td> <%= product_detail.fechafac1.strftime("%d/%m/%Y") %></td>
+                <%else%>
+                <td></td>
+                <%end %>
+                <td></td>
+                <td><%= product_detail.sit%> </td>
+                </tr>
+           <%end %>
+                
+              <tr>
+    <td></td>
+    <td>TOTAL X CLIENTE </td>
+    <td> </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    </tr>
+          
+
+          <% lcMedio = @contratos_rpt.last.medio_id%>
+            
+              
+             <tr>
+    <td></td>
+    <td>TOTAL X MEDIO </td>
+    <td> </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    </tr>
+            
+      
+      </table> 
+      </body>
+      
+      </html>

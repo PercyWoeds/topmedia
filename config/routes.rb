@@ -30,10 +30,14 @@
   
   resources :contratos do
     resources :contrato_details, except: [:index,:show], controller: "contratos/contratos_details"
+    collection { get :exportxls }
+    
   end 
   
   resources :facturas do
     resources :factura_details, except: [:index,:show], controller: "facturas/facturas_details"
+    
+    
   end 
   resources :supplier_payments do
       resources :supplierpayment_details, except: [:index,:show], controller: "supplier_payments/supplierpayment_details"

@@ -74,7 +74,9 @@ gem 'rails_autolink', '~> 1.1', '>= 1.1.6'
 # end
 
 gem 'pg', '~> 0.18.0'
- 
+
+gem 'wicked_pdf'
+ gem 'wkhtmltopdf-binary'
  
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
