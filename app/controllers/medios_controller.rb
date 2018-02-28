@@ -4,7 +4,7 @@ class MediosController < ApplicationController
   # GET /medios
   # GET /medios.json
   def index
-    @medios = Medio.all
+    @medios = Medio.order(:id)
   end
 
   # GET /medios/1
