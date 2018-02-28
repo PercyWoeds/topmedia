@@ -483,6 +483,18 @@ TABLE_HEADERS2 = ["Nº",
       return "red"
     end
   end
-  
+ def get_sumas(value)
+    
+    ordens= OrdenProduct.where([" orden_id = ?  ", self.id ])
+    ret = 0
+    for orden in ordens
+      if(value == "quantity")
+        ret += orden.quantity
+      else
+        ret += orden.total 
+      end
+    end
+    return ret
+  end  
   
 end

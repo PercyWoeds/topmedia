@@ -1,9 +1,30 @@
-<%= simple_form_for(@medio) do |f| %>
-  <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :descrip %>
-    <%= f.input :comments %>
+<% if @medio.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@medio.errors.count, "error") %> prohibited this customer from being saved:</h2>
+
+      <ul>
+      <% @medio.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+<%= simple_form_for(@medio) do |f| %>
+  
+  <div class="field">
+    <%= f.label :descrip, "RAZON SOCIAL" %><br />
+    <%= f.text_field :descrip %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :grupo, "Grupo" %><br />
+    <%= f.text_field :grupo %>
+  </div>
+  <div class="field">
+    <%= f.label :estacion, "Local- Estacion" %><br />
+    <%= f.text_field :estacion %>
   </div>
 
   <div class="form-actions">

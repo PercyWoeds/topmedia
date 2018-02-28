@@ -38,10 +38,6 @@ class Facturas::FacturasDetailsController < ApplicationController
     @factura_detail.factura_id  = @factura.id 
     @factura_detail.contrato_cuota_id   = a 
     
-    puts "factura iddd "
-    puts @factura.id
-    puts @factura_detail.contrato_cuota_id
-    puts a 
     
     respond_to do |format|
       if @factura_detail.save

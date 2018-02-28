@@ -1,12 +1,5 @@
 <%= render 'layouts/charts' %>
-<%
-invoices_subtotal = 0
-invoices_tax = 0
-invoices_total = 0
-subtotals = []
-taxes = []
-totals = []
-%>
+
 <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
   <%= link_to @company.name, @company %> &raquo;
@@ -17,18 +10,31 @@ totals = []
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
   Reporte de Ordenes
 </h1>
-
-
-<form method="get" action="/ordens/rpt_ordenes1/<%= @company.id %>">
-
-  <%= select_tag(:year, options_for_select(@years, @year)) %>
-  <%= select_tag(:month, options_for_select(@months, @month)) %>
+ 
   
-  <table>
+  
+<%= form_tag(reportes_ordens_path, :method => "get") do %>
+
+<p> Desde</p>
+
+<%= select_tag(:year, options_for_select(@years, @year), :style =>"width: 100px" )  %>
+
+<%= select_tag(:month, options_for_select(@months, @month), :style =>"width: 100px" ) %>
+<br>
+
+    <p> Hasta</p>
+
+<%= select_tag(:year1, options_for_select(@years, @year), :style =>"width: 100px" ) %>
+
+<%= select_tag(:month1, options_for_select(@months, @month), :style =>"width: 100px" ) %>
+<br>
+
+
+<table>
     <tr>
       <td>
         <div class="field">
-          <input id="check_cliente" name="check_cliente" type="checkbox" value="true" checked />
+            <input id="check_cliente" name="check_cliente" type="checkbox" value="true" checked />
           <div class="small">
             Todos los clientes
           </div>
@@ -38,11 +44,31 @@ totals = []
       <td>
       <div class="field">
         <h5>  Cliente </h5>
-        <%= select_tag(:customer_id,options_from_collection_for_select(@customers,'id','name') ) %>
+        <%= select_tag(:customer_id,options_from_collection_for_select(@customers,'id','name'),:id => "customer_select"  ) %>
       </div>
       </td>
       
     </tr>
+    <tr>
+      <td>
+        <div class="field">
+          <input id="check_medio" name="check_medio" type="checkbox" value="true" checked />
+          <div class="small">
+            Todos los Medios
+          </div>
+        </div>
+        
+      </td>
+      <td>
+      <div class="field">
+        <h5>  Medios </h5>
+        <%= select_tag(:medio_id,options_from_collection_for_select(@medios,'id','full_name'),:id => "medio_select"  ) %>
+      </div>
+      </td>
+      
+    </tr>
+    
+    
     <tr>
       <td>
     <div class="field">
@@ -57,7 +83,7 @@ totals = []
       <td>
     <div class="field">
       <h5>  Marca </h5>
-      <%= select_tag(:marca_id,options_from_collection_for_select(@marcas,'id','name') ) %>
+      <%= select_tag(:marca_id,options_from_collection_for_select(@marcas,'id','name'),:id => "marca_select"  ) %>
     </div>
         
         
@@ -78,7 +104,7 @@ totals = []
       <td>
     <div class="field">
       <h5>  Producto </h5>
-      <%= select_tag(:producto_id,options_from_collection_for_select(@productos,'id','name') ) %>
+      <%= select_tag(:producto_id,options_from_collection_for_select(@productos,'id','name'),:id => "producto_select"  ) %>
     </div>
         
         
@@ -101,7 +127,7 @@ totals = []
       <td>
     <div class="field">
       <h5>Version  </h4>
-      <%= select_tag(:version_id,options_from_collection_for_select(@versions,'id','descrip') ) %>
+      <%= select_tag(:version_id,options_from_collection_for_select(@versions,'id','descrip'),:id => "version_select"  ) %>
     </div>
         
       </td>
@@ -120,7 +146,7 @@ totals = []
          
     <div class="field">
       <h5>Ciudad </h4>
-      <%= select_tag(:ciudad_id,options_from_collection_for_select(@ciudads,'id','descrip') ) %>
+      <%= select_tag(:ciudad_id,options_from_collection_for_select(@ciudads,'id','descrip'),:id => "ciudad_select"  ) %>
     </div>
     
 
@@ -141,7 +167,7 @@ totals = []
          
       <div class="field">
         <h5>Tipo orden  </h4>
-        <%= select_tag(:tipo,options_from_collection_for_select(@tipoordens,'id','descrip') ) %>
+        <%= select_tag(:tipo,options_from_collection_for_select(@tipoordens,'id','descrip') ,:id => "tipoorden_select" ) %>
       </div>
       
 
@@ -151,15 +177,178 @@ totals = []
    
     
   </table>
-    
  
-     <input type="submit" value="Generar Reporte "  />
+<br> 
+ <%= submit_tag "To PDF", :name => "print" %>
+ <%= submit_tag "To Excel", :name => "print" %>
   
-</form>
+<% end %>
 
-<br />
+   
+</html>
 
+<script>
 
-<div class="button">
-  <%= link_to 'Regresar', "/companies/reports/reports_contratos/#{@company.id}" %>
-</div>
+$(document).ready(function() {
+  
+  if ($('#check_cliente').is(":checked")) {
+      $('#customer_select').attr('disabled', true); //disable input
+   }
+   else {
+      $('#customer_select').removeAttr('disabled'); //enable input
+   }
+   
+   
+   $('#check_cliente').click(function () {
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+
+           $('#customer_select').attr('disabled', true); //disable input
+
+        } else {
+             $('#customer_select').removeAttr('disabled'); //enable input
+            
+        }
+    });
+
+  if ($('#check_medio').is(":checked")) {
+      $('#medio_select').attr('disabled', true); //disable input
+   }
+   else {
+      $('#medio_select').removeAttr('disabled'); //enable input
+   }
+   
+   $('#check_medio').click(function () {
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+
+           $('#medio_select').attr('disabled', true); //disable input
+
+        } else {
+             $('#medio_select').removeAttr('disabled'); //enable input
+            
+        }
+    });
+    
+   if ($('#check_marca').is(":checked")) {
+      $('#marca_select').attr('disabled', true); //disable input
+   }
+   else {
+      $('#marca_select').removeAttr('disabled'); //enable input
+   }
+   
+     $('#check_marca').click(function () {
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+
+           $('#marca_select').attr('disabled', true); //disable input
+
+        } else {
+             $('#marca_select').removeAttr('disabled'); //enable input
+            
+        }
+    });
+  if ($('#check_producto').is(":checked")) {
+      $('#producto_select').attr('disabled', true); //disable input
+   }
+   else {
+      $('#producto_select').removeAttr('disabled'); //enable input
+   }
+   
+
+   $('#check_producto').click(function () {
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+
+           $('#producto_select').attr('disabled', true); //disable input
+
+        } else {
+             $('#producto_select').removeAttr('disabled'); //enable input
+            
+        }
+    });
+
+  if ($('#check_version').is(":checked")) {
+      $('#version_select').attr('disabled', true); //disable input
+   }
+   else {
+      $('#version_select').removeAttr('disabled'); //enable input
+   }
+   
+   $('#check_version').click(function () {
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+
+           $('#version_select').attr('disabled', true); //disable input
+
+        } else {
+             $('#version_select').removeAttr('disabled'); //enable input
+            
+        }
+    });
+
+   if ($('#check_ciudad').is(":checked")) {
+      $('#ciudad_select').attr('disabled', true); //disable input
+   }
+   else {
+      $('#ciudad_select').removeAttr('disabled'); //enable input
+   }
+   
+   $('#check_ciudad').click(function () {
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+
+           $('#ciudad_select').attr('disabled', true); //disable input
+
+        } else {
+             $('#ciudad_select').removeAttr('disabled'); //enable input
+            
+        }
+    });
+    
+  if ($('#check_tipoorden').is(":checked")) {
+      $('#tipoorden_select').attr('disabled', true); //disable input
+   }
+   else {
+      $('#tipoorden_select').removeAttr('disabled'); //enable input
+   }
+   
+  
+   $('#check_tipoorden').click(function () {
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+
+           $('#tipoorden_select').attr('disabled', true); //disable input
+
+        } else {
+           $('#tipoorden_select').removeAttr('disabled'); //enable input
+            
+        }
+    });
+  
+    $('#customer_select').change(function() {
+      $.ajax({
+        url: "/ordens/update_marcas",
+        data: {
+          customer_id : $('#customer_select').val()
+        },
+        dataType: "script"
+      });
+    
+    });
+    
+    $('#marca_select').change(function() {
+      $.ajax({
+        url: "/ordens/update_productos",
+        data: {
+          marca_id : $('#marca_select').val()
+        },
+        dataType: "script"
+      });
+    });
+    
+    
+  });
+  
+  </script>
+  

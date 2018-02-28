@@ -3,11 +3,13 @@ class Customer < ActiveRecord::Base
   
   belongs_to :company
   
+  has_many :marcas 
   has_many :invoices
   has_many :manifests
   has_many :facturas
   has_many :addresses
   has_many :quotes 
+  
   
   
   #accepts_nested_attributes_for :quotes, :reject_if => lambda { |a| a[:importe].blank? }, :allow_destroy => true

@@ -1,0 +1,4 @@
+$('#marca_select').html("<%= escape_javascript(options_from_collection_for_select(@marcas,"id","name",1)) %>");
+
+$('#producto_select').html("<%= escape_javascript(options_from_collection_for_select(@productos,"id","name",1)) %>");
+$('#version_select').html("<%= escape_javascript(options_from_collection_for_select(@versions,"id","descrip",1)) %>");

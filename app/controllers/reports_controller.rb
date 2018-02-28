@@ -1348,13 +1348,18 @@ class ReportsController < ApplicationController
   def rpt_ordenes1_pdf
     @company   = Company.find(params[:company_id])    
     @pagetitle = "Reportes de Ordenes "    
-    @customers = @company.get_customers()
-    @productos = @company.get_productos()
-    @marcas    = @company.get_marcas()
-    @versions  = @company.get_versions()
+    @customers = Customer.all 
+    
+    @medios    = Medio.all 
+    
+    @marcas    = Marca.where("customer_id = ?", Customer.first.id)
+    @productos = Producto.where(marca_id: @marcas.first.id) 
+    @versions  = Version.where(producto_id: @productos.first.id)
+    
     @ciudads  = @company.get_ciudads()
     @tipoordens  = @company.get_tipoordens()
     @monedas=@company.get_monedas    
+    
     if(params[:year] and params[:year].numeric?)
       @year = params[:year].to_i
     else
@@ -1391,6 +1396,9 @@ class ReportsController < ApplicationController
     
     
   end
+  
+ 
+ 
   def rpt_ordenes2_pdf
     @company = Company.find(params[:company_id])    
     @pagetitle = "Reportes de Ordenes "    

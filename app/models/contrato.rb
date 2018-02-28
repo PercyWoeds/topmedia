@@ -83,6 +83,23 @@ class Contrato < ActiveRecord::Base
         lcnumero = numero.to_s
         Voided.where(:id=>'13').update_all(:numero =>lcnumero)        
   end
-
+  
+  def get_contrato_canceladas(value)
+   
+   contratos= ContratoDetail.where([" contrato_id = ? and sit = '1' ", self.id ])
+    ret = 0
+    
+    for contrato in contratos
+      if(value == "vventa")
+        ret += contrato.vventa
+      else
+        ret += contrato.importe
+      end
+    end
+    
+    return ret
+   
+  end 
+  
 
 end

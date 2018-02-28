@@ -1,14 +1,19 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Descrip:</strong>
+  <strong>Razon Social:</strong>
   <%= @medio.descrip %>
 </p>
 
 <p>
-  <strong>Comments:</strong>
-  <%= @medio.comments %>
+  <strong>Grupo:</strong>
+  <%= @medio.grupo %>
 </p>
 
-<%= link_to 'Edit', edit_medio_path(@medio) %> |
-<%= link_to 'Back', medios_path %>
+<p>
+  <strong>Estacion:</strong>
+  <%= @medio.estacion %>
+</p>
+
+<%= link_to 'Editar', edit_medio_path(@medio) %> |
+<%= link_to 'Regresar', medios_path %>

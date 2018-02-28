@@ -1536,13 +1536,18 @@ def crear
       
   end
 
-  def rpt_ordenes1
-  
-    @company=Company.find(params[:company_id])          
+  def rpt_ordenes1_pdf
+   
+    @company=Company.find(1)          
     @mes = params[:month]    
     @anio = params[:year]    
+    @mes1 = params[:month1]    
+    @anio1 = params[:year1]    
+    
+      @marca= Marca.find_by("id = ?", params[:marca_id])
     
     @cliente_check = params[:check_cliente]   
+    @medio_check = params[:check_medio]   
     @producto_check = params[:check_producto]   
     @marca_check = params[:check_marca]   
     @version_check = params[:check_version]
@@ -1557,6 +1562,13 @@ def crear
       @customer = params[:customer_id]     
       @customer_name =  @company.get_cliente_name(@customer)
     end 
+    
+    if @medio_check == "true"
+        @medio=""
+    else
+        @medio =params[:medio_id]     
+    end 
+    
     
     if @producto_check == "true"
       @producto=""
@@ -1586,8 +1598,21 @@ def crear
     else
       @tipoorden = params[:tipo]     
     end 
+    puts @mes
+    puts @anio
+    puts @mes1
+    puts @anio1
+    puts @medio_check
+    puts @customer
+    puts @medio
+    puts @marca
+    puts @producto
+    puts @version
+    puts @ciudad
+    puts @tipoorden
     
-    @ordenes_rpt = @company.get_ordenes_cliente_all(@mes,@anio,@customer,@marca,@producto,@version,@ciudad,@tipoorden)
+    
+    @ordenes_rpt = @company.get_ordenes_cliente_all(@mes,@anio,@mes1,@anio1,@customer,@medio,@marca,@producto,@version,@ciudad,@tipoorden)
     
     
       Prawn::Document.generate("app/pdf_output/rpt_ordenes1.pdf") do |pdf|
@@ -1700,19 +1725,116 @@ def foot_data_headers_1
     end
 
 
+  
+
+  def update_marcas 
+    
+     customer = Customer.find(params[:customer_id])
+    # map to name and id for use in our options_for_select
+     puts customer.id 
+     @marcas = Marca.where(customer_id: customer.id)
+     @productos = Producto.where(marca_id: @marcas.last.id)
+     @versions = Version.where(producto_id: @productos.last.id)
+  
+  end
+  
+
   def update_productos
-    # updates artists and songs based on genre selected
-    marca = Marca.find(params[:marca_id])
-    @productos = marca.productos.map{|a| [a.name, a.id]}.insert(0, "Select an Producto")
-    @versions   = marca.versions.map{|s| [s.descrip, s.id]}.insert(0, "Select a version") 
+    # updates songs based on artist selected
+     @marcas = Marca.find(params[:marca_id])
+     @productos = Producto.where(marca_id: @marcas.last.id)
+     @versions = Version.where(producto_id: @productos.last.id)
   end
 
   def update_versions
     # updates songs based on artist selected
-    producto = Producto.find(params[:producto_id])
-    @versions = producto.versions.map{|s| [s.descrip, s.id]}.insert(0, "Select a Verson")
+    @productos = Producto.find(params[:producto_id])
+    @versions = Version.where(producto_id: @productos.last.id)
   end
-
+  
+   def reportes
+  
+     @company=Company.find(1)          
+    @mes = params[:month]    
+    @anio = params[:year]    
+    @mes1 = params[:month1]    
+    @anio1 = params[:year1]    
+    
+      @marca= Marca.find_by("id = ?", params[:marca_id])
+    
+    @cliente_check = params[:check_cliente]   
+    @medio_check = params[:check_medio]   
+    @marca_check = params[:check_marca]   
+    @producto_check = params[:check_producto]   
+    @version_check = params[:check_version]
+    @ciudad_check = params[:check_ciudad]   
+    @tipoorden_check = params[:check_tipoorden]   
+  
+    
+    if @cliente_check == "true"
+      @customer = ""
+      @customer_name = ""
+    else
+      @customer = params[:customer_id]     
+      @customer_name =  @company.get_cliente_name(@customer)
+    end 
+    
+    if @producto_check == "true"
+      @producto=""
+    else 
+      @producto =params[:producto_id]     
+    end 
+    if @medio_check == "true"
+        @medio=""
+    else
+        @medio =params[:medio_id]     
+    end 
+    
+    if @marca_check == "true"
+        @marca=""
+    else
+        @marca =params[:marca_id]     
+    end 
+    
+    if @version_check == "true"
+      @version = ""
+    else
+      @version =params[:version_id]     
+    end 
+    if @ciudad_check == "true"
+      @ciudad = ""
+    else
+      @ciudad =params[:ciudad_id]     
+    end 
+    
+    if @tipoorden_check == "true"
+      @tipoorden =""
+    else
+      @tipoorden = params[:tipo]     
+    end 
+    
+    @ordenes_rpt = @company.get_ordenes_cliente_all(@mes,@anio,@mes1,@anio1,@customer,@medio,@marca,@producto,@version,@ciudad,@tipoorden)
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Ordenes ",template: "ordens/orden_rpt.pdf.erb",locals: {:orden => @ordenes_rpt}
+        
+          # redirect_to :action => "rpt_ordenes1_pdf", :format => "pdf" ,
+          # :customer_id => params[:customer_id] , :medio_id =>  params[:medio_id] , :marca_id=> params[:marca_id] , :producto_id =>  params[:producto_id] , :version_id=> params[:version_id] , :ciudad_id=> params[:ciudad_id] , :tipoorden_id=> params[:tipoorden_id] ,:month => params[:month],:month1 => params[:month1],:year => params[:year],:year1 => params[:year1],:check_medio =>params[:check_medio],
+          # :check_marca =>params[:check_marca],
+          # :check_producto =>params[:check_producto],
+          # :check_version =>params[:check_version],
+          # :check_ciudad =>params[:check_ciudad],:check_tipoorden =>params[:check_tipoorden]
+          
+          
+        end   
+      when "To Excel" then render xlsx: 'exportxls'
+      else render action: "index"
+    end
+  end
+  
+ 
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180201164927) do
+ActiveRecord::Schema.define(version: 20180214155331) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,6 +155,15 @@ ActiveRecord::Schema.define(version: 20180201164927) do
   create_table "campania", force: :cascade do |t|
     t.string   "descrip"
     t.string   "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "canals", force: :cascade do |t|
+    t.string   "descrip"
+    t.string   "ruc"
+    t.string   "address1"
+    t.string   "phone1"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -831,8 +840,9 @@ ActiveRecord::Schema.define(version: 20180201164927) do
 
   create_table "marcas", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "customer_id"
   end
 
   create_table "medios", force: :cascade do |t|
@@ -846,6 +856,9 @@ ActiveRecord::Schema.define(version: 20180201164927) do
     t.string   "atencion"
     t.string   "ruc"
     t.string   "active"
+    t.string   "grupo"
+    t.string   "estacion"
+    t.string   "full_name"
   end
 
   create_table "modelos", force: :cascade do |t|

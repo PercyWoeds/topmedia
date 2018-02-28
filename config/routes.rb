@@ -1,6 +1,7 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :canals
   resources :tipo_ordens
   resources :category_programs
   resources :productos
@@ -14,6 +15,11 @@
   resources :ordens do
       resources :orden_products, except: [:index,:show], controller: "ordens/ordens_products"
       collection { get :crear}
+      collection { get :reportes}
+      collection { get :update_marcas}
+      collection { get :update_productos}
+      collection { get :exportxls }
+      collection { get :rpt_ordenes1_pdf}
   end 
   
   resources :versions do 
@@ -91,8 +97,10 @@
     collection { post :import2 }
     collection { post :import3 }
 
+    end 
     
-  end 
+    
+    
   resources :deliverymines   
 
     namespace :inventory do
@@ -108,6 +116,8 @@ resources :tranportorders do
   collection { get :search   }
   
 end 
+
+
 
 
   resources :serviceorders do 
@@ -226,9 +236,7 @@ end
   post 'add_mine', to: 'deliveries#add_mine'
   
   
-  get 'update_productos' , to: 'ordens#update_productos'
-  get 'update_versions' , to: 'ordens#update_versions'
-
+  
   get 'my_declarations', to: 'declarations#my_deliveries'
  # get 'search_friends', to: 'deliveries#search'
 
@@ -326,7 +334,7 @@ end
   match 'companies/reports/rpt_contratos3_pdf/:company_id' => 'reports#rpt_contratos3_pdf', via: [:get, :post]
   
   match 'companies/reports/rpt_ordenes1_pdf/:company_id' => 'reports#rpt_ordenes1_pdf', via: [:get, :post]
-
+  
   # Company users
 
   match 'company_users/ac_users' => 'company_users#ac_users', via: [:get, :post]

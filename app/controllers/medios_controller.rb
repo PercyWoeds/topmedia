@@ -69,6 +69,6 @@ class MediosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def medio_params
-      params.require(:medio).permit(:descrip, :comments)
+      params.require(:medio).permit(:descrip, :comments,:grupo,:estacion,:full_name)
     end
 end

@@ -2402,7 +2402,7 @@ def get_ordenes_cliente(fecha1,fecha2,cliente)
     
  end 
 
- def get_ordenes_cliente_all(mes,anio,cliente,marca,producto,version,ciudad,tipoorden)    
+ def get_ordenes_cliente_all(mes,anio,mes1,anio1,cliente,medio,marca,producto,version,ciudad,tipoorden)    
    
    sql_dato =""
    sql_dato1 =""
@@ -2415,6 +2415,20 @@ def get_ordenes_cliente(fecha1,fecha2,cliente)
   if cliente != ""
     sql_dato <<  "customer_id = " << cliente 
   end 
+  
+  
+  if medio != ""
+    
+    if sql_dato != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+    puts sql_dato 
+    
+    sql_dato << txt_and << "medio_id = " << medio
+  end 
+  
   
   if marca != ""
     if sql_dato != ""
@@ -2470,9 +2484,9 @@ def get_ordenes_cliente(fecha1,fecha2,cliente)
   end 
   
   if sql_dato ==  ""
-   @ordenes = Orden.where(["month = ? and year = ? ", "#{mes}","#{anio}" ])
+   @ordenes = Orden.where(["month >= ? and year >= ? and month <= ? and year <= ?", "#{mes}","#{anio}", "#{mes1}","#{anio1}" ]).order(:customer_id,:medio_id,:contrato_id)
   else
-   @ordenes = Orden.where(["month = ? and year = ? and #{sql_dato}", "#{mes} 00:00:00","#{anio} 23:59:59" ])
+   @ordenes = Orden.where(["month >= ? and year >= ? and month <= ? and year <= ? and #{sql_dato}", "#{mes} ","#{anio} ", "#{mes1}","#{anio1}"  ]).order(:customer_id,:medio_id,:contrato_id)
   end 
  
   return @ordenes

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Descrip:</strong>
+  <%= @canal.descrip %>
+</p>
+
+<p>
+  <strong>Ruc:</strong>
+  <%= @canal.ruc %>
+</p>
+
+<p>
+  <strong>Address1:</strong>
+  <%= @canal.address1 %>
+</p>
+
+<p>
+  <strong>Phone1:</strong>
+  <%= @canal.phone1 %>
+</p>
+
+<%= link_to 'Edit', edit_canal_path(@canal) %> |
+<%= link_to 'Back', canals_path %>
