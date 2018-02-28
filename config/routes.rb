@@ -51,10 +51,14 @@
 
   resources :ciudads
   resources :campania
+  
   resources :avisodetails do 
-
     collection { post :import }
   end 
+  resources :medios do 
+    collection { post :import }
+  end 
+  
   resources :tipocambios
   resources :ubicas
   

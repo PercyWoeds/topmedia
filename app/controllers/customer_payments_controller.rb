@@ -1953,7 +1953,7 @@ class CustomerPaymentsController < ApplicationController
                 numero   = parts[1]        
                 serie='FF01-'
 
-                f.code = serie<<numero
+                f.code = serie << numero
                 
             end 
                               

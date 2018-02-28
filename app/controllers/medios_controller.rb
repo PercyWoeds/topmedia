@@ -61,6 +61,11 @@ class MediosController < ApplicationController
     end
   end
 
+  def import
+      Medio.import(params[:file])
+       redirect_to root_url, notice: "Medio importados."
+  end 
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_medio

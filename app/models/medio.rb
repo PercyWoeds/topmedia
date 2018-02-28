@@ -16,5 +16,9 @@ class Medio < ActiveRecord::Base
 		self.full_name ="#{self.descrip} #{self.estacion} #{self.grupo} ".strip		
 	end 
 	
-	
+	def self.import(file)
+          CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
+          Medio.create! row.to_hash 
+        end
+    end      
 end
