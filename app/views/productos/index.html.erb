@@ -6,7 +6,7 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Version</th>
+      <th>Marca</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -15,7 +15,7 @@
     <% @productos.each do |producto| %>
       <tr>
         <td><%= producto.name %></td>
-        <td><%= producto.version_id %></td>
+        <td><%= producto.marca.name %></td>
         <td><%= link_to 'Show', producto %></td>
         <td><%= link_to 'Edit', edit_producto_path(producto) %></td>
         <td><%= link_to 'Destroy', producto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
