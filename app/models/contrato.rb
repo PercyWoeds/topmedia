@@ -1,7 +1,7 @@
 class Contrato < ActiveRecord::Base
   validates_uniqueness_of :code
 
-  validates_numericality_of :importe,:nrocuotas,:comision1,:comision2,:comision3
+  #validates_numericality_of :importe,:nrocuotas,:comision1,:comision2,:comision3
   
   belongs_to :customer 
   belongs_to :medio
@@ -100,4 +100,9 @@ class Contrato < ActiveRecord::Base
   end 
   
 
+    def self.import(file)
+          CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
+          Contrato.create! row.to_hash 
+        end
+    end      
 end

@@ -839,12 +839,10 @@ class ContratosController < ApplicationController
       invoice_headers2
   end
   
-
-    def self.import(file)
-          CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
-          Contrato.create! row.to_hash 
-        end
-    end      
+ def import
+      Contrato.import(params[:file])
+       redirect_to root_url, notice: "Contratos importados."
+  end 
   
 
   private
