@@ -223,6 +223,7 @@ end
 
   resources :contratos do
     resources :quotes    
+    collection { post :import }
   end 
   
   resources :purchases do

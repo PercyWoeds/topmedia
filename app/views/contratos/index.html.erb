@@ -44,4 +44,11 @@
 
 <%= link_to 'Nuevo Contrato',new_contrato_path  %>
 
+<h2>Importar Archivo contratos "*.csv"</h2>
+
+<%= form_tag import_contratos_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
 
