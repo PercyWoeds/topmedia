@@ -57,6 +57,7 @@
   end 
   resources :medios do 
     collection { post :import }
+    
   end 
   
   resources :tipocambios
@@ -251,6 +252,7 @@ end
   post 'items/update', to: 'items#update'
 
   # Reports
+  
   match 'companies/reports/monthly_profits/:company_id' => 'reports#monthly_profits', via: [:get, :post]
   match 'companies/reports/profits/:company_id' => 'reports#profits' , via: [:get, :post]
   match 'companies/reports/view_monthly_divisions/:company_id/:division_id' => 'reports#report_view_monthly_divisions', via: [:get, :post]
@@ -671,6 +673,7 @@ end
   match 'customers/create_ajax/:company_id' => 'customers#create_ajax', via: [:get, :post]
   match 'customers/new/:company_id' => 'customers#new', via: [:get, :post]
   match 'companies/customers/:company_id' => 'customers#list_customers', via: [:get, :post]
+  
   resources :customers
 
   # Divisions

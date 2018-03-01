@@ -451,6 +451,9 @@ class CustomerPaymentsController < ApplicationController
           @filters_display = "none"
         end
       end
+     
+    end
+      
     else
       errPerms()
     end
@@ -462,6 +465,8 @@ class CustomerPaymentsController < ApplicationController
     @companies = Company.where(user_id: current_user.id).order("name")
     @path = 'customerpayments'
     @pagetitle = "customerpayments"
+    
+     
   end
 
   # GET /customerpayments/1
@@ -1986,7 +1991,7 @@ class CustomerPaymentsController < ApplicationController
     @company = Company.find(params[:company_id])
     
   end
-  
+ 
  
   private
   def customerpayment_params

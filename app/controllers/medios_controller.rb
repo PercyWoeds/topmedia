@@ -5,6 +5,12 @@ class MediosController < ApplicationController
   # GET /medios.json
   def index
     @medios = Medio.order(:id)
+    
+     respond_to do |format|
+      format.html
+      format.csv { send_data @medios.to_csv, filename: "medios-#{Date.today}.csv" }
+      format.xls 
+    end
   end
 
   # GET /medios/1
@@ -65,7 +71,10 @@ class MediosController < ApplicationController
       Medio.import(params[:file])
        redirect_to root_url, notice: "Medio importados."
   end 
-
+  def export2
+    @medio = Medio.all
+    send_data @medio.to_csv  
+  end 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_medio

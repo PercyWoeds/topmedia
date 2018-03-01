@@ -34,8 +34,18 @@ class Customer < ActiveRecord::Base
       return "Not taxable"
     end
   end
-
   
+  def self.to_csv
+    attributes = %w{id name ruc account address1 }
 
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+
+      all.each do |customer|
+        csv << attributes.map{ |attr| customer.send(attr) }
+      end
+    end
+  end
+  
 
 end

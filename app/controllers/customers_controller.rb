@@ -24,9 +24,18 @@ class CustomersController < ApplicationController
       if(params[:search] and params[:search] != "")                 
   
         @customers = Customer.where(["company_id = ? AND  (ruc LIKE ? OR name LIKE ?)", @company.id,"%" + params[:search] + "%", "%" + params[:search] + "%"]).order('name').paginate(:page => params[:page]) 
+        
       else
         @customers = Customer.where(:company_id => @company.id).order("name").paginate(:page => params[:page])
+        
       end
+
+         respond_to do |format|
+            format.html
+            format.csv { send_data @customers.to_csv, filename: "customers-#{Date.today}.csv" }
+            format.xls 
+          end       
+      
     else
       errPerms()
     end
@@ -38,6 +47,10 @@ class CustomersController < ApplicationController
     @companies = Company.where(user_id: getUserId()).order("name")
     @path = 'customers'
     @pagetitle = "Customers"
+    @company = Company.find(1)
+    
+    @customers = Customer.where(:company_id => @company.id).order("name")
+    
   end
 
   # GET /customers/1
