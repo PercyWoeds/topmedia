@@ -5,7 +5,7 @@ class ContratosController < ApplicationController
   # GET /contratos
   # GET /contratos.json
   def index
-    @contratos = Contrato.all
+    @contratos = Contrato.order('fecha DESC').paginate(:page => params[:page])
   end
 
   # GET /contratos/1
