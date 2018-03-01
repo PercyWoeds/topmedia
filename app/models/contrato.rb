@@ -3,14 +3,12 @@ class Contrato < ActiveRecord::Base
 
   validates_numericality_of :importe,:nrocuotas,:comision1,:comision2,:comision3
   
-
-  
   belongs_to :customer 
   belongs_to :medio
   belongs_to :orden
   belongs_to :moneda 
   
-   has_many :facturas
+  has_many :facturas
   
   has_many :contrato_details, :dependent => :destroy
  
