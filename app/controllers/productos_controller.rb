@@ -10,22 +10,25 @@ class ProductosController < ApplicationController
   # GET /productos/1
   # GET /productos/1.json
   def show
+    @marcas = Marca.order(:name)
   end
 
   # GET /productos/new
   def new
     @producto = Producto.new
+    @marcas = Marca.order(:name)
   end
 
   # GET /productos/1/edit
   def edit
+    @marcas = Marca.order(:name)
   end
 
   # POST /productos
   # POST /productos.json
   def create
     @producto = Producto.new(producto_params)
-
+    @marcas = Marca.order(:name)
     respond_to do |format|
       if @producto.save
         format.html { redirect_to @producto, notice: 'Producto was successfully created.' }
@@ -40,6 +43,7 @@ class ProductosController < ApplicationController
   # PATCH/PUT /productos/1
   # PATCH/PUT /productos/1.json
   def update
+    
     respond_to do |format|
       if @producto.update(producto_params)
         format.html { redirect_to @producto, notice: 'Producto was successfully updated.' }

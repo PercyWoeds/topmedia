@@ -15,22 +15,25 @@ class VersionsController < ApplicationController
   # GET /versions/1
   # GET /versions/1.json
   def show
+    @productos = Producto.order(:name)
   end
 
   # GET /versions/new
   def new
     @version = Version.new
+    @productos = Producto.order(:name)
   end
 
   # GET /versions/1/edit
   def edit
+    @productos = Producto.order(:name)
   end
 
   # POST /versions
   # POST /versions.json
   def create
     @version = Version.new(version_params)
-
+    @productos = Producto.order(:name)
     respond_to do |format|
       if @version.save
         format.html { redirect_to @version, notice: 'Version was successfully created.' }

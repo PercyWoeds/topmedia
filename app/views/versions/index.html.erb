@@ -1,12 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Versions</h1>
+<h1>Versiones</h1>
 
 <table>
   <thead>
     <tr>
       <th>Descrip</th>
-      <th>Comments</th>
+      <th>Producto</th>
+      <th>Marca</th>
+      <th>Cliente</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,9 +18,11 @@
       <tr>
         <td><%= version.descrip %></td>
         <td><%= version.producto.name %></td>
-        <td><%= link_to 'Show', version %></td>
-        <td><%= link_to 'Edit', edit_version_path(version) %></td>
-        <td><%= link_to 'Destroy', version, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= version.producto.marca.name %></td>
+        <td><%= version.producto.marca.customer.name %></td>
+        <td><%= link_to 'Ver', version %></td>
+        <td><%= link_to 'Editar', edit_version_path(version) %></td>
+        <td><%= link_to 'Elimnar', version, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

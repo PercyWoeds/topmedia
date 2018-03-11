@@ -1820,14 +1820,6 @@ def foot_data_headers_1
         begin 
          render  pdf: "Ordenes ",template: "ordens/orden_rpt.pdf.erb",locals: {:orden => @ordenes_rpt}
         
-          # redirect_to :action => "rpt_ordenes1_pdf", :format => "pdf" ,
-          # :customer_id => params[:customer_id] , :medio_id =>  params[:medio_id] , :marca_id=> params[:marca_id] , :producto_id =>  params[:producto_id] , :version_id=> params[:version_id] , :ciudad_id=> params[:ciudad_id] , :tipoorden_id=> params[:tipoorden_id] ,:month => params[:month],:month1 => params[:month1],:year => params[:year],:year1 => params[:year1],:check_medio =>params[:check_medio],
-          # :check_marca =>params[:check_marca],
-          # :check_producto =>params[:check_producto],
-          # :check_version =>params[:check_version],
-          # :check_ciudad =>params[:check_ciudad],:check_tipoorden =>params[:check_tipoorden]
-          
-          
         end   
       when "To Excel" then render xlsx: 'exportxls'
       else render action: "index"

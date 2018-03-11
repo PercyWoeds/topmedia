@@ -6,9 +6,9 @@
 </p>
 
 <p>
-  <strong>Version:</strong>
-  <%= @producto.version_id %>
+  <strong>Marca :</strong>
+  <%= @producto.marca.name %>
 </p>
 
-<%= link_to 'Edit', edit_producto_path(@producto) %> |
-<%= link_to 'Back', productos_path %>
+<%= link_to 'Editar', edit_producto_path(@producto) %> |
+<%= link_to 'Regresar', productos_path %>

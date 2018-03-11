@@ -10,22 +10,25 @@ class MarcasController < ApplicationController
   # GET /marcas/1
   # GET /marcas/1.json
   def show
+    @customers = Customer.order(:name)
   end
 
   # GET /marcas/new
   def new
     @marca = Marca.new
+    @customers = Customer.order(:name)
   end
 
   # GET /marcas/1/edit
   def edit
+    @customers = Customer.order(:name)
   end
 
   # POST /marcas
   # POST /marcas.json
   def create
     @marca = Marca.new(marca_params)
-
+    @customers = Customer.order(:name)
     respond_to do |format|
       if @marca.save
         format.html { redirect_to @marca, notice: 'Marca was successfully created.' }
@@ -65,10 +68,11 @@ class MarcasController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_marca
       @marca = Marca.find(params[:id])
+      
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def marca_params
-      params.require(:marca).permit(:descrip)
+      params.require(:marca).permit(:name,:customer_id)
     end
 end

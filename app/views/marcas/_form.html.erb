@@ -10,11 +10,15 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
+ <div class="field">
+      <%= f.label :name, "Marca *", :class => "bold" %><br />
+      <%= f.text_field :name %>
+    </div>
+    
+<div class="field">
+      <%= f.label :customer_id , "Cliente", :class => "bold" %><br />
+      <%= f.collection_select :customer_id, @customers, :id, :name,{:prompt   => "Seleccione un cliente "} %>
+      </div>
 
 
   <div class="actions">
