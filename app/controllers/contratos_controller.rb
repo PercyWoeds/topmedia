@@ -806,11 +806,11 @@ class ContratosController < ApplicationController
     
     lcmonedadolares ="1"
     lcmonedasoles ="2"
-    @contratos_rpt = @company.get_contratos_day(@fecha1,@fecha2)
+    @contratos = @company.get_contratos_day(@fecha1,@fecha2)
       
     case params[:print]
-      when "To PDF" then render  pdf: "Contratos ",template: "contratos/contrato_rpt.pdf.erb",locals: {:contrato => @contratos_rpt}
-      when "To Excel" then render xlsx: 'exportxls'
+      when "PDF" then render  pdf: "Contratos ",template: "contratos/contrato_rpt.pdf.erb",locals: {:contrato => @contratos_rpt}
+      when "Excel" then render xlsx: 'exportxls'
       else render action: "index"
     end
     

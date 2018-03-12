@@ -9,8 +9,8 @@
     </title>
     
   
-    <%= stylesheet_link_tag "app", :media => "all" %>
-    <%= stylesheet_link_tag "print", :media => "print" %>
+      <%= stylesheet_link_tag    'application', media: 'all' %>
+  
         
     <%= javascript_include_tag "jquery-1.6.1.min" %>
     <%= javascript_include_tag "supersleight.plugin" %>
@@ -21,22 +21,24 @@
     <%= csrf_meta_tag %>
 
     
-
   </head>
   
   <body>
   
+    
     <div id="header_cont">
       <div id="header">
         <div id="logo">
-          <a href="<%= getAppUrl %>"><img src="/images/logo2.png" alt="<%= getAppName %>" id="img_logo"></a>
+          <a href="<%= getAppUrl %>"><img src="/images/tperedalogo.jpg" alt="<%= getAppName %>" id="img_logo"></a>
         </div>
       </div>
     </div>
+    
+    
     <%= render 'layouts/menu' %>
     <%= render 'layouts/usermenu' %>
     
-    <div id="content">
+    <div id="main_content">
       
       <%- flash.each do |key, msg| -%>
         <div class="<%= key %>">

@@ -22,15 +22,16 @@ totals = []
   <%= form_tag(exportxls_contratos_path, :method => "get") do %>
 
   <div class="field">
-    Desde <input type="date" name="fecha1" value="2017-10-01" style = "width: 150px" >
+    Desde <input type="date" name="fecha1" value="2018-10-01" style = "width: 150px" >
   </div>
 
 	<div class="field">
-    Hasta <input type="date" name="fecha2" value="2017-11-15" style = "width: 150px" >
+    Hasta <input type="date" name="fecha2" value="2018-11-15" style = "width: 150px" >
   </div>
 
-  <%= submit_tag "To PDF", :name => "print" %>
-  <%= submit_tag "To Excel", :name => "print" %>
+  <%= submit_tag  "PDF", :name => "print"    %>
+
+  <%= submit_tag "Excel", :name => "print" %>
      
 <% end %>
 <br />

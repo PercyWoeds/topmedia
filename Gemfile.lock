@@ -78,6 +78,8 @@ GEM
     erubis (2.7.0)
     eventmachine (1.2.3)
     execjs (2.7.0)
+    font-awesome-rails (4.7.0.3)
+      railties (>= 3.2, < 5.2)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     htmlentities (4.3.4)
@@ -218,6 +220,7 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
   devise (~> 4.1, >= 4.1.1)
+  font-awesome-rails (~> 4.7, >= 4.7.0.3)
   htmlentities
   jbuilder (~> 2.0)
   jquery-rails (~> 4.2, >= 4.2.1)
