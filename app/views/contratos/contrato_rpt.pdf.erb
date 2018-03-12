@@ -8,422 +8,155 @@
   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   <tr bgcolor="#B4D7F7">
-    
-    <th> Nro  </th>
-    <th> Vmto  </th>
-    <th>Valor <br> Venta</th>
-    <th><br>IGV</th>
-    <th>Total <br> Cuota</th>
-    <th>Fact.<br>Canal</th>
-    <th>Fact.<br>Masa</th>
-    <th>Fecha <br>Cancela</th>
-    <th>SIT.</th>
-    <th>Ctrol.</th>
+  
+    <th width="8%"> Orden </th>
+    <th width="8%"> Fecha   </th>
+    <th width="30%">Motivos </th>
+    <th width="10%"> Avisos</th>
+    <th width="5%"> Seg</th>
+    <th width="10%">Abonos</th>
+    <th width="10%">Cargos</th>
+    <th width="10%">Cargos <br>Acum.</th>
+    <th width="10%">Saldo</th>
   </tr>
   </table>
   
-     <% a = @contratos_rpt.first %>
      
-    <table style=  'font-size:80% ;width:100%'>
-    <tr style="font-weight:bold">
-    <td>CANAL</td>
-    <td> <%= a.medio.descrip %></td>
-    <td> </td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    </tr>
-  
-    <tr style="font-weight:bold">
-    <td>CLIENTE</td>
-    <td><%= a.customer.ruc %> </td>
-    <td><%= a.customer.name %> </td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    </tr>
-  </table>
-  
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   <tr bgcolor="#B4D7F7">
     
-    <td> Contrato </td>
-    <td> <%= a.codigointerno %> </td>
-    <td>  <%= a.tipocontrato_id %> </td>
-    <td>Mon: <%= a.get_moneda %></td>
-    <td><%= a.importe %> </td>
-    <td>Cuotas <%= a.nrocuotas %></td>
-    <td>Com1: <%= a.comision1 %> % </td>
-    <td>Com1: <%= a.comision2 %> % </td>
-    <td></td>
-    <td></td>
-  </tr>
-  </table>
+  
   
   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
-      <% lcCanal = a.medio_id %>
-      <% lcCliente = a.customer_id %>
+      <% a = @contratos.first %>
+      <% lcCanal = nil %>
+      <% lcCliente = nil %>
       
-       <% for  product in @contratos_rpt %>
+       <%  @contratos.each do |product| %>
            
             <% @contrato= Contrato.find(product.id)%>
-            <% @contrato_details = ContratoDetail.where(contrato_id: @contrato.id)%>
             
-        <%if lcCanal == product.medio_id%>
-        
-          <%if lcCliente == product.customer_id %>
-            
-            <% for product_detail  in @contrato_details %>
-                <tr>
-                <td><%=product_detail.nro %> <%= product_detail.fecha.strftime("%d/%m/%Y")%></td>
-                <% tax = product_detail.importe - product_detail.vventa  %>
-                <td><%= sprintf("%.2f",product_detail.vventa.to_s)   %> </td>
-                <td><%= sprintf("%.2f",tax.to_s)   %> </td>
-                <td><%= sprintf("%.2f",product_detail.importe.to_s)   %></td>
-                <td><%= product_detail.facturacanal %></td>
-                <td><%= product_detail.factura1%></td>
-                <%if product_detail.fechafac1 != nil%>
-                <td> <%= product_detail.fechafac1.strftime("%d/%m/%Y") %></td>
-                <%else%>
+            <% @orden = Orden.find_by(contrato_id: @contrato.id)%>
+            <% @saldo_cliente = product.get_saldo_acumulado_orden(@fecha1,@fecha2) %>
+            <% if @orden != nil %>
+              <% @orden_details= OrdenProduct.where(orden_id: @orden.id) %>
+              
+            <%else %>  
+              <% @orden_details = nil %>
+              <% @saldo_cliente = product.get_saldo_acumulado_orden(@fecha1,@fecha2) %>
+            <% end%>
+   
+            <% if  lcCliente != product.customer_id %>
+                <table style=  'font-size:80% ;width:100%'>
+                <tr style="font-weight:bold">
+                <td>CLIENTE</td>
+                <td><%= product.customer.ruc %> </td>
+                <td><%= product.customer.name %> </td>
                 <td></td>
-                <%end %>
                 <td></td>
-                <td><%= product_detail.sit%> </td>
+                <td></td>
+                <td></td>
+                <td></td>
                 </tr>
-           <%end %>
-          <% else %>
-          
-                    <table style=  'font-size:80% ;width:100%'>
-                    <tr>
-                    <td></td>
-                    <td>Canceladas :</td>
-                    <td><% product.get_contrato_canceladas("vventa") %> </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    </tr>
-                    <tr>
-                    <td></td>
-                    <td>p.Cobrar : </td>
-                    <td> </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    </tr>
+                </table>
                 
-                    <tr>
-                    <td></td>
-                    <td>p.Facturar: </td>
-                    <td> </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    </tr>
-                
-                      
-                    <tr>
-                    <td></td>
-                    <td>Total x Contrato </td>
-                    <td> </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    </tr>
-                    
-                    </table>
-          <hr>
-              <% lcCliente = product.customer_id %>
-            
-              <table style ='font-size:80% ;width:100%'>
-              <tr style="font-weight:bold">
-              <td>CLIENTE</td>
-              <td><%= product.customer.ruc %> </td>
-              <td><%= product.customer.name %> </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              </tr>
-              </table>
+        
+              <% if   lcCanal != product.medio_id%>
               
-              <hr> 
-              <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
-              <tr bgcolor="#B4D7F7">
-                
-                <td> Contrato </td>
-                <td> <%= product.codigointerno %> </td>
-                <td>  <%= product.tipocontrato_id %> </td>
-                <td>Mon: <%= product.get_moneda %></td>
-                <td><%= product.importe %> </td>
-                <td>Cuotas <%= product.nrocuotas %></td>
-                <td>Com1: <%= product.comision1 %> % </td>
-                <td>Com1: <%= product.comision2 %> % </td>
-                <td></td>
-                <td></td>
-              </tr>
-              </table>
-              
-  
-                  <table style=  'font-size:80% ;width:100%'>
-                    
-                    
-                           <% for product_detail  in @contrato_details %>
-                              <tr>
-                              <td><%=product_detail.nro %> <%= product_detail.fecha.strftime("%d/%m/%Y")%></td>
-                              <% tax = product_detail.importe - product_detail.vventa  %>
-                              <td><%= sprintf("%.2f",product_detail.vventa.to_s)   %> </td>
-                              <td><%= sprintf("%.2f",tax.to_s)   %> </td>
-                              <td><%= sprintf("%.2f",product_detail.importe.to_s)   %></td>
-                              <td><%= product_detail.facturacanal %></td>
-                              <td><%= product_detail.factura1%></td>
-                              <%if product_detail.fechafac1 != nil%>
-                              <td> <%= product_detail.fechafac1.strftime("%d/%m/%Y") %></td>
-                              <%else%>
-                              <td> / / </td>
-                              <%end %>
-                              <td></td>
-                              <td><%= product_detail.sit%> </td>
-                              </tr>
-                              <%end %>
-                          <%end %>
-                  </table>        
-                    
-                            
-          <%else%>
-          
-            <table style=  'font-size:80% ;width:100%'>
-
-                    <tr>
-                    <td></td>
-                    <td>Canceladas :</td>
+                  <table style=  'font-size:80% ;width:100%'>    
+                    <tr style="font-weight:bold">
+                    <td>CANAL</td>
+                    <td> <%= product.medio.descrip %></td>
                     <td> </td>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
                     </tr>
-                    <tr>
-                    <td></td>
-                    <td>p.Cobrar : </td>
-                    <td> </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    </tr>
-                
-                    <tr>
-                    <td></td>
-                    <td>p.Facturar: </td>
-                    <td> </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    </tr>
-                
-                      
-                    <tr>
-                    <td></td>
-                    <td>Total x Contrato </td>
-                    <td> </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    </tr>
-                    
-                    </table>
-                     <hr>   
-                     <table style=  'font-size:80% ;width:100%'>
-                    <tr>
-                    <td></td>
-                    <td>Total x Canal </td>
-                    <td> </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    </tr>
-                  </table>          
-                  <hr>
-          
-          
-          
-          
-    <table style=  'font-size:80% ;width:100%'>
-    <tr style="font-weight:bold">
-    <td>CANAL</td>
-    <td> <%= product.medio.descrip %></td>
-    <td> </td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    </tr>
-  
-    <tr style="font-weight:bold">
-    <td>CLIENTE</td>
-    <td><%= product.customer.ruc %> </td>
-    <td><%= product.customer.name %> </td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    </tr>
-    
-  
-  </table>
-  
-              <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
-              <tr bgcolor="#B4D7F7">
-                
-                <td> Contrato </td>
-                <td> <%= product.codigointerno %> </td>
-                <td>  <%= product.tipocontrato_id %> </td>
-                <td>Mon: <%= product.get_moneda %></td>
-                <td><%= product.importe %> </td>
-                <td>Cuotas <%= product.nrocuotas %></td>
-                <td>Com1: <%= product.comision1 %> % </td>
-                <td>Com1: <%= product.comision2 %> % </td>
-                <td></td>
-                <td></td>
-              </tr>
-              </table>
-          
-                            
-                  <table style=  'font-size:80% ;width:100%'>
-                    
-                    
-                           <% for product_detail  in @contrato_details %>
-                              <tr>
-                              <td><%=product_detail.nro %> <%= product_detail.fecha.strftime("%d/%m/%Y")%></td>
-                              <% tax = product_detail.importe - product_detail.vventa  %>
-                              <td><%= sprintf("%.2f",product_detail.vventa.to_s)   %> </td>
-                              <td><%= sprintf("%.2f",tax.to_s)   %> </td>
-                              <td><%= sprintf("%.2f",product_detail.importe.to_s)   %></td>
-                              <td><%= product_detail.facturacanal %></td>
-                              <td><%= product_detail.factura1%></td>
-                              <%if product_detail.fechafac1 != nil%>
-                              <td> <%= product_detail.fechafac1.strftime("%d/%m/%Y") %></td>
-                              <%else%>
-                              <td> / / </td>
-                              <%end %>
-                              <td></td>
-                              <td><%= product_detail.sit%> </td>
-                              </tr>
-                              
-                              <%end %>
-                     </table>                              
+                  </table>
+                               
                   
-        <%end %>
-        
-        
-        
-        </table>
-        <%   lcCanal= product.medio_id %>
-        <%   lcCliente = product.customer_id %>
-    
-        
-        <%end%>
-        
-       <table style=  'font-size:80% ;width:100%'>
-
-                    <tr>
-                    <td></td>
-                    <td>Canceladas :</td>
-                    <td> </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <table style=  'font-size:80% ;width:100%'>    
+                      <td> Contrato </td>
+                      <td> <%= product.codigointerno %> </td>
+                      <td> </td>
+                      <td></td>
+                      <td></td>
+                       <td>Mon: <%= product.get_moneda %></td>
                     </tr>
-                    <tr>
-                    <td></td>
-                    <td>p.Cobrar : </td>
-                    <td> </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    </tr>
-                
-                    <tr>
-                    <td></td>
-                    <td>p.Facturar: </td>
-                    <td> </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    </tr>
-                
-                      
-                    <tr>
-                    <td></td>
-                    <td>Total x Contrato </td>
-                    <td> </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    </tr>
-                    
                     </table>
-        <hr>  
-       <table style=  'font-size:80% ;width:100%'>
-        <tr>
-        <td> </td>
-        <td> </td>
-        <td>Total x Canal</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        </tr>
+                    
+                     <table style=  'font-size:80% ;width:100%'>       
+                        <tr>
+                        <td width="8%"> </td>
+                        <td width="8%"><%= product.fecha.strftime("%d/%m/%Y")  %> </td>
+                        <td width="30%"> </td>
+                        <td width="10%" align="right"> </td>
+                        <td width="5%" align="right"> </td>
+                        <td width="10%" align="right"> <%= product.importe  %></td>
+                        <td width="10%" align="right"> </td>
+                        <td width="10%" align="right"> </td>
+                        <td width="10%" align="right"> <%= @saldo_cliente  %> </td>
+                        </tr>
+                       
+                   </table>
+                        
+                     <table style=  'font-size:80% ;width:100%'>       
+                     
+                     <% if @orden_details != nil %>
+                        <% for product_detail  in @orden_details %>
+                        <% @saldo_cliente -= product_detail.total  %>
+                     
+                        <tr>
+                        <td width="8%"><%=@orden.code %></td>
+                        <td width="8%"><%= @orden.fecha.strftime("%d/%m/%Y")  %> </td>
+                        <td width="30%"><%= product_detail.avisodetail.descrip    %> </td>
+                        <td width="10%" align="right"><%= product_detail.quantity   %></td>
+                        <td width="5%" align="right"><%= @orden.tiempo  %></td>
+                        <td width="10%" align="right"> </td>
+                        <td width="10%" align="right"><%= product_detail.total  %> </td>
+                        <td width="10%" align="right"> </td>
+                        <td width="10%" align="right"><%= @saldo_cliente %> </td>
+                        </tr>
+                       <%end %>
+                      <%end %>
+                   </table>
+                   
+            <% else  %>
+                    <%  lcCanal = product.medio_id %>   
+                     <table style=  'font-size:80% ;width:100%'>       
+                        <tr>
+                        <td width="8%"> </td>
+                        <td width="8%">Total x canal  </td>
+                        <td width="30%"> </td>
+                        <td width="10%" align="right"> </td>
+                        <td width="5%" align="right"> </td>
+                        <td width="10%" align="right"> <%= product.importe  %></td>
+                        <td width="10%" align="right"> </td>
+                        <td width="10%" align="right"> </td>
+                        <td width="10%" align="right"> <%= @saldo_cliente  %> </td>
+                        </tr>
+                       
+                   </table>
+              
+            <% end %>  
+            
+            
+          <%else  %>
+            
+            <%  lcCliente = product.customer_id %>  
+                   
+            
+            
+          <% end %>  
+          
+        <%end%>
         </table>
+        
+        
         <hr>
         
       </body>
-      
       </html>

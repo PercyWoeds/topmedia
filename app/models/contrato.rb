@@ -68,7 +68,7 @@ class Contrato < ActiveRecord::Base
   end 
 
   def get_moneda
-  	if self.moneda_id == 1
+  	if self.moneda_id == 2
     	return "SOLES"
   	else
     	return  "DOLARES"
@@ -99,6 +99,30 @@ class Contrato < ActiveRecord::Base
    
   end 
   
+  def get_saldo_acumulado_orden(fecha1,fecha2)
+      ret =0
+      ret1 =0
+      @contrato = Contrato.where(['fecha <= ? and id = ? ',"#{fecha2} 23:59:59",self.id]).sum(importe)
+      
+      @orden = Orden.where(['fecha2<= ? and contrato_id = ? ',"#{fecha2} 23:59:59",self.id])
+      
+      if @orden != nil
+              for factura in @orden
+               @detail =  OrdenProduct.where(:orden_id => factura.id)
+                  for d in @detail 
+                      ret += d.total            
+                  end 
+                  ret += factura.total.round(2)
+               end 
+       else
+            ret = 0
+       end 
+
+         ret1 = @contrato - ret       
+        
+    return ret1
+      
+  end 
 
     def self.import(file)
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|

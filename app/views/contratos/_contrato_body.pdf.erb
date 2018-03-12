@@ -1,0 +1,56 @@
+                <table style=  'font-size:80% ;width:100%'>    
+                    <tr style="font-weight:bold">
+                    <td>CANAL</td>
+                    <td> <%= product.medio.descrip %></td>
+                    <td> </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    </tr>
+                  </table>
+                               
+                  
+                    <table style=  'font-size:80% ;width:100%'>    
+                      <td> Contrato </td>
+                      <td> <%= product.codigointerno %> </td>
+                      <td> </td>
+                      <td></td>
+                      <td></td>
+                       <td>Mon: <%= product.get_moneda %></td>
+                    </tr>
+                    </table>
+                    
+                     <table style=  'font-size:80% ;width:100%'>       
+                        <tr>
+                        <td width="8%"> </td>
+                        <td width="8%"><%= product.fecha.strftime("%d/%m/%Y")  %> </td>
+                        <td width="30%"> </td>
+                        <td width="10%" align="right"> </td>
+                        <td width="5%" align="right"> </td>
+                        <td width="10%" align="right"> <%= product.importe  %></td>
+                        <td width="10%" align="right"> </td>
+                        <td width="10%" align="right"> </td>
+                        <td width="10%" align="right"> <%= @saldo_cliente  %> </td>
+                        </tr>
+                       
+                   </table>
+                        
+                     <table style=  'font-size:80% ;width:100%'>       
+                        <% for product_detail  in @orden_details %>
+                        <% @saldo_cliente -= product_detail.total  %>
+                     
+                        <tr>
+                        <td width="8%"><%=@orden.code %></td>
+                        <td width="8%"><%= @orden.fecha.strftime("%d/%m/%Y")  %> </td>
+                        <td width="30%"><%= product_detail.avisodetail.descrip    %> </td>
+                        <td width="10%" align="right"><%= product_detail.quantity   %></td>
+                        <td width="5%" align="right"><%= @orden.tiempo  %></td>
+                        <td width="10%" align="right"> </td>
+                        <td width="10%" align="right"><%= product_detail.total  %> </td>
+                        <td width="10%" align="right"> </td>
+                        <td width="10%" align="right"><%= @saldo_cliente %> </td>
+                        </tr>
+                       <%end %>
+                   </table>
