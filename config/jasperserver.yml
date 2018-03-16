@@ -1,0 +1,14 @@
+development:
+  url: 'http://server:port/jasperserver/'
+  username: 'username'
+  password: 'password'
+
+test:
+  url: 'http://server:port/jasperserver/'
+  username: 'username'
+  password: 'password'
+
+production:
+  url: 'http://server:port/jasperserver/'
+  username: 'username'
+  password: 'password'
