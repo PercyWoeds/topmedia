@@ -1,4 +1,4 @@
- source 'http://rubygems.org'
+source 'http://rubygems.org'
 
 gem 'rails', '4.2.5.1'
 
@@ -10,6 +10,7 @@ gem 'rails', '4.2.5.1'
 
 # Added
 gem 'bluecloth'
+
 
 gem 'htmlentities'
 gem 'will_paginate'
@@ -23,16 +24,15 @@ gem 'pivot_table'
 gem 'protected_attributes'
  
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
-
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails', '>= 3.2'
+#gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
-
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
- gem 'bootstrap-sass', '~> 3.3', '>= 3.3.7'
+gem 'rails_serve_static_assets'
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '~> 4.2', '>= 4.2.1'
 gem 'jquery-ui-rails', '~> 5.0', '>= 5.0.5'
@@ -49,6 +49,7 @@ gem 'rmagick', '~> 2.15', '>= 2.15.4'
 gem 'simple_form', '~> 3.3', '>= 3.3.1'
 
 gem 'rails_autolink', '~> 1.1', '>= 1.1.6'
+
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -70,16 +71,19 @@ gem 'rails_autolink', '~> 1.1', '>= 1.1.6'
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
 # group :development, :test do
-#   gem 'webrat'
-# end
+#   gem 'w
 
-gem 'pg', '~> 0.18.0'
+gem 'pg', '~> 0.18.4'
+gem 'responders', '~> 2.0'
 
+gem 'axlsx', '~> 2.0'
+gem "axlsx_rails"
+
+
+gem  'prawn-qrcode'
+ 
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
-
-
- 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -88,15 +92,14 @@ end
 group :development do
   gem 'sqlite3'
   # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
-
+ 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'better_errors', '~> 2.1', '>= 2.1.1'
+  
   gem 'binding_of_caller', '~> 0.7.2'
   gem 'web-console', '~> 2.0'
-
-
+   
+ gem 'better_errors', '~> 2.4'
 end
 
 group :production do 
