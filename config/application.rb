@@ -9,10 +9,15 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 
 module Mnygo
   class Application < Rails::Application
-    config.encoding = "utf-8"
-    config.filter_parameters += [:password]
+    config.assets.precompile += %w( *.js *.css )
     
-    config.assets.precompile += ["*.js", "*.scss", "*.jpg", "*.png"]
+    config.encoding = "utf-8"
+    config.assets.initialize_on_precompile = false
+    config.serve_static_files = true
+    
+    # Configure sensitive parameters which will be filtered from the log file.
+    config.filter_parameters += [:password]
+    config.time_zone ='Lima'
     
   end
 end
