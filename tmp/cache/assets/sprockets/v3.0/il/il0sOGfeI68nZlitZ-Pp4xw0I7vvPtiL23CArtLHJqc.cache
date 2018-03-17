@@ -1,0 +1,29 @@
+{:uriI"™file://app/assets/stylesheets/plugins/jquery-scrollTo/tests/index.html?type=text/html&id=56ef2ed6f34cf9d7c59e17ce44a9791560ef861afa22a16ec077f18067eba9e8:ET:load_pathI"app/assets/stylesheets;T:filenameI"Dapp/assets/stylesheets/plugins/jquery-scrollTo/tests/index.html;T:	nameI"(plugins/jquery-scrollTo/tests/index;T:logical_pathI"-plugins/jquery-scrollTo/tests/index.html;T:content_typeI"text/html;T:sourceI"™<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>jQuery.scrollTo Tests</title>
+	<meta name="keywords" content="javascript, jquery, plugins, scroll, scrollTo, smooth, animation, to, effect, ariel, flesler, window, overflow, element, navigation, customizable" />
+	<meta name="description" content="Tests for jQuery ScrollTo. Made by Ariel Flesler." />
+	<meta name="robots" content="index,follow" />
+</head>
+<body>
+	<h1>jQuery.scrollTo Tests</h1>
+	
+	<ul>
+		<li><a href="WinMaxY-compat.html">Max window scrolling (compat mode)</a></li>
+		<li><a href="WinMaxY-quirks.html">Max window scrolling (quirks mode)</a></li>
+		<li><a href="ElemMaxY-compat.html">Max element scrolling (compat mode)</a></li>
+		<li><a href="ElemMaxY-quirks.html">Max element scrolling (quirks mode)</a></li>
+		<li><a href="WinMaxY-with-iframe-compat.html">Max window scrolling, within an iframe (compat mode)</a></li>
+		<li><a href="WinMaxY-with-iframe-quirks.html">Max window scrolling, within an iframe (quirks mode)</a></li>
+		<li><a href="WinMaxY-to-iframe-compat.html">Max iframe scrolling from outside (compat mode)</a></li>
+		<li><a href="WinMaxY-to-iframe-quirks.html">Max iframe scrolling from outside (quirks mode)</a></li>
+	</ul>
+</body>
+</html>
+;T:metadata{	:dependencieso:Set:
+@hash}
+I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"2processors:type=text/html&file_type=text/html;TTI"Rfile-digest://app/assets/stylesheets/plugins/jquery-scrollTo/tests/index.html;TTF:charsetI"
+utf-8;F:digest"%Æ¿áõç§æ \© $Õ»*âpõUÂçPˆÄ¶wcòNŸ:lengthi™:dependencies_digest"%ååË‘ŠÒ‚–¶JÇÑšò{c@ÑÇ¨;y¼ë—:idI"E56ef2ed6f34cf9d7c59e17ce44a9791560ef861afa22a16ec077f18067eba9e8;F:
+mtimel+´%IY

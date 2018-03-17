@@ -1,0 +1,36 @@
+{:uriI"file://app/assets/stylesheets/plugins/jquery-scrollTo/composer.json?type=application/json&id=e36620c76f347623dbe27e1a089f1bd36cbcf2e6035bbc7a2136d2371aef0c0d:ET:load_pathI"app/assets/stylesheets;T:filenameI"Aapp/assets/stylesheets/plugins/jquery-scrollTo/composer.json;T:	nameI"%plugins/jquery-scrollTo/composer;T:logical_pathI"*plugins/jquery-scrollTo/composer.json;T:content_typeI"application/json;T:sourceI"€{
+    "name": "flesler/jquery.scrollto",
+    "description": "Lightweight, cross-browser and highly customizable animated scrolling with jQuery",
+    "keywords": [
+        "browser", "animated", "animation", "jquery",
+        "scrolling", "scroll", "links", "anchors"
+    ],
+    "homepage": "https://github.com/flesler/jquery.scrollTo",
+    "support": {
+        "issues": "https://github.com/flesler/jquery.scrollTo/issues",
+        "source": "https://github.com/flesler/jquery.scrollTo"
+    },
+    "authors": [
+        {
+            "name": "Ariel Flesler",
+            "web": "http://flesler.blogspot.com/"
+        }
+    ],
+    "require": {
+        "components/jquery": ">=1.8"
+    },
+    "extra": {
+        "component": {
+            "scripts": [
+                "jquery.scrollTo.js"
+            ],
+            "files": [
+                "jquery.scrollTo.min.js"
+            ]
+        }
+    }
+};T:metadata{	:dependencieso:Set:
+@hash}
+I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"@processors:type=application/json&file_type=application/json;TTI"Ofile-digest://app/assets/stylesheets/plugins/jquery-scrollTo/composer.json;TTF:charsetI"
+utf-8;F:digest"%¨çCØ?~Ùy/#+©±±£›Ú9@\n&¨HÍ;>Pvå:lengthi€:dependencies_digest"%x¯‚z×ß—Ü¡‹¤Müo£¶þƒ%§/IÉ¬Ö–ç:idI"Ee36620c76f347623dbe27e1a089f1bd36cbcf2e6035bbc7a2136d2371aef0c0d;F:
+mtimel+´%IY

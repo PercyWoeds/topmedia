@@ -1,0 +1,24 @@
+{:uriI"¢file://app/assets/stylesheets/plugins/jquery-scrollTo/tests/WinMaxY-compat.html?type=text/html&id=37c548520ded666c5abdd9ffb6e8b88aefed6ff3298fdfd6b14f977ea204fd36:ET:load_pathI"app/assets/stylesheets;T:filenameI"Mapp/assets/stylesheets/plugins/jquery-scrollTo/tests/WinMaxY-compat.html;T:	nameI"1plugins/jquery-scrollTo/tests/WinMaxY-compat;T:logical_pathI"6plugins/jquery-scrollTo/tests/WinMaxY-compat.html;T:content_typeI"text/html;T:sourceI"<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>jQuery.scrollTo - Test Window MaxY - Compat Mode</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.js"></script>
+	<script type="text/javascript" src="../jquery.scrollTo.js"></script>
+	<script type="text/javascript" src="test.js"></script>
+</head>
+<body>
+	<h1>jQuery.scrollTo - Test Window MaxY - Compat Mode</h1>
+	
+	<div id="ua" style="height:1500px; width:500px; padding:0 50px; background-color:#AAA">
+		&nbsp;
+	</div>
+	<script type="text/javascript">
+		$(window).test();
+	</script>
+</html>
+;T:metadata{	:dependencieso:Set:
+@hash}
+I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"2processors:type=text/html&file_type=text/html;TTI"[file-digest://app/assets/stylesheets/plugins/jquery-scrollTo/tests/WinMaxY-compat.html;TTF:charsetI"
+utf-8;F:digest"%xlIžQ¹q¹Á$¢Rk˜WÐ²S6­_ùÃbFK:lengthi:dependencies_digest"%I¿6˜‚*ûTŽNKG°<mœ×Ï%nƒOWâK—Ö”r:idI"E37c548520ded666c5abdd9ffb6e8b88aefed6ff3298fdfd6b14f977ea204fd36;F:
+mtimel+´%IY

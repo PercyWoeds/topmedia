@@ -1,0 +1,27 @@
+{:uriI"£file://app/assets/stylesheets/plugins/jquery-scrollTo/tests/ElemMaxY-compat.html?type=text/html&id=dd050149a8d6aaae6922730a821d095cec9e9342cf20ca39d5504bbff1038747:ET:load_pathI"app/assets/stylesheets;T:filenameI"Napp/assets/stylesheets/plugins/jquery-scrollTo/tests/ElemMaxY-compat.html;T:	nameI"2plugins/jquery-scrollTo/tests/ElemMaxY-compat;T:logical_pathI"7plugins/jquery-scrollTo/tests/ElemMaxY-compat.html;T:content_typeI"text/html;T:sourceI"f<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>jQuery.scrollTo - Test Element MaxY - Compat Mode</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.js"></script>
+	<script type="text/javascript" src="../jquery.scrollTo.js"></script>
+	<script type="text/javascript" src="test.js"></script>
+</head>
+<body>
+	<h1>jQuery.scrollTo - Test Element MaxY - Compat Mode</h1>
+	
+	<div id="viewport" style="width:600px;height:500px;overflow: auto">
+		<div id="ua" style="height:1500px; width:500px; padding:0 40px; background-color:#AAA">
+			&nbsp;
+		</div>
+	</div>
+	<script type="text/javascript">
+		$('#viewport').test();
+	</script>
+</html>
+;T:metadata{	:dependencieso:Set:
+@hash}
+I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"2processors:type=text/html&file_type=text/html;TTI"\file-digest://app/assets/stylesheets/plugins/jquery-scrollTo/tests/ElemMaxY-compat.html;TTF:charsetI"
+utf-8;F:digest"%NåMy¹uòâ±:ŽUq¤URæiI„4Ô“Ü
+ªÐ:lengthif:dependencies_digest"%ø]sªÏè|pÙ46Ñ†pVuX¨À…†ÃÖ=ÚNÖ_:idI"Edd050149a8d6aaae6922730a821d095cec9e9342cf20ca39d5504bbff1038747;F:
+mtimel+´%IY

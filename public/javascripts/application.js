@@ -1,3 +1,4 @@
+
 // Document ready (on load)
   function documentReady() {
     fixPngs();
@@ -155,6 +156,7 @@
       alert("Please find a product to add first.");
     }
   }
+  
 
   // List items in a kit
   function listItemsKit() {
@@ -189,16 +191,17 @@
     $("#items").val(items_final.join(","));
     listItemsKit();
   }
-  
 
- // Update price total for invoice
+  // Update price total for invoice
   function updateItemTotal() {
-    var quantity = $("#ac_item_quantity").val
+    var quantity = $("#ac_item_quantity").val();
     var price = $("#ac_item_price").val();
     var discount = $("#ac_item_discount").val();
     
     if(isNumeric(quantity) && isNumeric(price) && isNumeric(discount)) {
+      
       var total = quantity * price;
+      
       total -= total * (discount / 100);
 
       $("#ac_item_total").html(total);
@@ -788,21 +791,21 @@
 
 
   // Update price total for invoice
-  function updateItemTotal5() {
+  function updateItemTotal4() {
     var quantity = $("#ac_item_quantity").val();
     var price = $("#ac_item_price").val();
     var discount = $("#ac_item_discount").val();
     
     if(isNumeric(quantity) && isNumeric(price) && isNumeric(discount)) {
-
       var total = quantity * price;
       total -= total * (discount / 100);
 
-      $("#ac_item_total").html( total);
+      $("#ac_item_total").html(total);
     } else {
       $("#ac_item_total").html("0.00");
     }
   }
+
   // Removes an item from an invoice
   function removeItemFromserviceorder(id) {
     var items = $("#items").val();
@@ -869,8 +872,6 @@
       var item_id = $("#ac_item_id").val();
       
       var quantity = $("#ac_item_quantity").val();
-      var inafecto = $("#ac_item_inafecto").val();
-      var impuesto = $("#ac_item_impuesto").val();
       var price = $("#ac_item_price").val();
       var discount = $("#ac_item_discount").val();    
       var items_arr = $("#items").val().split(",");
@@ -878,14 +879,11 @@
       if(quantity == "" || !isNumeric(quantity)) {
         alert("Por favor ingrese una cantidad validad");
       } else if(price == "" || !isNumeric(price)) {
-        alert("Por favor ingrese un importe afecto");
+        alert("Por favor ingrese un precio valido");
       } else if(discount == "" || !isNumeric(discount)) {
         alert("Por favor ingrese un descuento valido");
-      } else if(inafecto == "" || !isNumeric(inafecto)) {
-        alert("Por favor ingrese un importe inafecto");
-      }
-      else {
-        var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount+"|BRK|" + inafecto+"|BRK|" + impuesto;
+      } else {
+        var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount;
         
         $("#items").val($("#items").val() + "," + item_line);
         listItemsPurchase();
@@ -893,51 +891,14 @@
         $("#ac_item_id").val("");
         $("#ac_item").val("");
         $("#ac_item_quantity").val("1");
-        $("#ac_item_price").val("0");
-        $("#ac_item_inafecto").val("0");
+        $("#ac_item_price").val("");
         $("#ac_item_discount").val("0");
-        $("#ac_item_impuesto").val("18");
-        updateItemTotalPur();
+        updateItemTotal5();
       }
     } else {
-      alert("Por favor ingrese un detalle primero.");
+      alert("Por favor ingrese un servicio primero.");
     }
   }
-
-
-// Update price total for invoice
-  function updateItemTotalPur() {
-
-    var impuesto  = $("#ac_item_impuesto").val();
-    var inafecto  = $("#ac_item_inafecto").val();
-    var afecto    = $("#ac_item_price").val();
-    total = 0 ;
-    total1 = 0 ;
-
-    if(isNumeric(impuesto) && isNumeric(inafecto) && isNumeric(afecto)) {
-
-      var totaligv = Number(afecto) * (1 + Number(impuesto)/100) ;
-      var total1   = Math.round(totaligv* 100)/100  ;
-      var total2   = total1 - Math.round(afecto * 100)/100;
-      var tax      = Math.round(total2 * 100)/100  ;
-      var total = Number(total1) + Number(inafecto);
-      
-      
-      $("#ac_item_subtotal").html(afecto);
-      $("#ac_item_tax").html(tax);
-      $("#ac_item_total").html(total);
-
-    } else {
-      
-      $("#ac_item_subtotal").html("0.00");
-      $("#ac_item_tax").html("0.00");
-      $("#ac_item_total").html("0.00");
-    }
-  }  
-  
-  function round(value, decimals) {
-  return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
-   }
 
   // List items in a kit
   function listItemsPurchase() {
@@ -967,6 +928,25 @@
       documentReady();
     });
   }
+
+
+  // Update price total for invoice
+  function updateItemTotal5() {
+    var quantity = $("#ac_item_quantity").val();
+    var price = $("#ac_item_price").val();
+    var discount = $("#ac_item_discount").val();
+    
+    if(isNumeric(quantity) && isNumeric(price) && isNumeric(discount)) {
+
+      var total = quantity * price;
+      total -= total * (discount / 100);
+
+      $("#ac_item_total").html( total);
+    } else {
+      $("#ac_item_total").html("0.00");
+    }
+  }
+
 
   // Add an item to a product kit
   function addItemToMovement() {
@@ -1138,7 +1118,7 @@
 // agregar item guias  
   function addItemToGuias() {
 
-    alert("Buscando... ");
+    
     var item = $("#ac_item").val();
     var company_id = $("#delivery_company_id").val();
 
@@ -1264,8 +1244,9 @@
 
     if( isNumeric(price) && isNumeric(factory) && isNumeric(ajuste) && isNumeric(saldooriginal) && isNumeric(compen))  {
       
-      var total = price+factory + ajuste ;
+      var total = price + factory + ajuste ;
 
+      
     } else {
 
     $("#ac_item_total2").html(saldooriginal);
@@ -1392,203 +1373,50 @@
     $("#items").val(items_final.join(","));
     listItemsOutput();
   }
+ //............................................................................  
 
-
-
-// Add an item to Orden
-  function addItemToOrden() { 
-
+ //............................................................................  
+  // Add an item to a product kit
+  function addItemToAjust() {
     var item = $("#ac_item").val();
+   
     
     if(item != "") {
-      var company_id = $("#orden_company_id").val();
+      var company_id = $("#ajust_company_id").val();
       var item_id = $("#ac_item_id").val();
       
-      var price  = $("#ac_item_price").val();
-      var tarifa = $("#ac_item_tarifa").val();
-      var total  = $("#ac_item_total").val();
-      
-      var item_1 =  $("#ac_item_1").val();
-      var item_2 =  $("#ac_item_2").val();
-      var item_3 =  $("#ac_item_3").val();    
-      var item_4 =  $("#ac_item_4").val();
-      var item_5 =  $("#ac_item_5").val();
-      var item_6 =  $("#ac_item_6").val();
-      var item_7 =  $("#ac_item_7").val();
-      var item_8 =  $("#ac_item_8").val();
-      var item_9 =  $("#ac_item_9").val();    
-      var item_10 =  $("#ac_item_10").val();
-      var item_11 =  $("#ac_item_11").val();
-      var item_12 =  $("#ac_item_12").val();
-      var item_13 =  $("#ac_item_13").val();
-      var item_14 =  $("#ac_item_14").val();
-      var item_15 =  $("#ac_item_15").val();    
-      var item_16 =  $("#ac_item_16").val();
-      var item_17 =  $("#ac_item_17").val();
-      var item_18 =  $("#ac_item_18").val();
-      var item_19 =  $("#ac_item_19").val();
-      var item_20 =  $("#ac_item_20").val();
-      var item_21 =  $("#ac_item_21").val();    
-      var item_22 =  $("#ac_item_22").val();
-      var item_23 =  $("#ac_item_23").val();
-      var item_24 =  $("#ac_item_24").val();
-      var item_25 =  $("#ac_item_25").val();    
-      var item_26 =  $("#ac_item_26").val();
-      var item_27 =  $("#ac_item_27").val();
-      var item_28 =  $("#ac_item_28").val();
-      var item_29 =  $("#ac_item_29").val();
-      var item_30 =  $("#ac_item_30").val();
-      var item_31 =  $("#ac_item_31").val();
-      
-      
+      var quantity = $("#ac_item_quantity").val();
     
     
       var items_arr = $("#items").val().split(",");
 
-      if(tarifa == "" || !isNumeric(tarifa)) {
+      if(quantity == "" || !isNumeric(quantity)) {
         alert("Por favor ingrese una cantidad valida");
-    
       }  else {
-        
-        var item_line = item_id+"|BRK|" +item_1+"|BRK|"+item_2 +"|BRK|"+item_3+"|BRK|"+item_4+"|BRK|"+item_5+"|BRK|"+item_6+"|BRK|"+item_7+"|BRK|"+item_8+"|BRK|"+item_9+"|BRK|"+item_10+"|BRK|"+item_11+"|BRK|"+item_12 +"|BRK|"+item_13+"|BRK|"+item_14+"|BRK|"+item_15+"|BRK|"+item_16+"|BRK|"+item_17+"|BRK|"+item_18+"|BRK|"+item_19+"|BRK|"+item_20+"|BRK|"+item_21+"|BRK|"+item_22+"|BRK|"+item_23+"|BRK|"+item_24+"|BRK|"+item_25+"|BRK|"+item_26+"|BRK|"+item_27+"|BRK|"+item_28+"|BRK|"+item_29+"|BRK|"+item_30+"|BRK|"+item_31+"|BRK|"+ price + "|BRK|" + tarifa + "|BRK|" + total ;
+        var item_line = item_id + "|BRK|" + quantity ;
         
         $("#items").val($("#items").val() + "," + item_line);
         
-        listItemsOrden();
+        listItemsAjust();
         
         $("#ac_item_id").val("");
         $("#ac_item").val("");
-        $("#ac_item_tarifa").val("0");
-        $("#ac_item_price").val("");
-        $("#ac_item_total").val("");
+        $("#ac_item_quantity").val("1");
         
-        $("#ac_item_1").val("0");
-        $("#ac_item_2").val("0");
-        $("#ac_item_3").val("0");
-        $("#ac_item_4").val("0");
-        $("#ac_item_5").val("0");
-        $("#ac_item_6").val("0");
-        $("#ac_item_7").val("0");
-        $("#ac_item_8").val("0");
-        $("#ac_item_9").val("0");
-        $("#ac_item_10").val("0");
-        $("#ac_item_11").val("0");
-        $("#ac_item_12").val("0");
-        $("#ac_item_13").val("0");
-        $("#ac_item_14").val("0");
-        $("#ac_item_15").val("0");
-        $("#ac_item_16").val("0");
-        $("#ac_item_17").val("0");
-        $("#ac_item_18").val("0");
-        $("#ac_item_19").val("0");
-        $("#ac_item_20").val("0");
-        $("#ac_item_21").val("0");
-        $("#ac_item_22").val("0");
-        $("#ac_item_23").val("0");
-        $("#ac_item_24").val("0");
-        $("#ac_item_25").val("0");
-        $("#ac_item_26").val("0");
-        $("#ac_item_27").val("0");
-        $("#ac_item_28").val("0");
-        $("#ac_item_29").val("0");
-        $("#ac_item_30").val("0");
-        $("#ac_item_31").val("0");
-        $("#ac_item_total").val("0");
-      
+        updateItemTotalAjust();
       }
     } else {
-      alert("Por favor agregue un item .");
+      alert("Por favor agregue un item ajuste.");
     }
-  }
-  function updateItemOrden() {
-    
-    var tarifa   = $("#orden_product_tarifa").val();
-    var duracion = $("#ac_item_duracion").val();  
-    
-    
-      var item_1  =  $("#orden_product_d01").val();
-      var item_2  =  $("#orden_product_d02").val();
-      var item_3  =  $("#orden_product_d03").val();    
-      var item_4  =  $("#orden_product_d04").val();
-      var item_5  =  $("#orden_product_d05").val();
-      var item_6  =  $("#orden_product_d06").val();
-      var item_7  =  $("#orden_product_d07").val();
-      var item_8  =  $("#orden_product_d08").val();
-      var item_9  =  $("#orden_product_d09").val();    
-      var item_10 =  $("#orden_product_d10").val();
-      var item_11 =  $("#orden_product_d11").val();
-      var item_12 =  $("#orden_product_d12").val();
-      var item_13 =  $("#orden_product_d13").val();
-      var item_14 =  $("#orden_product_d14").val();
-      var item_15 =  $("#orden_product_d15").val();    
-      var item_16 =  $("#orden_product_d16").val();
-      var item_17 =  $("#orden_product_d17").val();
-      var item_18 =  $("#orden_product_d18").val();
-      var item_19 =  $("#orden_product_d19").val();
-      var item_20 =  $("#orden_product_d20").val();
-      var item_21 =  $("#orden_product_d21").val();    
-      var item_22 =  $("#orden_product_d22").val();
-      var item_23 =  $("#orden_product_d23").val();
-      var item_24 =  $("#orden_product_d24").val();
-      var item_25 =  $("#orden_product_d25").val();    
-      var item_26 =  $("#orden_product_d26").val();
-      var item_27 =  $("#orden_product_d27").val();
-      var item_28 =  $("#orden_product_d28").val();
-      var item_29 =  $("#orden_product_d29").val();
-      var item_30 =  $("#orden_product_d30").val();
-      var item_31 =  $("#orden_product_d31").val();
-      
-    if( isNumeric(tarifa) || isNumeric(duracion)) {
-    
-      var price = ((tarifa) / 30 * parseInt(duracion ));
-      
-      var suma_dias =parseInt(item_1)+parseInt(item_2)+parseInt(item_3)+parseInt(item_4)+ parseInt(item_5)+parseInt(item_6)+parseInt(item_7)+parseInt(item_8)+parseInt(item_9)+parseInt(item_10)+
-                     parseInt(item_11)+parseInt(item_12)+parseInt(item_13)+parseInt(item_14)+ parseInt(item_15)+parseInt(item_16)+parseInt(item_17)+parseInt(item_18)+parseInt(item_19)+parseInt(item_20)+
-                     parseInt(item_21)+parseInt(item_22)+parseInt(item_23)+parseInt(item_24)+ parseInt(item_25)+parseInt(item_26)+parseInt(item_27)+parseInt(item_28)+parseInt(item_29)+parseInt(item_30)+parseInt(item_31);
-      var total =  suma_dias * parseFloat(price);
-      
-      $("#orden_product_quantity").html(suma_dias);
-      $("#orden_product_price").html(price);
-      $("#orden_product_total").html(total);
-      
-      document.getElementById('orden_product_quantity').value = suma_dias;
-      document.getElementById('orden_product_price').value = price;
-      document.getElementById('orden_product_total').value = total;
-
-    } else {
-      
-      $("#orden_product_price").html("0.00");
-      $("#orden_product_total").html("0.00");
-      
-    }
-  }
-
- function updateItemContrato() {
-      
-      var c_importe   = $("#contrato_detail_importe").val();
-      var c_comision1 = $("#ac_item_comision1").val();
-      var c_comision2 = $("#ac_item_comision2").val();
-   
-      var vventa  =  ((c_importe) / 1.18 );
-      var comision1  =  vventa * parseFloat(c_comision1)/100;
-      var comision2  =  vventa * parseFloat(c_comision2)/100 ;
-      var totalcomision = comision1 + comision2 ;
-  
-      document.getElementById('contrato_detail_vventa').value = vventa.toFixed(2);
-      document.getElementById('contrato_detail_comision1').value = comision1.toFixed(2);
-      document.getElementById('contrato_detail_comision2').value = comision2.toFixed(2);
-      document.getElementById('contrato_detail_total').value = totalcomision.toFixed(2);
-      
- 
   }
 
 
   // List items in a kit
-  function listItemsOrden() {
+  function listItemsAjust() {
     var items = $("#items").val();
-    var company_id = $("#orden_company_id").val();
+    var company_id = $("#ajust_company_id").val();
     
-    $.get('/ordens/list_items/' + company_id, {
+    $.get('/ajusts/list_items/' + company_id, {
       items: items
     },
     function(data) {
@@ -1597,9 +1425,23 @@
     });
   }
 
-  
+// Update price total for invoice
+  function updateItemTotalAjust() {
+    var quantity = $("#ac_item_quantity").val();
+    
+    
+    
+    if(isNumeric(quantity)) {
+      var total = quantity;      
+
+      $("#ac_item_total").html(total);
+    } else {
+      $("#ac_item_total").html("0.00");
+    }
+  }
+
 // Removes an item from an invoice
-  function removeItemFromOrden(id) {
+  function removeItemFromAjust(id) {
     var items = $("#items").val();
     var items_arr = items.split(",");
     var items_final = Array();
@@ -1613,21 +1455,451 @@
     }
     
     $("#items").val(items_final.join(","));
-    listItemsOrden();
+    listItemsAjust();
+  }
+  
+  // Add an item to a product
+  function addItemToViatico() {
+    
+    var item = $("#ac_item").val();
+
+    if(item != "") {
+      var company_id = $("#viatico_company_id").val();
+      var inicial = $("#viatico_inicial").val();
+      var tm = $("#tm").val();
+      var item_id = $("#ac_item_id").val();
+      
+      var quantity = $("#ac_item_total").val();
+      var compro  = $("#ac_item_compro").val();
+      var detalle= $("#ac_item_detalle").val();
+      var fecha  = $("#ac_item_fecha").val();
+      var ruc    = $("#ac_supplier_id").val();
+      var gasto    = $("#gasto_id").val();
+      var empleado =$("#ac_employee_id").val();
+      var items_arr = $("#items").val().split(",");
+
+      if(quantity == "" || !isNumeric(quantity)) {
+        alert("Por favor ingrese un importe valido");
+      } else if(fecha == "" ) {
+        alert("Por favor ingrese una fecha");
+      } else if(gasto == "" || !isNumeric(gasto)) {
+        alert("Por favor ingrese un gasto  ");
+      } else if(empleado == "" || !isNumeric(empleado)) {
+        alert("Por favor ingrese un empleado ");
+      } else {
+
+      
+      var item_line = item_id + "|BRK|" + quantity + "|BRK|" +detalle + "|BRK|" +tm + "|BRK|"+inicial + "|BRK|"+compro+ "|BRK|"+fecha+ "|BRK|"+ruc+ "|BRK|"+gasto+ "|BRK|"+empleado ;
+      
+        $("#items").val($("#items").val() + "," + item_line);
+        listItemsViatico();
+          $("#tm").val("");
+        $("#ac_item_id").val("");
+        $("#ac_item").val("");
+        $("#ac_item_total").val("0.00");
+        $("#ac_item_compro").val("");
+        $("#ac_item_detalle").val("");
+        $("#ac_item_ruc").val("");
+        $("#ac_item_empleado").val("");        
+        updateItemTotalViatico();
+      }
+    } else {
+      alert("Por favor ingrese un detalle primero.");    
+    }
+  }
+
+  // List items in a kit
+ 
+
+
+  // List items in a kit
+  function listItemsViatico() {
+    
+    var items = $("#items").val();
+    var company_id = $("#viatico_company_id").val();
+    
+    $.get('/viaticos/list_items/' + company_id, {
+      items: items
+    },
+    function(data) {
+      $("#list_items").html(data);
+      documentReady();
+    });
+  }
+
+  // Update price total for invoice
+  function updateItemTotalViatico() {
+    var quantity = $("#ac_item_quantity").val();
+    
+    if(isNumeric(quantity) ) {
+      var total = quantity ;
+      
+
+      $("#ac_item_total").html(total);
+    } else {
+      $("#ac_item_total").html("0.00");
+    }
+  }
+
+  // Removes an item from an invoice
+  function removeItemFromViatico(id) {
+    var items = $("#items").val();
+    var items_arr = items.split(",");
+    var items_final = Array();
+    var i = 0;
+    
+    while(i < items_arr.length) {
+      if(i != id) {
+        items_final[i] = items_arr[i];
+      }
+      i++;
+    }
+    
+    $("#items").val(items_final.join(","));
+    listItemsViatico();
+    
   }
 
 
-function getFormattedDate(date) {
-  var year = date.getFullYear();
-  var month = (1 + date.getMonth()).toString();
-  month = month.length > 1 ? month : '0' + month;
-  var day = date.getDate().toString();
-  day = day.length > 1 ? day : '0' + day;
-  return month + '/' + day + '/' + year;
-}
+  
+  // Add an item to a LGV.
+  
+  function addItemTolgv() {
+
+    
+    var item = $("#ac_item").val();
+    if(item != "") {
+      var company_id = $("#lgv_company_id").val();
+      var stock_inicial = $("#ac_item_inicial").val();
+      var peaje = $("#lgv_peaje").val();
+        
+      var item_id = $("#ac_item_id").val();
+      var ac_item_fecha = $("#ac_item_fecha").val();
+    
+      var td        = $("#ac_item_td").val();
+      var documento = $("#ac_item_documento").val();
+      var importe   = $("#ac_item_importe").val();
+      var detalle   = $("#ac_item_detalle").val();
+      
+      var items_arr = $("#items").val().split(",");
+
+      if(importe == "" || !isNumeric(importe)) {
+        alert("Por favor ingrese un importe valido");
+      } else {
+      
+      var item_line = item_id + "|BRK|" +ac_item_fecha + "|BRK|" + td + "|BRK|"+documento + "|BRK|"+ importe + "|BRK|"+ peaje + "|BRK|"+ stock_inicial+ "|BRK|"+ detalle;
+        
+        $("#items").val($("#items").val() + "," + item_line);
+        listItemslgv();
+        
+        $("#ac_item").val("");
+        $("#ac_item_id").val("");        
+        $("#ac_td").val("");
+        $("#ac_documento").val("");
+        $("#ac_item_total").val("0.00");
+        $("#ac_item_detalle").val("");
+        
+      }
+    } else {
+      alert("Por favor ingrese un detalle primero.");    
+    }
+  }
+
+  // List items in a kit
+  function listItemslgv() {
+    
+    var items = $("#items").val();
+    var company_id = $("#lgv_company_id").val();
+    
+    $.get('/lgvs/list_items/' + company_id ,  {
+      items: items
+    },
+    function(data) {
+      $("#list_items").html(data);
+      documentReady();
+    });
+  }
+
+
+  // Removes an item from an invoice
+  function removeItemFromlgv(id) {
+    var items = $("#items").val();
+    var items_arr = items.split(",");
+    var items_final = Array();
+    var i = 0;
+    
+    while(i < items_arr.length) {
+      if(i != id) {
+        items_final[i] = items_arr[i];
+      }
+      i++;
+    }
+    
+    $("#items").val(items_final.join(","));
+    listItemslgv();
+  }
 
  //............................................................................  
+ 
+function addItemToLgv2() {
+    var item = $("#ac_item_compro").val();
+    
+   if(item != "") {
+      var company_id = $("#lgv_company_id").val();
+      var item_id = $("#ac_compro_id").val();        
+      var inicial = $("#ac_item_inicial").val();        
+      
+      var items_arr = $("#items2").val().split(",");
+      
+      var item_line = item_id + "|BRK|" + inicial ;
+        
+        $("#items2").val($("#items2").val() + "," + item_line );
 
+        listItemsLgv2();
+        
+        $("#ac_item_compro").val("");
+        $("#ac_item_inicial").val("");
+        $("#ac_compro_id").val("");      
+      
+    } else {
+      alert("Por favor ingreso informacion de comprobante.");
+    }
+  }
+
+
+  function listItemsLgv2() {
+    var items2 = $("#items2").val();
+    var company_id = $("#lgv_company_id").val();
+    
+    $.get('/lgvs/list_items2/' + company_id, {
+      items2: items2
+    },
+    function(data) {
+      $("#list_items2").html(data);
+      documentReady();
+    });
+
+  }
+
+// Removes an item from an invoice
+  function removeItemFromLgv2(id) {
+    var items = $("#items2").val();
+    var items_arr = items.split(",");
+    var items_final = Array();
+    var i = 0;
+    
+    while(i < items_arr.length) {
+      if(i != id) {
+        items_final[i] = items_arr[i];
+      }
+      i++;
+    }
+    
+    $("#items2").val(items_final.join(","));
+    listItemsLgv2();
+  }
+
+  
+ //............................................................................  
+// Shortcut to create new customer form
+  function createSupplier() {
+    var company_id = $("#viatico_company_id").val();
+    
+    $.get('/suppliers/new/' + company_id + '?ajax=1', {
+    },
+    function(data) {
+      displayRemote(data);
+      showRemote();
+      
+      $("#new_supplier").bind("submit", function() {
+        event.preventDefault();
+        doCreateSupplier();
+      });
+    });
+  }
+
+  // Create new customer in the invoice via ajax
+  function doCreateSupplier() {
+    var company_id = $("#viatico_company_id").val();
+    var ruc = $("#supplier_ruc").val();
+    var name = $("#supplier_name").val();
+    var email = $("#supplier_email").val();
+    var phone1 = $("#supplier_phone1").val();
+    var phone2 = $("#supplier_phone2").val();
+    var address1 = $("#supplier_address1").val();
+    var address2 = $("#supplier_address2").val();
+    var city = $("#supplier_city").val();
+    var state = $("#supplier_state").val();
+    var zip = $("#supplier_zip").val();
+    var country = $("#supplier_country").val();
+    var comments = $("#supplier_comments").val();
+    
+    if($("#supplier_taxable").attr("checked")) {
+      var taxable = 1;
+    } else {
+      var taxable = 0;
+    }
+    
+    if(name != "") {
+      $.post('/suppliers/create_ajax/' + company_id, {
+        name: name,
+        email: email,
+        phone1: phone1,
+        phone2: phone2,
+        address1: address1,
+        address2: address2,
+        city: city,
+        state: state,
+        zip: zip,
+        country: country,
+        comments: comments,
+        taxable: taxable
+      },
+      function(data) {
+        if(data == "error_empty") {
+          alert("Please enter a supplier name");
+        } else if(data == "error") {
+          alert("Ah ocurrido un error grabando el proveedor ,por favor trate otra vez ");
+        } else {
+          var data_arr = data.split("|BRK|");
+          
+          $("#ac_supplier").val(data_arr[1]);
+          $("#ac_supplier_id").val(data_arr[0]);
+          $("#selected_supplier").html(data_arr[1]);
+          
+          hideRemote();
+          alert("Proveedor creado");
+        }
+      });
+    } else {
+      alert("Por favor ingrese un proveedor.");
+    }
+  }
+
+  
+ //............................................................................  
+// Shortcut to create new customer form
+  function createSupplier2() {
+    
+    alert("sup");
+    var company_id = $("#purchaseorder_company_id").val();
+    
+    $.get('/suppliers/new/' + company_id + '?ajax=1', {
+    },
+    function(data) {
+      displayRemote(data);
+      showRemote();
+      
+      $("#new_supplier").bind("submit", function() {
+        event.preventDefault();
+        doCreateSupplier2();
+      });
+    });
+  }
+
+  // Create new customer in the invoice via ajax
+  function doCreateSupplier2() {
+    var company_id = $("#purchaseorder_company_id").val();
+    var ruc = $("#supplier_ruc").val();
+    var name = $("#supplier_name").val();
+    var email = $("#supplier_email").val();
+    var phone1 = $("#supplier_phone1").val();
+    var phone2 = $("#supplier_phone2").val();
+    var address1 = $("#supplier_address1").val();
+    var address2 = $("#supplier_address2").val();
+    var city = $("#supplier_city").val();
+    var state = $("#supplier_state").val();
+    var zip = $("#supplier_zip").val();
+    var country = $("#supplier_country").val();
+    var comments = $("#supplier_comments").val();
+    
+    if($("#supplier_taxable").attr("checked")) {
+      var taxable = 1;
+    } else {
+      var taxable = 0;
+    }
+    
+    if(name != "") {
+      $.post('/suppliers/create_ajax/' + company_id, {
+        name: name,
+        email: email,
+        phone1: phone1,
+        phone2: phone2,
+        address1: address1,
+        address2: address2,
+        city: city,
+        state: state,
+        zip: zip,
+        country: country,
+        comments: comments,
+        taxable: taxable
+      },
+      function(data) {
+        if(data == "error_empty") {
+          alert("Please enter a supplier name");
+        } else if(data == "error") {
+          alert("Ah ocurrido un error grabando el proveedor ,por favor trate otra vez ");
+        } else {
+          var data_arr = data.split("|BRK|");
+          
+          $("#ac_supplier").val(data_arr[1]);
+          $("#ac_supplier_id").val(data_arr[0]);
+          $("#selected_supplier").html(data_arr[1]);
+          
+          hideRemote();
+          alert("Proveedor creado");
+        }
+      });
+    } else {
+      alert("Por favor ingrese un proveedor.");
+    }
+  }
+
+
+//marca
+
+function createMarca() {
+    alert("aa");
+    var company_id = $("#product_company_id").val();
+    
+    $.get('/marcas/new/' + company_id + '?ajax=1', {
+    },
+    function(data) {
+      displayRemote(data);
+      showRemote();
+      
+      $("#new_marca").bind("submit", function() {
+        event.preventDefault();
+        doCreateMarca();
+      });
+    });
+  }
+  
+ // Create new marca in the invoice via ajax
+  function doCreateMarca() {
+    var company_id = $("#product_company_id").val();
+    var name = $("#marca_descrip").val();
+  
+    if(name != "") {
+      $.post('/marcas/create_ajax/' + company_id, {
+        descrip: name
+      },
+      function(data) {
+        if(data == "error_empty") {
+          alert("Por favor ingreso una descripcion de marca");
+        } else if(data == "error") {
+          alert("Ah ocurrido un error grabando la marca,por favor trate otra vez ;-)");
+        } else {
+          var data_arr = data.split("|BRK|");
+          
+          hideRemote();
+          alert("marca creado");
+        }
+      });
+    } else {
+      alert("Por favor ingrese una marca.");
+    }
+  }
 
   // On ready
   $(document).ready(function() {
@@ -1643,3 +1915,7 @@ function getFormattedDate(date) {
       })
     ;
   });
+
+
+
+

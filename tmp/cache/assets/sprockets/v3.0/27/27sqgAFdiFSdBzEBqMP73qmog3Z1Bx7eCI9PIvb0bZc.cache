@@ -1,0 +1,51 @@
+{:uriI"ïfile://app/assets/stylesheets/plugins/lightbox/package.json?type=application/json&id=564f33c2c386a12bf0406897da3f2343204d52cac57cad8ff986a9a7358107bb:ET:load_pathI"app/assets/stylesheets;T:filenameI"9app/assets/stylesheets/plugins/lightbox/package.json;T:	nameI"plugins/lightbox/package;T:logical_pathI""plugins/lightbox/package.json;T:content_typeI"application/json;T:sourceI" {
+	"name": "ekko-lightbox",
+	"description": "A lightbox gallery plugin for Bootstrap 3 based on the modal plugin",
+	"version": "3.3.3",
+	"keywords": [
+		"lightbox",
+		"gallery",
+		"bootstrap",
+		"jquery",
+		"modal"
+	],
+	"homepage": "https://github.com/ashleydw/lightbox",
+	"author": "ashleydw <hello@ashleyd.ws>",
+	"main": "dist/ekko-lightbox.min.js",
+	"style": "dist/ekko-lightbox.css",
+	"less": "ekko-lightbox.less",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ashleydw/lightbox.git"
+	},
+	"bugs": {
+		"url": "https://github.com/ashleydw/lightbox/issues"
+	},
+	"license": {
+		"type": "GNU GENERAL PUBLIC LICENSE",
+		"url": "https://github.com/ashleydw/lightbox/blob/master/LICENSE.txt"
+	},
+	"devDependencies": {
+		"grunt": "^0.4.5",
+		"grunt-banner": "~0.2.0",
+		"grunt-contrib-coffee": "~0.8.0",
+		"grunt-contrib-uglify": "~0.2.2",
+		"grunt-contrib-watch": "~0.5.1",
+		"grunt-recess": "~0.3.3",
+		"grunt-bump": "~0.0.14"
+	},
+	"npmName": "ekko-lightbox",
+	"npmFileMap": [
+		{
+			"basePath": "/dist/",
+			"files": [
+				"*"
+			]
+		}
+	]
+}
+;T:metadata{	:dependencieso:Set:
+@hash}
+I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"@processors:type=application/json&file_type=application/json;TTI"Gfile-digest://app/assets/stylesheets/plugins/lightbox/package.json;TTF:charsetI"
+utf-8;F:digest"%§G˙yBÑÎÂ‘y◊áîåa.)”“àõŸ~Ø 3vó:lengthi :dependencies_digest"% ´ﬁ≈æ‰µ…Nèˆ6¯eﬂñ€ñ{z4÷À÷Å.:idI"E564f33c2c386a12bf0406897da3f2343204d52cac57cad8ff986a9a7358107bb;F:
+mtimel+¥%IY

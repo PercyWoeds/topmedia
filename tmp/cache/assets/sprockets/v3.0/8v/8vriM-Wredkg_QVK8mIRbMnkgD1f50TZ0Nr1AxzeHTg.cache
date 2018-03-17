@@ -1,0 +1,25 @@
+{:uriI"œfile://app/assets/stylesheets/plugins/jquery-scrollTo/package.json?type=application/json&id=be42f7c30863b5ee7aa55e1ab8ca68114a190ea64fad99569e90d2d7fcc6dc6e:ET:load_pathI"app/assets/stylesheets;T:filenameI"@app/assets/stylesheets/plugins/jquery-scrollTo/package.json;T:	nameI"$plugins/jquery-scrollTo/package;T:logical_pathI")plugins/jquery-scrollTo/package.json;T:content_typeI"application/json;T:sourceI"¡{
+  "name": "jquery.scrollto",
+  "version": "2.1.1",
+  "description": "Lightweight, cross-browser and highly customizable animated scrolling with jQuery",
+  "main": "jquery.scrollTo.js",
+  "license": "MIT",
+  "ignore": ["**/.*","demo","tests","CHANGELOG","README.md","composer.json","bower.json"],
+  "dependencies": { "jquery": ">=1.8" },
+  "homepage": "https://github.com/flesler/jquery.scrollTo/",
+  "docs": "https://github.com/flesler/jquery.scrollTo/",
+  "demo": "http://demos.flesler.com/jquery/scrollTo/",
+  "bugs": "https://github.com/flesler/jquery.scrollTo/issues",
+  "download": "https://github.com/flesler/jquery.scrollTo/releases",
+  "repository": "git://github.com/flesler/jquery.scrollTo",
+  "keywords": ["browser","animated","animation","scrolling","scroll","links","anchors","jquery","jquery-plugin", "ecosystem:jquery"],
+  "author": {
+    "name": "Ariel Flesler",
+    "web": "http://flesler.blogspot.com/"
+  }
+}
+;T:metadata{	:dependencieso:Set:
+@hash}
+I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"@processors:type=application/json&file_type=application/json;TTI"Nfile-digest://app/assets/stylesheets/plugins/jquery-scrollTo/package.json;TTF:charsetI"
+utf-8;F:digest"%ãD9æX‹œ‚°ªâ½Œmã«œÏ_R«O}iìÌ:lengthi¡:dependencies_digest"%Ş/B?‘¾÷6K=Jd+ÔP#YgxËÆ*Ú”:idI"Ebe42f7c30863b5ee7aa55e1ab8ca68114a190ea64fad99569e90d2d7fcc6dc6e;F:
+mtimel+´%IY

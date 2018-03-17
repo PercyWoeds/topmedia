@@ -78,8 +78,6 @@ gem 'pg', '~> 0.18.0'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
-gem "font-awesome-rails" 
-gem 'jasperserver-rails'
 
  
 group :development, :test do
