@@ -18,7 +18,7 @@ gem 'prawn-table'
 gem 'devise', '~> 4.1', '>= 4.1.1'
 gem 'thin'
 gem 'pivot_table'
-gem 'bootstrap-sass', '~> 3.3.6'
+
 gem 'protected_attributes'
  
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
@@ -78,7 +78,8 @@ gem 'bower-rails'
 gem 'bootstrap-modal-rails'
 gem 'typeahead-rails'
 gem "cocoon"
-
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
