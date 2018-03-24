@@ -87,17 +87,19 @@
       </th>
     </tr>
   </thead>
+  
   <div class="button">
  
   
   <%= link_to "Agregar Item","/facturas/newfactura2/#{@factura.id}" %>
   
   </div>  
+  
   <tbody>
     <%  @factura_details.each do |quote| %>
       <tr>
         <td class="bordered_bottom bordered_right">
-          <%= link_to quote.contrato_detail.nro    %>
+          <%= link_to quote.id    %>
         </td>
         <td class="bordered_bottom bordered_right">
           <%= money(quote.total) %>
