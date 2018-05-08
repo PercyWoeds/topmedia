@@ -23,7 +23,7 @@
     <% @contratos.each do |contrato| %>
       <tr>
         <td><%= contrato.code %></td>
-        <td><%= contrato.fecha %></td>
+        <td><%= contrato.fecha.strftime("%d/%m/%Y") %></td>
         <td><%= contrato.customer.name  %></td>
         <td><%= contrato.medio.descrip  %></td>
         <td><%= contrato.importe %></td>
@@ -35,6 +35,7 @@
         <td><%= link_to 'Cuotas', contrato %></td>
         <td><%= link_to 'Edit', edit_contrato_path(contrato) %></td>
         <td><%= link_to 'Eliminar', contrato, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        
       </tr>
     <% end %>
   </tbody>

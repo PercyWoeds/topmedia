@@ -213,10 +213,19 @@
 
   </div>  
   
+
   
 <div class="button">
 <%= link_to 'Agregar Item', new_contrato_contrato_detail_path(@contrato) %>
 <%= link_to 'Editar', edit_contrato_path(@contrato) %> 
 <%= link_to 'Regresar', contratos_path %>
 </div>
+<%= form_tag import_contrato_details_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+
+
 </div>
+

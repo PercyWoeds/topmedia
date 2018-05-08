@@ -21,6 +21,9 @@
       collection { get :exportxls }
       collection { get :rpt_ordenes1_pdf}
   end 
+  resources :contrato_details do 
+     collection { post :import }
+  end 
   
   resources :versions do 
      collection { post :import }
@@ -340,7 +343,7 @@ end
   match 'companies/reports/rpt_contratos2_pdf/:company_id' => 'reports#rpt_contratos2_pdf', via: [:get, :post]
   match 'companies/reports/rpt_contratos3_pdf/:company_id' => 'reports#rpt_contratos3_pdf', via: [:get, :post]
   
-  match 'companies/reports/rpt_ordenes1_pdf/:company_id' => 'reports#rpt_ordenes1_pdf', via: [:get, :post]
+  match 'companies/reports/rpt_parte_1/:company_id' => 'reports#rpt_parte_1', via: [:get, :post]
   
   # Company users
 
