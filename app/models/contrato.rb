@@ -25,6 +25,17 @@ class Contrato < ActiveRecord::Base
                      CANCELA",                     
                       "SIT"]
                      
+  TABLE_HEADERS1 = [ "NRO",
+                     "CONTRATO",
+                     "FECHA",
+                     "CLIENTE",
+                     "MEDIOS",
+                     "MONEDA",
+                     "TIPO",
+                     "COMISION1",
+                     "COMISION2",                     
+                      "IMPORTE"]
+                     
 
   TABLE_HEADERS3 = ["ITEM",
                      "NRO.",

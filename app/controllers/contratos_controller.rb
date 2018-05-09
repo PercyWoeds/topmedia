@@ -137,7 +137,7 @@ class ContratosController < ApplicationController
       headers = []
       table_content = []
 
-      Contrato::TABLE_HEADERS.each do |header|
+      Contrato::TABLE_HEADERS1.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
