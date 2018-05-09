@@ -292,7 +292,7 @@ class ContratosController < ApplicationController
       headers = []
       table_content = []
 
-      Contrato::TABLE_HEADERS.each do |header|
+      Contrato::TABLE_HEADERS2.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -368,7 +368,7 @@ class ContratosController < ApplicationController
                row << " "
               end 
               row << detalle.factura1 
-              row << detalle.factura2
+              
               
               table_content << row
             end 

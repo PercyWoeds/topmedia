@@ -33,10 +33,22 @@ class Contrato < ActiveRecord::Base
                      "MONEDA",
                      "TIPO",
                      "COMISION1",
-                     "COMISION2",                     
+                     "COMISION2",         
+                     "COMISION3",         
                       "IMPORTE"]
                      
-
+ TABLE_HEADERS2 = [ "NRO",
+                     "CONTRATO",
+                     "FECHA",
+                     "CLIENTE",
+                     "MEDIOS",
+                     "MONEDA",
+                     "TIPO",
+                     "COMISION1",
+                     "COMISION2",         
+                     "COMISION3",         
+                      "IMPORTE"]
+  
   TABLE_HEADERS3 = ["ITEM",
                      "NRO.",
                      "FECHA",
