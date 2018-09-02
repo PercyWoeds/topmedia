@@ -54,14 +54,23 @@
 <%= render "ordens/list" %>
 
 <br />
+<%= will_paginate @ordens %>
+
 
 <div class="button">
   <%= link_to 'Orden TV/Radio/Otros', "/ordens/new/#{@company.id}" %>
   <%= link_to 'Orden Digital', "/ordens/neworden/#{@company.id}" %>
 </div>
 
+<h2>Importar Archivos "*.csv"</h2>
 
-<%= will_paginate @ordens %>
+<%= form_tag import_ordens_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+
+
 
 <%= render 'layouts/autocomplete' %>
 

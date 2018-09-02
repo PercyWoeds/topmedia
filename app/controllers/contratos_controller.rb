@@ -796,14 +796,14 @@ class ContratosController < ApplicationController
     send_file("app/pdf_output/rpt_contrato3.pdf", :type => 'application/pdf', :disposition => 'inline')
 
   end
-  
- def exportxls
+
+ def ec_01 
   
     $lcxCliente ="1"
     @company=Company.find(1)      
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]
-    
+
     lcmonedadolares ="1"
     lcmonedasoles ="2"
     @contratos = @company.get_contratos_day(@fecha1,@fecha2)
@@ -839,7 +839,7 @@ class ContratosController < ApplicationController
       invoice_headers2
   end
   
- def import
+  def import
       Contrato.import(params[:file])
        redirect_to root_url, notice: "Contratos importados."
   end 

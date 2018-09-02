@@ -1826,7 +1826,11 @@ def foot_data_headers_1
     end
   end
   
- 
+  def import
+      Orden.import(params[:file])
+       redirect_to root_url, notice: "Contratos importados."
+  end 
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -20,6 +20,7 @@
       collection { get :update_productos}
       collection { get :exportxls }
       collection { get :rpt_ordenes1_pdf}
+      collection { post :import }
   end 
   resources :contrato_details do 
      collection { post :import }
@@ -39,7 +40,7 @@
   
   resources :contratos do
     resources :contrato_details, except: [:index,:show], controller: "contratos/contratos_details"
-    collection { get :exportxls }
+    collection { get :ec_01 }
     
   end 
   
@@ -120,30 +121,26 @@
     end
 
 
-resources :tranportorders do
-  collection { get :search   }
-  
-end 
-
-
-
-
-  resources :serviceorders do 
-
-    collection { post  :dograbarins }  
-    collection do 
-      put :discontinue 
+    resources :tranportorders do
+      collection { get :search   }
     end 
-  end 
+  
+    resources :serviceorders do 
+  
+      collection { post  :dograbarins }  
+      collection do 
+        put :discontinue 
+      end 
+    end 
 
 
-  resources :purchaseorders do 
-    collection { get :search   }
-    collection { get :receive    }
-    collection { post :newfactura }
-  
-  end 
-  
+    resources :purchaseorders do 
+      collection { get :search   }
+      collection { get :receive    }
+      collection { post :newfactura }
+    
+    end 
+    
   resources :deliveries do
     collection { get :search   }
     collection { post :import }
