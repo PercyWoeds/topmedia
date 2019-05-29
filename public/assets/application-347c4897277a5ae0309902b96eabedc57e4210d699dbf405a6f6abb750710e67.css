@@ -663,11 +663,8 @@ p form, p div, div.price_line form, div.price_line div {
 /* They will automatically be included in application.css.
 /* You can use Sass (SCSS) here: http://sass-lang.com/
 /*
+/*
 
 
-*/
-
-
-@import "bootstrap-sprockets";
-@import "bootstrap";
+ */
 

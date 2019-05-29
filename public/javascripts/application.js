@@ -893,7 +893,7 @@
         $("#ac_item_quantity").val("1");
         $("#ac_item_price").val("");
         $("#ac_item_discount").val("0");
-        updateItemTotal5();
+        updateItemTotalPur();
       }
     } else {
       alert("Por favor ingrese un servicio primero.");
@@ -946,9 +946,42 @@
       $("#ac_item_total").html("0.00");
     }
   }
+  
+  
+  // Update price total for invoice
+  function updateItemTotalPur() {
+    var quantity = $("#ac_item_quantity").val();
+    var price = $("#ac_item_price").val();
+    var discount = $("#ac_item_discount").val();
+    var impuesto = $("#ac_item_impuesto").val();
+    var impuesto_1 = 1 + (impuesto/100) ;
+    var op_no_gravada = $("#ac_item_inafecto").val();
+    
+    if(isNumeric(quantity) && isNumeric(price) && isNumeric(discount) && isNumeric(impuesto)){
+
+      var total = quantity * price;
+      total -= total * (discount / 100)  ;
+      total += op_no_gravada 
+      $("#ac_item_total").html( total);
+      var subtotal = total /  (impuesto_1) ;
+      var tax  = total - subtotal ;
+      
+      $("#ac_item_total").html(roundTo(total,2));
+      $("#ac_item_subtotal").html(roundTo(subtotal,2));
+      $("#ac_item_tax").html(roundTo(tax,2));
+      $("#ac_item_subtotal2").html(roundTo(op_no_gravada,2));
+      
+    } else {
+      $("#ac_item_total").html("0.00");
+      $("#ac_item_subtotal").html("0.00");
+      $("#ac_item_tax").html("0.00");
+      
+    }
+  }
 
 
-  // Add an item to a product kit
+
+  // Add an item to a product kitupdateItemTotalPur
   function addItemToMovement() {
     var item = $("#ac_item").val();
     
@@ -1901,6 +1934,14 @@ function createMarca() {
     }
   }
 
+  
+  
+
+ function roundTo(n, decimals ) {
+ 		return Number(Math.round(n  +'e'+decimals)+'e-'+decimals);
+}
+
+  
   // On ready
   $(document).ready(function() {
     documentReady();

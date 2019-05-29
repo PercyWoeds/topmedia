@@ -1991,7 +1991,7 @@ def newfactura2
   
   # Autocomplete for products
   def ac_products
-    @products = Product.where(["company_id = ? AND (code LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])  
+    @products = Product.where(["company_id = ? AND (code iLIKE ? OR name iLIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])  
     render :layout => false
   end
   
