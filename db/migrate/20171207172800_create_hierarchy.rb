@@ -2,9 +2,9 @@ class CreateHierarchy < ActiveRecord::Migration
   def self.up
     
     
-    g1 = Marca.create(:descrip => "Marca 1")
-    g2 = Marca.create(:descrip => "Marca 2")
-    g3 = Marca.create(:descrip => "Marca 3")
+    g1 = Marca.create(:name => "Marca 1")
+    g2 = Marca.create(:name => "Marca 2")
+    g3 = Marca.create(:name => "Marca 3")
 
     a1 = Producto.create(:name => "Marca  1", :marca_id => g1.id)
     a2 = Producto.create(:name => "Marca  2", :marca_id => g1.id)
