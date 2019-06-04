@@ -24,7 +24,7 @@ class Medio < ActiveRecord::Base
     end   
     
   def self.to_csv
-    attributes = %w{id descrip ruc grupo estacion }
+    attributes = %w{id descrip ruc grupo estacion sigla }
 
     CSV.generate(headers: true) do |csv|
       csv << attributes
