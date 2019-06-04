@@ -76,6 +76,6 @@ class AvisodetailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def avisodetail_params
-      params.require(:avisodetail).permit(:descrip, :comments,:category_program_id)
+      params.require(:avisodetail).permit(:descrip, :comments,:category_program_id,:medio_id)
     end
 end
