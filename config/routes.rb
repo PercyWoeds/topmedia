@@ -26,6 +26,14 @@
      collection { post :import }
   end 
   
+  
+  resources :marcas do 
+     collection { post :import }
+  end
+
+   resources :productos do 
+     collection { post :import }
+  end
   resources :versions do 
      collection { post :import }
   end 

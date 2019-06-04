@@ -28,4 +28,18 @@
 
 <br>
 
-<%= link_to 'New Producto', new_producto_path %>
+
+<div class="button">
+<%= link_to 'Nuevo Producto', new_producto_path %>
+</div>
+
+
+
+
+<h2>Importar Archivo "*.csv"</h2>
+
+<%= form_tag import_productos_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+

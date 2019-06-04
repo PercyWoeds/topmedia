@@ -65,6 +65,12 @@ class ProductosController < ApplicationController
     end
   end
 
+
+  def import
+      Producto.import(params[:file])
+       redirect_to root_url, notice: "Productos importadas."
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_producto

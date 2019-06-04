@@ -69,6 +69,13 @@ class VersionsController < ApplicationController
     end
   end
 
+
+
+  def import
+      Version.import(params[:file])
+       redirect_to root_url, notice: "Version  importadas."
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_version

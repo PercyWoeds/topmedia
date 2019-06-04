@@ -25,4 +25,18 @@
 
 <br>
 
+
+<div class="button">
 <%= link_to 'Nuevo Marca', new_marca_path %>
+</div>
+
+
+
+
+<h2>Importar Archivo "*.csv"</h2>
+
+<%= form_tag import_marcas_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
