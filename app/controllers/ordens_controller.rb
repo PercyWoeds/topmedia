@@ -20,8 +20,9 @@ class OrdensController < ApplicationController
      $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
      $lcHora  = Time.now.to_s    
         
-      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 130
+      pdf.image "#{Dir.pwd}/public/images/logo.jpg", :width => 130
         
+
       pdf.move_down 5
         
       #pdf.text supplier.street, :size => 10
