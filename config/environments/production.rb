@@ -36,6 +36,8 @@ Mnygo::Application.configure do
   # In production, Apache or nginx will already do this
    
    config.serve_static_files = false
+   config.serve_static_assets = true
+   
     
    config.log_level = :info
 
