@@ -883,7 +883,8 @@
       } else if(discount == "" || !isNumeric(discount)) {
         alert("Por favor ingrese un descuento valido");
       } else {
-        var item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount;
+
+        var    item_line = item_id + "|BRK|" + quantity + "|BRK|" + price + "|BRK|" + discount+"|BRK|" + inafecto+"|BRK|" + impuesto;
         
         $("#items").val($("#items").val() + "," + item_line);
         listItemsPurchase();

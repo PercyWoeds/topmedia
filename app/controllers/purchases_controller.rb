@@ -2182,7 +2182,7 @@ def newfactura2
     @purchase[:division_id] = 1
     
 
-    @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]+@purchase[:inafect]
+    @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]  + @purchase[:inafect]
     @purchase[:charge]  = 0
     @purchase[:pago] = 0
     @purchase[:balance] =   @purchase[:total_amount]
