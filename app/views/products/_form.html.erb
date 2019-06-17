@@ -43,7 +43,7 @@
   
   <div class="field">
     <%= f.label :marca_id %><br />
-    <%= f.select :marca_id,options_from_collection_for_select(@marcas,'id','descrip') %>
+    <%= f.select :marca_id,options_from_collection_for_select(@marcas,'id','name') %>
     <div class="small">
       Marca del producto.
     </div>
