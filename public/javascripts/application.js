@@ -967,7 +967,7 @@
       var subtotal = total /  (impuesto_1) ;
       var tax  = total - subtotal ;
       
-      $("#ac_item_total").html(roundTo(total,2));
+  
       $("#ac_item_subtotal").html(roundTo(subtotal,2));
       $("#ac_item_tax").html(roundTo(tax,2));
       $("#ac_item_subtotal2").html(roundTo(op_no_gravada,2));
