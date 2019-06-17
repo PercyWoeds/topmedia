@@ -1,0 +1,41 @@
+/* line 1, /home/percy/appmedios/app/assets/stylesheets/sidemenu.css.scss */
+body {
+  background-color: #f1f1f1;
+}
+
+/* line 4, /home/percy/appmedios/app/assets/stylesheets/sidemenu.css.scss */
+body::-webkit-scrollbar {
+  width: 7px;
+  background-color: #084951;
+}
+
+/* line 8, /home/percy/appmedios/app/assets/stylesheets/sidemenu.css.scss */
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+/* line 11, /home/percy/appmedios/app/assets/stylesheets/sidemenu.css.scss */
+body::-webkit-scrollbar-thumb {
+  background-color: #FFB800;
+  outline: 1px solid red;
+}
+
+/* line 16, /home/percy/appmedios/app/assets/stylesheets/sidemenu.css.scss */
+.color-blue {
+  color: #1D92AF;
+}
+
+/* line 17, /home/percy/appmedios/app/assets/stylesheets/sidemenu.css.scss */
+.color-segreen {
+  color: #3F7577;
+}
+
+/* line 18, /home/percy/appmedios/app/assets/stylesheets/sidemenu.css.scss */
+.color-orang {
+  color: #CE7B11;
+}
+
+/* line 20, /home/percy/appmedios/app/assets/stylesheets/sidemenu.css.scss */
+.padding-top > .col-md-6 {
+  padding-bottom: 15px;
+}

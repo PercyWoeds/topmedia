@@ -961,7 +961,8 @@
 
       var total = quantity * price;
       total -= total * (discount / 100)  ;
-      total += op_no_gravada 
+      total = total + op_no_gravada ;
+
       $("#ac_item_total").html( total);
       var subtotal = total /  (impuesto_1) ;
       var tax  = total - subtotal ;

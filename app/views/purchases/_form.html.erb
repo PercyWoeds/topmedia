@@ -150,11 +150,6 @@
     </div>
     <br />
     
-    <div class="small">
-      Precio S/IGV del  producto para agregar una factura.
-    </div>
-
-    <br />
     
     <strong>Cantidad:</strong><br />
     <input type="text" name="ac_item_quantity" id="ac_item_quantity" value="1" class="tf_short" />
@@ -248,6 +243,7 @@
       selectFirst: false
     });
     
+
     $("#ac_item").result(function(event, data, formatted) {
       $("#ac_item_id").val(data[2]);
       $("#ac_item_price").val(data[4]);
