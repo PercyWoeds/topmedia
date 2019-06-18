@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180301145301) do
+ActiveRecord::Schema.define(version: 20191207172805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,8 +129,8 @@ ActiveRecord::Schema.define(version: 20180301145301) do
     t.integer  "d29"
     t.integer  "d30"
     t.integer  "d31"
-    t.integer  "category_program"
     t.integer  "category_program_id"
+    t.integer  "medio_id"
   end
 
   create_table "bank_acounts", force: :cascade do |t|
@@ -176,9 +176,8 @@ ActiveRecord::Schema.define(version: 20180301145301) do
   create_table "category_programs", force: :cascade do |t|
     t.string   "code"
     t.string   "descrip"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.integer  "avisodetail_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "ciudads", force: :cascade do |t|
@@ -255,6 +254,12 @@ ActiveRecord::Schema.define(version: 20180301145301) do
     t.datetime "fechafac1"
     t.datetime "fechafac2"
     t.float    "comision3"
+    t.datetime "fec_pago"
+    t.float    "vv_f_emp1"
+    t.float    "vv_f_emp2"
+    t.float    "estado"
+    t.text     "comments"
+    t.float    "igv"
   end
 
   create_table "contratos", force: :cascade do |t|
@@ -274,6 +279,7 @@ ActiveRecord::Schema.define(version: 20180301145301) do
     t.string   "description"
     t.string   "codigointerno"
     t.float    "comision3"
+    t.integer  "modalidad"
   end
 
   create_table "csubdiarios", force: :cascade do |t|
@@ -1530,19 +1536,6 @@ ActiveRecord::Schema.define(version: 20180301145301) do
     t.string   "pais"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "supplier_payment_details", force: :cascade do |t|
-    t.integer  "document_id"
-    t.string   "documento"
-    t.integer  "supplier_id"
-    t.string   "tm"
-    t.float    "total"
-    t.text     "descrip"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.integer  "purchase_id"
-    t.integer  "supplier_payment_id"
   end
 
   create_table "supplier_payments", force: :cascade do |t|

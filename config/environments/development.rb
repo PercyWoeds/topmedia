@@ -27,10 +27,11 @@ Mnygo::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 
   #BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
-  config.web_console.whitelisted_ips = ['10.0.0.0/8', '148.102.0.0/12', '192.168.0.0/16', '190.8.140.226','167.250.205.154','181.66.54.127','190.119.250.33']
+  config.web_console.whitelisted_ips = ['10.0.0.0/8', '148.102.0.0/12', '192.168.0.0/16', '190.8.140.226','167.250.205.154','181.66.54.127']
   
-  BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
+  require 'better_errors'
+  config.middleware.use BetterErrors::Middleware
+
 
   
 end
-
