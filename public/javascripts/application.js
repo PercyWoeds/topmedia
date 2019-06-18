@@ -876,7 +876,7 @@
       
       var quantity = $("#ac_item_quantity").val();
       var price = $("#ac_item_price").val();
-      var discount = $("#ac_item_discount").val();  
+      var discount = 0;  
       var inafecto1 = $("#ac_item_inafecto").val();  
         
       var items_arr = $("#items").val().split(",");
@@ -885,8 +885,6 @@
         alert("Por favor ingrese una cantidad validad");
       } else if(price == "" || !isNumeric(price)) {
         alert("Por favor ingrese un precio valido");
-      } else if(discount == "" || !isNumeric(discount)) {
-        alert("Por favor ingrese un descuento valido");
       } else if(inafecto1 == "" || !isNumeric(inafecto1)) {
         alert("Por favor ingrese un monto inafecto valido");
         
@@ -960,16 +958,15 @@
   // Update price total for invoice
   function updateItemTotalPur() {
     var quantity = $("#ac_item_quantity").val();
-    var price = $("#ac_item_price").val();
-    var discount = $("#ac_item_discount").val();
+    var price    = $("#ac_item_price").val();
+    var discount = 0 ; 
     var impuesto = $("#ac_item_impuesto").val();
     var impuesto_1 = 1 + (impuesto/100) ;
     var opnogravada = $("#ac_item_inafecto").val();
     
-    if(isNumeric(quantity) && isNumeric(price) && isNumeric(discount) && isNumeric(impuesto)&& isNumeric(opnogravada) ){
+    if(isNumeric(quantity) && isNumeric(price) && isNumeric(discount) && isNumeric(impuesto) && isNumeric(opnogravada) ){
 
       var total = quantity * price;
-          total -= total * (discount / 100)  ;
           total = total + opnogravada ;
 
       var subtotal = total /  (impuesto_1) ;
