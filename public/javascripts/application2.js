@@ -964,7 +964,7 @@
     var impuesto_1 = 1 + (impuesto/100) ;
     var opnogravada = $("#ac_item_inafecto").val();
     
-    if(isNumeric(quantity) && isNumeric(price) && isNumeric(discount) && isNumeric(impuesto) && isNumeric(opnogravada) ){
+    if(isNumeric(quantity) && isNumeric(price)  && isNumeric(impuesto) && isNumeric(opnogravada) ){
 
       var total = quantity * price;
           total = total + opnogravada ;
@@ -981,6 +981,7 @@
       $("#ac_item_total").html("0.00");
       $("#ac_item_subtotal").html("0.00");
       $("#ac_item_tax").html("0.00");
+      $("#ac_item_subtotal2").html("0.00");
       
     }
   }
