@@ -113,13 +113,14 @@
   <% end %>
 </div>
 
+
 <div class="mid_box">
   <h4>
-    Agregar Productos  a la factura 
+    Agregar item  a la factura 
 
   </h4>
   
-  <form method="get" action="/products" onsubmit="addItemToPurchase(); return false;">
+  <form method="get" action="/purchases" onsubmit="addItemToPurchase(); return false;">
 
     <input type="hidden" name="ac_item_id" id="ac_item_id" value="" />
     
