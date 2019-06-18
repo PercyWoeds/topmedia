@@ -192,6 +192,7 @@
     listItemsKit();
   }
 
+
   // Update price total for invoice
   function updateItemTotal() {
     var quantity = $("#ac_item_quantity").val();
@@ -248,6 +249,8 @@
       alert("Please find a product to add first.");
     }
   }
+
+
 
   // List items in a kit
   function listItemsInvoice() {
@@ -961,13 +964,13 @@
     var discount = $("#ac_item_discount").val();
     var impuesto = $("#ac_item_impuesto").val();
     var impuesto_1 = 1 + (impuesto/100) ;
-    var op_no_gravada = $("#ac_item_inafecto").val();
+    var opnogravada = $("#ac_item_inafecto").val();
     
-    if(isNumeric(quantity) && isNumeric(price) && isNumeric(discount) && isNumeric(impuesto)&& isNumeric(op_no_gravada) ){
+    if(isNumeric(quantity) && isNumeric(price) && isNumeric(discount) && isNumeric(impuesto)&& isNumeric(opnogravada) ){
 
       var total = quantity * price;
           total -= total * (discount / 100)  ;
-          total = total + op_no_gravada ;
+          total = total + opnogravada ;
 
       var subtotal = total /  (impuesto_1) ;
       var tax  = total - subtotal ;
