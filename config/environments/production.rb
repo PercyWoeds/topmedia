@@ -8,7 +8,7 @@ Mnygo::Application.configure do
   config.cache_classes = true
   config.eager_load= true 
 
-  config.assets.compile = false
+  config.assets.compile = true
   config.assets.digest = true
   config.assets.compress  = true
   
