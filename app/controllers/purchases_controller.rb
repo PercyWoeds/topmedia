@@ -2139,8 +2139,6 @@ def newfactura2
     @pagetitle = "Nueva Compra"
     @action_txt = "Crear"
     
-
-    
     @purchase = Purchase.new(purchase_params)
     
     @company = Company.find(params[:purchase][:company_id])
@@ -2179,7 +2177,7 @@ def newfactura2
         @purchase[:tax_amount] = @purchase[:tax_amount]
        end 
     rescue
-      @purchase[:tax_amount] = 0
+        @purchase[:tax_amount] = 0
       
     end
 
@@ -2207,12 +2205,31 @@ def newfactura2
     end    
     
       respond_to do |format|
-        if @purchase.save     
-          @purchase.add_item
+        if @purchase.save    
+
+          product = Product.find(1)
+          afecto  =  @purchase[:payable_amount] / 1.18
+          total1  =  @purchase[:payable_amount]
+          inafecto = @purchase[:inafect]
+          quantity = 1.0
+          discount = 0.0
+          total =   @purchase[:total_amount]
+          impuesto = 18.00
+          tax  =   @purchase[:tax_amount]
+          
+          new_pur_product = PurchaseDetail.new(:purchase_id => @purchase.id, :product_id => product.id,
+          :price_without_tax => afecto.to_f,:price_with_tax=>total1, :inafect=>inafecto.to_f,
+          :quantity => quantity.to_i, :discount => discount.to_f,
+          :total => total ,:impuesto=> impuesto.to_f,:totaltax=>tax)
+          new_pur_product.save
+
+
+
+
           @purchase.process()
           puts @purchase[:total_amount]
     
-    
+
           
           format.html { redirect_to(@purchase, :notice => 'Factura fue grabada con exito .') }
           format.xml  { render :xml => @purchase, :status => :created, :location => @purchase}
