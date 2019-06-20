@@ -8,8 +8,6 @@ class PurchaseDetail < ActiveRecord::Base
   
 
 
-
-
   def get_subtotal(items)
   	subtotal = 0
 

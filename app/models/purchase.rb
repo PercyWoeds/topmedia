@@ -216,7 +216,7 @@ TABLE_HEADERS2  = ["ITEM ",
 
   def add_item 
           product = Product.find(1)
-          afecto  =  @purchase[:payable_amount] /1.18
+          afecto  =  @purchase[:payable_amount] / 1.18
           total1  =  @purchase[:payable_amount]
           inafecto = @purchase[:inafect]
           quantity = 1.0
