@@ -2185,13 +2185,8 @@ def newfactura2
     @purchase[:location_id] = 1
     @purchase[:division_id] = 1
     
-    puts @purchase[:total_amount] 
-    puts  @purchase[:payable_amount] 
-    puts  @purchase[:tax_amount]  
-    puts  @purchase[:inafecto]
-    puts  @purchase[:company_id]
-        
-
+    @purchase[:date2]  =   @purchase[:date1] 
+    
     @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]  + @purchase[:inafecto]
     @purchase[:charge]  = 0
     @purchase[:pago] = 0
