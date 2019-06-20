@@ -3,6 +3,7 @@ class Purchase < ActiveRecord::Base
   
   validates_presence_of :company_id, :supplier_id, :documento,:document_id,:date1
         
+
     
   belongs_to :company
   belongs_to :location
@@ -212,6 +213,25 @@ TABLE_HEADERS2  = ["ITEM ",
     end
   end
 
+
+  def add_item 
+          product = Product.find(1)
+          afecto  =  @purchase[:payable_amount] /1.18
+          total1  =  @purchase[:payable_amount]
+          inafecto = @purchase[:inafect]
+          quantity = 1.0
+          discount = 0.0
+          total =   @purchase[:total_amount]
+          impuesto = 18.00
+          tax  =   @purchase[:tax_amount]
+          
+          new_pur_product = PurchaseDetail.new(:purchase_id => self.id, :product_id => product.id,
+          :price_without_tax => afecto.to_f,:price_with_tax=>total1, :inafect=>inafecto.to_f,
+          :quantity => quantity.to_i, :discount => discount.to_f,
+          :total => total ,:impuesto=> impuesto.to_f,:totaltax=>tax)
+          new_pur_product.save
+
+  end 
   
   def add_products(items)
     for item in items

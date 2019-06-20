@@ -7,7 +7,6 @@ class PurchasesController < ApplicationController
   before_filter :authenticate_user!, :checkProducts
 
             
-   
   def ingresos
         @company = Company.find(params[:id])
         @purchases  = PurchaseDetail.all.paginate(:page => params[:page])
@@ -2097,6 +2096,9 @@ def newfactura2
     @purchase[:date1] = Date.today
     @purchase[:date2] = Date.today 
     @purchase[:date3] = Date.today 
+    @purchase[:payable_amount] = 0 
+    @purchase[:inafecto] = 0 
+    
     
     @company = Company.find(params[:company_id])
     @purchase.company_id = @company.id
@@ -2137,7 +2139,7 @@ def newfactura2
     @pagetitle = "Nueva Compra"
     @action_txt = "Crear"
     
-    items = params[:items].split(",")
+
     
     @purchase = Purchase.new(purchase_params)
     
@@ -2149,28 +2151,32 @@ def newfactura2
     @documents = @company.get_documents()    
     @servicebuys  = @company.get_servicebuys()
     @monedas  = @company.get_monedas()
-    @payments  = @company.get_payments()
+    @payments  = @company.get_payments()  
 
 
+    @purchase[:total_amount] = @purchase[:payable_amount] * 1.18
+    @purchase[:tax_amount] =@purchase[:total_amount] - @purchase[:payable_amount]  
+    
     @tipodocumento = @purchase[:document_id]
     
     if @tipodocumento == 7
-      @purchase[:payable_amount] = @purchase.get_subtotal(items)*-1
+      @purchase[:payable_amount] = @purchase[:payable_amount]*-1
     else
-      @purchase[:payable_amount] = @purchase.get_subtotal(items)
+      @purchase[:payable_amount] = @purchase[:payable_amount]
     end    
+
     if @tipodocumento == 7
-      @purchase[:inafect] = @purchase.get_inafecto(items) *-1
+      @purchase[:inafecto] = @purchase[:inafecto] *-1
     else
-      @purchase[:inafect] = @purchase.get_inafecto(items)
+      @purchase[:inafecto] = @purchase[:inafecto]
     end    
     
 
     begin
        if @tipodocumento == 7
-        @purchase[:tax_amount] = @purchase.get_tax(items)*-1
+        @purchase[:tax_amount] = @purchase[:tax_amount]*-1
        else
-        @purchase[:tax_amount] = @purchase.get_tax(items)
+        @purchase[:tax_amount] = @purchase[:tax_amount]
        end 
     rescue
       @purchase[:tax_amount] = 0
@@ -2181,8 +2187,14 @@ def newfactura2
     @purchase[:location_id] = 1
     @purchase[:division_id] = 1
     
+    puts @purchase[:total_amount] 
+    puts  @purchase[:payable_amount] 
+    puts  @purchase[:tax_amount]  
+    puts  @purchase[:inafecto]
+    puts  @purchase[:company_id]
+        
 
-    @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]  + @purchase[:inafect]
+    @purchase[:total_amount] = @purchase[:payable_amount] + @purchase[:tax_amount]  + @purchase[:inafecto]
     @purchase[:charge]  = 0
     @purchase[:pago] = 0
     @purchase[:balance] =   @purchase[:total_amount]
@@ -2196,9 +2208,11 @@ def newfactura2
     
       respond_to do |format|
         if @purchase.save     
-          @purchase.add_products(items)          
+          @purchase.add_item
           @purchase.process()
-
+          puts @purchase[:total_amount]
+    
+    
           
           format.html { redirect_to(@purchase, :notice => 'Factura fue grabada con exito .') }
           format.xml  { render :xml => @purchase, :status => :created, :location => @purchase}
@@ -2293,7 +2307,7 @@ def newfactura2
       :product_id,:unit_id,:price_with_tax,:price_without_tax,:price_public,:quantity,:other,:money_type,
       :discount,:tax1,:payable_amount,:tax_amount,:total_amount,:status,:pricestatus,:charge,:pago,
       :balance,:tax2,:supplier_id,:order1,:plate_id,:user_id,:company_id,:location_id,:division_id,:comments,
-      :processed,:return,:date_processed,:payment_id,:document_id,:documento,:moneda_id)
+      :processed,:return,:date_processed,:payment_id,:document_id,:documento,:moneda_id,:inafect,:inafecto)
   end
 
 end

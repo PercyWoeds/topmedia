@@ -957,22 +957,23 @@
   
   // Update price total for invoice
   function updateItemTotalPur() {
-    var quantity = $("#ac_item_quantity").val();
-    var price    = $("#ac_item_price").val();
+    var quantity = 1 ;
+    var price    = $("#purchase_payable_amount").val();
     var discount = 0 ; 
-    var impuesto = $("#ac_item_impuesto").val();
+    var impuesto = 18.00 ;
     var impuesto_1 = 1 + (impuesto/100) ;
-    var opnogravada = $("#ac_item_inafecto").val();
+    var opnogravada = $("#purchase_inafecto").val();
     
     if(isNumeric(quantity) && isNumeric(price)  && isNumeric(impuesto) && isNumeric(opnogravada) ){
 
       var total = quantity * price;
+
           total = total + opnogravada ;
 
       var subtotal = total /  (impuesto_1) ;
       var tax  = total - subtotal ;
       
-      $("#ac_item_total").html( total); 
+      $("#ac_item_total").html(total); 
       $("#ac_item_subtotal").html(roundTo(subtotal,2));
       $("#ac_item_tax").html(roundTo(tax,2));
       $("#ac_item_subtotal2").html(roundTo(op_no_gravada,2));
