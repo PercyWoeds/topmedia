@@ -65,7 +65,7 @@
     <br />
      <div class="field">
     <strong>Op.Inafecta :</strong><br />
-    <%= f.number_field :inafecto, value: number_with_precision(f.object.inafecto, precision: 2) %>
+    <%= f.number_field :inafecto, :value => (number_with_precision(f.object.inafecto, :precision => 2) || 0)  ,:step => 0.01 %>
   </div>
 
     <div class="small">
@@ -75,7 +75,7 @@
     
     <strong>Op.Afecta :</strong><br />
  <div class="field">
-    <%= f.number_field :payable_amount, value: number_with_precision(f.object.payable_amount, precision: 2) %>
+    <%= f.number_field :payable_amount, :value => (number_with_precision(f.object.payable_amount, :precision => 2) || 0) ,:step => 0.01  %>
 </div>
 
     <div class="small">
