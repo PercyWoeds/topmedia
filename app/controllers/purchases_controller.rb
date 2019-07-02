@@ -2128,6 +2128,13 @@ def newfactura2
     
     @purchase_details = @purchase.purchase_details
     
+    @documents = @company.get_documents()    
+    @servicebuys  = @company.get_servicebuys()
+    @monedas  = @company.get_monedas()
+    @payments  = @company.get_payments()
+
+
+
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
 
