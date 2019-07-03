@@ -33,6 +33,8 @@ class Contratos::ContratosDetailsController < ApplicationController
     @contrato_detail[:vventa]= 0.00
     @contrato_detail[:comision1]= 0.00
     @contrato_detail[:comision2]= 0.00
+    @contrato_detail[:comision3]= 0.00
+    
     @contrato_detail[:total]= 0.00
   end
 
@@ -43,6 +45,8 @@ class Contratos::ContratosDetailsController < ApplicationController
   $lcMedio = a.medio.descrip 
   $lcComision1 = a.comision1
   $lcComision2 = a.comision2
+  $lcComision3 = a.comision3
+  
   $lcTipoContrato = a.tipocontrato_id 
   $lcNrocuotas = a.nrocuotas
   $lcImporte  = a.importe 
