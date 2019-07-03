@@ -8,9 +8,9 @@ class ContratosController < ApplicationController
 
 
   if params[:code]
-    @contratos = Contrato.where('anio iLIKE ?', "%#{params[:anio]}%")
+    @contratos = Contrato.where('anio iLIKE ?', "%#{params[:anio]}%").paginate(:page => params[:page])
   else
-    @contratos = Contrato.all
+    @contratos = Contrato.all.paginate(:page => params[:page])
   end
 
 
