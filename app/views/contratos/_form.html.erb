@@ -13,6 +13,11 @@
 <%= hr() %>
 
 
+<%= form_tag(contratos_path method: :get) do %>
+  Contrato <%= text_field_tag :anio, params[:anio] %>
+  <%= submit_tag 'Search' %>
+<% end %>
+
 
 <%= simple_form_for(@contrato) do |f| %>
   <%= f.error_notification %>

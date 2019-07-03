@@ -2,6 +2,13 @@
 
 <h1>Contratos</h1>
 
+
+
+<%= form_tag(contratos_path method: :get) do %>
+  Contrato <%= text_field_tag :anio, params[:anio] %>
+  <%= submit_tag 'Search' %>
+<% end %>
+
 <table>
   <thead>
     <tr>

@@ -5,9 +5,15 @@ class ContratosController < ApplicationController
   # GET /contratos
   # GET /contratos.json
   def index
-    @contratos = Contrato.order('fecha DESC').paginate(:page => params[:page])
 
-    
+
+  if params[:code]
+    @coupon = Contrato.where('anio iLIKE ?', "%#{params[:anio]}%")
+  else
+    @coupon = Contrato.all
+  end
+
+
   end
 
   # GET /contratos/1

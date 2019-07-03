@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191207172806) do
+ActiveRecord::Schema.define(version: 20191207172807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -570,6 +570,7 @@ ActiveRecord::Schema.define(version: 20191207172806) do
     t.datetime "fecha2"
     t.string   "year_mounth"
     t.integer  "contrato_id"
+    t.integer  "anio"
   end
 
   create_table "histories", force: :cascade do |t|
