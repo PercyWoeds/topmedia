@@ -8,9 +8,9 @@ class ContratosController < ApplicationController
 
 
   if params[:code]
-    @coupon = Contrato.where('anio iLIKE ?', "%#{params[:anio]}%")
+    @contrato = Contrato.where('anio iLIKE ?', "%#{params[:anio]}%")
   else
-    @coupon = Contrato.all
+    @contrato = Contrato.all
   end
 
 
