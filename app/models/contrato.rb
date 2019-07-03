@@ -12,6 +12,8 @@ class Contrato < ActiveRecord::Base
   
   has_many :contrato_details, :dependent => :destroy
  
+  scope :by_year, lambda { |year| where('extract(year from fecha ) = ?', year) }
+
 
   TABLE_HEADERS = [ "CUOTA","VALOR VENTA",
                      "IGV.",
