@@ -272,6 +272,14 @@ WHERE purchase_details.product_id = ?',params[:id] ])
     pdf.text "Documentos de compra : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
     pdf.text ""
     pdf.font "Helvetica" , :size => 6
+    pdf.font_families.update("Open Sans" => {
+          :normal => "app/assets/fonts/OpenSans-Regular.ttf",
+          :italic => "app/assets/fonts/OpenSans-Italic.ttf",
+        })
+
+        pdf.font "Open Sans",:size =>6
+  
+
 
       headers = []
       table_content = []
