@@ -307,7 +307,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
           if lcCliente == product.supplier_id
             fechas2 = product.date2 
             row = []          
-            row << lcDoc
+            row << product.document.descripshort
             row << product.documento 
             row << product.date1.strftime("%d/%m/%Y")
             row << product.date2.strftime("%d/%m/%Y")
@@ -350,7 +350,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             lcCliente = product.supplier_id
 
             row = []          
-            row << lcDoc
+            row << product.document.descripshort
             row << product.documento 
             row << product.date1.strftime("%d/%m/%Y")
             row << product.date2.strftime("%d/%m/%Y")
@@ -385,7 +385,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
             row << ""
             row << ""
             row << ""          
-            row << "TOTALES POR CLIENTE=> "            
+            row << "TOTALES POR PROVEEDOR=> "            
             row << ""
             row << sprintf("%.2f",total_cliente_dolares.to_s)
             row << sprintf("%.2f",total_cliente_soles.to_s)                      
