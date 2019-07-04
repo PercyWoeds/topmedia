@@ -2100,6 +2100,8 @@ def newfactura2
     @purchase[:date1] = Date.today
     @purchase[:date2] = Date.today 
     @purchase[:date3] = Date.today 
+    @purchase[:fecha3] = Date.today 
+    
     @purchase[:payable_amount] = 0 
     @purchase[:inafecto] = 0 
     

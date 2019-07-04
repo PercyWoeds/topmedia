@@ -941,7 +941,7 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
     return @purchases 
   end
   def get_purchases_by_day_detalle(fecha1,fecha2)
-    @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ?  ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:moneda_id,:document_id)
+    @purchases = Purchase.where([" company_id = ? AND fecha3 >= ? and fecha3 <= ?  ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:moneda_id,:document_id)
     return @purchases 
   end
 
