@@ -1402,8 +1402,15 @@ def list_receive_supplierpayments
     
     pdf.text "LISTADO DE COMPRAS : Desde "+@fecha1.to_s+ " Hasta : "+@fecha2.to_s , :size => 11 ,:align => :center
     pdf.text ""
-    pdf.font "Helvetica" , :size => 8
+    pdf.font "Helvetica" , :size => 6
+    pdf.font_families.update("Open Sans" => {
+          :normal => "app/assets/fonts/OpenSans-Regular.ttf",
+          :italic => "app/assets/fonts/OpenSans-Italic.ttf",
+        })
 
+        pdf.font "Open Sans",:size =>6
+  
+    
       headers = []
       table_content = []
 
