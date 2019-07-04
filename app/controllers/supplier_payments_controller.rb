@@ -1291,7 +1291,6 @@ def rpt_cpagar5_pdf
 
   def client_data_headers_rpt
       client_headers  = [["Empresa  :", $lcCli ]]
-      client_headers << ["Direccion :", $lcdir1]      
       client_headers
   end
 
@@ -1408,7 +1407,7 @@ def list_receive_supplierpayments
           :italic => "app/assets/fonts/OpenSans-Italic.ttf",
         })
 
-        pdf.font "Open Sans",:size =>6
+        pdf.font "Open Sans",:size => 7 
   
     
       headers = []

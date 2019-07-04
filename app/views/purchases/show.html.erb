@@ -38,6 +38,16 @@
   <%= @purchase.moneda.symbol %>
 </p>
 
+<p>
+  <b>Fecha Registro: </b>
+  <%= @purchase.fecha3.strftime('%F') %>
+</p>
+
+<p>
+  <b>Fecha Documento: </b>
+  <%= @purchase.date1.strftime('%F')  %>
+</p>
+
 <%= hr() %>
 
 <h3>
@@ -125,7 +135,7 @@
         Total Op.Inafecto:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        <%= money(@purchase.inafect) %>
+        <%= money(@purchase.inafecto) %>
       </td>
     </tr>
     
