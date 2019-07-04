@@ -279,8 +279,6 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
         pdf.font "Open Sans",:size =>6
   
-
-
       headers = []
       table_content = []
 
@@ -298,9 +296,7 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
       lcDoc='FT'      
 
-       lcCliente = @facturas_rpt.first.supplier_id
-       
-       
+       lcCliente = @facturas_rpt.first.supplier_id      
 
        for  product in @facturas_rpt
         
