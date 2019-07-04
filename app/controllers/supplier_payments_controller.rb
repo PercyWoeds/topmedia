@@ -1399,7 +1399,7 @@ def list_receive_supplierpayments
 
   def build_pdf_body_rpt(pdf)
     
-    pdf.text "LISTADO DE COMPRAS : Desde "+@fecha1.to_s+ " Hasta : "+@fecha2.to_s , :size => 11 ,:align => :center
+    pdf.text "COMPRAS : Desde "+@fecha1.to_s+ " Hasta : "+@fecha2.to_s , :size => 11 ,:align => :center
     pdf.text ""
     pdf.font "Helvetica" , :size => 6
     pdf.font_families.update("Open Sans" => {
@@ -1447,7 +1447,7 @@ def list_receive_supplierpayments
             row << ""
             row << ""
             row << ""
-            row << ""
+             row << ""
             
             table_content << row
             
@@ -1599,11 +1599,11 @@ def list_receive_supplierpayments
             table_content << row
             
             lcMoneda = product.moneda_id
+            lcDocumento = product.document_id
+            
             nroitem=nroitem + 1
             
-        end 
-        
-            
+        end       
         
         
         end
