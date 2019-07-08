@@ -27,6 +27,7 @@ self.per_page = 20
                       DOCUMENTO",
                      "FECHA
                       DMCTO",
+                     "INAFECTO", 
                      "VALOR 
                       VENTA",
                      "I.G.V.",
