@@ -1741,7 +1741,6 @@ def list_receive_supplierpayments
 
   def client_data_headers_rpt
       client_headers  = [["Empresa  :", $lcCli ]]
-      client_headers << ["Direccion :", $lcdir1]
       client_headers
   end
 
