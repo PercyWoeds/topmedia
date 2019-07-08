@@ -29,7 +29,7 @@ class Factura < ActiveRecord::Base
                      "subtotal",
                      "IGV.",
                      "TOTAL",
-                     "ESTADO"]
+                     ]
 
   TABLE_HEADERS2 = ["TD",
                      

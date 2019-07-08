@@ -853,7 +853,7 @@ new_invoice_item.save
             row << product.subtotal.to_s
             row << product.tax.to_s
             row << product.total.to_s
-            row << ""
+            
             table_content << row
 
             nroitem=nroitem + 1

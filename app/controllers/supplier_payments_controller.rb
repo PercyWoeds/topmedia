@@ -1488,7 +1488,7 @@ def list_receive_supplierpayments
             row << "TOTAL x Tipo Doc => "            
             row << ""
             row << ""
-            row << ""
+        
             row << sprintf("%.2f",total_cliente_doc_inafecto.to_s)
             row << sprintf("%.2f",total_cliente_doc_payable.to_s)
             row << sprintf("%.2f",total_cliente_doc_tax.to_s)
@@ -1543,7 +1543,7 @@ def list_receive_supplierpayments
             row << "TOTAL x Tipo Doc => "   
             row << " "            
             row << ""
-            row << ""
+            
             row << sprintf("%.2f",total_cliente_doc_inafecto.to_s)
             row << sprintf("%.2f",total_cliente_doc_payable.to_s)
             row << sprintf("%.2f",total_cliente_doc_tax.to_s)
@@ -1642,7 +1642,7 @@ def list_receive_supplierpayments
             row << ""
             row << ""
 
-            row << ""
+          
 
             row << sprintf("%.2f",total_cliente_doc_inafecto.to_s)            
             row << sprintf("%.2f",total_cliente_doc_payable.to_s)
