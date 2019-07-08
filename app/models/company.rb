@@ -456,7 +456,7 @@ def get_guias_2(fecha1,fecha2)
 ## ESTADO DE CUENTA 
  def get_facturas_day(fecha1,fecha2,moneda)
 
-    @facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda ]).order(:id )
+    @facturas = Facturaf.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda ]).order(:id )
     return @facturas
     
  end 
@@ -952,10 +952,14 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
     ret = 0
     for purchase in purchases
       
+
       if(value == "payable_amount")
         ret += purchase.payable_amount
       elsif(value == "tax_amount")
         ret += purchase.tax_amount
+      elsif(value == "inafecto")
+        ret += purchase.inafecto 
+       
       else
         ret += purchase.total_amount
       end
@@ -972,8 +976,10 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
 
     ret = 0
     for purchase in purchases
+      if(value == "inafecto")
+        ret += purchase.inafecto
       
-      if(value == "payable_amount")
+      elsif(value == "payable_amount")
         ret += purchase.payable_amount
       elsif(value == "tax_amount")
         ret += purchase.tax_amount

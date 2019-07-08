@@ -1473,9 +1473,11 @@ def list_receive_supplierpayments
             nroitem=nroitem + 1
           else
             totals = []            
+            total_cliente_doc_inafecto   = 0
             total_cliente_doc_payable   = 0
             total_cliente_doc_tax   = 0
             total_cliente_doc_total   = 0
+            total_cliente_doc_inafecto = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"inafecto")
             total_cliente_doc_payable = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"payable_amount")
             total_cliente_doc_tax     = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"tax_amount")
             total_cliente_doc_total   = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"total_amount")
@@ -1487,6 +1489,7 @@ def list_receive_supplierpayments
             row << ""
             row << ""
             row << ""
+            row << sprintf("%.2f",total_cliente_doc_inafecto.to_s)
             row << sprintf("%.2f",total_cliente_doc_payable.to_s)
             row << sprintf("%.2f",total_cliente_doc_tax.to_s)
             row << sprintf("%.2f",total_cliente_doc_total.to_s)
@@ -1514,7 +1517,6 @@ def list_receive_supplierpayments
             row << product.documento
             row << product.date1.strftime("%d/%m/%Y")
             row <<  sprintf("%.2f",product.inafecto.to_s)
-            
             row <<  sprintf("%.2f",product.payable_amount.to_s)
             row <<  sprintf("%.2f",product.tax_amount.to_s)
             row <<  sprintf("%.2f",product.total_amount.to_s)
@@ -1525,10 +1527,12 @@ def list_receive_supplierpayments
           end 
             
         else
+            total_cliente_doc_inafecto  = 0
+          
             total_cliente_doc_payable   = 0
             total_cliente_doc_tax   = 0
             total_cliente_doc_total   = 0
-            
+            total_cliente_doc_inafecto = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"inafecto")            
             total_cliente_doc_payable = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"payable_amount")
             total_cliente_doc_tax     = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"tax_amount")
             total_cliente_doc_total   = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"total_amount")
@@ -1536,9 +1540,11 @@ def list_receive_supplierpayments
             row =[]
             row << ""
             row << ""
+            row << "TOTAL x Tipo Doc => "   
+            row << " "            
             row << ""
-            row << "TOTALES POR DOCUMENTO => "            
             row << ""
+            row << sprintf("%.2f",total_cliente_doc_inafecto.to_s)
             row << sprintf("%.2f",total_cliente_doc_payable.to_s)
             row << sprintf("%.2f",total_cliente_doc_tax.to_s)
             row << sprintf("%.2f",total_cliente_doc_total.to_s)
@@ -1547,10 +1553,12 @@ def list_receive_supplierpayments
           
           
             totals = []            
+            total_cliente_moneda_inafecto   = 0
             total_cliente_moneda_payable   = 0
             total_cliente_moneda_tax   = 0
             total_cliente_moneda_total   = 0
-            
+
+            total_cliente_moneda_inafecto = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcMoneda,"inafecto")            
             total_cliente_moneda_payable = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcMoneda,"payable_amount")
             total_cliente_moneda_tax     = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcMoneda,"tax_amount")
             total_cliente_moneda_total   = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcMoneda,"total_amount")
@@ -1561,6 +1569,8 @@ def list_receive_supplierpayments
             row << "TOTAL X MONEDA:"
             row << ""            
             row << ""
+            row << ""
+            row << sprintf("%.2f",total_cliente_moneda_inafecto.to_s)            
             row << sprintf("%.2f",total_cliente_moneda_payable.to_s)
             row << sprintf("%.2f",total_cliente_moneda_tax.to_s)
             row << sprintf("%.2f",total_cliente_moneda_total.to_s)
@@ -1598,7 +1608,11 @@ def list_receive_supplierpayments
             row << product.supplier.name  
             row << product.documento
             row << product.date1.strftime("%d/%m/%Y")
+
+            row <<  sprintf("%.2f",product.inafecto.to_s)
+            
             row <<  sprintf("%.2f",product.payable_amount.to_s)
+
             row <<  sprintf("%.2f",product.tax_amount.to_s)
             row <<  sprintf("%.2f",product.total_amount.to_s)
             table_content << row
@@ -1612,11 +1626,11 @@ def list_receive_supplierpayments
         
         
         end
-        
-          total_cliente_doc_payable   = 0
+            total_cliente_doc_inafecto  = 0            
+            total_cliente_doc_payable   = 0
             total_cliente_doc_tax   = 0
             total_cliente_doc_total   = 0
-            
+            total_cliente_doc_payable = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"inafecto")            
             total_cliente_doc_payable = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"payable_amount")
             total_cliente_doc_tax     = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"tax_amount")
             total_cliente_doc_total   = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"total_amount")
@@ -1627,6 +1641,10 @@ def list_receive_supplierpayments
             row << "TOTAL x Tipo Doc => "              
             row << ""
             row << ""
+
+            row << ""
+
+            row << sprintf("%.2f",total_cliente_doc_inafecto.to_s)            
             row << sprintf("%.2f",total_cliente_doc_payable.to_s)
             row << sprintf("%.2f",total_cliente_doc_tax.to_s)
             row << sprintf("%.2f",total_cliente_doc_total.to_s)
@@ -1635,11 +1653,11 @@ def list_receive_supplierpayments
           
 
            lcMoneda = @purchases_all_rpt.last.moneda_id
-            
+            total_cliente_moneda_inafecto   = 0 
             total_cliente_moneda_payable   = 0
             total_cliente_moneda_tax   = 0
             total_cliente_moneda_total   = 0
-            
+            total_cliente_moneda_inafecto = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcMoneda,"inafecto")
             total_cliente_moneda_payable = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcMoneda,"payable_amount")
             total_cliente_moneda_tax     = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcMoneda,"tax_amount")
             total_cliente_moneda_total   = @company.get_purchases_by_day_value(@fecha1,@fecha2, lcMoneda,"total_amount")
@@ -1651,6 +1669,8 @@ def list_receive_supplierpayments
             row << "TOTAL X MONEDA => "            
             row << ""
             row << ""
+            row << ""
+            row << sprintf("%.2f",total_cliente_moneda_inafecto.to_s)        
             row << sprintf("%.2f",total_cliente_moneda_payable.to_s)
             row << sprintf("%.2f",total_cliente_moneda_tax.to_s)
             row << sprintf("%.2f",total_cliente_moneda_total.to_s)
