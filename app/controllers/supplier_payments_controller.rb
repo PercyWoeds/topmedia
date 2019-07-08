@@ -1569,7 +1569,7 @@ def list_receive_supplierpayments
             row << "TOTAL X MONEDA:"
             row << ""            
             row << ""
-            row << ""
+            
             row << sprintf("%.2f",total_cliente_moneda_inafecto.to_s)            
             row << sprintf("%.2f",total_cliente_moneda_payable.to_s)
             row << sprintf("%.2f",total_cliente_moneda_tax.to_s)
@@ -1667,7 +1667,6 @@ def list_receive_supplierpayments
             row << ""
            
             row << "TOTAL X MONEDA => "            
-            row << ""
             row << ""
             row << ""
             row << sprintf("%.2f",total_cliente_moneda_inafecto.to_s)        
