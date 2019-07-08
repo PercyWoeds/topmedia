@@ -626,6 +626,7 @@ new_invoice_item.save
     @deliveryships = @invoice.my_deliverys 
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
+    @medios = @company.get_medios()
 
     @ac_user = getUsername()
     @invoice[:user_id] = getUserId()
@@ -645,6 +646,7 @@ new_invoice_item.save
     @deliveryships = @invoice.my_deliverys 
 
     @products_lines = @invoice.products_lines
+    @medios = @company.get_medios()
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
@@ -671,6 +673,7 @@ new_invoice_item.save
     @services = @company.get_services()
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
+    @medios = @company.get_medios()
 
     @invoice[:subtotal] = 0
     
@@ -722,6 +725,8 @@ new_invoice_item.save
     @invoice = Factura.find(params[:id])
     @company = @invoice.company
     @payments = @company.get_payments()    
+     @medios = @company.get_medios()
+
     if(params[:ac_customer] and params[:ac_customer] != "")
       @ac_customer = params[:ac_customer]
     else
@@ -835,8 +840,9 @@ new_invoice_item.save
 
             row = []          
             row << lcDoc
-            row << product.code
             row << product.fecha.strftime("%d/%m/%Y")            
+            row << product.code
+            row << product.medio.descrip 
             row << product.contrato.customer.name  
             if product.moneda_id == 1
               row << "USD"
@@ -1320,7 +1326,7 @@ new_invoice_item.save
 
   private
   def factura_params
-    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:contrato_id)
+    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:contrato_id,:medio_id)
   end
 
 end

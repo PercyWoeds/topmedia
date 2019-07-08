@@ -45,6 +45,11 @@
     </div>
     <%= hr() %>
     
+    <div class="field">
+      <%= f.label :medio_id %><br />
+      <%= f.select :medio_id,options_from_collection_for_select(@medios,'id','name') %>
+    </div>
+    
 
       <label for="ac_contrato" class="bold">Contrato *</label><br />
       <input type="text" name="ac_contrato" id="ac_contrato" value="<% if @ac_contrato %><%= @ac_contrato %><% end %>" />

@@ -134,6 +134,14 @@ class Company < ActiveRecord::Base
        
     return monedas
   end
+
+  def get_medios()
+     medios = Medio.order(:descrip)
+       
+    return medios
+  end
+
+
   def get_transports()
      transports = Tranportorder.where(company_id: self.id).order(:code)
        
@@ -456,7 +464,7 @@ def get_guias_2(fecha1,fecha2)
 ## ESTADO DE CUENTA 
  def get_facturas_day(fecha1,fecha2,moneda)
 
-    @facturas = Facturaf.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda ]).order(:id )
+    @facturas = Factura.where([" company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",moneda ]).order(:id )
     return @facturas
     
  end 

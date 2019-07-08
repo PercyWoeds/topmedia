@@ -31,8 +31,11 @@ class Factura < ActiveRecord::Base
                      "ESTADO"]
 
   TABLE_HEADERS2 = ["TD",
-                      "Documento",
+                     
                      "Fecha",
+                    "Documento",
+                     "Facturado a: ",
+                    
                      "Cliente",
                      "Moneda",
                      "SUBTOTAL",
