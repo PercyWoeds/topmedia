@@ -842,7 +842,7 @@ new_invoice_item.save
             row << lcDoc
             row << product.fecha.strftime("%d/%m/%Y")            
             row << product.code
-            row << product.medios.descrip 
+            row << product.medio.descrip 
             row << product.contrato.customer.name  
             if product.moneda_id == 1
               row << "USD"
