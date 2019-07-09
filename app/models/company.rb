@@ -986,7 +986,6 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
     for purchase in purchases
       if(value == "inafecto")
         ret += purchase.inafecto
-      
       elsif(value == "payable_amount")
         ret += purchase.payable_amount
       elsif(value == "tax_amount")

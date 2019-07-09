@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191207172807) do
+ActiveRecord::Schema.define(version: 20191207172812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -280,6 +280,7 @@ ActiveRecord::Schema.define(version: 20191207172807) do
     t.string   "codigointerno"
     t.float    "comision3"
     t.integer  "modalidad"
+    t.integer  "anio"
   end
 
   create_table "csubdiarios", force: :cascade do |t|
@@ -571,6 +572,7 @@ ActiveRecord::Schema.define(version: 20191207172807) do
     t.string   "year_mounth"
     t.integer  "contrato_id"
     t.integer  "anio"
+    t.integer  "medio_id"
   end
 
   create_table "histories", force: :cascade do |t|
@@ -1043,6 +1045,7 @@ ActiveRecord::Schema.define(version: 20191207172807) do
     t.integer  "aviso_detail_id"
     t.integer  "avisodetail_id"
     t.string   "tipo"
+    t.string   "secu_cont"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -1331,6 +1334,7 @@ ActiveRecord::Schema.define(version: 20191207172807) do
     t.string   "yearmonth"
     t.float    "inafect"
     t.float    "inafecto"
+    t.datetime "fecha3"
   end
 
   create_table "purchaseships", force: :cascade do |t|
@@ -1759,6 +1763,7 @@ ActiveRecord::Schema.define(version: 20191207172807) do
     t.integer  "producto_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "motivo"
   end
 
   create_table "voideds", force: :cascade do |t|
