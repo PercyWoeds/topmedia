@@ -8,6 +8,8 @@ class Contrato < ActiveRecord::Base
   belongs_to :orden
   belongs_to :moneda 
   
+
+
   has_many :facturas
   
   has_many :contrato_details, :dependent => :destroy
@@ -133,7 +135,7 @@ class Contrato < ActiveRecord::Base
       
       if @orden != nil
               for factura in @orden
-               @detail =  OrdenProduct.where(:orden_id => factura.id)
+               @detail =  Orden.where(:orden_id => factura.id)
                   for d in @detail 
                       ret += d.total            
                   end 

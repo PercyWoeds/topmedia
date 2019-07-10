@@ -24,11 +24,10 @@
      
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   <tr bgcolor="#B4D7F7">
-    
-  
   
   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+
       <% a = @contratos.first %>
       <% lcCanal = nil %>
       <% lcCliente = nil %>
@@ -38,9 +37,11 @@
             <% @contrato= Contrato.find(product.id)%>
             
             <% @orden = Orden.find_by(contrato_id: @contrato.id)%>
+
             <% @saldo_cliente = product.get_saldo_acumulado_orden(@fecha1,@fecha2) %>
+
             <% if @orden != nil %>
-              <% @orden_details= OrdenProduct.where(orden_id: @orden.id) %>
+              <% @orden_details= Orden.where(orden_id: @orden.id) %>
               
             <%else %>  
               <% @orden_details = nil %>
@@ -106,17 +107,18 @@
                      <table style=  'font-size:80% ;width:100%'>       
                      
                      <% if @orden_details != nil %>
+
                         <% for product_detail  in @orden_details %>
                         <% @saldo_cliente -= product_detail.total  %>
                      
                         <tr>
                         <td width="8%"><%=@orden.code %></td>
                         <td width="8%"><%= @orden.fecha.strftime("%d/%m/%Y")  %> </td>
-                        <td width="30%"><%= product_detail.avisodetail.descrip    %> </td>
-                        <td width="10%" align="right"><%= product_detail.quantity   %></td>
+                        <td width="30%"><%= @orden.version.descrip    %> </td>
+                        <td width="10%" align="right"><%= @orden.quantity   %></td>
                         <td width="5%" align="right"><%= @orden.tiempo  %></td>
                         <td width="10%" align="right"> </td>
-                        <td width="10%" align="right"><%= product_detail.total  %> </td>
+                        <td width="10%" align="right"><%= @orden.total  %> </td>
                         <td width="10%" align="right"> </td>
                         <td width="10%" align="right"><%= @saldo_cliente %> </td>
                         </tr>
