@@ -2422,8 +2422,7 @@ def get_ordenes_eecc(fecha1,fecha2)
       end 
     end 
 
-   Orden.where(month: nil,year: nil )update_all(month:  )    
-    @contratos = Orden.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:moneda_id,:customer_id,:medio_id,:secu_cont,:code )
+    @contratos = Orden.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:moneda_id,:customer_id,:medio_id,:secu_cont,:month,:code )
     return @contratos
 end 
 
