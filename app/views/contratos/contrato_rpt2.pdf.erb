@@ -28,30 +28,26 @@
   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
 
-      <% a = @contratos.first %>
-      <% lcCanal = nil %>
-      <% lcCliente = nil %>
+      <% a = @ordenes.first %>
+      <% lcCanal = a.medio_id %>
+      <% lcCliente = a.customer_id  %>
       
-       <%  @contratos.each do |product| %>
+       <%  @ordenes.each do |product| %>
            
-            <% @contrato= Contrato.find(product.id)%>
-            
-            <% @orden = Orden.find_by(contrato_id: @contrato.id)%>
-
-            <% @saldo_cliente = product.get_saldo_acumulado_orden(@fecha1,@fecha2) %>
+            <% @saldo_cliente = product.contrato.get_saldo_acumulado_orden(@fecha1,@fecha2) %>
 
             <% if @orden != nil %>
               <% @orden_details= Orden.where(orden_id: @orden.id) %>
               
             <%else %>  
               <% @orden_details = nil %>
-              <% @saldo_cliente = product.get_saldo_acumulado_orden(@fecha1,@fecha2) %>
+              <% @saldo_cliente = product.contrato.get_saldo_acumulado_orden(@fecha1,@fecha2) %>
             <% end%>
    
             <% if  lcCliente != product.customer_id %>
                 <table style=  'font-size:80% ;width:100%'>
                 <tr style="font-weight:bold">
-                <td>CLIENTE</td>
+                <td>CLIENTE : </td>
                 <td><%= product.customer.ruc %> </td>
                 <td><%= product.customer.name %> </td>
                 <td></td>
@@ -67,7 +63,7 @@
               
                   <table style=  'font-size:80% ;width:100%'>    
                     <tr style="font-weight:bold">
-                    <td>CANAL</td>
+                    <td>MEDIO : </td>
                     <td> <%= product.medio.descrip %></td>
                     <td> </td>
                     <td></td>
@@ -81,11 +77,11 @@
                   
                     <table style=  'font-size:80% ;width:100%'>    
                       <td> Contrato </td>
-                      <td> <%= product.codigointerno %> </td>
+                      <td> <%= product.secu_cont %> </td>
                       <td> </td>
                       <td></td>
                       <td></td>
-                       <td>Mon: <%= product.get_moneda %></td>
+                       <td>Mon: <%= product.contrato.get_moneda %></td>
                     </tr>
                     </table>
                     

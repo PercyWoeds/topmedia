@@ -2399,10 +2399,35 @@ def get_ingresos_day3(fecha1,fecha2)
     return @purchases 
 
 end
+
 def get_contratos_day(fecha1,fecha2)    
     @contratos = Contrato.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:customer_id,:medio_id,:moneda_id,:fecha)
     return @contratos
 end 
+def get_ordenes_eecc(fecha1,fecha2)    
+
+    @factura = Orden.where(:month => nil)
+
+    for factura in @factura
+        f = Orden.find(factura.id)
+      if f
+        @fechas =f.fecha.to_s
+        parts = @fechas.split("-")
+        anio = parts[0]
+        mes  = parts[1]
+        dia  = parts[2]      
+        f.month = mes
+        f.year = anio 
+        f.save
+      end 
+    end 
+
+   Orden.where(month: nil,year: nil )update_all(month:  )    
+    @contratos = Orden.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:moneda_id,:customer_id,:medio_id,:secu_cont,:code )
+    return @contratos
+end 
+
+
 def get_ordenes_day(fecha1,fecha2)    
     @ordenes = Orden.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])
     return @ordenes
