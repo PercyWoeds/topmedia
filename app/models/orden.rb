@@ -500,7 +500,7 @@ TABLE_HEADERS2 = ["Nº",
   
   def get_ordenes_detalle(fecha1,fecha2,customer,medio,secuencia,moneda,mes)
 
-  @orden =Orden.where(["fecha >= ? and fecha <= ? and customer_id=? and medio_id=? and secu_cont =? and moneda_id=? and month=? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",customer,medio,secuencia,moneda,mes ]).order(:mount,:code )
+  @orden =Orden.where(["fecha >= ? and fecha <= ? and customer_id=? and medio_id=? and secu_cont =? and moneda_id=? and month=? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",customer,medio,secuencia,moneda,mes ]).order(:month,:code )
     return @orden
 end 
 
