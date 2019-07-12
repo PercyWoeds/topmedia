@@ -20,12 +20,8 @@
     <th width="10%">Saldo</th>
   </tr>
   </table>
-  
-     
- 
-    
       
-             <%  @ordenes.each do |product| %>
+        <%  @ordenes.each do |product| %>
 
              <table style=  'font-size:80% ;width:100%'>
                 <tr style="font-weight:bold">
@@ -72,7 +68,7 @@
 
                           <%  @saldo +=orden1.total %>
 
-                         <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+                             <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
                               
                               <tr>
                               <td width="8%"> <%= orden1.code  %></td>
@@ -91,23 +87,22 @@
                               <%  @total_cargos = orden1.total %>
 
 
-                        <table style=  'font-size:80% ;width:100%'>       
-                            <tr>
-                            <td width="8%"> </td>
-                            <td width="8%">Total Mes  </td>
-                            <td width="30%"> </td>
-                            <td width="10%" align="right"> </td>
-                            <td width="5%" align="right"> </td>
-                            <td width="10%" align="right"> <%= @total_cargos  %></td>
-                            <td width="10%" align="right"> </td>
-                            <td width="10%" align="right"> </td>
-                            <td width="10%" align="right"> <%= @saldo  %> </td>
-                            </tr>
-                           
-                       </table>
+                              <table style=  'font-size:80% ;width:100%'>       
+                                  <tr>
+                                  <td width="8%"> </td>
+                                  <td width="8%">Total Mes  </td>
+                                  <td width="30%"> </td>
+                                  <td width="10%" align="right"> </td>
+                                  <td width="5%" align="right"> </td>
+                                  <td width="10%" align="right"> <%= @total_cargos  %></td>
+                                  <td width="10%" align="right"> </td>
+                                  <td width="10%" align="right"> </td>
+                                  <td width="10%" align="right"> <%= @saldo  %> </td>
+                                  </tr>                           
+                              </table>
                     <%end%>   
               <%end%>
-
+          <%end%>
        
         
         <hr>
