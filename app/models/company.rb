@@ -2425,7 +2425,7 @@ def get_ordenes_eecc(fecha1,fecha2)
 @contratos = Orden.find_by_sql(["
   SELECT  customer_id,medio_id, secu_cont, moneda_id, month as year_month,
    SUM(total) as balance   
-   FROM orden 
+   FROM Ordens 
    WHERE fecha >= ? and fecha<=? 
    GROUP BY 4,1,2,3,5
    ORDER BY 4,1,2,3,5 ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ])  
