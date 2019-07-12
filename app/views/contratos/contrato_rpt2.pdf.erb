@@ -73,7 +73,12 @@
                               <tr>
                               <td width="8%"> <%= orden1.code  %></td>
                               <td width="8%"><%= orden1.fecha.strftime("%d/%m/%Y")  %> </td>
+                              <% if orden1.version == nil %>
                               <td width="30%"><%= orden1.version.descrip    %> </td>
+                              <% else %>
+                              <td width="30%"><%= orden1.version_id    %> </td>
+                              
+                              <% end %>
                               <td width="10%" align="right"><%= orden1.quantity   %></td>
                               <td width="5%" align="right"><%= orden1.tiempo  %></td>
                               <td width="10%" align="right"> </td>
