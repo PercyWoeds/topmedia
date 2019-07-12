@@ -2422,10 +2422,22 @@ def get_ordenes_eecc(fecha1,fecha2)
       end 
     end 
 
-    @contratos = Orden.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:moneda_id,:customer_id,:medio_id,:secu_cont,:month,:code )
+@contratos = Orden.find_by_sql(["
+  SELECT  customer_id,medio_id, secu_cont, moneda_id, month as year_month,
+   SUM(total) as balance   
+   FROM orden 
+   WHERE fecha >= ? and fecha<=? 
+   GROUP BY 4,1,2,3,5
+   ORDER BY 4,1,2,3,5 ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ])  
+
     return @contratos
 end 
 
+def get_ordenes_detalle(fecha1,fecha2,customer,medio,secuencia,moneda,mes)
+
+  @orden =Orden.where(["fecha >= ? and fecha <= ? and customer_id=? and medio_id=? and secu_cont =? and moneda_id=? and month=? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",customer,medio,secuencia,moneda,mes ])
+    return @orden
+end 
 
 def get_ordenes_day(fecha1,fecha2)    
     @ordenes = Orden.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])

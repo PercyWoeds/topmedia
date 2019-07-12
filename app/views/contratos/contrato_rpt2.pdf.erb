@@ -22,32 +22,16 @@
   </table>
   
      
-  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
-  <tr bgcolor="#B4D7F7">
-  
-  
-  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+ 
+        <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
 
-      <% a = @ordenes.first %>
-      <% lcCanal = a.medio_id %>
-      <% lcCliente = a.customer_id  %>
+    
       
-       <%  @ordenes.each do |product| %>
-           
-            <% @saldo_cliente = product.contrato.get_saldo_acumulado_orden(@fecha1,@fecha2) %>
+             <%  @ordenes.each do |product| %>
 
-            <% if @orden != nil %>
-              <% @orden_details= Orden.where(orden_id: @orden.id) %>
-              
-            <%else %>  
-              <% @orden_details = nil %>
-              <% @saldo_cliente = product.contrato.get_saldo_acumulado_orden(@fecha1,@fecha2) %>
-            <% end%>
-   
-            <% if  lcCliente != product.customer_id %>
-                <table style=  'font-size:80% ;width:100%'>
+             <table style=  'font-size:80% ;width:100%'>
                 <tr style="font-weight:bold">
-                <td>CLIENTE : </td>
+                <td>CLIENTE</td>
                 <td><%= product.customer.ruc %> </td>
                 <td><%= product.customer.name %> </td>
                 <td></td>
@@ -58,12 +42,9 @@
                 </tr>
                 </table>
                 
-        
-              <% if   lcCanal != product.medio_id%>
-              
                   <table style=  'font-size:80% ;width:100%'>    
                     <tr style="font-weight:bold">
-                    <td>MEDIO : </td>
+                    <td>CANAL</td>
                     <td> <%= product.medio.descrip %></td>
                     <td> </td>
                     <td></td>
@@ -73,84 +54,58 @@
                     <td></td>
                     </tr>
                   </table>
-                               
-                  
-                    <table style=  'font-size:80% ;width:100%'>    
+
+                   <table style=  'font-size:80% ;width:100%'>    
                       <td> Contrato </td>
-                      <td> <%= product.secu_cont %> </td>
+                      <td> <%= product.codigointerno %> </td>
                       <td> </td>
                       <td></td>
                       <td></td>
-                       <td>Mon: <%= product.contrato.get_moneda %></td>
+                       <td>Mon: <%= product.get_moneda %></td>
                     </tr>
                     </table>
                     
-                     <table style=  'font-size:80% ;width:100%'>       
-                        <tr>
-                        <td width="8%"> </td>
-                        <td width="8%"><%= product.fecha.strftime("%d/%m/%Y")  %> </td>
-                        <td width="30%"> </td>
-                        <td width="10%" align="right"> </td>
-                        <td width="5%" align="right"> </td>
-                        <td width="10%" align="right"> <%= product.total  %></td>
-                        <td width="10%" align="right"> </td>
-                        <td width="10%" align="right"> </td>
-                        <td width="10%" align="right"> <%= @saldo_cliente  %> </td>
-                        </tr>
-                       
-                   </table>
-                        
-                     <table style=  'font-size:80% ;width:100%'>       
-                     
-                     <% if @orden_details != nil %>
 
-                        <% for product_detail  in @orden_details %>
-                        <% @saldo_cliente -= product_detail.total  %>
-                     
-                        <tr>
-                        <td width="8%"><%=@orden.code %></td>
-                        <td width="8%"><%= @orden.fecha.strftime("%d/%m/%Y")  %> </td>
-                        <td width="30%"><%= @orden.version.descrip    %> </td>
-                        <td width="10%" align="right"><%= @orden.quantity   %></td>
-                        <td width="5%" align="right"><%= @orden.tiempo  %></td>
-                        <td width="10%" align="right"> </td>
-                        <td width="10%" align="right"><%= @orden.total  %> </td>
-                        <td width="10%" align="right"> </td>
-                        <td width="10%" align="right"><%= @saldo_cliente %> </td>
-                        </tr>
-                       <%end %>
-                      <%end %>
-                   </table>
-                   
-            <% else  %>
-                    <%  lcCanal = product.medio_id %>   
-                     <table style=  'font-size:80% ;width:100%'>       
+                <%  @detalle = product.get_ordenes_detalle(@fecha1,@fecha2,product.customer_id,product.medio_id,product_secu_cont,product.moneda_id,product.month)%>        
+
+                 <% @detalle.each do |orden1 | %> 
+
+                      
+                      <tr>
+                      <td width="8%"> <%= @orden1.code  %></td>
+                      <td width="8%"><%= @orden1.fecha.strftime("%d/%m/%Y")  %> </td>
+                      <td width="30%"><%= @orden1.version.descrip    %> </td>
+                      <td width="10%" align="right"><%= @orden1.quantity   %></td>
+                      <td width="5%" align="right"><%= @orden1.tiempo  %></td>
+                      <td width="10%" align="right"> </td>
+                      <td width="10%" align="right"><%= @orden1.total  %> </td>
+                      <td width="10%" align="right"> </td>
+                      <td width="10%" align="right"><%= @saldo  %> </td>
+                      </tr>
+                      <%  @saldo +=@orden1.total %>
+                      <%  @total_cargos = @orden1.total %>
+
+                <% end %>
+                <table style=  'font-size:80% ;width:100%'>       
                         <tr>
                         <td width="8%"> </td>
-                        <td width="8%">Total x canal  </td>
+                        <td width="8%">Total Mes  </td>
                         <td width="30%"> </td>
                         <td width="10%" align="right"> </td>
                         <td width="5%" align="right"> </td>
-                        <td width="10%" align="right"> <%= product.total  %></td>
+                        <td width="10%" align="right"> <%= @total_cargos  %></td>
                         <td width="10%" align="right"> </td>
                         <td width="10%" align="right"> </td>
-                        <td width="10%" align="right"> <%= @saldo_cliente  %> </td>
+                        <td width="10%" align="right"> <%= @saldo  %> </td>
                         </tr>
                        
                    </table>
-              
-            <% end %>  
-            
-            
-          <%else  %>
-            
-            <%  lcCliente = product.customer_id %>  
-                   
-            
-            
-          <% end %>  
-          
-        <%end%>
+
+
+
+                
+              <%end%>
+
         </table>
         
         
