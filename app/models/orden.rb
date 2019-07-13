@@ -499,6 +499,14 @@ TABLE_HEADERS2 = ["Nº",
   end  
   
   def get_ordenes_detalle(fecha1,fecha2,customer,medio,secuencia,moneda)
+    puts "orden detalle "
+    puts fecha1
+    puts fecha2
+    puts customer 
+    puts medio
+    puts secuencia
+    puts moneda 
+
 
     @orden =Orden.where(["fecha >= ? and fecha <= ? and customer_id=? and medio_id=? and secu_cont =? and moneda_id=?  ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",customer,medio,secuencia,moneda ]).order(:month,:code )
     return @orden

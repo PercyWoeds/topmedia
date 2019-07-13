@@ -817,6 +817,7 @@ class ContratosController < ApplicationController
 
     lcmonedadolares ="1"
     lcmonedasoles ="2"
+    
     @ordenes = @company.get_ordenes_eecc(@fecha1,@fecha2)
       
     case params[:print]
