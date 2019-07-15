@@ -67,7 +67,7 @@
                 <% if @detalle != nil %>
                         <% @saldo = 0 %>
                         <% @total_cargos = 0 %>
-                        <% if @detalle.first,month ==nil %>
+                        <% if @detalle.first.month ==nil %>
                           <% lcMes = 0 %>
                         <% else %>
                           <% lcMes = @detalle.first.month %>
