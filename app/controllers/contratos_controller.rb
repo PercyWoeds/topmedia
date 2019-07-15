@@ -838,7 +838,7 @@ class ContratosController < ApplicationController
 
   def invoice_headers_rpt            
       invoice_headers  = [["Fecha : ",$lcFecha1]]    
-      invoice_headers << ["Hora :", $lcHora]
+      invoice_headers << ["Hora :", $llcHora]
       invoice_headers
   end
   def invoice_headers_rpt2            

@@ -909,7 +909,9 @@ class OrdensController < ApplicationController
     @orden[:fecha] = Date.today 
     @company = Company.find(params[:company_id])
     @orden.company_id = @company.id
-    
+
+    @monedas = Moneda.all 
+
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @ciudad = Ciudad.all
@@ -1167,6 +1169,7 @@ class OrdensController < ApplicationController
     @contratos = Contrato.all 
     @productos = Producto.all 
     @ciudad = Ciudad.all
+    @monedas = Moneda.all 
     
     @orden[:month]= @month 
     @orden[:year]= @year

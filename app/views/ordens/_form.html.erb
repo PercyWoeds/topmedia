@@ -78,9 +78,15 @@
       <%= f.collection_select :version_id, @versions, :id, :descrip,{:prompt   => "Selec una version"} %>
     </div>
     
-   
-    
     <div class="field">
+      <%= f.label :moneda_id %><br />
+      <%= f.select :moneda_id,options_from_collection_for_select(@monedas,'id','description') %>
+    </div>
+    
+    <div class="fi <div class="field">
+      <%= f.label :medio_id %><br />
+      <%= f.select :medio_id,options_from_collection_for_select(@medios,'id','full_name') %>
+    </div>eld">
       <%= f.label :tiempo, "Duracion*", :class => "bold"   %><br />
       <%= f.number_field :tiempo   %>
     </div>
