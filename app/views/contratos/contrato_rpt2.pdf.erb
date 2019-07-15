@@ -88,9 +88,9 @@
                                 <td width="10%" align="right"><%= orden1.quantity %></td>
                                 <td width="5%"  align="right"><%= orden1.tiempo %></td>
                                 <td width="10%" align="right"><%= orden1.month %> </td>
-                                 <td width="10%" align="right"> </td>
+                                
                                 <td width="10%" align="right"><%= sprintf("%.2f",orden1.total.to_s)  %> </td>
-                               
+                                <td width="10%" align="right"> </td>
                                 <td width="10%" align="right"><%= sprintf("%.2f",@saldo.to_s)%></td>
                                 </tr>
                                </table>                                       
@@ -100,6 +100,8 @@
                            
                                 <% else %>
 
+                                    <%  @total_cargos += @total_mes %>
+                                    
                                     <table style=  'font-size:80% ;width:100%'>       
                                         <tr>
                                         <td width="8%"> </td>
@@ -116,7 +118,7 @@
                                         
                                         </tr>                           
                                     </table>
-                                   <%  @total_cargos += @total_mes %>
+                                  
                                    <%  @total_mes  = 0 %>                                  
                                    <% lcMes = orden1.month %> 
 
