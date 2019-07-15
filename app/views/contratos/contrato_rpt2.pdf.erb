@@ -72,47 +72,48 @@
                        
                      <% @detalle.each do |orden1| %> 
 
-                              <%  @saldo += orden1.total %>
+                            <%  @saldo += orden1.total %>
 
-                             <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
-                              <tr>
-                              <td width="15%"> <%= orden1.code  %></td>
-                              <td width="8%">  <%= orden1.fecha.strftime("%d/%m/%Y")  %> </td>
-                              <% if orden1.version != nil %>
-                              <td width="23%"> <%= orden1.version.descrip %> </td>
-                              <% else %>
-                              <td width="23%"> <%= orden1.version_id %> </td>
-                              <% end %>
-                              <td width="10%" align="right"><%= orden1.quantity %></td>
-                              <td width="5%"  align="right"> <%= orden1.tiempo %></td>
-                              <td width="10%" align="right"><%= orden1.month %> </td>
-                              <td width="10%" align="right"><%= sprintf("%.2f",orden1.total.to_s)  %> </td>
-                              <td width="10%" align="right"> </td>
-                              <td width="10%" align="right"><%= sprintf("%.2f",@saldo.to_s)%></td>
-                              </tr>
-                             </table>
-          
-                             
+                            <% if lcMes  == orden1.month %> 
+
+                               <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+                                <tr>
+                                <td width="15%"> <%= orden1.code  %></td>
+                                <td width="8%">  <%= orden1.fecha.strftime("%d/%m/%Y")  %> </td>
+                                <% if orden1.version != nil %>
+                                <td width="23%"> <%= orden1.version.descrip %> </td>
+                                <% else %>
+                                <td width="23%"> <%= orden1.version_id %> </td>
+                                <% end %>
+                                <td width="10%" align="right"><%= orden1.quantity %></td>
+                                <td width="5%"  align="right"><%= orden1.tiempo %></td>
+                                <td width="10%" align="right"><%= orden1.month %> </td>
+                                <td width="10%" align="right"><%= sprintf("%.2f",orden1.total.to_s)  %> </td>
+                                <td width="10%" align="right"> </td>
+                                <td width="10%" align="right"><%= sprintf("%.2f",@saldo.to_s)%></td>
+                                </tr>
+                               </table>                                       
                               <%  @total_cargos = orden1.total %>
 
-                              <% if lcMes  != orden1.month %> 
+                           
+                                <% else %>
 
-                                <table style=  'font-size:80% ;width:100%'>       
-                                    <tr>
-                                    <td width="8%"> </td>
-                                    <td width="8%">Total Mes  </td>
-                                    <td width="30%"> </td>
-                                    <td width="10%" align="right"> </td>
-                                    <td width="5%" align="right"> </td>
-                                    <td width="10%" align="right"> <%= sprintf("%.2f",@total_cargos.to_s)  %></td>
-                                    <td width="10%" align="right"> </td>
-                                    <td width="10%" align="right"> <%= sprintf("%.2f",@saldo.to_s)%></td>
-                                    <td width="10%" align="right">  </td>
-                                    </tr>                           
-                                </table>
-                              <% else %>
-                               <% lcMes = orden1.month %> 
-                               <% @total_cargos = 0 %>
+                                    <table style=  'font-size:80% ;width:100%'>       
+                                        <tr>
+                                        <td width="8%"> </td>
+                                        <td width="8%">Total Mes  </td>
+                                        <td width="30%"> </td>
+                                        <td width="10%" align="right"> </td>
+                                        <td width="5%" align="right"> </td>
+                                        <td width="10%" align="right"> <%= sprintf("%.2f",@total_cargos.to_s)  %></td>
+                                        <td width="10%" align="right"> </td>
+                                        <td width="10%" align="right"> <%= sprintf("%.2f",@saldo.to_s)%></td>
+                                        <td width="10%" align="right">  </td>
+                                        </tr>                           
+                                    </table>
+                                
+                                   <% lcMes = orden1.month %> 
+                                   <% @total_cargos = 0 %>
 
                               <% end %>
 
