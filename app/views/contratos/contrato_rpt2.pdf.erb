@@ -87,7 +87,7 @@
                               <td width="10%" align="right"><%= orden1.quantity   %></td>
                               <td width="5%"  align="right"> <%= orden1.tiempo  %></td>
                               <td width="10%" align="right"><%= orden1.month %> </td>
-                              <td width="10%" align="right"><%= orden1.total.sprintf("%.2f")  %> </td>
+                              <td width="10%" align="right"><%= sprintf("%.2f",orden1.total.to_s)  %> </td>
                               <td width="10%" align="right"> </td>
                               <td width="10%" align="right"><%= @saldo  %> </td>
                               </tr>
