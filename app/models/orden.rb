@@ -510,6 +510,7 @@ TABLE_HEADERS2 = ["Nº",
 
     @orden =Orden.where(["fecha >= ? and fecha <= ? and customer_id=? and medio_id=? and secu_cont =? and moneda_id=?  ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",customer,medio,secuencia,moneda ]).order(:month,:code )
     return @orden
+    
   end 
 
     def self.import(file)
