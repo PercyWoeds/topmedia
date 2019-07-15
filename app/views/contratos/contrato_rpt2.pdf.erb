@@ -75,7 +75,6 @@
                               <%  @saldo += orden1.total %>
 
                              <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
-                              
                               <tr>
                               <td width="15%"> <%= orden1.code  %></td>
                               <td width="8%">  <%= orden1.fecha.strftime("%d/%m/%Y")  %> </td>
@@ -112,8 +111,8 @@
                                     </tr>                           
                                 </table>
                               <% else %>
-                                lcMes = orden1.month 
-                                @total_cargos = 0
+                               <% lcMes = orden1.month %> 
+                               <% @total_cargos = 0 %>
 
                               <% end %>
 
