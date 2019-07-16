@@ -537,7 +537,7 @@ TABLE_HEADERS2 = ["Nº",
     return @orden
 
    
-    end 
+  
 
 
   end 
