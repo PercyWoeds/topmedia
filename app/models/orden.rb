@@ -440,6 +440,39 @@ TABLE_HEADERS2 = ["Nº",
         detalle.save
         
   end 
+
+  def get_mes(mes)
+
+       do case 
+          when mes == 1 
+              return "Enero"
+          when mes == 2
+            return "Febrero"
+          when mes == 3
+            return "Marzo"
+          when mes == 4
+            return "Abril"
+          when mes == 5
+            return "Mayo"
+          when mes == 6
+            return "Junio"
+          when mes == 7
+            return "Julio"
+          when mes == 8
+            return "Agosto"
+          when mes == 9
+            return "Setiembre"
+          when mes == 10
+            return  "Octubre"
+          when mes == 11
+            return "Noviembre"
+          when mes == 12
+            return "Diciembre"
+
+       end 
+
+
+  end 
   
   def get_moneda(id)
       texto = ""
