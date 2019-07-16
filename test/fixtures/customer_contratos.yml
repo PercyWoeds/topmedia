@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  customer_id: 1
+  secu_org: MyString
+  medio_id: 1
+  contrato_id: 1
+  anio: MyString
+  referencia: MyString
+  moneda_id: 1
+
+two:
+  customer_id: 1
+  secu_org: MyString
+  medio_id: 1
+  contrato_id: 1
+  anio: MyString
+  referencia: MyString
+  moneda_id: 1

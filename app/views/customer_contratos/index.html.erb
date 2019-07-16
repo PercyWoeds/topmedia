@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Customer Contratos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Customer</th>
+      <th>Secu org</th>
+      <th>Medio</th>
+      <th>Contrato</th>
+      <th>Anio</th>
+      <th>Referencia</th>
+      <th>Moneda</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @customer_contratos.each do |customer_contrato| %>
+      <tr>
+        <td><%= customer_contrato.customer_id %></td>
+        <td><%= customer_contrato.secu_org %></td>
+        <td><%= customer_contrato.medio_id %></td>
+        <td><%= customer_contrato.contrato_id %></td>
+        <td><%= customer_contrato.anio %></td>
+        <td><%= customer_contrato.referencia %></td>
+        <td><%= customer_contrato.moneda_id %></td>
+        <td><%= link_to 'Show', customer_contrato %></td>
+        <td><%= link_to 'Edit', edit_customer_contrato_path(customer_contrato) %></td>
+        <td><%= link_to 'Destroy', customer_contrato, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Customer contrato', new_customer_contrato_path %>

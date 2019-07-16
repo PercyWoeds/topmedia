@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Customer:</strong>
+  <%= @customer_contrato.customer_id %>
+</p>
+
+<p>
+  <strong>Secu org:</strong>
+  <%= @customer_contrato.secu_org %>
+</p>
+
+<p>
+  <strong>Medio:</strong>
+  <%= @customer_contrato.medio_id %>
+</p>
+
+<p>
+  <strong>Contrato:</strong>
+  <%= @customer_contrato.contrato_id %>
+</p>
+
+<p>
+  <strong>Anio:</strong>
+  <%= @customer_contrato.anio %>
+</p>
+
+<p>
+  <strong>Referencia:</strong>
+  <%= @customer_contrato.referencia %>
+</p>
+
+<p>
+  <strong>Moneda:</strong>
+  <%= @customer_contrato.moneda_id %>
+</p>
+
+<%= link_to 'Edit', edit_customer_contrato_path(@customer_contrato) %> |
+<%= link_to 'Back', customer_contratos_path %>

@@ -1,6 +1,7 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :customer_contratos
   resources :canals
   resources :tipo_ordens
   resources :category_programs
