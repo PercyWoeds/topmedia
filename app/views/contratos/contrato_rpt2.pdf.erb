@@ -141,7 +141,8 @@
                                     <td width="10%" align="right"> </td>
                                     <td width="10%" align="right"><%= sprintf("%.2f",@saldo.to_s)%></td>
                                     </tr>
-                                   </table>           
+                                   </table>     
+                                    <%   @total_mes += orden1.total %>      
                                     <%  @total_cargos += @total_mes %>
                                                                 
                                    <% lcMes = orden1.month %> 
