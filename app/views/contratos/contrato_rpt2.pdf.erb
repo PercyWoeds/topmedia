@@ -70,7 +70,11 @@
                     <tr style="font-weight:bold">
                    
                       <td> ++ Contratox : </td>
+                      <% if product.secu_cont == nil %>
+                      <td> ** nulo ** </td>
+                      <% else %>
                       <td> <%= product.secu_cont %> </td>
+                      <% end %>
                       <td> </td>
                       <td></td>
                       <td></td>
