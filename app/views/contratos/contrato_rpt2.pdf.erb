@@ -62,7 +62,24 @@
                     </table>
                     
 
-                <%  @detalle = product.get_ordenes_detalle(@fecha1,@fecha2,product.customer_id,product.medio_id,product.secu_cont,product.moneda_id)%>        
+                <%  @detalle = product.get_ordenes_detalle(@fecha1,@fecha2,product.customer_id,product.medio_id,product.secu_cont,product.moneda_id)%>      
+
+                <% if product.customer_id ==  24 and product.medio_id ==  398 and product.moneda_id == 2 %>
+
+                   <table style=  'font-size:80% ;width:100%'>    
+                    <tr style="font-weight:bold">
+                   
+                      <td> ++ Contratox : </td>
+                      <td> <%= product.secu_cont %> </td>
+                      <td> </td>
+                      <td></td>
+                      <td></td>
+                       <td>Mon: <%= product.get_moneda(product.moneda_id ) %></td>
+                    </tr>
+                    </table>
+                
+
+                <% end %>  
 
                 <% if @detalle.all.size > 0 %>
                         <% @saldo = 0 %>
