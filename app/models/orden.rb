@@ -443,7 +443,7 @@ TABLE_HEADERS2 = ["Nº",
 
   def get_mes(mes)
 
-       do case 
+       case  
           when mes == 1 
               return "Enero"
           when mes == 2
