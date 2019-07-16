@@ -109,7 +109,7 @@
                                         <tr>
                                         <td width="8%"> </td>
                                         <td width="8%">Total Mes : </td>
-                                        <td width="30%"><%= orden1.get_mes(orden1.month )%> </td>
+                                        <td width="30%"><%= orden1.get_mes(lcMes  )%> </td>
                                         <td width="10%" align="right"> </td>
                                         <td width="5%" align="right"> </td>
                                         <td width="10%" align="right"> </td>
@@ -121,6 +121,8 @@
                                         
                                         </tr>                           
                                     </table>
+
+                                     <%  @total_mes  = 0 %>    
 
                                     <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
                                     <tr>
@@ -141,13 +143,14 @@
                                     </tr>
                                    </table>           
                                   
-                                   <%  @total_mes  = 0 %>                                  
+                                                                
                                    <% lcMes = orden1.month %> 
 
                                    
                               <% end %>
 
                     <%end%>
+
 
                     <%  @total_cargos += @total_mes %>
                                     
