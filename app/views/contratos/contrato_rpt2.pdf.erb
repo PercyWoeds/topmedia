@@ -81,7 +81,23 @@
                        <td>Mon: <%= product.get_moneda(product.moneda_id ) %></td>
                     </tr>
                     </table>
-                
+                 <% @detalle.each do |orden2| %> 
+
+                  <table style=  'font-size:80% ;width:100%'>    
+                    <tr style="font-weight:bold">
+                   
+                      <td> ordenes  : </td>
+                   
+                      <td> <%= orden2.code  %> </td>
+                      
+                      <td> </td>
+                      <td></td>
+                      <td></td>
+                       <td> </td>
+                    </tr>
+                    </table>
+
+                 <% end %>
 
                 <% end %>  
 
