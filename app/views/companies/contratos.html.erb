@@ -36,7 +36,18 @@
   </p>
 <%= hr() %>
 
-<div class="mid_box">
+  <h3>
+    <%= image_tag("reports_32.png", :class => "vmiddle") %>
+    <%= link_to "Cliente  por contrato ", customer_contratos_path %>
+  </h3>
+
+  <p>
+    Tipo de cambio sunat
+  </p>
+<%= hr() %>
+
+
+
   <h3>
   <%= image_tag("reports_32.png", :class => "vmiddle") %>
     <%= link_to "Reportes", "/companies/reports/reports_contratos/#{@company.id}" %>
@@ -51,7 +62,7 @@
 
 
 
-  </div>
+
 </div>
 
 

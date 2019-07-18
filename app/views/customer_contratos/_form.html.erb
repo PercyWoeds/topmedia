@@ -1,15 +1,60 @@
-<%= simple_form_for(@customer_contrato) do |f| %>
-  <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :customer_id %>
-    <%= f.input :secu_org %>
-    <%= f.input :medio_id %>
-    <%= f.input :contrato_id %>
-    <%= f.input :anio %>
-    <%= f.input :referencia %>
-    <%= f.input :moneda_id %>
+<% if @customer_contrato.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@customer_contrato.errors.count, "error") %> prohibited this orden from being saved:</h2>
+
+    <ul>
+    <% @customer_contrato.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
   </div>
+<% end %>
+
+
+<div>
+  <%= form_for(@customer_contrato) do |f| %>
+
+  
+    <div class="field">
+      
+      <%= f.label :customer_id %><br />
+      <%= f.select :customer_id,options_from_collection_for_select(@customers,'id','name') %>
+
+    </div>
+    
+    <div class="field">
+     <%= f.label :medio_id %><br />
+      <%= f.select :medio_id,options_from_collection_for_select(@medios,'id','name') %>
+
+    </div>
+    <div class="field">
+  
+      <%= f.label :contrato_id %><br />
+      <%= f.select :contrato_id,options_from_collection_for_select(@contratos,'id','code') %>
+
+
+    </div>
+    <div class="field">  
+      <%= f.label :anio, "Año*", :class => "bold" %><br />
+      <%= f.text_field :anio  %>
+    </div>
+    <div class="field"> 
+      <%= f.label :referencia, "Referencia: " %><br />
+      <%= f.text_field :referencia  %>
+    </div>
+    <div class="field"> 
+      <%= f.label :moneda_id %><br />
+      <%= f.select :moneda_id,options_from_collection_for_select(@monedas,'id','description') %>
+
+    </div>
+
+    <div class="field">
+      <%= f.label :secu_cont,"Secuencia Contrato :  " %><br />
+      <%= f.text_field :secu_cont  %>
+    </div>
+
+
 
   <div class="form-actions">
     <%= f.button :submit %>

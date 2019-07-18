@@ -15,16 +15,32 @@ class CustomerContratosController < ApplicationController
   # GET /customer_contratos/new
   def new
     @customer_contrato = CustomerContrato.new
+
+    @customers = Customer.all 
+    @medios = Medio.all
+    @contratos = Contratos.all
+    @monedas = Moneda.ll 
+
   end
 
   # GET /customer_contratos/1/edit
   def edit
+    @customers = Customer.all 
+    @medios = Medio.all
+    @contratos = Contratos.all
+    @monedas = Moneda.ll 
+
   end
 
   # POST /customer_contratos
   # POST /customer_contratos.json
   def create
     @customer_contrato = CustomerContrato.new(customer_contrato_params)
+    @customers = Customer.all 
+    @medios = Medio.all
+    @contratos = Contratos.all
+    @monedas = Moneda.ll 
+
 
     respond_to do |format|
       if @customer_contrato.save
@@ -40,6 +56,11 @@ class CustomerContratosController < ApplicationController
   # PATCH/PUT /customer_contratos/1
   # PATCH/PUT /customer_contratos/1.json
   def update
+    @customers = Customer.all 
+    @medios = Medio.all
+    @contratos = Contratos.all
+    @monedas = Moneda.ll 
+
     respond_to do |format|
       if @customer_contrato.update(customer_contrato_params)
         format.html { redirect_to @customer_contrato, notice: 'Customer contrato was successfully updated.' }
@@ -69,6 +90,6 @@ class CustomerContratosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def customer_contrato_params
-      params.require(:customer_contrato).permit(:customer_id, :secu_org, :medio_id, :contrato_id, :anio, :referencia, :moneda_id)
+      params.require(:customer_contrato).permit(:customer_id, :secu_org, :medio_id, :contrato_id, :anio, :referencia, :moneda_id,:secu_cont )
     end
 end
