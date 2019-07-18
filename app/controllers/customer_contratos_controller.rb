@@ -18,7 +18,7 @@ class CustomerContratosController < ApplicationController
 
     @customers = Customer.all 
     @medios = Medio.all
-    @contratos = Contratos.all
+    @contratos = Contrato.all
     @monedas = Moneda.ll 
 
   end
@@ -27,7 +27,7 @@ class CustomerContratosController < ApplicationController
   def edit
     @customers = Customer.all 
     @medios = Medio.all
-    @contratos = Contratos.all
+    @contratos = Contrato.all
     @monedas = Moneda.ll 
 
   end
@@ -38,7 +38,7 @@ class CustomerContratosController < ApplicationController
     @customer_contrato = CustomerContrato.new(customer_contrato_params)
     @customers = Customer.all 
     @medios = Medio.all
-    @contratos = Contratos.all
+    @contratos = Contrato.all
     @monedas = Moneda.ll 
 
 
@@ -58,7 +58,7 @@ class CustomerContratosController < ApplicationController
   def update
     @customers = Customer.all 
     @medios = Medio.all
-    @contratos = Contratos.all
+    @contratos = Contrato.all
     @monedas = Moneda.ll 
 
     respond_to do |format|
