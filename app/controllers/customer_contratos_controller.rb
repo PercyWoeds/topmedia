@@ -1,12 +1,16 @@
 class CustomerContratosController < ApplicationController
   before_action :set_customer_contrato, only: [:show, :edit, :update, :destroy]
 
+
   # GET /customer_contratos
   # GET /customer_contratos.json
   def index
     @customer_contratos = CustomerContrato.all
   end
-
+def import
+      CustomerContrato.import(params[:file])
+       redirect_to root_url, notice: "Clientes Contratos  importadas."
+  end 
   # GET /customer_contratos/1
   # GET /customer_contratos/1.json
   def show

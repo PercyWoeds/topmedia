@@ -36,4 +36,16 @@
 
 <br>
 
+
 <%= link_to 'New Customer contrato', new_customer_contrato_path %>
+
+
+
+<h2>Importar Archivo clientes contratos "*.csv"</h2>
+
+<%= form_tag import_customer_contratos_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+
