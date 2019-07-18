@@ -42,6 +42,10 @@
   resources :tipoavisos do 
     collection { post :import }
   end 
+
+  resources :customer_contratos do 
+    collection { post :import }
+  end 
   resources :periodos
   resources :motivos
   resources :medios
