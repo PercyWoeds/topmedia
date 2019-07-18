@@ -19,7 +19,7 @@ class CustomerContratosController < ApplicationController
     @customers = Customer.all 
     @medios = Medio.all
     @contratos = Contrato.all
-    @monedas = Moneda.ll 
+    @monedas = Moneda.all 
 
   end
 
@@ -28,7 +28,7 @@ class CustomerContratosController < ApplicationController
     @customers = Customer.all 
     @medios = Medio.all
     @contratos = Contrato.all
-    @monedas = Moneda.ll 
+    @monedas = Moneda.all 
 
   end
 
@@ -39,7 +39,7 @@ class CustomerContratosController < ApplicationController
     @customers = Customer.all 
     @medios = Medio.all
     @contratos = Contrato.all
-    @monedas = Moneda.ll 
+    @monedas = Moneda.all 
 
 
     respond_to do |format|
@@ -59,7 +59,7 @@ class CustomerContratosController < ApplicationController
     @customers = Customer.all 
     @medios = Medio.all
     @contratos = Contrato.all
-    @monedas = Moneda.ll 
+    @monedas = Moneda.all 
 
     respond_to do |format|
       if @customer_contrato.update(customer_contrato_params)
