@@ -1,10 +1,10 @@
 
-<% if @customer_abono.errors.any? %>
+<% if @contrato_abono.errors.any? %>
   <div id="error_explanation">
-    <h2><%= pluralize(@customer_abono.errors.count, "error") %> prohibited this orden from being saved:</h2>
+    <h2><%= pluralize(@contrato_abono.errors.count, "error") %> prohibited this orden from being saved:</h2>
 
     <ul>
-    <% @customer_abono.errors.full_messages.each do |msg| %>
+    <% @contrato_abono.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
     <% end %>
     </ul>
@@ -13,7 +13,7 @@
 
 
 <div>
-  <%= form_for(@customer_abono) do |f| %>
+  <%= form_for(@contrato_abono) do |f| %>
 
 
   <div class="form-inputs">
@@ -45,14 +45,22 @@
 
     </div>
 
+   <div class="field"> 
+      <%= f.label :moneda_id %><br />
+      <%= f.select :moneda_id,options_from_collection_for_select(@monedas,'id','description') %>
 
-    <%= f.input :fecha %>
-    <%= f.input :customer_id %>
-    <%= f.input :medio_id %>
-    <%= f.input :secu_cont %>
-    <%= f.input :observa %>
-    <%= f.input :importe %>
-    <%= f.input :moneda_id %>
+    </div>
+
+
+   <div class="field">
+
+    
+    <%= f.label :fecha %><br />
+    <%= f.text_field :fecha   %>
+
+    </div>
+  
+   
   </div>
 
   <div class="form-actions">
