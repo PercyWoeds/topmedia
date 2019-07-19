@@ -19,9 +19,8 @@ class ContratoAbonosController < ApplicationController
     @customers = Customer.all.order(:name) 
     @monedas = Moneda.all
     @medios =Medio.all.order(:descrip)
-    @customercontrato = CustomerContrato.all.order(:secu_cont)
-
-
+    @customercontrato = CustomerContrato.all.order(:secu_cont) 
+    @contrato_abono[:fecha] = Date.today
   end
 
   # GET /contrato_abonos/1/edit
