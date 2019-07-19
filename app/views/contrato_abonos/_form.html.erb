@@ -19,8 +19,14 @@
   <div class="form-inputs">
 
 
+    <div class="field">    
+      <%= f.label :fecha %><br />
+      <%= f.text_field :fecha  %>
+    </div>
+
+
     <div class="field">
-      
+    
       <%= f.label :customer_id %><br />
       <%= f.select :customer_id,options_from_collection_for_select(@customers,'id','name') %>
 
@@ -37,14 +43,6 @@
       <%= f.select :secu_cont,options_from_collection_for_select(@customercontrato,'secu_cont','secu_cont') %>
     </div>
 
-
-
-    <div class="field"> 
-      <%= f.label :moneda_id %><br />
-      <%= f.select :moneda_id,options_from_collection_for_select(@monedas,'id','description') %>
-
-    </div>
-
    <div class="field"> 
       <%= f.label :moneda_id %><br />
       <%= f.select :moneda_id,options_from_collection_for_select(@monedas,'id','description') %>
@@ -52,14 +50,13 @@
     </div>
 
 
-   <div class="field">
 
-    
-    <%= f.label :fecha %><br />
-    <%= f.text_field :fecha   %>
 
-    </div>
-  
+
+     <div class="field">
+    <%= f.label :importe, "Importe*", :class => "bold" %><br />
+    <%= f.number_field :importe ,:step => 0.01 %>   
+    </div>  
    
   </div>
 
