@@ -72,7 +72,7 @@ TABLE_HEADERS2 = ["Nº",
 
       @numero_contrato = CustomerContrato.find_by(secu_cont: secu_contrato)
 
-      if @numero_contrato.all.size >0 
+      if @numero_contrato != nil  
         return @numero_contrato.contrato.code 
       else
          return "-"
