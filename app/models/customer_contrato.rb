@@ -6,4 +6,12 @@ validates_presence_of :secu_cont, :customer_id, :contrato_id,:medio_id, :moneda_
   belongs_to :contrato 
   belongs_to :moneda 
 
+
+
+    def self.import(file)
+          CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
+          CustomerContrato.create! row.to_hash 
+        end
+    end      
+
 end
