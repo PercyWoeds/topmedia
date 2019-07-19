@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @contrato_abono.fecha %>
+</p>
+
+<p>
+  <strong>Customer:</strong>
+  <%= @contrato_abono.customer_id %>
+</p>
+
+<p>
+  <strong>Medio:</strong>
+  <%= @contrato_abono.medio_id %>
+</p>
+
+<p>
+  <strong>Secu cont:</strong>
+  <%= @contrato_abono.secu_cont %>
+</p>
+
+<p>
+  <strong>Observa:</strong>
+  <%= @contrato_abono.observa %>
+</p>
+
+<p>
+  <strong>Importe:</strong>
+  <%= @contrato_abono.importe %>
+</p>
+
+<p>
+  <strong>Moneda:</strong>
+  <%= @contrato_abono.moneda_id %>
+</p>
+
+<%= link_to 'Editar', edit_contrato_abono_path(@contrato_abono) %> |
+<%= link_to 'Regresar', contrato_abonos_path %>

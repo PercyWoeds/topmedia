@@ -37,6 +37,7 @@ class ContratosController < ApplicationController
     @customers = Customer.all 
     @monedas = Moneda.all
     @medios =Medio.all 
+    
     @contrato[:code] = "#{generate_guid11()}"
     @contrato[:nrocuotas]=0
     @contrato[:comision1]=0.00

@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Contrato Abonos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Customer</th>
+      <th>Medio</th>
+      <th>Secu cont</th>
+      <th>Observa</th>
+      <th>Importe</th>
+      <th>Moneda</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @contrato_abonos.each do |contrato_abono| %>
+      <tr>
+        <td><%= contrato_abono.fecha %></td>
+        <td><%= contrato_abono.customer.name  %></td>
+        <td><%= contrato_abono.medio.descrip %></td>
+
+        <td><%= contrato_abono.secu_cont %></td>
+        <td><%= contrato_abono.observa %></td>
+        <td><%= contrato_abono.moneda.description %></td>
+        <td><%= contrato_abono.importe %></td>
+        
+        <td><%= link_to 'Ver', contrato_abono %></td>
+        <td><%= link_to 'Editar', edit_contrato_abono_path(contrato_abono) %></td>
+        <td><%= link_to 'Eliminar', contrato_abono, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Nuevo Contrato abono', new_contrato_abono_path %>

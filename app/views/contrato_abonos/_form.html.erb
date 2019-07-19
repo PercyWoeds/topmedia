@@ -1,0 +1,61 @@
+
+<% if @customer_abono.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@customer_abono.errors.count, "error") %> prohibited this orden from being saved:</h2>
+
+    <ul>
+    <% @customer_abono.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+<div>
+  <%= form_for(@customer_abono) do |f| %>
+
+
+  <div class="form-inputs">
+
+
+    <div class="field">
+      
+      <%= f.label :customer_id %><br />
+      <%= f.select :customer_id,options_from_collection_for_select(@customers,'id','name') %>
+
+    </div>
+
+     <div class="field">
+     <%= f.label :medio_id %><br />
+      <%= f.select :medio_id,options_from_collection_for_select(@medios,'id','descrip') %>
+
+    </div>
+
+    <div class="field">
+       <%= f.label :customer_contrato_id %><br />
+      <%= f.select :customer_contrato_id,options_from_collection_for_select(@customercontrato,'id','secu_cont') %>
+    </div>
+
+
+
+    <div class="field"> 
+      <%= f.label :moneda_id %><br />
+      <%= f.select :moneda_id,options_from_collection_for_select(@monedas,'id','description') %>
+
+    </div>
+
+
+    <%= f.input :fecha %>
+    <%= f.input :customer_id %>
+    <%= f.input :medio_id %>
+    <%= f.input :secu_cont %>
+    <%= f.input :observa %>
+    <%= f.input :importe %>
+    <%= f.input :moneda_id %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
