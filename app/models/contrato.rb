@@ -88,17 +88,7 @@ class Contrato < ActiveRecord::Base
   	end
 
   end 	
-  def get_nro_contrato(secu_contrato)
-
-      @numero_contrato = CustomerContrato.find_by(secu_cont: secu_contrato)
-
-      if @numero_contrato.all.size >0 
-        return @numero_contrato.contrato.code 
-      else
-         return "-"
-      end 
-
-  end 
+ 
 
   def get_contrato_cuotas(id)
       @contrato_cuotas = ContratoDetail.where(:contrato_id=>id)
