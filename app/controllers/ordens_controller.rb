@@ -899,7 +899,8 @@ class OrdensController < ApplicationController
     @marcas= Marca.all 
     @versions = Version.all 
     @contratos = Contrato.all 
-    @productos = Producto.all 
+    @productos = Producto.all
+    @contratos2 = CustomerContrato.all.order(:secu_cont)  
 
     @orden = Orden.new
     @orden[:code] = "#{generate_guid12()}"
@@ -1016,6 +1017,7 @@ class OrdensController < ApplicationController
     @company = @orden.company
     @ac_customer = @orden.customer.name
     @ac_user = @orden.user.username
+    @contratos2 = CustomerContrato.all.order(:secu_cont)  
 
 
 #-------
@@ -1170,7 +1172,9 @@ class OrdensController < ApplicationController
     @productos = Producto.all 
     @ciudad = Ciudad.all
     @monedas = Moneda.all 
-    
+    @contratos2 = CustomerContrato.all.order(:secu_cont)  
+
+
     @orden[:month]= @month 
     @orden[:year]= @year
     
@@ -1223,6 +1227,7 @@ class OrdensController < ApplicationController
     @marcas= Marca.all 
     @versions = Version.all 
     @contratos = Contrato.all 
+    @contratos2 = CustomerContrato.all.order(:secu_cont)  
 
     items = params[:items].split(",")
     
