@@ -63,12 +63,12 @@
                     </table>
 
                  <%  @abonos = product.get_abonos_detalle(@fecha1,@fecha2,product.customer_id,product.medio_id,product.secu_cont,product.moneda_id)%>    
-                    
+
                     <% if @abonos.all.size > 0 %>
                         <% @saldo = 0 %>
 
                         <% @abonos.each do |abonos| %> 
-                              <%  @saldo += abonos.total %>
+                              <%  @saldo += abonos.importe %>
 
                               <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
                               <tr>
