@@ -48,7 +48,7 @@
             <%= link_to "Edit", edit_orden_path(orden) %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= link_to 'Delete', orden, :confirm => 'Are you sure?', :method => :delete %>
+            <%= link_to 'Eliminar':data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>
           </td>
         </tr>
       <% end %>

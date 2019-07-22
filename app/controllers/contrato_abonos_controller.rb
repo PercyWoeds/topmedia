@@ -86,6 +86,12 @@ class ContratoAbonosController < ApplicationController
     end
   end
 
+   def import
+      ContratoAbono.import(params[:file])
+       redirect_to root_url, notice: "Contratos abonos  importados."
+  end 
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_contrato_abono
