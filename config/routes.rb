@@ -51,6 +51,11 @@
   resources :motivos
   resources :medios
   resources :contrato_cuota
+  resources :contrato_abonos
+    collection { post :import }
+  end 
+  
+  
   
   resources :contratos do
     resources :contrato_details, except: [:index,:show], controller: "contratos/contratos_details"
