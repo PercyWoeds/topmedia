@@ -51,7 +51,8 @@
   resources :motivos
   resources :medios
   resources :contrato_cuota
-  resources :contrato_abonos
+
+  resources :contrato_abonos do 
     collection { post :import }
   end 
   
