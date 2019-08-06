@@ -63,7 +63,7 @@
 
 <% if @orden.tipo == "N" %>
 <div class="button">
-<%= link_to 'Agregar Item', new_orden_orden_product_path(@orden) :popup => ['Modelo Educacional', 'height=300,width=600'] %>
+<%= link_to 'Agregar Item', new_orden_orden_product_path(@orden), :popup => ['Ordenes', 'height=300,width=600'] %>
 
 </div> 
 <% end %>
