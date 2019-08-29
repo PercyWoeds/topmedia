@@ -18,9 +18,7 @@
 </p>
 
 <p>
-
-<b>Contrato:</b>
-  <%= @orden.secu_cont %>
+  <%= @orden.contrato.code %>
 </p>
 
 <b>Medio:</b>
@@ -61,16 +59,11 @@
 
 <%= hr() %>
 
-
-
-
+<% if @orden.tipo == "N" %>
 <div class="button">
-
-<%= link_to( 'Add item',new_orden_orden_product_path(@orden)  %>  <br>
-
-
+<%= link_to 'Agregar Item', new_orden_orden_product_path(@orden) %>
 </div> 
-
+<% end %>
 <h3>
   Detalle
 </h3>
@@ -201,7 +194,7 @@
   <tbody>
     
     <%  @ordens_products.each do |product| %>
-          <tr>
+    <tr>
           <td class="small bordered_bottom bordered_right">
             <%= product.id %>    
           </td>
@@ -317,17 +310,14 @@
           <td class="small bordered_bottom bordered_right">
             <%= money(product.total) %>
           </td>
-
           <% if @orden.tipo == "N" %>
-            <td><%= link_to 'Editar', edit_orden_orden_product_path(orden_id: @orden.id,id: product.id ) %></td>          
-            <td><%= link_to 'Eliminar',[@orden,product], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Editar', edit_orden_orden_product_path(orden_id: @orden.id,id: product.id ) %></td>          
+          <td><%= link_to 'Eliminar',[@orden,product], method: :delete, data: { confirm: 'Are you sure?' } %></td>
           <% end %>
           
-        
+    </td>
     
-
-
-
+    <% end %>
     <tr>
       <td colspan="35" class="bordered_bottom bordered_right">
         &nbsp;
@@ -402,5 +392,4 @@
   <%= link_to 'Editar', edit_orden_path(@orden) %>
   <%= link_to 'Regresar', "/companies/ordens/#{@orden.company.id}" %>
 </div>
-
 
