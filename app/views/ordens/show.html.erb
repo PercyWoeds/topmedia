@@ -63,10 +63,7 @@
 
 <% if @orden.tipo == "N" %>
 
-  
-
- 
-   <div class="form-inputs">
+     <div class="form-inputs">
     
     
    <table>
@@ -328,7 +325,7 @@
 
 
 </div> 
-<% end %>
+
 <h3>
   Detalle
 </h3>
@@ -583,6 +580,8 @@
     </td>
     
     <% end %>
+
+    
     <tr>
       <td colspan="35" class="bordered_bottom bordered_right">
         &nbsp;
@@ -657,3 +656,5 @@
   <%= link_to 'Editar', edit_orden_path(@orden) %>
   <%= link_to 'Regresar', "/companies/ordens/#{@orden.company.id}" %>
 </div>
+
+

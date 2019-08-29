@@ -93,6 +93,7 @@ class Ordens::OrdensProductsController < ApplicationController
         
          format.html { redirect_to @orden, notice: 'Orden product was successfully created.' }
          format.json { render :show, status: :created, location: @orden }
+         
        else
          format.html { render :new }
          format.json { render json: @orden.errors, status: :unprocessable_entity }
