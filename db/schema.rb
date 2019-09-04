@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191207172817) do
+ActiveRecord::Schema.define(version: 20191207172821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -220,6 +220,18 @@ ActiveRecord::Schema.define(version: 20191207172817) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "contrato_abonos", force: :cascade do |t|
+    t.datetime "fecha"
+    t.integer  "customer_id"
+    t.integer  "medio_id"
+    t.string   "secu_cont"
+    t.string   "observa"
+    t.float    "importe"
+    t.integer  "moneda_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "contrato_cuota", force: :cascade do |t|
     t.integer  "nro"
     t.datetime "fecha"
@@ -322,6 +334,7 @@ ActiveRecord::Schema.define(version: 20191207172817) do
     t.integer  "moneda_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "secu_cont"
   end
 
   create_table "customer_payment_details", force: :cascade do |t|
@@ -979,6 +992,11 @@ ActiveRecord::Schema.define(version: 20191207172817) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "orden_product_imports", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "orden_products", force: :cascade do |t|
     t.integer  "orden_id"
     t.integer  "avisodetail_id"
@@ -1022,6 +1040,20 @@ ActiveRecord::Schema.define(version: 20191207172817) do
     t.integer  "d29"
     t.integer  "d30"
     t.integer  "d31"
+    t.string   "canal"
+    t.string   "descrip"
+    t.string   "d"
+    t.string   "h"
+    t.string   "cantidad"
+    t.string   "rating"
+    t.string   "rating2"
+    t.string   "tpp"
+    t.string   "impactos"
+    t.string   "miles"
+    t.string   "impactos2"
+    t.string   "cpp"
+    t.string   "cpm"
+    t.string   "cmp2"
   end
 
   create_table "ordens", force: :cascade do |t|

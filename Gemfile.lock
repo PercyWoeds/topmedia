@@ -169,6 +169,10 @@ GEM
       actionpack (>= 4.2.0, < 6.0)
       railties (>= 4.2.0, < 6.0)
     rmagick (2.16.0)
+    roo (2.7.1)
+      nokogiri (~> 1)
+      rubyzip (~> 1.1, < 2.0.0)
+    rubyzip (1.2.3)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -254,6 +258,7 @@ DEPENDENCIES
   rails_autolink (~> 1.1, >= 1.1.6)
   rails_serve_static_assets
   rmagick (~> 2.15, >= 2.15.4)
+  roo (~> 2.7.0)
   sass-rails (>= 3.2)
   sdoc (~> 0.4.0)
   simple_form (~> 3.3, >= 3.3.1)
@@ -270,4 +275,4 @@ DEPENDENCIES
   wkhtmltopdf-binary
 
 BUNDLED WITH
-   1.17.2
+   1.17.3

@@ -1839,6 +1839,8 @@ def foot_data_headers_1
       Orden.import(params[:file])
        redirect_to root_url, notice: "Contratos importados."
   end 
+
+
   
 
   private

@@ -74,7 +74,9 @@ gem 'annotate'
 #   gem 'w
 
   gem 'pg', '~> 0.18.4'
- 
+
+gem "roo", "~> 2.7.0"
+
 gem 'bower-rails'
 gem 'bootstrap-modal-rails'
 gem 'typeahead-rails'

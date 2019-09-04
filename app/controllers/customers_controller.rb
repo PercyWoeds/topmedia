@@ -10,6 +10,7 @@ class CustomersController < ApplicationController
       Customer.import(params[:file])
        redirect_to root_url, notice: "Clientes importadas."
   end 
+  
   def import2
       Customer.import2(params[:file])
        redirect_to root_url, notice: "Clientes direcciones importadas."

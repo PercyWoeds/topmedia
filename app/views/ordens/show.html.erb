@@ -19,7 +19,7 @@
 
 <p>
   
-  
+
 </p>
 
 <b>Medio:</b>
@@ -61,10 +61,22 @@
 <%= hr() %>
 
 <% if @orden.tipo == "N" %>
-<div class="button">
-<%= link_to 'Agregar Item', new_orden_orden_product_path(@orden) %>
-</div> 
+
+<h4>Importar informacion desde plantilla "*.csv"</h4>
+    <%= form_tag import_orden_orden_products_path(@orden), multipart: true do %>
+      <%= file_field_tag :file %>
+      <%= submit_tag "Importar " %>
+    <% end %>
+    <%= hr() %>
+
+
+    <div class="button">
+      <%= link_to 'Agregar Item', new_orden_orden_product_path(@orden) %>
+    </div> 
+
 <% end %>
+
+
 <h3>
   Detalle
 </h3>

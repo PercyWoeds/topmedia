@@ -1,6 +1,20 @@
   Mnygo::Application.routes.draw do
 
 
+  get 'orden_product_imports/new'
+
+  get 'orden_product_imports/create'
+
+  get 'orden_products_imports/new'
+
+  get 'orden_products_imports/create'
+
+  get 'items_imports/new'
+
+  get 'items_imports/create'
+
+  get 'ordens_imports/new_create'
+
   resources :contrato_abonos
   resources :customer_contratos
   resources :canals
@@ -15,7 +29,10 @@
   resources :orden_products
   resources :quotes
   resources :ordens do
-      resources :orden_products, except: [:index,:show], controller: "ordens/ordens_products"
+      resources :orden_products, except: [:index,:show], controller: "ordens/ordens_products" do
+        collection { post :import }
+      end 
+
       collection { get :crear}
       collection { get :reportes}
       collection { get :update_marcas}
@@ -27,7 +44,8 @@
   resources :contrato_details do 
      collection { post :import }
   end 
-  
+    
+  resources :orden_product_imports, only: [:new, :create]
   
   resources :marcas do 
      collection { post :import }
@@ -41,6 +59,9 @@
   end 
   
   resources :tipoavisos do 
+    collection { post :import }
+  end 
+ resources :orden_products do 
     collection { post :import }
   end 
 

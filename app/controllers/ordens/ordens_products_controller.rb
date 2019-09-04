@@ -1,6 +1,6 @@
 class Ordens::OrdensProductsController < ApplicationController
    before_action :set_orden 
-   before_action :set_orden_product, :except=> [:new,:create]
+   before_action :set_orden_product, :except=> [:new,:create,:import ]
    
   # GET /orden_products/1
   # GET /orden_products/1.json
@@ -162,8 +162,14 @@ class Ordens::OrdensProductsController < ApplicationController
       render :show 
     end 
     
-    
   end
+
+
+  def import
+
+      OrdenProduct.import(params[:file])
+       redirect_to root_url, notice: "Orden importada."
+  end 
 
   private
     # Use callbacks to share common setup or constraints between actions.
