@@ -168,7 +168,13 @@ class Ordens::OrdensProductsController < ApplicationController
   def import
 
       OrdenProduct.import(params[:file])
-       redirect_to root_url, notice: "Orden importada."
+        @orden[:subtotal] = @orden.get_subtotal("subtotal")
+           @orden[:tax] = @orden.get_subtotal("tax")
+           @orden[:total] = @orden[:subtotal] + @orden[:tax]
+          
+           @orden.update_attributes(:subtotal=> @orden[:subtotal])
+
+       redirect_to root_url, notice: "Orden importadas"
   end 
 
   private
