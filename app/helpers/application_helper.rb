@@ -583,11 +583,15 @@ module ApplicationHelper
   end
   def formatea_number(number)
       ret = ""
-      if number>0
-        ret =  sprintf("%.0f",number.to_s)
+      if number != nil
+        if number>0
+          ret =  sprintf("%.0f",number.to_s)
         else
-      ret = ""        
-    end 
+          ret = ""        
+        end 
+      else 
+         ret = ""
+      end 
     return ret 
   end 
   

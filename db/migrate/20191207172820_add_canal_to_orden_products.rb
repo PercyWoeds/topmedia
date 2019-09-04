@@ -1,5 +1,6 @@
 class AddCanalToOrdenProducts < ActiveRecord::Migration
   def change
+  	
     add_column :orden_products, :canal, :string
 	add_column :orden_products, :descrip, :string
 	add_column :orden_products, :d, :string
