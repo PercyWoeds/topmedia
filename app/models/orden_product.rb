@@ -86,7 +86,7 @@ class OrdenProduct < ActiveRecord::Base
            row['d25'] = 0
           end 
           if row['d26'] == nil
-           row['d19'] = 0
+           row['d26'] = 0
           end 
           if row['d27'] == nil
            row['d27'] = 0
