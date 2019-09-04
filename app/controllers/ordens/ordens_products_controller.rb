@@ -168,6 +168,7 @@ class Ordens::OrdensProductsController < ApplicationController
   def import
 
       OrdenProduct.import(params[:file])
+      
         @orden[:subtotal] = @orden.get_subtotal("subtotal")
            @orden[:tax] = @orden.get_subtotal("tax")
            @orden[:total] = @orden[:subtotal] + @orden[:tax]

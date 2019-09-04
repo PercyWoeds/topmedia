@@ -287,7 +287,7 @@ class OrdensController < ApplicationController
      for  order in @orden_detalle 
             row = []
             row << nroitem.to_s        
-            row << order.avisodetail.descrip 
+            row << order.descrip  
             row << formatea_number(order.d01)
             row << formatea_number(order.d02)
             row << formatea_number(order.d03)
