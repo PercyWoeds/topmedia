@@ -50,14 +50,13 @@ class OrdensController < ApplicationController
 
   def build_pdf_body_rpt2(pdf)
     
+   
     
     pdf.font "Helvetica" , :size => 6
     pdf.stroke_horizontal_rule
     pdf.font "Helvetica" , :size => 8
     pdf.move_down 2
-
-
-    max_rows = [client_data_headers_1.length, invoice_headers_1.length,0].max
+    max_rows = [client_data_headers_1.length, invoice_headers_1.length 0].max
       rows = []
       (1..max_rows).each do |row|
         rows_index = row - 1
@@ -65,7 +64,6 @@ class OrdensController < ApplicationController
         rows[rows_index] += (client_data_headers_1.length >= row ? client_data_headers_1[rows_index] : ['',''])
         rows[rows_index] += (invoice_headers_1.length >= row ? invoice_headers_1[rows_index] : ['',''])
       
-        
       end
 
       if rows.present?
@@ -84,9 +82,6 @@ class OrdensController < ApplicationController
 
       end
         
-
-        
-
          pdf.font "Helvetica" , :size => 6
       pdf.move_down 2
       headers = []
@@ -515,7 +510,6 @@ class OrdensController < ApplicationController
                                           columns([35]).width=42
 
                                          
-                                          
                                         end                                          
       pdf
 
