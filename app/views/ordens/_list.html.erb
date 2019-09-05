@@ -42,10 +42,10 @@
             <%= orden.get_processed_short %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= link_to "View", orden %>
+            <%= link_to "Ver", orden %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= link_to "Edit", edit_orden_path(orden) %>
+            <%= link_to "Editar", edit_orden_path(orden) %>
           </td>
           <td class="bordered_right bordered_bottom">
             <%= link_to 'Eliminar',:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>
