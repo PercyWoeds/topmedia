@@ -86,7 +86,7 @@ class OrdensController < ApplicationController
    
         
          pdf.font "Helvetica" , :size => 5
-      pdf.move_down 2
+      pdf.move_down 10
       headers = []
       table_content = []
       total_general = 0
@@ -425,6 +425,7 @@ class OrdensController < ApplicationController
          end 
            
            row << sprintf("%.2f",@total_linea_general.to_s)
+           row << ""
          row << "SUBTOTAL:"
          row << ActiveSupport::NumberHelper::number_to_delimited(@orden.subtotal.round(2),delimiter:",",separator:".").to_s
         
