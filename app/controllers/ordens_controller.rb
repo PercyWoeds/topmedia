@@ -472,13 +472,14 @@ class OrdensController < ApplicationController
                                           columns([33]).align=:right
                                           
                                           columns([33]).width=30
+
                                           columns([34]).align=:right
                                           columns([34]).width=42
                                           
                                           columns([35]).align=:right
                                           columns([35]).width=42
-                                          columns([35]).align=:right
-                                          columns([35]).width=42
+
+                                         
                                           
                                         end                                          
       pdf
