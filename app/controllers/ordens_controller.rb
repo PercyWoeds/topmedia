@@ -25,6 +25,38 @@ class OrdensController < ApplicationController
 
       pdf.move_down 5
 
+      #pdf.text supplier.street, :size => 10
+      #pdf.text supplier.district, :size => 10
+      #pdf.text supplier.city, :size => 1
+       
+       pdf.bounding_box([555, 525], :width => 170, :height => 70) do
+        pdf.stroke_bounds
+        pdf.move_down 15
+        pdf.font "Helvetica", :style => :bold do
+          pdf.text "R.U.C: 20545232031", :align => :center,:size => 10
+          pdf.text "ORDEN DE TRANSMISION", :align => :center,:size  =>10
+          pdf.text "#{@orden.code}"+" REV."+"#{@orden.revision}", :align => :center,:size  =>10
+          pdf.text @month_name, :align => :center,:size  =>10,
+                                 :style => :bold
+          
+        end
+      end
+   
+    pdf.text "Lima, " << @orden.fecha.strftime("%d/%m/%Y") ,:size =>10 ,:style=> :bold 
+    pdf 
+
+
+  end   
+
+  def build_pdf_body_rpt2(pdf)
+    
+    
+    pdf.font "Helvetica" , :size => 6
+    pdf.stroke_horizontal_rule
+    pdf.font "Helvetica" , :size => 8
+    pdf.move_down 2
+
+
 
 
     max_rows = [client_data_headers_1.length, invoice_headers_1.length, 0].max
@@ -56,36 +88,6 @@ class OrdensController < ApplicationController
         
 
         
-      #pdf.text supplier.street, :size => 10
-      #pdf.text supplier.district, :size => 10
-      #pdf.text supplier.city, :size => 1
-       
-       pdf.bounding_box([555, 525], :width => 170, :height => 70) do
-        pdf.stroke_bounds
-        pdf.move_down 15
-        pdf.font "Helvetica", :style => :bold do
-          pdf.text "R.U.C: 20545232031", :align => :center,:size => 10
-          pdf.text "ORDEN DE TRANSMISION", :align => :center,:size  =>10
-          pdf.text "#{@orden.code}"+" REV."+"#{@orden.revision}", :align => :center,:size  =>10
-          pdf.text @month_name, :align => :center,:size  =>10,
-                                 :style => :bold
-          
-        end
-      end
-   
-    pdf.text "Lima, " << @orden.fecha.strftime("%d/%m/%Y") ,:size =>10 ,:style=> :bold 
-    pdf 
-
-
-  end   
-
-  def build_pdf_body_rpt2(pdf)
-    
-    
-    pdf.font "Helvetica" , :size => 6
-    pdf.stroke_horizontal_rule
-    pdf.font "Helvetica" , :size => 8
-    pdf.move_down 2
 
          pdf.font "Helvetica" , :size => 6
       pdf.move_down 2
@@ -439,87 +441,62 @@ class OrdensController < ApplicationController
                                           columns([1]).align=:left
                                           columns([1]).width = 10
                                           columns([2]).align=:center
-                                          columns([2]).width=8
+                                          
 
                                           columns([3]).align=:center
-                                          columns([3]).width=8
-
+                                          
                                           columns([4]).align=:center
-                                          columns([4]).width=8
-
+                                          
                                           columns([5]).align=:center 
-                                          columns([5]).width=8
-
+                                          
                                           columns([6]).align=:center
-                                          columns([6]).width=8
-
+                                          
 
                                           columns([7]).align=:center
-                                          columns([7]).width=8
-
+                                          
                                           columns([8]).align=:center
-                                          columns([8]).width=8
-
+                                          
                                           columns([9]).align=:center
-                                          columns([9]).width=8
-
+                                          
                                           columns([10]).align=:center
-                                          columns([10]).width=8
-
+                                          
                                           columns([11]).align=:center 
-                                          columns([11]).width=8
-
+                                          
                                           columns([12]).align=:center
-                                          columns([12]).width=8
-
+                                          
                                           columns([13]).align=:center
-                                          columns([13]).width=8
-
+                                          
                                           columns([14]).align=:center
-                                          columns([14]).width=8
-
+                                          
                                           columns([15]).align=:center
-                                          columns([15]).width=8
-
+                                          
                                           columns([16]).align=:center
-                                          columns([16]).width=8
-
+                                          
                                           columns([17]).align=:center
-                                          columns([17]).width=8
-
+                                          
                                           columns([18]).align=:center
-                                          columns([18]).width=8
-
+                                          
                                           columns([19]).align=:center
-                                          columns([19]).width=8
-
+                                          
                                           columns([20]).align=:center
-                                          columns([20]).width=8
-
+                                          
                                           columns([21]).align=:center
-                                          columns([21]).width=8
-
+                                          
                                           columns([22]).align=:center
-                                          columns([22]).width=8
+                                          
 
                                           columns([23]).align=:center
-                                          columns([23]).width=8
-
+                                          
                                           columns([24]).align=:center
-                                          columns([3]).width=8
-
+                                          
                                           columns([25]).align=:center
-                                          columns([25]).width=8
-
+                                          
                                           columns([26]).align=:center
-                                          columns([26]).width=8
-
+                                          
                                           columns([27]).align=:center
-                                          columns([27]).width=8
-
+                                          
                                           columns([28]).align=:center 
-                                          columns([28]).width=8
-
+                                          
                                           columns([29]).align=:center 
                                           columns([30]).align=:center
                                           
@@ -1728,7 +1705,7 @@ def foot_data_headers_1
      
      client_data_headers_1  = [["Cliente : ", $lcCli]]
       client_data_headers_1 <<  ["Motivo : ", $lcVersion]
-      client_data_headers_1 <<  ["Duración : ",$lcDuracion ]
+      client_data_headers_1 <<  ["Duracion : ",$lcDuracion ]
       client_data_headers_1
       
       
