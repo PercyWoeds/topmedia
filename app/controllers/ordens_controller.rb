@@ -288,7 +288,7 @@ class OrdensController < ApplicationController
      for  order in @orden_detalle 
             row = []
             row << nroitem.to_s        
-            row << order.descrip[1..18]  
+            row << order.descrip[0..16]  
             row << formatea_number(order.d01)
             row << formatea_number(order.d02)
             row << formatea_number(order.d03)
@@ -473,10 +473,13 @@ class OrdensController < ApplicationController
                                           
                                           columns([33]).width=30
                                           columns([34]).align=:right
-                                          columns([34]).width=44
+                                          columns([34]).width=42
                                           
                                           columns([35]).align=:right
-                                          columns([35]).width=45
+                                          columns([35]).width=42
+                                          columns([35]).align=:right
+                                          columns([35]).width=42
+                                          
                                         end                                          
       pdf
 
