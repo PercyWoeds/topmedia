@@ -28,33 +28,7 @@ class OrdensController < ApplicationController
       #pdf.text supplier.street, :size => 10
       #pdf.text supplier.district, :size => 10
       #pdf.text supplier.city, :size => 1
-       
-       pdf.bounding_box([555, 525], :width => 170, :height => 70) do
-        pdf.stroke_bounds
-        pdf.move_down 15
-        pdf.font "Helvetica", :style => :bold do
-          pdf.text "R.U.C: 20545232031", :align => :center,:size => 10
-          pdf.text "ORDEN DE TRANSMISION", :align => :center,:size  =>10
-          pdf.text "#{@orden.code}"+" REV."+"#{@orden.revision}", :align => :center,:size  =>10
-          pdf.text @month_name, :align => :center,:size  =>10,
-                                 :style => :bold
-          
-        end
-      end
-   
-    pdf.text "Lima, " << @orden.fecha.strftime("%d/%m/%Y") ,:size =>10 ,:style=> :bold 
-    pdf 
 
-
-  end   
-
-  def build_pdf_body_rpt2(pdf)
-    
-   
-    
-    pdf.font "Helvetica" , :size => 6
-    pdf.stroke_horizontal_rule
-   
     max_rows = [client_data_headers_1.length, invoice_headers_1.length, 0].max
       rows = []
       (1..max_rows).each do |row|
@@ -80,6 +54,34 @@ class OrdensController < ApplicationController
         pdf.move_down 5
 
       end
+      
+       
+       pdf.bounding_box([555, 525], :width => 170, :height => 70) do
+        pdf.stroke_bounds
+        pdf.move_down 15
+        pdf.font "Helvetica", :style => :bold do
+          pdf.text "R.U.C: 20545232031", :align => :center,:size => 10
+          pdf.text "ORDEN DE TRANSMISION", :align => :center,:size  =>10
+          pdf.text "#{@orden.code}"+" REV."+"#{@orden.revision}", :align => :center,:size  =>10
+          pdf.text @month_name, :align => :center,:size  =>10,
+                                 :style => :bold
+          
+        end
+      end
+   
+    pdf.text "Lima, " << @orden.fecha.strftime("%d/%m/%Y") ,:size =>10 ,:style=> :bold 
+    pdf 
+
+
+  end   
+
+  def build_pdf_body_rpt2(pdf)
+    
+   
+    
+    pdf.font "Helvetica" , :size => 6
+
+   
         
          pdf.font "Helvetica" , :size => 5
       pdf.move_down 2
