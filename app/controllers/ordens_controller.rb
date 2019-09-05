@@ -11,7 +11,7 @@ class OrdensController < ApplicationController
 ##-------------------------------------------------------------------------------------
   
   def build_pdf_header_rpt2(pdf)
-     pdf.font "Helvetica" , :size => 6
+     pdf.font "Helvetica" , :size => 8
       
      $lcCli  =  @orden.customer.name 
      $lcRucCli =  @orden.customer.ruc
@@ -24,7 +24,8 @@ class OrdensController < ApplicationController
         
 
       pdf.move_down 5
-
+      pdf.text "Lima, " << @orden.fecha.strftime("%d/%m/%Y") ,:size =>10 ,:style=> :bold 
+    
       #pdf.text supplier.street, :size => 10
       #pdf.text supplier.district, :size => 10
       #pdf.text supplier.city, :size => 1
@@ -54,7 +55,7 @@ class OrdensController < ApplicationController
         pdf.move_down 5
 
       end
-      
+
        
        pdf.bounding_box([555, 525], :width => 170, :height => 70) do
         pdf.stroke_bounds
@@ -68,8 +69,9 @@ class OrdensController < ApplicationController
           
         end
       end
+
+
    
-    pdf.text "Lima, " << @orden.fecha.strftime("%d/%m/%Y") ,:size =>10 ,:style=> :bold 
     pdf 
 
 
@@ -279,6 +281,7 @@ class OrdensController < ApplicationController
         row << "31"+"\n"+get_name_dia(fechadia31)
       end 
       row << "TOTAL"
+      row << "R.MILES"
       row << "TARIFA"
       row << "IMPORTE"
       
@@ -364,6 +367,7 @@ class OrdensController < ApplicationController
                            order.d11+order.d12+order.d13+order.d14+order.d15+order.d16+order.d17+order.d18+order.d19+order.d20+
                            order.d21+order.d22+order.d23+order.d24+order.d25+order.d26+order.d27+order.d28+order.d29+order.d30+order.d31
             row << sprintf("%.2f",@total_linea.to_s)
+            row << rating2 
             row << ActiveSupport::NumberHelper::number_to_delimited(order.price.round(2),delimiter_pattern: /(\d+?)(?=(\d\d)+(\d)(?!\d))/).to_s
             
             row << ActiveSupport::NumberHelper::number_to_delimited(order.total.round(2),delimiter:",",separator:".").to_s
