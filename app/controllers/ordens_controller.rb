@@ -384,8 +384,8 @@ class OrdensController < ApplicationController
 
 
         row = []
-         row << ""       
-         row << " TOTAL => "         
+         row << "TOTAL =>"       
+         row << "  "         
          row << formatea_number(@total_dia01_column)
          row << formatea_number(@total_dia02_column)
          row << formatea_number(@total_dia03_column)
