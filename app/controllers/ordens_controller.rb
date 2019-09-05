@@ -56,7 +56,7 @@ class OrdensController < ApplicationController
     pdf.stroke_horizontal_rule
     pdf.font "Helvetica" , :size => 8
     pdf.move_down 2
-    max_rows = [client_data_headers_1.length, invoice_headers_1.length 0].max
+    max_rows = [client_data_headers_1.length, invoice_headers_1.length, 0].max
       rows = []
       (1..max_rows).each do |row|
         rows_index = row - 1
