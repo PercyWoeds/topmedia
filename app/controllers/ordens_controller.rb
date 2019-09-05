@@ -57,9 +57,7 @@ class OrdensController < ApplicationController
     pdf.move_down 2
 
 
-
-
-    max_rows = [client_data_headers_1.length, invoice_headers_1.length, invoice_headers_2.length, 0].max
+    max_rows = [client_data_headers_1.length, invoice_headers_1.length,0].max
       rows = []
       (1..max_rows).each do |row|
         rows_index = row - 1
@@ -78,7 +76,7 @@ class OrdensController < ApplicationController
           :width => pdf.bounds.width
         
         }) do
-          columns([0, 2,4]).font_style = :bold
+          columns([0, 2]).font_style = :bold
           
         end
 
