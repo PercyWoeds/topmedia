@@ -24,6 +24,37 @@ class OrdensController < ApplicationController
         
 
       pdf.move_down 5
+
+
+
+    max_rows = [client_data_headers_1.length, invoice_headers_1.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_1.length >= row ? client_data_headers_1[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_1.length >= row ? invoice_headers_1[rows_index] : ['',''])
+      
+        
+      end
+
+      if rows.present?
+
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0,:height => 17 },
+          :width => pdf.bounds.width
+        
+        }) do
+          columns([0, 2,4]).font_style = :bold
+          
+        end
+
+        pdf.move_down 5
+
+      end
+        
+
         
       #pdf.text supplier.street, :size => 10
       #pdf.text supplier.district, :size => 10
@@ -56,33 +87,6 @@ class OrdensController < ApplicationController
     pdf.font "Helvetica" , :size => 8
     pdf.move_down 2
 
-    max_rows = [client_data_headers_1.length, invoice_headers_1.length,invoice_headers_2.length, 0].max
-      rows = []
-      (1..max_rows).each do |row|
-        rows_index = row - 1
-        rows[rows_index] = []
-        rows[rows_index] += (client_data_headers_1.length >= row ? client_data_headers_1[rows_index] : ['',''])
-        rows[rows_index] += (invoice_headers_1.length >= row ? invoice_headers_1[rows_index] : ['',''])
-        rows[rows_index] += (invoice_headers_2.length >= row ? invoice_headers_2[rows_index] : ['',''])
-        
-      end
-
-      if rows.present?
-
-        pdf.table(rows, {
-          :position => :center,
-          :cell_style => {:border_width => 0,:height => 17 },
-          :width => pdf.bounds.width
-        
-        }) do
-          columns([0, 2,4]).font_style = :bold
-          
-        end
-
-        pdf.move_down 5
-
-      end
-        
          pdf.font "Helvetica" , :size => 6
       pdf.move_down 2
       headers = []
@@ -239,8 +243,8 @@ class OrdensController < ApplicationController
       
      row = []
       
-      row << "Nº"
-      row << "PROGRAMA "
+      row << "PROGRAMA"
+      row << "HORA "
       row << "01"+"\n"+get_name_dia(fechadia1)
       row << "02"+"\n"+get_name_dia(fechadia2)
       row << "03"+"\n"+get_name_dia(fechadia3)
@@ -287,8 +291,8 @@ class OrdensController < ApplicationController
      
      for  order in @orden_detalle 
             row = []
-            row << nroitem.to_s        
-            row << order.descrip[0..16]  
+            row << order.descrip[0..16]        
+            row << order.h  
             row << formatea_number(order.d01)
             row << formatea_number(order.d02)
             row << formatea_number(order.d03)
@@ -431,36 +435,91 @@ class OrdensController < ApplicationController
                                         
                                         } do 
                                           columns([0]).align=:center
-                                          columns([0]).width = 20
+                                          columns([0]).width = 80
                                           columns([1]).align=:left
-                                          columns([1]).width = 80
+                                          columns([1]).width = 10
                                           columns([2]).align=:center
+                                          columns([2]).width=8
+
                                           columns([3]).align=:center
+                                          columns([3]).width=8
+
                                           columns([4]).align=:center
+                                          columns([4]).width=8
+
                                           columns([5]).align=:center 
+                                          columns([5]).width=8
+
                                           columns([6]).align=:center
+                                          columns([6]).width=8
+
+
                                           columns([7]).align=:center
+                                          columns([7]).width=8
+
                                           columns([8]).align=:center
+                                          columns([8]).width=8
+
                                           columns([9]).align=:center
+                                          columns([9]).width=8
+
                                           columns([10]).align=:center
+                                          columns([10]).width=8
+
                                           columns([11]).align=:center 
+                                          columns([11]).width=8
+
                                           columns([12]).align=:center
+                                          columns([12]).width=8
+
                                           columns([13]).align=:center
+                                          columns([13]).width=8
+
                                           columns([14]).align=:center
+                                          columns([14]).width=8
+
                                           columns([15]).align=:center
+                                          columns([15]).width=8
+
                                           columns([16]).align=:center
+                                          columns([16]).width=8
+
                                           columns([17]).align=:center
+                                          columns([17]).width=8
+
                                           columns([18]).align=:center
+                                          columns([18]).width=8
+
                                           columns([19]).align=:center
+                                          columns([19]).width=8
+
                                           columns([20]).align=:center
+                                          columns([20]).width=8
+
                                           columns([21]).align=:center
+                                          columns([21]).width=8
+
                                           columns([22]).align=:center
+                                          columns([22]).width=8
+
                                           columns([23]).align=:center
+                                          columns([23]).width=8
+
                                           columns([24]).align=:center
+                                          columns([3]).width=8
+
                                           columns([25]).align=:center
+                                          columns([25]).width=8
+
                                           columns([26]).align=:center
+                                          columns([26]).width=8
+
                                           columns([27]).align=:center
+                                          columns([27]).width=8
+
                                           columns([28]).align=:center 
+                                          columns([28]).width=8
+
                                           columns([29]).align=:center 
                                           columns([30]).align=:center
                                           
@@ -1660,23 +1719,6 @@ def foot_data_headers_1
       
   end
 
-  def invoice_headers_1            
-      invoice_headers_1  = [["Medio : ", $lcMedio]]
-      invoice_headers_1 <<  ["Cobertura : ", $lcCobertura]
-      invoice_headers_1 <<  ["Moneda : ", $lcMoneda]
-      invoice_headers_1
-  end
-
- def invoice_headers_2
-      invoice_headers_2  = [["Marca: ", $lcMarca]] 
-      invoice_headers_2 << ["Producto  : ",$lcProducto]
-      invoice_headers_2 << ["Version  : ",$lcVersion]
-      invoice_headers_2 << ["Duracion  : ",$lcDuracion]
-          
-      invoice_headers_2
-      
-      
-  end
 
 
 
@@ -1685,8 +1727,8 @@ def foot_data_headers_1
     #{@purchaseorder.description}
      
      client_data_headers_1  = [["Cliente : ", $lcCli]]
-      client_data_headers_1 <<  ["RUC : ", $lcRucCli]
-      client_data_headers_1 <<  ["Contrato : ", $lcContrato]
+      client_data_headers_1 <<  ["Motivo : ", $lcVersion]
+      client_data_headers_1 <<  ["Duración : ",$lcDuracion ]
       client_data_headers_1
       
       
