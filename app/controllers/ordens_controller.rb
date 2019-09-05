@@ -290,7 +290,7 @@ class OrdensController < ApplicationController
      
      for  order in @orden_detalle 
             row = []
-            row << order.descrip[0..16]        
+            row << order.descrip[0..14]        
             row << order.h  
             row << formatea_number(order.d01)
             row << formatea_number(order.d02)
@@ -514,7 +514,7 @@ class OrdensController < ApplicationController
                                           columns([34]).width=40
                                           
                                           columns([35]).align=:right
-                                          columns([34]).width=40
+                                          columns([35]).width=40
                                           
 
                                          
