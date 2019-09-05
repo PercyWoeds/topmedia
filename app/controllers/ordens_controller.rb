@@ -54,8 +54,7 @@ class OrdensController < ApplicationController
     
     pdf.font "Helvetica" , :size => 6
     pdf.stroke_horizontal_rule
-    pdf.font "Helvetica" , :size => 8
-    pdf.move_down 2
+   
     max_rows = [client_data_headers_1.length, invoice_headers_1.length, 0].max
       rows = []
       (1..max_rows).each do |row|
@@ -69,9 +68,9 @@ class OrdensController < ApplicationController
       if rows.present?
 
         pdf.table(rows, {
-          :position => :center,
+          :position => :left,
           :cell_style => {:border_width => 0,:height => 17 },
-          :width => pdf.bounds.width
+          :width => pdf.bounds.width/3*2
         
         }) do
           columns([0, 2]).font_style = :bold
@@ -82,7 +81,7 @@ class OrdensController < ApplicationController
 
       end
         
-         pdf.font "Helvetica" , :size => 6
+         pdf.font "Helvetica" , :size => 5
       pdf.move_down 2
       headers = []
       table_content = []
@@ -429,7 +428,7 @@ class OrdensController < ApplicationController
                                         :width => pdf.bounds.width
                                         
                                         } do 
-                                          columns([0]).align=:center
+                                          columns([0]).align=:left 
                                           columns([0]).width = 80
                                           columns([1]).align=:left
                                     
