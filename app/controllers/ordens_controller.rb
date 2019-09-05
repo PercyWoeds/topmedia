@@ -55,6 +55,7 @@ class OrdensController < ApplicationController
     pdf.stroke_horizontal_rule
     pdf.font "Helvetica" , :size => 8
     pdf.move_down 2
+
     max_rows = [client_data_headers_1.length, invoice_headers_1.length,invoice_headers_2.length, 0].max
       rows = []
       (1..max_rows).each do |row|
@@ -287,7 +288,7 @@ class OrdensController < ApplicationController
      for  order in @orden_detalle 
             row = []
             row << nroitem.to_s        
-            row << order.descrip  
+            row << order.descrip[1..18]  
             row << formatea_number(order.d01)
             row << formatea_number(order.d02)
             row << formatea_number(order.d03)
@@ -893,13 +894,14 @@ class OrdensController < ApplicationController
     end
     
 
-    @customers = Customer.all
-    @motivos =Motivo.all
-    @medios = Medio.all    
-    @marcas= Marca.all 
-    @versions = Version.all 
+
+    @customers = Customer.all.order(:name)
+    @motivos =Motivo.all.order(:name)
+    @medios = Medio.all.order(:descrip)    
+    @marcas= Marca.all.order(:name) 
+    @versions = Version.all.order(:descrip) 
     @contratos = Contrato.all 
-    @productos = Producto.all
+    @productos = Producto.all.order(:name)
     @contratos2 = CustomerContrato.all.order(:secu_cont)  
 
     @orden = Orden.new

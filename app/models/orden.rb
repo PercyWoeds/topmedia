@@ -156,7 +156,7 @@ TABLE_HEADERS2 = ["Nº",
   end
   
   def get_orden_products
-    invoice_products = OrdenProduct.where(orden_id:  self.id)    
+    invoice_products = OrdenProduct.where(orden_id:  self.id).order(:id)    
     return invoice_products
   end
   
