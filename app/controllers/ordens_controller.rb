@@ -59,7 +59,7 @@ class OrdensController < ApplicationController
 
 
 
-    max_rows = [client_data_headers_1.length, invoice_headers_1.length, 0].max
+    max_rows = [client_data_headers_1.length, invoice_headers_1.length, invoice_headers_2.length, 0].max
       rows = []
       (1..max_rows).each do |row|
         rows_index = row - 1
@@ -440,6 +440,7 @@ class OrdensController < ApplicationController
                                           columns([0]).width = 80
                                           columns([1]).align=:left
                                           columns([1]).width = 10
+
                                           columns([2]).align=:center
                                           
 
@@ -600,11 +601,11 @@ class OrdensController < ApplicationController
      $lcMedio = @orden.medio.descrip
      $lcCobertura = @orden.ciudad.descrip 
      
-    
+
+
     Prawn::Document.generate "app/pdf_output/rpt_orden2.pdf" , :page_layout => :landscape,:size=> "A4" do |pdf|        
     #Prawn::Document.generate("app/pdf_output/rpt_orden2.pdf") do |pdf|        
-
-        
+    
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt2(pdf)
         pdf = build_pdf_body_rpt2(pdf)
