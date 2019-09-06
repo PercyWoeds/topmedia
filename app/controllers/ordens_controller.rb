@@ -440,7 +440,7 @@ class OrdensController < ApplicationController
 
                                           columns([0]).width = 60
                                           columns([1]).align=:left
-                                    
+                                          columns([1]).width = 30
 
                                           columns([2]).align=:center
                                           
@@ -506,7 +506,7 @@ class OrdensController < ApplicationController
                                           columns([31]).align=:center
                                           
                                           columns([32]).align=:right
-                                          columns([33]).width= 28
+                                          columns([32]).width= 28
 
                                           columns([33]).align=:right
                                           
