@@ -58,7 +58,7 @@ class OrdensController < ApplicationController
       end
 
        
-       pdf.bounding_box([565, 535], :width => 170, :height => 70) do
+       pdf.bounding_box([570, 540], :width => 170, :height => 70) do
         pdf.stroke_bounds
         pdf.move_down 15
         pdf.font "Helvetica", :style => :bold do
@@ -437,6 +437,7 @@ class OrdensController < ApplicationController
                                           columns([0]).align=:left 
 
                                           columns([0]).width = 60
+
                                           columns([1]).align=:left
                                           columns([1]).width = 30
 
@@ -511,7 +512,7 @@ class OrdensController < ApplicationController
                                           columns([33]).width=34
 
                                           columns([34]).align=:right
-                                          columns([34]).width=40
+                                          columns([34]).width=42
                                           
 
                                           columns([35]).align=:right
