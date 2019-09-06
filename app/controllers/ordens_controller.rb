@@ -81,12 +81,9 @@ class OrdensController < ApplicationController
     
    
     
-    pdf.font "Helvetica" , :size => 6
-
-   
+    pdf.font "Helvetica" , :size => 5
         
-     pdf.font "Helvetica" , :size => 4.7
-      pdf.move_down 10
+     pdf.move_down 10
       headers = []
       table_content = []
       total_general = 0
@@ -607,7 +604,7 @@ class OrdensController < ApplicationController
      
 
 
-    Prawn::Document.generate "app/pdf_output/rpt_orden2.pdf" , :page_layout => :landscape,:size=> "A4",:margin => [0,0,0,0] do |pdf|        
+    Prawn::Document.generate "app/pdf_output/rpt_orden2.pdf" , :page_layout => :landscape,:size=> "A4",:margin => [1,1,1,1] do |pdf|        
     
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt2(pdf)
