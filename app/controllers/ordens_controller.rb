@@ -436,7 +436,7 @@ class OrdensController < ApplicationController
                                         } do 
                                           columns([0]).align=:left 
 
-                                          columns([0]).width = 60
+                                          columns([0]).width = 90
 
                                           columns([1]).align=:left
                                           columns([1]).width = 30
