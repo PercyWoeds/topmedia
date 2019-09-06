@@ -85,7 +85,7 @@ class OrdensController < ApplicationController
 
    
         
-         pdf.font "Helvetica" , :size => 5
+         pdf.font "Helvetica" , :size => 4.5
       pdf.move_down 10
       headers = []
       table_content = []
@@ -509,7 +509,7 @@ class OrdensController < ApplicationController
                                           
                                           columns([33]).align=:right
                                           
-                                          columns([33]).width=20
+                                          columns([33]).width=25
 
                                           columns([34]).align=:right
                                           columns([34]).width=36
