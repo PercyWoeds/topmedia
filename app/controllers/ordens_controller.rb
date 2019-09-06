@@ -85,7 +85,7 @@ class OrdensController < ApplicationController
 
    
         
-         pdf.font "Helvetica" , :size => 4.5
+     pdf.font "Helvetica" , :size => 4.7
       pdf.move_down 10
       headers = []
       table_content = []
@@ -526,6 +526,7 @@ class OrdensController < ApplicationController
 
 
     def build_pdf_footer_rpt2(pdf)
+        pdf.font "Helvetica" , :size => 6
 
         subtotals = []
         taxes = []
