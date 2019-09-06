@@ -943,7 +943,7 @@ class OrdensController < ApplicationController
     @versions = Version.all.order(:descrip) 
     @contratos = Contrato.all 
     @productos = Producto.all.order(:name)
-    @contratos2 = CustomerContrato.all.order(:secu_cont)  
+    
 
     @orden = Orden.new
     @orden[:code] = "#{generate_guid12()}"
@@ -959,6 +959,7 @@ class OrdensController < ApplicationController
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @ciudad = Ciudad.all
+    @contratos2 = @company.get_customer_contratos()
     
     @ac_user = getUsername()
     @orden[:user_id] = getUserId()

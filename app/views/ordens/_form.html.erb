@@ -28,9 +28,7 @@
 
     
     <div class="field">
-    
       <label for="ac_customer" class="bold">Cliente*</label><br />
-      
       <input type="text" name="ac_customer" id="ac_customer" value="<% if @ac_customer %><%= @ac_customer %><% end %>" />
       
       
@@ -54,7 +52,8 @@
 
     <div class="field">
       <%= f.label :secu_cont %><br />
-      <%= f.select :secu_cont,options_from_collection_for_select(@contratos2,'secu_cont','secu_cont') %>
+      
+    <%=  f.collection_select(:secu_cont, @contratos2, :id,:name , size: @contratos2.size) %>
        
     </div>
     <div class="field">

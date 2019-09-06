@@ -611,7 +611,18 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and factur
     
  end 
 
+ def get_customer_contratos
 
+    @contratos =CustomerContrato.find_by_sql(["Select 
+    concat(customer_contratos.secu_cont,' ',customers.name,'  ',medios.descrip,'  ',contratos.code) as name 
+    from customer_contratos  
+    INNER JOIN customers ON customer_contratos.customer_id = customers.id
+    INNER JOIN medios    ON customer_contratos.medio_id = medios.id    
+    INNER JOIN contratos ON customer_contratos.contrato_id = contratos.id "])
+    
+    return @contratos
+    
+ end 
 
  def get_customer_payments_value_otros(fecha1,fecha2,value='factory')
 
