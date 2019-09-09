@@ -4,20 +4,18 @@ class ContratosController < ApplicationController
 
   # GET /contratos
   # GET /contratos.json
+
+
+
   def index
-
-
-
-  if params[:code]
-    @courses = Course.by_year(params[:year])
-
-    @contratos = Contrato.by_year("%#{params[:anio]}%").paginate(:page => params[:page])
-  else
-    @contratos = Contrato.all.paginate(:page => params[:page])
+    if params[:search]
+      @contratos = Contrato.search(params[:search]).order("code").paginate(:page => params[:page])
+    else
+      @contratos = Contrato.all.order('code ').paginate(:page => params[:page])
+    end
   end
 
-
-  end
+  
 
   # GET /contratos/1
   # GET /contratos/1.json

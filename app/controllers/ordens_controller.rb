@@ -23,9 +23,9 @@ class OrdensController < ApplicationController
       pdf.image "#{Dir.pwd}/public/images/logo.jpg", :width => 130
         
 
-      pdf.move_down 10
+      pdf.move_down 20
 
-      pdf.text "Lima, " << @orden.fecha.strftime("%d/%m/%Y") ,:size =>10 ,:style=> :bold 
+      pdf.text "   Lima, " << @orden.fecha.strftime("%d/%m/%Y") ,:size =>10 ,:style=> :bold 
     
       #pdf.text supplier.street, :size => 10
       #pdf.text supplier.district, :size => 10

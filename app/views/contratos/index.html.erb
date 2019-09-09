@@ -2,11 +2,9 @@
 
 <h1>Contratos</h1>
 
-
-
-<%= form_tag(contratos_path method: :get) do %>
-  Contrato <%= text_field_tag :anio, params[:anio] %>
-  <%= submit_tag 'Search' %>
+<%= form_tag(contratos_path, :method => "get", id: "search-form") do %>
+  <%= text_field_tag :search, params[:search], placeholder: "Buscar Contratos" %>
+  <%= submit_tag "Buscar" %>
 <% end %>
 
 <table>
@@ -52,7 +50,11 @@
 
 <%= will_paginate @contratos %>  
 
+
+
+<div class="button">
 <%= link_to 'Nuevo Contrato',new_contrato_path  %>
+</div>
 
 <h2>Importar Archivo contratos "*.csv"</h2>
 
