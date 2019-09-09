@@ -82,10 +82,14 @@ class Contrato < ActiveRecord::Base
 
     def self.search(search)
     # Title is for the above case, the OP incorrectly had 'name'
+      
         where("extract(year from fecha ) = ?", "#{search}")
+          
     end
-    
 
+  
+
+   
   def get_contrato
 
 	if self.tipocontrato_id == 1

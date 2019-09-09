@@ -2,10 +2,13 @@
 
 <h1>Contratos</h1>
 
-<%= form_tag(contratos_path, :method => "get", id: "search-form") do %>
-  <%= text_field_tag :search, params[:search], placeholder: "Buscar Contratos" %>
+  <%= form_tag(contratos_path, :method => "get", id: "search-form") do %>
+
+  <%= text_field_tag :search, params[:search], placeholder: "Buscar Contratos por año" %>
+    <%= text_field_tag :search2, params[:search2], placeholder: "Buscar Contrato " %>
   <%= submit_tag "Buscar" %>
-<% end %>
+  <% end %>
+
 
 <table>
   <thead>
@@ -27,19 +30,19 @@
   <tbody>
     <% @contratos.each do |contrato| %>
       <tr>
-        <td><%= contrato.code %></td>
-        <td><%= contrato.fecha.strftime("%d/%m/%Y") %></td>
-        <td><%= contrato.customer.name  %></td>
-        <td><%= contrato.medio.descrip  %></td>
-        <td><%= contrato.importe %></td>
-        <td><%= contrato.moneda.description  %></td>
-        <td><%= contrato.get_contrato %></td>
-        <td><%= contrato.nrocuotas %></td>
-        <td><%= contrato.comision1 %></td>
-        <td><%= contrato.comision2 %></td>
-        <td><%= link_to 'Cuotas', contrato %></td>
-        <td><%= link_to 'Edit', edit_contrato_path(contrato) %></td>
-        <td><%= link_to 'Eliminar', contrato, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+         <td class="small bordered_bottom bordered_right"><%= contrato.code %></td>
+         <td class="small bordered_bottom bordered_right"><%= contrato.fecha.strftime("%d/%m/%Y") %></td>
+        <td class="small bordered_bottom bordered_right"><%= contrato.customer.name  %></td>
+        <td class="small bordered_bottom bordered_right"><%= contrato.medio.descrip  %></td>
+        <td class="small bordered_bottom bordered_right"><%= money(contrato.importe) %></td>
+        <td class="small bordered_bottom bordered_right"><%= contrato.moneda.description  %></td>
+        <td class="small bordered_bottom bordered_right"><%= contrato.get_contrato %></td>
+        <td class="small bordered_bottom bordered_right"><%= contrato.nrocuotas %></td>
+        <td class="small bordered_bottom bordered_right"><%= contrato.comision1 %></td>
+        <td class="small bordered_bottom bordered_right"><%= contrato.comision2 %></td>
+        <td class="small bordered_bottom bordered_right"><%= link_to 'Cuotas', contrato %></td>
+        <td class="small bordered_bottom bordered_right"><%= link_to 'Editar', edit_contrato_path(contrato) %></td>
+        <td class="small bordered_bottom bordered_right"><%= link_to 'Eliminar', contrato, method: :delete, data: { confirm: 'Esta seguro de eliminar ?' } %></td>
         
       </tr>
     <% end %>

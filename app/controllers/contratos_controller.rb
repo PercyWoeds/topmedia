@@ -8,11 +8,16 @@ class ContratosController < ApplicationController
 
 
   def index
-    if params[:search]
+
+    if params[:search] !=""
+
       @contratos = Contrato.search(params[:search]).order("code").paginate(:page => params[:page])
     else
       @contratos = Contrato.all.order('code ').paginate(:page => params[:page])
+       
     end
+
+
   end
 
   
@@ -62,8 +67,8 @@ class ContratosController < ApplicationController
   # POST /contratos.json
   def create
     @contrato = Contrato.new(contrato_params)
-    @customers = Customer.all 
-    @medios =  Medio.all 
+    @customers = Customer.all.order(:name)
+    @medios =  Medio.all.order(:name) 
     
     
     respond_to do |format|
