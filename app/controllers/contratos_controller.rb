@@ -9,7 +9,7 @@ class ContratosController < ApplicationController
 
   def index
 
-    if params[:search] !=""
+    if params[:search] and params[:search] != ""
 
       @contratos = Contrato.search(params[:search]).order("code").paginate(:page => params[:page])
     else
