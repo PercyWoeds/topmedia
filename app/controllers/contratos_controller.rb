@@ -37,9 +37,9 @@ class ContratosController < ApplicationController
   # GET /contratos/new
   def new
     @contrato = Contrato.new
-    @customers = Customer.all 
+    @customers = Customer.all.order(:name)
     @monedas = Moneda.all
-    @medios =Medio.all 
+     @medios =Medio.all.order(:name)
     
     @contrato[:code] = "#{generate_guid11()}"
     @contrato[:nrocuotas]=0
