@@ -5,9 +5,10 @@ class CustomerContratosController < ApplicationController
   # GET /customer_contratos
   # GET /customer_contratos.json
   def index
-    @customer_contratos = CustomerContrato.all
-  end
-def import
+    @customer_contratos = CustomerContrato.all.order(:customer_id,:secu_cont)
+   end
+
+  def import
       CustomerContrato.import(params[:file])
        redirect_to root_url, notice: "Clientes Contratos  importadas."
   end 
@@ -19,10 +20,9 @@ def import
   # GET /customer_contratos/new
   def new
     @customer_contrato = CustomerContrato.new
-
-    @customers = Customer.all 
-    @medios = Medio.all
-    @contratos = Contrato.all
+    @customers = Customer.all.order(:name)
+    @medios = Medio.all.order(:full_name)
+    @contratos = Contrato.all.order(:code)
     @monedas = Moneda.all 
 
   end

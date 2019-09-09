@@ -9,6 +9,8 @@ class Customer < ActiveRecord::Base
   has_many :facturas
   has_many :addresses
   has_many :quotes 
+
+  has_many :customer_contratos
   
   
   
