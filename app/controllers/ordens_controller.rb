@@ -1881,11 +1881,11 @@ def foot_data_headers_1
     # Never trust parameters from the scary internet, only allow the white list through.
     def orden_params
 
-    params.require(:orden).permit(contrato_id: , fecha:, medio_id: , marca_id:,version_id:,
-    fecha1:, fecha2:, tiempo:, code: , company_id: , subtotal: , tax: , total: , user_id: ,
-    processed:, customer_id:, description:, rating:, month:, year: , revision:, producto_id:,
-    ciudad_id:,fecha_inicio:, fecha_fin: , tarifa: , aviso_detail_id:, avisodetail_id: , 
-    tipo:, secu_cont:, moneda_id:, quantity:)
+    params.require(:orden).permit(:contrato_id , :fecha, :medio_id , :marca_id,:version_id,
+    :fecha1, :fecha2, :tiempo, :code , :company_id , :subtotal, :tax, :total, :user_id ,
+    :processed , :customer_id, :description, :rating , :month, :year, :revision, :producto_id:,
+    :ciudad_id,:fecha_inicio, :fecha_fin, :tarifa , :aviso_detail_id, :avisodetail_id, 
+    :tipo, :secu_cont, :moneda_id, :quantity)
     end
 
 end
