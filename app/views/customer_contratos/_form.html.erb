@@ -17,22 +17,18 @@
 
   
     <div class="field">
-      
       <%= f.label :customer_id %><br />
-      <%= f.select :customer_id,options_from_collection_for_select(@customers,'id','name') %>
-
+      <%= f.collection_select :customer_id, @customers, :id, :name, :prompt => true %>
     </div>
     
     <div class="field">
-     <%= f.label :medio_id %><br />
-      <%= f.select :medio_id,options_from_collection_for_select(@medios,'id','descrip') %>
-
+     <%= f.label :medio_id %><br />    
+     <%= f.collection_select :medio_id, @medios, :id, :descrip, :prompt => true %>
     </div>
     <div class="field">
-  
-      <%= f.label :contrato_id %><br />
-      <%= f.select :contrato_id,options_from_collection_for_select(@contratos,'id','code') %>
 
+      <%= f.label :contrato_id %><br />
+      <%= f.collection_select :contrato_id, @contratos, :id, :code, :prompt => true %>
 
     </div>
     <div class="field">  
