@@ -27,11 +27,14 @@
       </div>
     </div>
     <div class="field">
-      <%= f.label :document_id,"Documento" %><br />
-      <%= f.select :document_id, options_from_collection_for_select(@documents,'id','description')%>
+      <%= f.label :document_id,"Documento:" %><br />
+      <%= f.collection_select  :document_id, Document.all , :id, :description,{:selected => Document.first }%>
+
+    
+
     </div>
       
-    <div class="field">
+    <div class="field ">
       <%= f.label :documento, "Nro Documento *", :class => "bold" %><br />
       <%= f.text_field :documento %>
 
@@ -57,6 +60,8 @@
     <div class="field">
       <%= f.label :moneda_id ,"  "%><br />
       <%= f.select :moneda_id, options_from_collection_for_select(@monedas,'id','description') %>
+
+
     </div>
     
       

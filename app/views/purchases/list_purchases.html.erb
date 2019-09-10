@@ -20,12 +20,6 @@
   </form>
 </div>
 
-
-<br />
-<%= render "purchases/list" %>
-
-<br />
-
 <div class="button">
   <%= link_to 'Nueva Factura', "/purchases/new/#{@company.id}" %>
 
@@ -33,6 +27,13 @@
   <%= link_to 'Cargar Orden de compra', "/purchases/cargar/#{@company.id}" %>
   
 </div>
+
+<br />
+<%= render "purchases/list" %>
+
+<br />
+
+
 
 <%= will_paginate @invoices %>
 
