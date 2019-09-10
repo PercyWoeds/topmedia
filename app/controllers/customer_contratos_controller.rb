@@ -29,10 +29,10 @@ class CustomerContratosController < ApplicationController
 
   # GET /customer_contratos/1/edit
   def edit
-    @customers = Customer.all 
-    @medios = Medio.all
-    @contratos = Contrato.all
-    @monedas = Moneda.all 
+     @customers = Customer.all.order(:name)
+    @medios = Medio.all.order(:full_name)
+    @contratos = Contrato.all.order(:code)
+   @monedas = Moneda.all 
 
   end
 

@@ -618,7 +618,8 @@ WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? and factur
     from customer_contratos  
     INNER JOIN customers ON customer_contratos.customer_id = customers.id
     INNER JOIN medios    ON customer_contratos.medio_id = medios.id    
-    INNER JOIN contratos ON customer_contratos.contrato_id = contratos.id "])
+    INNER JOIN contratos ON customer_contratos.contrato_id = contratos.id 
+    ORDER BY customers.name,medios.descrip,customer_contratos.secu_cont"])
     
     return @contratos
     
