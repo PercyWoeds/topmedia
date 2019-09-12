@@ -1407,7 +1407,7 @@ def list_receive_supplierpayments
           :italic => "app/assets/fonts/OpenSans-Italic.ttf",
         })
 
-        pdf.font "Open Sans",:size => 7 
+        pdf.font "Open Sans",:size => 6 
   
     
       headers = []
@@ -1695,11 +1695,11 @@ def list_receive_supplierpayments
                                           columns([4]).align=:right
                                           columns([4]).width= 60 
                                           columns([5]).align=:right
-                                          columns([5]).width= 60 
+                                          columns([5]).width= 80
                                           columns([6]).align=:right
-                                          columns([6]).width= 60 
+                                          columns([6]).width= 80
                                           columns([7]).align=:right
-                                          columns([7]).width= 60 
+                                          columns([7]).width= 80 
                                           
                                         end                                          
       pdf.move_down 10      

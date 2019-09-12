@@ -28,13 +28,9 @@
 <%= will_paginate @invoices %>  
 
 <div class="button">
-  <%= link_to 'Nueva Factura', "/facturas/new/#{@company.id}" %>  
+  <%= link_to 'Factura Contratos', "/facturas/new/#{@company.id}" %>  
   
-  <%= link_to "Download CSV", "/facturas/export2/#{@company.id}" %>
-
-  <%= link_to "Comprob.Fisicos TXT", "/facturas/export/#{@company.id}" %> 
-
-  <%= link_to "Export Concar", "/facturas/export3/#{@company.id}" %> 
+  <%= link_to "Factura Servicios", "/facturas/newfactura2/#{@company.id}" %>
 
 
 </div>
