@@ -39,15 +39,9 @@
       <% end %>
       </div>
 
-    <div class="field">
-      <%= f.label :location_id ,"Local"%><br />
-      <%= f.select :location_id, options_from_collection_for_select(@locations,'id','name') %>    
-    </div>
+  
 
-    <div class="field">
-      <%= f.label :division_id %><br />
-      <%= f.select :division_id,options_from_collection_for_select(@divisions,'id','name') %>
-    </div>
+
     <%= hr() %>
     
 
@@ -65,6 +59,12 @@
         <span id="selected_customer"><% if @ac_customer %><%= @ac_customer %><% else %><!-- i --><% end %></span>
       </div>
      </div>
+
+
+    <div class="field">
+      <%= f.label :medio_id %><br />
+      <%= f.select :medio_id,options_from_collection_for_select(@medios,'id','descrip') %>
+    </div>
 
      <div class="field">
       <%= f.label :payment_id,"Forma de Pago " %><br />
@@ -85,11 +85,15 @@
       
     </div>
 
- 
-    <div class="field">
-      <%= f.label :contrato, "Contrato:", :class => "bold"  %><br />
-      <%= f.text_field :contrato  %>
-    </div>
+ <div class="small">
+        <strong>Seleccionar Contrato :</strong>
+        <span id="selected_contrato"><% if @ac_contrato %><%= @ac_contrato %><% else %><!-- i --><% end %></span>
+        <br>
+        <span id="selected_contrato_name"><% if @ac_contrato %><%= @ac_contrato %><% else %><!-- i --><% end %></span>
+        <br>
+        <strong>Seleccionar Medio :</strong>
+        <span id="selected_contrato_descrip"><% if @ac_contrato %><%= @ac_contrato %><% else %><!-- i --><% end %></span>
+      </div>
 
 
     <div class="field" id="list_items">
@@ -151,6 +155,8 @@
       
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
       <%= f.hidden_field :customer_id, :id => "ac_customer_id" %>
+      <%= f.hidden_field :contrato_id, :id => "ac_contrato_id" %>
+     
       <%= f.hidden_field :company_id %>      
       <%= f.submit %>
     </div>
@@ -255,7 +261,7 @@
       $("#selected_contrato_name").html(data[0]);
     });        
     
-    
+
     $("#ac_customer").autocomplete("/facturas/ac_customers/<%= @company.id %>", {
 			matchSubset: 1,
 			matchContains: 1,
@@ -267,6 +273,7 @@
       $("#selected_customer").html(data[0]);
     });        
     
+
     $("#ac_user").autocomplete("/facturas/ac_user/<%= @company.id %>", {
 			matchSubset: 1,
 			matchContains: 1,

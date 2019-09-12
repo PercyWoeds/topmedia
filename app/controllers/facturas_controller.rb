@@ -86,7 +86,7 @@ class FacturasController < ApplicationController
     @invoice[:user_id] = getUserId()
     @invoice[:moneda_id] = 2
     @invoice[:document_id] = 1  
-     
+
     
     
   end
@@ -727,7 +727,9 @@ new_invoice_item.save
     @invoice[:charge] = 0
     @invoice[:tipo] = 1
         
-
+    @invoice[:location_id] = 1
+    @invoice[:division_id] = 1
+    
     
     if(params[:factura][:user_id] and params[:factura][:user_id] != "")
       curr_seller = User.find(params[:factura][:user_id])
