@@ -241,6 +241,21 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
+
+    $("#ac_contrato").autocomplete("/facturas/ac_contratos/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_contrato").result(function(event, data, formatted) {
+      $("#ac_contrato_id").val(data[6]);
+      $("#selected_contrato").html(data[4]);
+      $("#selected_contrato_descrip").html(data[2]);
+      $("#selected_contrato_name").html(data[0]);
+    });        
+    
+    
     $("#ac_customer").autocomplete("/facturas/ac_customers/<%= @company.id %>", {
 			matchSubset: 1,
 			matchContains: 1,
