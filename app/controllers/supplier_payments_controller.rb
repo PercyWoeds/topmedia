@@ -1265,7 +1265,7 @@ def rpt_cpagar5_pdf
     @purchases_all_rpt = @company.get_purchases_by_day_detalle(@fecha1,@fecha2)  
     @rpt = "rpt_#{generate_guid()}"
 
-    Prawn::Document.generate("app/pdf_output/#{@rpt}.pdf") do |pdf|
+    Prawn::Document.generate("app/pdf_output/#{@rpt}.pdf") ,:size=> "A4",:margin => [20,20,5,20] do |pdf|
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt(pdf)        
         pdf = build_pdf_body_rpt(pdf)
@@ -1684,8 +1684,8 @@ def list_receive_supplierpayments
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width,
-                                        :cell_style => {:border_width => 0 ,:height => 17 },
-                                        :margin => [20,20,5,20]
+                                        :cell_style => {:border_width => 0 ,:height => 17 }
+
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:left
