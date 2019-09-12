@@ -52,9 +52,44 @@ class FacturasController < ApplicationController
     end
     
     
+  end
+
+
+  def new2
+    @pagetitle = "Nueva factura"
+    @action_txt = "Create"
+    $lcAction="Factura"
+    $Action= "create"
     
-     
-  end  
+    @invoice = Factura.new
+    
+    @invoice[:code] = "#{generate_guid3()}"
+    
+    @invoice[:processed] = false
+    
+  
+    @company = Company.find(params[:company_id])
+    @invoice.company_id = @company.id
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+    @payments = @company.get_payments()
+    @services = @company.get_services()
+    @products = @company.get_products()
+    
+    @deliveryships = @invoice.my_deliverys 
+    @tipofacturas = @company.get_tipofacturas() 
+    @monedas = @company.get_monedas()
+    @tipodocumento = @company.get_documents()
+
+    @ac_user = getUsername()
+    @invoice[:user_id] = getUserId()
+    @invoice[:moneda_id] = 2
+    @invoice[:document_id] = 1  
+    
+  end
+
+
   def excel
 
     @company=Company.find(1)          
@@ -632,6 +667,7 @@ new_invoice_item.save
     @invoice[:user_id] = getUserId()
   end
 
+
   # GET /invoices/1/edit
   def edit
     @pagetitle = "Edit invoice"
@@ -687,7 +723,8 @@ new_invoice_item.save
     @invoice[:balance] = @invoice[:total]
     @invoice[:pago] = 0
     @invoice[:charge] = 0
-    
+    @invoice[:tipo] = 1
+        
 
     
     if(params[:factura][:user_id] and params[:factura][:user_id] != "")

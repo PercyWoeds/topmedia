@@ -474,6 +474,8 @@
   match 'facturas/ac_contrato_cuotas/:id' => 'facturas#ac_contrato_cuotas', via: [:get, :post]
   match 'facturas/ac_guias/:company_id' => 'facturas#ac_guias', via: [:get, :post]
   match 'facturas/new/:company_id' => 'facturas#new', via: [:get, :post]
+  match 'facturas/new2/:company_id' => 'facturas#new2', via: [:get, :post]
+  
   match 'facturas/export/:company_id' => 'facturas#export', via: [:get, :post]
   match 'facturas/export2/:company_id' => 'facturas#export2', via: [:get, :post]
   match 'facturas/export3/:company_id' => 'facturas#export3', via: [:get, :post]
