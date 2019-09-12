@@ -1265,13 +1265,17 @@ def rpt_cpagar5_pdf
     @purchases_all_rpt = @company.get_purchases_by_day_detalle(@fecha1,@fecha2)  
     @rpt = "rpt_#{generate_guid()}"
 
-    Prawn::Document.generate("app/pdf_output/#{@rpt}.pdf") ,:size=> "A4",:margin => [20,20,5,20] do |pdf|
+
+
+    Prawn::Document.generate "app/pdf_output/#{@rpt}.pdf"  ,:size=> "A4",:margin => [20,20,5,20] do |pdf|
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt(pdf)        
         pdf = build_pdf_body_rpt(pdf)
         build_pdf_footer_rpt(pdf)
         $lcFileName =  "app/pdf_output/#{@rpt}.pdf"      
     end     
+
+
 
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
                 
