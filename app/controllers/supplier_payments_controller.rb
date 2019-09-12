@@ -1689,11 +1689,11 @@ def list_receive_supplierpayments
                                           columns([0]).align=:center
                                           columns([1]).align=:left
                                           columns([2]).align=:left
-                                          columns([2]).width= 150 
+                                          columns([2]).width= 130 
                                           columns([3]).align=:left
                                           columns([3]).width= 60 
                                           columns([4]).align=:right
-                                          columns([4]).width= 60 
+                                          columns([4]).width= 50 
                                           columns([5]).align=:right
                                           columns([5]).width= 80
                                           columns([6]).align=:right
