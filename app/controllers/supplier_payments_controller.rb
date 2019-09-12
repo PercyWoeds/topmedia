@@ -1636,9 +1636,9 @@ def list_receive_supplierpayments
             total_cliente_doc_total     = 0
 
             total_cliente_doc_inafecto = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"inafecto")            
-            total_cliente_doc_payable = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"payable_amount")
-            total_cliente_doc_tax     = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"tax_amount")
-            total_cliente_doc_total   = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"total_amount")
+            total_cliente_doc_payable  = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"payable_amount")
+            total_cliente_doc_tax      = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"tax_amount")
+            total_cliente_doc_total    = @company.get_purchases_by_doc_value(@fecha1,@fecha2, lcMoneda,lcDocumento,"total_amount")
             
             row =[]
             row << ""
@@ -1692,19 +1692,26 @@ def list_receive_supplierpayments
 
                                         } do 
                                           columns([0]).align=:center
+
                                           columns([1]).align=:left
+
                                           columns([2]).align=:left
                                           columns([2]).width= 130 
+
                                           columns([3]).align=:left
                                           columns([3]).width= 60 
+
                                           columns([4]).align=:right
                                           columns([4]).width= 50 
+
                                           columns([5]).align=:right
-                                          columns([5]).width= 80
+                                          columns([5]).width= 60
+
                                           columns([6]).align=:right
-                                          columns([6]).width= 80
+                                          columns([6]).width= 60
+
                                           columns([7]).align=:right
-                                          columns([7]).width= 80 
+                                          columns([7]).width= 60 
                                           
                                         end                                          
       pdf.move_down 10      
