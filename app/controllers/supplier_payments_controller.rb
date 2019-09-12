@@ -1685,6 +1685,7 @@ def list_receive_supplierpayments
                                         :header => true,
                                         :width => pdf.bounds.width,
                                         :cell_style => {:border_width => 0 ,:height => 17 },
+                                        :margin => [20,20,5,20]
                                         } do 
                                           columns([0]).align=:center
                                           columns([1]).align=:left
