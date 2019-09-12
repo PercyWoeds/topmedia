@@ -1688,7 +1688,7 @@ def list_receive_supplierpayments
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width,
-                                        :cell_style => {:border_width => 0 ,:height => 17 }
+                                        :cell_style => {:border_width => 0 ,:height => 15 }
 
                                         } do 
                                           columns([0]).align=:center
@@ -1712,6 +1712,10 @@ def list_receive_supplierpayments
 
                                           columns([7]).align=:right
                                           columns([7]).width= 60 
+
+                                          columns([8]).align=:right
+                                          columns([8]).width= 60 
+                                          
                                           
                                         end                                          
       pdf.move_down 10      
