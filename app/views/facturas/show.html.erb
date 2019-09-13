@@ -201,11 +201,11 @@
 <div class="button">
   
   <%= link_to 'Exportar to PDF', "/facturas/pdf/#{@factura.id}.pdf" %>
-  <%= link_to 'Send factura via email', "/facturas/email/#{@factura.id}" %>
   
 <% if @factura.processed =="0" || @factura.processed==nil %>
   <%= link_to 'Procesar factura', "/facturas/do_process/#{@factura.id}" %>
-  <%= link_to 'Editar', edit_factura_path(@factura) %>
+
+
 <% elsif @factura.processed =="1" %>  
   <%= link_to 'Anular', "/facturas/do_anular/#{@factura.id}" %>
 <% end %>
