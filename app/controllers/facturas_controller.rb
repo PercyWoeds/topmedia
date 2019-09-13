@@ -77,8 +77,8 @@ class FacturasController < ApplicationController
     @services = @company.get_services()
     @products = @company.get_products()
     @medios = @company.get_medios()
+    @contratos = Contrato.all.order(:code )
 
-    
     @deliveryships = @invoice.my_deliverys 
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
@@ -88,7 +88,7 @@ class FacturasController < ApplicationController
     @invoice[:user_id] = getUserId()
     @invoice[:moneda_id] = 2
     @invoice[:document_id] = 1  
-
+    @invoice[:contrato_id] = 1 
     
     
   end
