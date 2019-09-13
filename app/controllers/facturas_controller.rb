@@ -741,6 +741,9 @@ new_invoice_item.save
     respond_to do |format|
       if @invoice.save
         # Create products for kit
+        if items !=  nil or items != ""
+         @invoice.add_products(items)
+        end 
         
         @invoice.correlativo
         # Check if we gotta process the invoice
