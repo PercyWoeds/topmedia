@@ -935,8 +935,7 @@ class OrdensController < ApplicationController
       
       i += 1
     end
-    
-
+  
 
     @customers = Customer.all.order(:name)
     @motivos =Motivo.all.order(:name)

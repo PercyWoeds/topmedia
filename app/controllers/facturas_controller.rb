@@ -701,10 +701,6 @@ new_invoice_item.save
   
     items = params[:items].split(",")
 
-
-    puts "factura items "
-    puts items 
-
     items2 = params[:items2].split(",")
 
     @invoice = Factura.new(factura_params)
@@ -728,6 +724,7 @@ new_invoice_item.save
       @invoice[:tax] = 0
     end
     
+
     @invoice[:total] = @invoice[:subtotal] + @invoice[:tax]
     @invoice[:balance] = @invoice[:total]
     @invoice[:pago] = 0
@@ -737,6 +734,20 @@ new_invoice_item.save
     @invoice[:location_id] = 1
     @invoice[:division_id] = 1
     
+    if item != nil or items !=""
+
+      @invoice[:subtotal] = @invoice.get_subtotal_items(items)
+    
+    begin
+      @invoice[:tax] = @invoice.get_tax(items, @invoice[:customer_id])
+    rescue
+      @invoice[:tax] = 0
+    end
+    
+    @invoice[:total] = @invoice[:subtotal] + @invoice[:tax]
+    
+
+    end 
     
     if(params[:factura][:user_id] and params[:factura][:user_id] != "")
       curr_seller = User.find(params[:factura][:user_id])
@@ -748,13 +759,14 @@ new_invoice_item.save
         # Create products for kit
         if items !=  nil or items != ""
          @invoice.add_products(items)
+
+
         end 
 
         @invoice.correlativo
         # Check if we gotta process the invoice
         @invoice.process()
 
-        
         format.html { redirect_to(@invoice, :notice => 'Invoice was successfully created.') }
         format.xml  { render :xml => @invoice, :status => :created, :location => @invoice }
       else

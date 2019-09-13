@@ -235,7 +235,6 @@ class InvoicesController < ApplicationController
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     
-    
     @ac_user = getUsername()
     @invoice[:user_id] = getUserId()
   end

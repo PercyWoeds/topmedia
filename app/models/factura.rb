@@ -60,6 +60,33 @@ class Factura < ActiveRecord::Base
   end
   
   
+  def get_subtotal_items(items)
+    subtotal = 0
+    
+    for item in items
+      if(item and item != "")
+        parts = item.split("|BRK|")
+        
+        id = parts[0]
+        quantity = parts[1]
+        price = parts[2]
+        discount = parts[3]
+        
+        total = price.to_f * quantity.to_i
+        total -= total * (discount.to_f / 100)
+        
+        begin
+          product = Product.find(id.to_i)
+          subtotal += total
+        rescue
+        end
+      end
+    end
+    
+    return subtotal
+  end
+
+
   def self.to_csv(result)
     unless result.nil?
       CSV.generate do |csv|
@@ -177,7 +204,7 @@ class Factura < ActiveRecord::Base
         total = price.to_f * quantity.to_f
         total -= total * (discount.to_f / 100)
         
-        #begin
+        begin
           product = Service.find(id.to_i)
           
  #         new_invoice_product = InvoiceService.new(:factura_id => self.id, :service_id => product.id, :price => price.to_f, :quantity => quantity.to_f, :discount => discount.to_f, :total => total.to_f)
@@ -187,9 +214,9 @@ class Factura < ActiveRecord::Base
 
           new_invoice_product.save
 
-        #rescue
+        rescue
           
-        #end
+        end
       end
     end
   end
