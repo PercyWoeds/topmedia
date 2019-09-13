@@ -961,6 +961,7 @@ class OrdensController < ApplicationController
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @ciudad = Ciudad.all
+
     @contratos2 = @company.get_customer_contratos()
     
     @ac_user = getUsername()
@@ -1131,7 +1132,9 @@ class OrdensController < ApplicationController
     @contratos = Contrato.all 
     @productos = Producto.all 
     @ciudad = Ciudad.all
-    
+    @contratos2 = @company.get_customer_contratos()
+        
+
 
     @products_lines = @orden.products_lines
     

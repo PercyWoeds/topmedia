@@ -704,7 +704,7 @@ new_invoice_item.save
 
     puts "factura items "
     puts items 
-    
+
     items2 = params[:items2].split(",")
 
     @invoice = Factura.new(factura_params)
@@ -1377,7 +1377,7 @@ new_invoice_item.save
 
   private
   def factura_params
-    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:contrato_id,:medio_id,:document_id)
+    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:contrato_id,:medio_id,:document_id,_:service_id, )
   end
 
 end

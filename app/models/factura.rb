@@ -182,7 +182,7 @@ class Factura < ActiveRecord::Base
           
  #         new_invoice_product = InvoiceService.new(:factura_id => self.id, :service_id => product.id, :price => price.to_f, :quantity => quantity.to_f, :discount => discount.to_f, :total => total.to_f)
           new_invoice_product =  FacturaDetail.new(:factura_id=> self.id ,:contrato_detail_id => 1,
-            :total =>item.total, :contrato_id => 1,:service_id => product.id, :price => price.to_f,
+            :contrato_id => 1,:service_id => product.id, :price => price.to_f,
             :quantity => quantity.to_f,:discount => discount.to_f, :total => total.to_f )            
 
           new_invoice_product.save
