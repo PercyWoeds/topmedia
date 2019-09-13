@@ -20,6 +20,8 @@ class ManifestsController < ApplicationController
     @manifest = Manifest.new
     @customers = @manifest.get_customers()
     @puntos = @manifest.get_puntos()
+    
+
   end
 
   # GET /manifests/1/edit

@@ -76,6 +76,8 @@ class FacturasController < ApplicationController
     @payments = @company.get_payments()
     @services = @company.get_services()
     @products = @company.get_products()
+    @medios = @company.get_medios()
+
     
     @deliveryships = @invoice.my_deliverys 
     @tipofacturas = @company.get_tipofacturas() 
