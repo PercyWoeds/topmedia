@@ -1133,7 +1133,7 @@ class OrdensController < ApplicationController
     @productos = Producto.all 
     @ciudad = Ciudad.all
     @contratos2 = @company.get_customer_contratos()
-        
+    @monedas = Moneda.all         
 
 
     @products_lines = @orden.products_lines
