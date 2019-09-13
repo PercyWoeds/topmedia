@@ -701,6 +701,12 @@ new_invoice_item.save
   
     items = params[:items].split(",")
 
+    
+    puts "factura items "
+    puts items 
+    puts "factuta items "
+    puts items2 
+
     items2 = params[:items2].split(",")
 
     @invoice = Factura.new(factura_params)
@@ -718,6 +724,7 @@ new_invoice_item.save
     @invoice[:subtotal] = 0
     
     begin
+
       @invoice[:tax] = 0
     rescue
       @invoice[:tax] = 0
@@ -744,7 +751,7 @@ new_invoice_item.save
         if items !=  nil or items != ""
          @invoice.add_products(items)
         end 
-        
+
         @invoice.correlativo
         # Check if we gotta process the invoice
         @invoice.process()
