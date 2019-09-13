@@ -701,12 +701,10 @@ new_invoice_item.save
   
     items = params[:items].split(",")
 
-    
+
     puts "factura items "
     puts items 
-    puts "factuta items "
-    puts items2 
-
+    
     items2 = params[:items2].split(",")
 
     @invoice = Factura.new(factura_params)

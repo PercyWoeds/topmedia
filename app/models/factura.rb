@@ -177,16 +177,16 @@ class Factura < ActiveRecord::Base
         total = price.to_f * quantity.to_f
         total -= total * (discount.to_f / 100)
         
-        begin
+        #begin
           product = Service.find(id.to_i)
           
           new_invoice_product = InvoiceService.new(:factura_id => self.id, :service_id => product.id, :price => price.to_f, :quantity => quantity.to_f, :discount => discount.to_f, :total => total.to_f)
 
           new_invoice_product.save
 
-        rescue
+        #rescue
           
-        end
+        #end
       end
     end
   end
