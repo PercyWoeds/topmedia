@@ -24,12 +24,18 @@ class SupplierpaymentDetail < ActiveRecord::Base
         a = Document.find(id)
         return a.description 
     end 
-  def get_supplier_ruc(id)
+
+    def get_supplier_ruc(id)
+
+        a =Supplier.find(id)
+        return a.ruc 
+
+    end 
+    
+    def get_supplier(id)
 
     a =Supplier.find(id)
-    return a.ruc 
-
-  end 
-  
+    return a.name 
+    end 
 
 end
