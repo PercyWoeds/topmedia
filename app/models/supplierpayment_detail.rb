@@ -20,4 +20,10 @@ class SupplierpaymentDetail < ActiveRecord::Base
         return ret
     end 
     
+    def get_document(id)
+        a = Document.find(id)
+        return a.description 
+    end 
+  
+
 end
