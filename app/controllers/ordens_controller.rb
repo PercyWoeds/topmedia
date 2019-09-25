@@ -600,7 +600,7 @@ class OrdensController < ApplicationController
      @months = monthsArr
      @month_name = @months[$lcFechaMes - 1][0] <<" - " <<@orden.year.to_s
     
-     $lcMoneda = @orden.get_moneda(@orden.contrato.moneda_id)
+     $lcMoneda = @orden.get_moneda(@orden.moneda_id)
      $lcMedio = @orden.medio.descrip
      $lcCobertura = @orden.ciudad.descrip 
      
