@@ -9,6 +9,10 @@
           Customer
         </th>
         <th class="bordered_right bordered_bottom">
+          Moneda
+        </th>
+        
+        <th class="bordered_right bordered_bottom">
           Total
         </th>
         <th class="bordered_right bordered_bottom">
@@ -32,15 +36,18 @@
           <td class="bordered_right bordered_bottom">
             <%= link_to orden.customer.name, orden.customer, :title => "Go to customer" %>
           </td>
+          <td class="bordered_right bordered_bottom">
+            <%= orden.get_moneda %>
+          </td>
+          
+          
           <td class="bordered_right bordered_bottom right">
             <%= money(orden.total) %>
           </td>
           <td class="bordered_right bordered_bottom">
             <%= doDate(orden.created_at) %>
           </td>
-          <td class="bordered_right bordered_bottom">
-            <%= orden.get_moneda %>
-          </td>
+
           
           <td class="bordered_right bordered_bottom <%= orden.processed_color %>">
             <%= orden.get_processed_short %>
