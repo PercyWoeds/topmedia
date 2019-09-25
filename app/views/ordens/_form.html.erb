@@ -79,13 +79,12 @@
     
     <div class="field">
       <%= f.label :moneda_id %><br />
-      <%= f.collection_select :moneda_id, @monedas, :id, :description ,{:prompt   => "Selec una version"} %>
-
+      <%= f.collection_select :moneda_id, @monedas, :id, :description ,{:prompt   => "Selec una moneda"} %>
     </div>
     
-      
-      <%= f.label :tiempo, "Duracion*", :class => "bold"   %><br />
-      <%= f.number_field :tiempo   %>
+    <%= f.label :tiempo, "Duracion*", :class => "bold"   %><br />
+    <%= f.number_field :tiempo   %>
+    
     </div>
     <div class="field">
       <%= select_tag(:year, options_for_select(@years, @year)) %>

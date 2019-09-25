@@ -44,6 +44,12 @@
 
     <%= hr() %>
     
+    <div class="field">
+      <%= f.label :medio_id %><br />
+      <%= f.select :medio_id,options_from_collection_for_select(@medios,'id','descrip') %>
+    </div>
+
+
 
       <label for="ac_customer" class="bold">Cliente*</label><br />
       <input type="text" name="ac_customer" id="ac_customer" value="<% if @ac_customer %><%= @ac_customer %><% end %>" />
@@ -61,11 +67,7 @@
      </div>
 
 
-    <div class="field">
-      <%= f.label :medio_id %><br />
-      <%= f.select :medio_id,options_from_collection_for_select(@medios,'id','descrip') %>
-    </div>
-
+    
      <div class="field">
       <%= f.label :payment_id,"Forma de Pago " %><br />
       <%= f.select :payment_id,options_from_collection_for_select(@payments,'id','descrip') %>

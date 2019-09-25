@@ -1888,6 +1888,9 @@ def foot_data_headers_1
     :processed , :customer_id, :description, :rating , :month, :year, :revision, :producto_id,
     :ciudad_id,:fecha_inicio, :fecha_fin, :tarifa , :aviso_detail_id, :avisodetail_id, 
     :tipo, :secu_cont, :moneda_id, :quantity)
+
+
     end
+
 
 end
