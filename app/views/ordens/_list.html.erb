@@ -37,10 +37,10 @@
             <%= link_to orden.customer.name, orden.customer, :title => "Go to customer" %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= orden.get_moneda %>
+            <%= orden.get_moneda(orden.id) %>
           </td>
           
-          
+
           <td class="bordered_right bordered_bottom right">
             <%= money(orden.total) %>
           </td>
