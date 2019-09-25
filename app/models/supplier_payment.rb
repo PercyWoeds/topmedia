@@ -185,10 +185,10 @@ self.per_page = 20
   end
 
   def get_payments    
- @itemproducts =SupplierpaymentDetail.find_by_sql(['Select supplier_payment_details.total,
-      purchases.documento,purchases.document_id,purchases.supplier_id  from supplier_payment_details   
-      INNER JOIN purchases ON   supplier_payment_details.purchase_id = purchases.id
-      WHERE  supplier_payment_details.supplier_payment_id = ?', self.id ])
+ @itemproducts =SupplierpaymentDetail.find_by_sql(['Select supplierpayment_details.total,
+      purchases.documento,purchases.document_id,purchases.supplier_id  from supplierpayment_details   
+      INNER JOIN purchases ON   supplierpayment_details.purchase_id = purchases.id
+      WHERE  supplierpayment_details.supplier_payment_id = ?', self.id ])
 
     return @itemproducts
   end
