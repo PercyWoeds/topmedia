@@ -734,18 +734,18 @@ new_invoice_item.save
     @invoice[:location_id] = 1
     @invoice[:division_id] = 1
     
-    if item != nil or items !=""
+    if items != nil or items !=""
 
       @invoice[:subtotal] = @invoice.get_subtotal_items(items)
-    
-    begin
-      @invoice[:tax] = @invoice.get_tax(items, @invoice[:customer_id])
-    rescue
-      @invoice[:tax] = 0
-    end
-    
-    @invoice[:total] = @invoice[:subtotal] + @invoice[:tax]
-    
+      
+      begin
+        @invoice[:tax] = @invoice.get_tax(items, @invoice[:customer_id])
+      rescue
+        @invoice[:tax] = 0
+      end
+      
+      @invoice[:total] = @invoice[:subtotal] + @invoice[:tax]
+      
 
     end 
     

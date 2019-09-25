@@ -270,6 +270,8 @@ class InvoicesController < ApplicationController
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
+
+    
     
     @invoice[:subtotal] = @invoice.get_subtotal(items)
     

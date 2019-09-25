@@ -38,6 +38,10 @@
           <td class="bordered_right bordered_bottom">
             <%= doDate(orden.created_at) %>
           </td>
+          <td class="bordered_right bordered_bottom">
+            <%= orden.get_moneda %>
+          </td>
+          
           <td class="bordered_right bordered_bottom <%= orden.processed_color %>">
             <%= orden.get_processed_short %>
           </td>
