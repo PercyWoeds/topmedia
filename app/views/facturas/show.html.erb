@@ -60,7 +60,7 @@
   <%= link_to @factura.code, @factura %>
 </p>
 
-  <% if @lcTipoFactura ==  "1" %>
+  <% if @factura.tc  ==  "1"  %>
 
       <%= render 'contratos/show' %>
 
@@ -106,7 +106,7 @@
     </tr>
   </thead>
   
-  <% if @lcTipoFactura == '1' %>
+  <% if @factura.tc  == '1' %>
   <div class="button">
  
   
