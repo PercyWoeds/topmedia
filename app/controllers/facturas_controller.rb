@@ -883,7 +883,7 @@ new_invoice_item.save
 
   def build_pdf_body_rpt(pdf)
     
-    pdf.text "Facturas Moneda" +" Emitidas : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
+    pdf.text "Facturas " +" Emitidas : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
 
 
     pdf.text ""
@@ -921,6 +921,7 @@ new_invoice_item.save
             row << product.subtotal.to_s
             row << product.tax.to_s
             row << product.total.to_s
+            row << product.get_processed
             
             table_content << row
 
@@ -981,10 +982,13 @@ new_invoice_item.save
       row << ""
       row << "TOTALES => "
       row << ""
+      row << ""
+      
       row << subtotal.round(2).to_s
       row << tax.round(2).to_s
       row << total.round(2).to_s
       row << ""
+      
       table_content << row
       
       result = pdf.table table_content, {:position => :center,
