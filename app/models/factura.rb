@@ -13,6 +13,8 @@ class Factura < ActiveRecord::Base
   belongs_to :user
   belongs_to :moneda 
   belongs_to :medio  
+
+  belongs_to :customer 
     
 
   has_many   :deliveryship
