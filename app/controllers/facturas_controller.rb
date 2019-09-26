@@ -60,6 +60,8 @@ class FacturasController < ApplicationController
     @action_txt = "Create"
     $lcAction="Factura"
     $Action= "create"
+    @lcTipoFactura = "2"
+    
     
     @invoice = Factura.new
     
@@ -669,6 +671,9 @@ new_invoice_item.save
 
     @ac_user = getUsername()
     @invoice[:user_id] = getUserId()
+
+    @lcTipoFactura = "1"
+
   end
 
 
@@ -759,8 +764,6 @@ new_invoice_item.save
         # Create products for kit
         if items !=  nil or items != ""
          @invoice.add_products(items)
-
-
         end 
 
         @invoice.correlativo
