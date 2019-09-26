@@ -55,7 +55,7 @@
        <% total_1 = total_general %>
         
       
-      <% total_3 = total_1 / 1.18 %>
+      <% total_3 = total_1 * 1.18 %>
       <% total_2 = total_1 - total_3 %>
       
 
@@ -77,7 +77,7 @@
             Op.Gravada
           </td>
           <td class="small bordered_bottom bordered_right">
-            <%= money(total_3) %>
+            <%= money(total_1) %>
           </td>
         </tr>
     
@@ -110,7 +110,7 @@
             Total 
           </td>
           <td class="small bordered_bottom bordered_right">
-            <%= money(total_1) %>
+            <%= money(total_3) %>
           </td>
         </tr>
       
