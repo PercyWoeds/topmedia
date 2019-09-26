@@ -60,26 +60,22 @@
   <%= link_to @factura.code, @factura %>
 </p>
 
-<% if @lcTipoFactura ==  "1" %>
+  <% if @lcTipoFactura ==  "1" %>
 
-<%= render 'contratos/show' %>
+      <%= render 'contratos/show' %>
 
-<% else %>
-
-      <p>
-        <b>Cliente :</b>
-        <%= link_to @factura.customer.name , @customer.code %>
-      </p>
-    <% end %>
+  <% else %>
 
         <p>
-      <strong>Medio :</strong>
-      <%= @factura.medio.descrip  %>
-      </p>
+          <b>Cliente :</b>
+          <%= link_to @factura.customer.name , @factura.customer.code %>
+        </p>
+           <p>
+        <strong>Medio :</strong>
+        <%= @factura.medio.descrip  %>
+        </p>
 
-
-<% end %>
-
+  <% end %>
 
 
 
@@ -125,49 +121,48 @@
 
     <% if @lcTipoFactura == '1' %>
 
-      <tr>
-        <td class="bordered_bottom bordered_right">
-          <%= link_to quote.id    %>
-        </td>
-        <td class="bordered_bottom bordered_right">
-          <%= money(quote.total) %>
-        </td>
-        <td class="bordered_bottom bordered_right">
-          <%= quote.moneda_id %>
-        </td>
-        <td class="bordered_bottom bordered_right">
-          <%= money(quote.tipocambio) %>%
-        </td>
-        <td class="bordered_bottom bordered_right">
-          <%= money(quote.total) %>
-        </td>
-          
-          <td><%= link_to 'Eliminar',[@factura,quote], method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+          <tr>
+            <td class="bordered_bottom bordered_right">
+              <%= link_to quote.id    %>
+            </td>
+            <td class="bordered_bottom bordered_right">
+              <%= money(quote.total) %>
+            </td>
+            <td class="bordered_bottom bordered_right">
+              <%= quote.moneda_id %>
+            </td>
+            <td class="bordered_bottom bordered_right">
+              <%= money(quote.tipocambio) %>%
+            </td>
+            <td class="bordered_bottom bordered_right">
+              <%= money(quote.total) %>
+            </td>
+              
+              <td><%= link_to 'Eliminar',[@factura,quote], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
 
       <% else %>
-      <tr>
-        <td class="bordered_bottom bordered_right">
-          <%= link_to quote.id    %>
-        </td>
-        <td class="bordered_bottom bordered_right">
-          <%= money(quote.quantity) %>%
-        </td>
-        <td class="bordered_bottom bordered_right">
-          <%= quote.service.name  %>
-        </td>
-        <td class="bordered_bottom bordered_right">
-          <%= money(quote.price) %>
-        </td>
-        <td class="bordered_bottom bordered_right">
-          <%= money(quote.total) %>
-        </td>
-          
-      </tr>
-
-
-
+          <tr>
+            <td class="bordered_bottom bordered_right">
+              <%= link_to quote.id    %>
+            </td>
+            <td class="bordered_bottom bordered_right">
+              <%= money(quote.quantity) %>%
+            </td>
+            <td class="bordered_bottom bordered_right">
+              <%= quote.service.name  %>
+            </td>
+            <td class="bordered_bottom bordered_right">
+              <%= money(quote.price) %>
+            </td>
+            <td class="bordered_bottom bordered_right">
+              <%= money(quote.total) %>
+            </td>
+              
+          </tr>
       <% end %>
+
+
     <% end %>
     <tr>
       <td colspan="5" class="bordered_bottom bordered_right">
