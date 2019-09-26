@@ -42,7 +42,73 @@
           <td class="small bordered_bottom bordered_right">
             <%= money(product.currtotal) %>
           </td>
+            <% total_general += product.currtotal  %>
         </tr>
       <% end %>
+
+
+      <% total_1 = 0%>
+      <% total_2 = 0%>
+      <% total_3 = 0%>
+      
     </tbody>
+
+
+        <tr>
+          <td >
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            Op.Gravada
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= money(total_3) %>
+          </td>
+        </tr>
+    
+    <tr>
+          <td >
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            
+          </td>
+          <td class="small bordered_bottom bordered_right">
+           I.G.V.
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= money(total_2) %>
+          </td>
+        </tr>
+      <% total_1 += product.currtotal %>
+        
+      <% end %>
+      
+      <% total_3 = total_1 / 1.18 %>
+      <% total_2 = total_1 - total_3 %>
+      
+
+          <td >
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            Total 
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= money(total_1) %>
+          </td>
+        </tr>
+      
   </table>
