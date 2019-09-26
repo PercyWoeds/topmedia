@@ -87,6 +87,8 @@
 
 <table>
   <thead>
+    <% if @factura.tc == '1' %>
+
     <tr>
       <th>
         Cuota 
@@ -104,6 +106,26 @@
         Total
       </th>
     </tr>
+    <% else %>
+      <tr>
+        <th>
+          Item 
+        </th>
+        <th>
+          Qty
+        </th>
+        <th>
+          Descrip
+        </th>
+        <th>
+          Precio S/Igv
+        </th>
+        <th>
+          Total
+        </th>
+       </tr> 
+
+    <% end %>
   </thead>
   
   <% if @factura.tc  == '1' %>
@@ -147,7 +169,7 @@
               <%= link_to quote.id    %>
             </td>
             <td class="bordered_bottom bordered_right">
-              <%= money(quote.quantity) %>%
+              <%= money(quote.quantity) %>
             </td>
             <td class="bordered_bottom bordered_right">
               <%= quote.service.name  %>
