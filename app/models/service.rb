@@ -11,6 +11,8 @@ class Service < ActiveRecord::Base
   has_many :serviceorder_services
 
   has_many :purchase_details
+  has_many :factura_details
+  
   
 
   
