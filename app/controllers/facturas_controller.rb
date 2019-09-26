@@ -911,7 +911,7 @@ new_invoice_item.save
             row << product.fecha.strftime("%d/%m/%Y")            
             row << product.code
             row << product.medio.descrip 
-            row << product.contrato.customer.name  
+            row << product.customer.name  
             if product.moneda_id == 1
               row << "USD"
             else
