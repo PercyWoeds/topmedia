@@ -911,7 +911,7 @@ new_invoice_item.save
             row << product.fecha.strftime("%d/%m/%Y")            
             row << product.code
             row << product.medio.descrip 
-            if product.contrato != nil
+            if product.tc == "1"
               row << product.contrato.customer.name  
             else 
               row << product.customer.name
