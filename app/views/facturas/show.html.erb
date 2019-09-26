@@ -60,7 +60,28 @@
   <%= link_to @factura.code, @factura %>
 </p>
 
+<% if @lcTipoFactura ==  "1" %>
+
 <%= render 'contratos/show' %>
+
+<% else %>
+
+      <p>
+        <b>Cliente :</b>
+        <%= link_to @factura.customer.name , @customer.code %>
+      </p>
+    <% end %>
+
+        <p>
+      <strong>Medio :</strong>
+      <%= @factura.medio.descrip  %>
+      </p>
+
+
+<% end %>
+
+
+
 
 <%= hr() %>
 
@@ -89,15 +110,21 @@
     </tr>
   </thead>
   
+  <% if @lcTipoFactura == '1' %>
   <div class="button">
  
   
   <%= link_to "Agregar Item","/facturas/newfactura2/#{@factura.id}" %>
   
-  </div>  
+  </div> 
+
+  <% end %>
   
   <tbody>
     <%  @factura_details.each do |quote| %>
+
+    <% if @lcTipoFactura == '1' %>
+
       <tr>
         <td class="bordered_bottom bordered_right">
           <%= link_to quote.id    %>
@@ -114,11 +141,33 @@
         <td class="bordered_bottom bordered_right">
           <%= money(quote.total) %>
         </td>
-        
-        
           
           <td><%= link_to 'Eliminar',[@factura,quote], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
+
+      <% else %>
+      <tr>
+        <td class="bordered_bottom bordered_right">
+          <%= link_to quote.id    %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= money(quote.quantity) %>%
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= quote.service.name  %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= money(quote.price) %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= money(quote.total) %>
+        </td>
+          
+      </tr>
+
+
+
+      <% end %>
     <% end %>
     <tr>
       <td colspan="5" class="bordered_bottom bordered_right">
