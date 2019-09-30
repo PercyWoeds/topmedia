@@ -926,8 +926,7 @@ new_invoice_item.save
             row << product.subtotal.to_s
             row << product.tax.to_s
             row << product.total.to_s
-            row << product.get_processed
-            
+                        
             table_content << row
 
             nroitem=nroitem + 1
@@ -992,7 +991,7 @@ new_invoice_item.save
       row << subtotal.round(2).to_s
       row << tax.round(2).to_s
       row << total.round(2).to_s
-      row << ""
+
       
       table_content << row
       
