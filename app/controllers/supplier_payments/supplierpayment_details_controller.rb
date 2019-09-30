@@ -80,7 +80,7 @@ class SupplierPayments::SupplierpaymentDetailsController < ApplicationController
     
     if @supplierpayment_detail.destroy
       flash[:notice]= "Item fue eliminado satisfactoriamente "
-      redirect_to @supplier_payment
+      redirect_to @supplier_payment_detail 
     else
       flash[:error]= "Item ha tenido un error y no fue eliminado"
       render :show 
