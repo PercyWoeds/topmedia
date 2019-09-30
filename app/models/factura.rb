@@ -43,8 +43,8 @@ class Factura < ActiveRecord::Base
                      "Moneda",
                      "SUBTOTAL",
                      "IGV.",
-                     "TOTAL",
-                     "ESTADO"]
+                     "TOTAL"
+                     ]
   TABLE_HEADERS3 = ["TD",
                       "Documento",
                      "Fecha",

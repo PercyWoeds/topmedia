@@ -436,7 +436,7 @@ class SupplierPaymentsController < ApplicationController
   def build_pdf_header(pdf)
 
     
-      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 160
+      pdf.image "#{Dir.pwd}/public/images/logo.png", :width => 160
         
       pdf.move_down 6
         
@@ -1413,7 +1413,6 @@ def list_receive_supplierpayments
         })
 
         pdf.font "Open Sans",:size => 6 
-  
     
       headers = []
       table_content = []
