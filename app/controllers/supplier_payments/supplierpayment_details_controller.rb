@@ -19,9 +19,9 @@ class SupplierPayments::SupplierpaymentDetailsController < ApplicationController
   # GET /supplierpayment_details/new
   def new
     @supplierpayment_detail = SupplierpaymentDetail.new
-    @documentos = Document.all 
-    @suppliers = Supplier.all 
-    @purchases= Purchase.all 
+    @documentos = Document.all.order(:description) 
+    @suppliers = Supplier.all.order(:name) 
+    @purchases= Purchase.all
     @company = Company.find(1)
     $lcSaldoCheque = 0
     

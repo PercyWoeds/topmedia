@@ -17,36 +17,42 @@
     <h4>
        Informacion Orden de Pago 
     </h4>
-      
-        <div class="field">
-          <%= f.label :fecha1, "Fecha*", :class => "bold" %><br />
-          <%= f.date_field :fecha1 ,:class => "input.tf_short" %>
-        </div>
-
-        </td>
-        <td>  
-        <div class="field">
+              <div class="field">
           <%= f.label :code, "Code*", :class => "bold" %><br />
           <%= f.text_field :code, :onclick => "$(this).select();" %>
         </div>
-    
-  
 
-    <div class="field">
-      <%= f.label :bank_acount_id %><br />
+
+      <div class="field">
+      <%= f.label :bank_acount_id ,"Cuenta bancaria "%><br />
       <%= f.select :bank_acount_id,options_from_collection_for_select(@bank_acounts,'id','number') %>
     </div>
 
+   
+    <div class="field">
+      <%= f.label :fecha1, "Fecha*", :class => "bold" %><br />
+      <%= f.date_field :fecha1 ,:class => "input.tf_short" %>
+    </div>
+
+    </td>
+    <td>  
+
+  <div class="field">
+      <%= f.label  :concept_id ,"Conceptos de Cheque / Transferencia "%><br />
+      <%= f.select :concept_id,options_from_collection_for_select(@conceptos,'id','descrip') %>
+    </div>
 
     <div class="field">
-      <%= f.label  :document_id %><br />
+      <%= f.label  :document_id ,"Cheque / Transferencia "%><br />
       <%= f.select :document_id,options_from_collection_for_select(@documents,'id','description') %>
     </div>
-
+ 
     <div class="field">
-      <%= f.label :documento, "Documento ", :class => "bold" %><br />
+      <%= f.label :documento, "Nro.Documento ", :class => "bold" %><br />
       <%= f.text_field :documento %>
     </div>
+
+   
 
       <label for="ac_supplier" class="bold">Girado : *</label><br />
       

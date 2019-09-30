@@ -1098,6 +1098,7 @@ def rpt_cpagar5_pdf
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @suppliers = @company.get_suppliers()
+    @conceptos = Concept.all(order: descrip )
     
     @bank_acounts = @company.get_bank_acount_by($lcId)        
     @monedas  = @company.get_monedas()
