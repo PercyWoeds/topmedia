@@ -687,7 +687,7 @@
   
   match 'supplier_payments/go_bancos/:id' => 'supplier_payments#go_bancos', via: [:get, :post]
   
-  match 'supplierpayment_details/new2/:id' => 'supplierpayment_details#new2', via: [:get, :post]
+  match 'supplier_payments/supplierpayment_details/new2/:id' => 'supplierpayment_details#new2', via: [:get, :post]
   
   match 'companies/supplier_payments/:company_id' => 'supplier_payments#list_supplierpayments', via: [:get, :post]  
   resources :supplier_payments
