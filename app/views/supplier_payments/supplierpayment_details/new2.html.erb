@@ -1,0 +1,13 @@
+<h2>Nuevo Proveedor</h2>
+
+<p>Importe Saldo Cheque 
+<input type="text" name="ac_item_importe" id="ac_item_importe" value= "<%= $lcSaldoCheque %>"  readonly class="tf_short" />
+</p> 
+<% if $lcSaldoCheque < 0 %>
+     <p  ><span style=\"color: #99cc00;\"> Valor de Facturas excede pago en cheques </span> </p>
+<% end  %>
+
+
+<%= render 'form' %>
+
+<%= link_to 'Back', supplierpayment_details_path %>

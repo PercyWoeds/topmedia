@@ -1,6 +1,4 @@
 
-
-
 <%= simple_form_for([@supplierpayment , @supplierpayment_detail]) do |f| %>
   <%= f.error_notification %>
 
@@ -17,10 +15,9 @@
     
       <label for="ac_item" class="bold"> Documento *</label><br />
       <input type="text" name="ac_item" id="ac_item" value="<% if @ac_documento %><%= @ac_documento %><% end %>" />
-    
       
       <div class="small">
-        Ingrese una termino de busqueda para encontrar un cliente.
+        Ingrese una termino de busqueda para encontrar un documento.
       </div>
       <br />
 
@@ -31,6 +28,8 @@
         <br>
       
       </div>
+
+
     
     <div class="field">
       <%= f.label :total, "Total *", :class => "bold" %><br />
