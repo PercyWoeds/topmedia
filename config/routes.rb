@@ -92,7 +92,7 @@
   end 
   resources :supplier_payments do
       resources :supplierpayment_details, except: [:index,:show], controller: "supplier_payments/supplierpayment_details" do
-        collection { post :new2 }    
+        collection { get :new2 }    
       end 
 
       collection { get :rpt_compras_01 }
