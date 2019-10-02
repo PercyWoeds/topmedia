@@ -42,17 +42,17 @@
       </table>
 
 
-      <%  @purchases_all_1.each do |detalle| %>
+<%  @purchases_all_1.each do |detalle| %>
                 
-                 <table style=  'font-size:80% ;width:100%'>    
+             <table style=  'font-size:80% ;width:100%'>    
 
-                      <tr style="font-weight:bold">
-                      <td width="8%" >DOCUMENTO: </td>
-                      <td width="20%"align="left"> <%= detalle.document.description  %></td>
-                      <td width="72%"> </td>    
-                      </tr>
+                  <tr style="font-weight:bold">
+                  <td width="8%" >DOCUMENTO: </td>
+                  <td width="20%"align="left"> <%= detalle.document.description  %></td>
+                  <td width="72%"> </td>    
+                  </tr>
 
-                  </table>
+              </table>
 
 <% @detalle = @purchase.get_purchases_by_moneda_doc(@fecha1,@fecha2,"1",detalle.document_id) %>
                  
