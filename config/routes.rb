@@ -92,6 +92,8 @@
   end 
   resources :supplier_payments do
       resources :supplierpayment_details, except: [:index,:show], controller: "supplier_payments/supplierpayment_details"
+      collection { get :rpt_compras_01 }
+
   end 
 
   resources :ciudads
@@ -207,6 +209,8 @@
     collection { get :generar  }
     collection { post :import }
     collection { get :excel }
+    collection { get :rpt_compras_01 }
+    
     collection { post :discontinue }
     collection do 
       put :discontinue 
@@ -366,6 +370,7 @@
   match 'contratos/rpt_contratos2/:company_id' => 'contratos#rpt_contratos2', via: [:get, :post]  
   match 'contratos/rpt_contratos3/:company_id' => 'contratos#rpt_contratos3', via: [:get, :post]  
   
+
   match 'ordens/rpt_ordenes1/:company_id' => 'ordens#rpt_ordenes1', via: [:get, :post]  
   
 

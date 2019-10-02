@@ -960,10 +960,27 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
     @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda , ]).order(:id,:moneda_id)    
     return @purchases 
   end
+
+  def get_purchases_by_day2(fecha1,fecha2,moneda)
+  
+    @purchases = Purchase.select("document_id").where([" company_id = ? AND date1 >= ? and date1 <= ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda ]).group(:document_id)
+  
+
+    return @purchases 
+  end
+
+
+  def get_purchases_by_moneda_doc(fecha1,fecha2,moneda,documento)  
+    @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and moneda_id = ? and document_id=? ", self.id, "#{fecha1}","#{fecha2}", moneda , documento ]).order(:id,:document_id,:date1)    
+    return @purchases 
+  end
+
+
   def get_purchases_by_day_detalle(fecha1,fecha2)
     @purchases = Purchase.where([" company_id = ? AND fecha3 >= ? and fecha3 <= ?  ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:moneda_id,:document_id)
     return @purchases 
   end
+
 
   def get_purchases_by_day_value(fecha1,fecha2,moneda,value='total_amount')
   

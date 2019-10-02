@@ -1255,6 +1255,7 @@ def rpt_cpagar5_pdf
 
 
 
+
   # Export supplierpayment to PDF
   def rpt_purchases_all
     @company=Company.find(params[:id])      
@@ -1264,8 +1265,8 @@ def rpt_cpagar5_pdf
     @moneda = params[:moneda_id]
       
     @purchases_all_rpt = @company.get_purchases_by_day_detalle(@fecha1,@fecha2)  
+   
     @rpt = "rpt_#{generate_guid()}"
-
 
 
     Prawn::Document.generate "app/pdf_output/#{@rpt}.pdf"  ,:size=> "A4",:margin => [20,20,5,20] do |pdf|
@@ -1277,13 +1278,33 @@ def rpt_cpagar5_pdf
     end     
 
 
-
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
-                
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
-  
-
   end
+
+
+ def rpt_compras_01 
+  
+    @company=Company.find(1)      
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]
+
+    
+    @compras  = @company.get_purchases_by_day_detalle(@fecha1,@fecha2)  
+    @purchases_all_1 = @company.get_purchases_by_day2(@fecha1,@fecha2,"1")
+    @purchases_all_2 = @company.get_purchases_by_day2(@fecha1,@fecha2,"2")
+    @purchase = Purchase.first
+      
+    case params[:print]
+      when "PDF" then render  pdf: "rpt_compras ",template: "supplier_payments/rpt_compras_01.pdf.erb",locals: {:contrato => @contratos_rpt}
+      when "Excel" then render xlsx: 'rpt_compras_01'
+      else render action: "index"
+    end
+    
+  
+  end
+
+
 
   def receive
     @supplierpayment = SupplierPayment.find(params[:id])
@@ -1397,8 +1418,6 @@ def list_receive_supplierpayments
 
       end
 
-
-      
       pdf 
   end   
 
@@ -1623,11 +1642,8 @@ def list_receive_supplierpayments
             
             lcMoneda = product.moneda_id
             lcDocumento = product.document_id
-            
             nroitem=nroitem + 1
-            
         end       
-        
         
         end
             total_cliente_doc_inafecto  = 0            

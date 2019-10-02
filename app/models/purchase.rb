@@ -59,6 +59,13 @@ TABLE_HEADERS2  = ["ITEM ",
 
 
   
+  def get_purchases_by_moneda_doc(fecha1,fecha2,moneda,documento)  
+    @purchases = Purchase.where([" company_id = ? AND date1 >= ? and date1 <= ? and moneda_id = ? and document_id=? ", "1", "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda , documento ]).order(:id,:moneda_id)    
+    return @purchases 
+  end
+  
+
+  
   	
   	
   def not_purchase_with?()
@@ -382,7 +389,7 @@ TABLE_HEADERS2  = ["ITEM ",
 
   end
 
-  
+
 
 
 end
