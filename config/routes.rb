@@ -92,7 +92,9 @@
   end 
   resources :supplier_payments do
       resources :supplierpayment_details, except: [:index,:show], controller: "supplier_payments/supplierpayment_details"
+
       collection { get :rpt_compras_01 }
+
 
   end 
 
@@ -684,6 +686,8 @@
   match 'supplier_payments/rpt_cpagar5_pdf/:id' => 'supplier_payments#rpt_cpagar5_pdf', via: [:get, :post]
   
   match 'supplier_payments/go_bancos/:id' => 'supplier_payments#go_bancos', via: [:get, :post]
+  
+  match 'supplierpayment_details/new2/:id' => 'supplierpayment_details#new2', via: [:get, :post]
   
   match 'companies/supplier_payments/:company_id' => 'supplier_payments#list_supplierpayments', via: [:get, :post]  
   resources :supplier_payments
