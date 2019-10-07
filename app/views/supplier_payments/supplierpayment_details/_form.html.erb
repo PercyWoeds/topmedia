@@ -2,6 +2,11 @@
 <%= simple_form_for([@supplierpayment , @supplierpayment_detail]) do |f| %>
   <%= f.error_notification %>
 
+    <div class="field">
+      <%= f.label  :concept_id ,"Conceptos de Cheque / Transferencia "%><br />
+      <%= f.select :concept_id,options_from_collection_for_select(@conceptos,'id','descrip') %>
+    </div>
+    
 
     <div class="field">
       <%= f.label :supplier_id, "Proveedor *", :class => "bold" %><br />

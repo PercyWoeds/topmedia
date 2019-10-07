@@ -1815,7 +1815,7 @@ def list_receive_supplierpayments
     
     @company = Company.find(1)
     
-    @supplierpayments = SupplierPayment.where(["bank_acount_id = ?",$lcId])
+    @supplierpayments = SupplierPayment.where(["bank_acount_id = ?",$lcId]).order(:documento)
     
     return @supplierpayments
 

@@ -4,6 +4,10 @@ class SupplierpaymentDetail < ActiveRecord::Base
     belongs_to :supplier 
     belongs_to :purchase 
     belongs_to :concept 
+
+    validates_presence_of :concept_id
+
+    
     
     
     
