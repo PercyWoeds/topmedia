@@ -115,6 +115,6 @@ class SupplierPayments::SupplierpaymentDetailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def supplierpayment_detail_params
-      params.require(:supplierpayment_detail).permit(:document_id, :documento, :supplier_id, :tm, :total, :descrip, :purchase_id, :supplier_payment_id, :tipocambio, :numero_documento, :fecha_documento )
+      params.require(:supplierpayment_detail).permit(:document_id, :documento, :supplier_id, :tm, :total, :descrip, :purchase_id, :supplier_payment_id, :tipocambio, :numero_documento, :fecha_documento:nrooperacion,:operacion,:concept_id )
     end
 end
