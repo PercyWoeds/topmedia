@@ -1828,7 +1828,7 @@ def list_receive_supplierpayments
   def supplierpayment_params
     params.require(:supplier_payment).permit(:company_id,:location_id,:division_id,:bank_acount_id,
       :document_id,:documento,:supplier_id,:tm,:total,:fecha1,:fecha2,:nrooperacion,:operacion,
-      :descrip,:comments,:user_id,:processed,:code,:concept_id , :numero_documento, :fecha_documento )
+      :descrip,:comments,:user_id,:processed,:code,:concept_id )
 
   end
 
