@@ -9,7 +9,7 @@
     
     <div class="field">
       <%= f.label :document_id, "Tipo de Documento *", :class => "bold" %><br />
-      <%= 1f.select :document_id,options_from_collection_for_select(@documentos,'id','description',:selected => @supplierpayment_detail.document_id)%>
+      <%= f.select :document_id,options_from_collection_for_select(@documentos,'id','description',:selected => @supplierpayment_detail.document_id)%>
     </div>
     <div class="field">
       <%= f.label :numero_documento, "Numero de Documento *", :class => "bold" %><br />
@@ -20,8 +20,7 @@
       <%= f.date_field :fecha_documento ,:class => "input.tf_short" %>
     </div>
     
-      
-
+  
     
     <div class="field">
       <%= f.label :total, "Total *", :class => "bold" %><br />
