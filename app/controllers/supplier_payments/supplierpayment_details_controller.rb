@@ -1,6 +1,6 @@
 class SupplierPayments::SupplierpaymentDetailsController < ApplicationController
    before_action :set_supplierpayment
-   before_action :set_supplierpayment_detail, :except=> [:new,:create]
+   before_action :set_supplierpayment_detail, :except=> [:new,:new2,:create]
    
 
   # GET /supplierpayment_details
