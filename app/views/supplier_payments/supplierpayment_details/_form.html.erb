@@ -2,6 +2,7 @@
 <%= simple_form_for([@supplierpayment , @supplierpayment_detail]) do |f| %>
   <%= f.error_notification %>
 
+
     <div class="field">
       <%= f.label :supplier_id, "Proveedor *", :class => "bold" %><br />
       <%= f.select :supplier_id,options_from_collection_for_select(@suppliers,'id','name',:selected => @supplierpayment_detail.supplier_id)%>
@@ -19,6 +20,18 @@
       <%= f.label :fecha_documento, "Fecha de Documento *", :class => "bold" %><br />
       <%= f.date_field :fecha_documento ,:class => "input.tf_short" %>
     </div>
+
+
+     <div class="field">
+      <%= f.label :nrooperacion, "Nro.Operacion *", :class => "bold" %><br />
+      <%= f.text_field :nrooperacion %>
+    </div>
+
+     <div class="field">
+      <%= f.label :operacion, "Operacion *", :class => "bold" %><br />
+      <%= f.text_field :operacion %>
+    </div>
+
     
   
     

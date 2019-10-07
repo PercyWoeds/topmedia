@@ -17,9 +17,9 @@
     <h4>
        Informacion Orden de Pago 
     </h4>
-              <div class="field">
+        <div class="field">
           <%= f.label :code, "Code*", :class => "bold" %><br />
-          <%= f.text_field :code, :onclick => "$(this).select();" %>
+          <%= f.text_field :code, :onclick => "$(this).select();",:readonly  %>
         </div>
 
 
@@ -37,7 +37,7 @@
     </td>
     <td>  
 
-  <div class="field">
+    <div class="field">
       <%= f.label  :concept_id ,"Conceptos de Cheque / Transferencia "%><br />
       <%= f.select :concept_id,options_from_collection_for_select(@conceptos,'id','descrip') %>
     </div>
@@ -48,7 +48,7 @@
     </div>
  
     <div class="field">
-      <%= f.label :documento, "Nro.Documento ", :class => "bold" %><br />
+      <%= f.label :documento, "Nro.Cheque / Transferencia ", :class => "bold" %><br />
       <%= f.text_field :documento %>
     </div>
 
@@ -69,15 +69,6 @@
       </div>
     
 
-    <div class="field">
-      <%= f.label :nrooperacion, "Nro.Operacion"  %><br />
-      <%= f.text_field :nrooperacion %>
-    </div>
-
-    <div class="field">
-      <%= f.label :operacion, "Operacion" %><br />
-      <%= f.text_field :operacion  %>
-    </div>
 
     <div class="field">
       <%= f.label :total, "Importe ", :class => "bold" %><br />

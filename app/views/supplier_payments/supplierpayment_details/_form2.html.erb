@@ -3,6 +3,12 @@
   <%= f.error_notification %>
 
     
+
+    <div class="field">
+      <%= f.label  :concept_id ,"Conceptos de Cheque / Transferencia "%><br />
+      <%= f.select :concept_id,options_from_collection_for_select(@conceptos,'id','descrip') %>
+    </div>
+
       <label for="ac_item" class="bold"> Documento *</label><br />
       <input type="text" name="ac_item" id="ac_item" value="<% if @ac_documento %><%= @ac_documento %><% end %>" />
       
@@ -20,11 +26,32 @@
       </div>
 
     
+    
+    <div class="field">
+      <%= f.label :numero_documento, "Numero de Document *", :class => "bold" %><br />
+      <%= f.text_field :numero_documento %>
+    </div>
+    <div class="field">
+      <%= f.label :fecha_documento, "Fecha de Documento *", :class => "bold" %><br />
+      <%= f.date_field :fecha_documento ,:class => "input.tf_short" %>
+    </div>
+
+
+     <div class="field">
+      <%= f.label :nrooperacion, "Nro.Operacion *", :class => "bold" %><br />
+      <%= f.text_field :nrooperacion %>
+    </div>
+
+     <div class="field">
+      <%= f.label :operacion, "Operacion *", :class => "bold" %><br />
+      <%= f.text_field :operacion %>
+    </div>
     <div class="field">
       <%= f.label :total, "Total *", :class => "bold" %><br />
      
       <%= f.text_field :total  %>      
     </div>
+    
     
 
   <div class="form-actions">

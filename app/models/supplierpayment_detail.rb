@@ -3,6 +3,8 @@ class SupplierpaymentDetail < ActiveRecord::Base
     belongs_to :document 
     belongs_to :supplier 
     belongs_to :purchase 
+    belongs_to :concept 
+    
     
     
     def sumar_total(id) 
