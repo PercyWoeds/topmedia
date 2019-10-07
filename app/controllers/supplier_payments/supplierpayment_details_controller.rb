@@ -28,7 +28,6 @@ class SupplierPayments::SupplierpaymentDetailsController < ApplicationController
 
     @lcSaldoCheque = 0
     @lcSaldoCheque = @supplierpayment.total - @supplierpayment_detail.sumar_total(@supplierpayment.id)
-    
      
   end
 
