@@ -11,7 +11,7 @@
       </div>
       <br />
 
-      <div class="small">
+      <div >
         <strong>Seleccionar :</strong>
         <span id="selected_contrato">     <% if @ac_documento %><%= @ac_documento %><% else %><!-- i --><% end %></span>
         <span id="selected_contrato_name"><% if @ac_documento %><%= @ac_documento %><% else %><!-- i --><% end %></span>
@@ -30,6 +30,8 @@
   <div class="form-actions">
     <%= f.hidden_field :purchase_id, :id => "ac_item_id" %>
     <%= f.hidden_field :supplier_id, :id => "ac_supplier_id" %>
+    <%= f.hidden_field :document_id, :id => "ac_document_id" %>
+    
     <%= f.button :submit %>
   </div>
   
@@ -51,6 +53,8 @@
       $("#ac_item_id").val(data[4]);
       $("#selected_contrato_name").html(data[8]);
       $("#ac_supplier_id").val(data[2]);
+      $("#ac_document_id").val(data[10]);
+      
     });
     
      $("#supplierpayment_detail_total").bind("keyup", function() {

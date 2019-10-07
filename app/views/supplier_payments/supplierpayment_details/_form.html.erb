@@ -2,43 +2,35 @@
 <%= simple_form_for([@supplierpayment , @supplierpayment_detail]) do |f| %>
   <%= f.error_notification %>
 
-      <div class="field">
+    <div class="field">
       <%= f.label :supplier_id, "Proveedor *", :class => "bold" %><br />
       <%= f.select :supplier_id,options_from_collection_for_select(@suppliers,'id','name',:selected => @supplierpayment_detail.supplier_id)%>
     </div>
     
     <div class="field">
       <%= f.label :document_id, "Tipo de Documento *", :class => "bold" %><br />
-      <%= f.select :document_id,options_from_collection_for_select(@documentos,'id','description',:selected => @supplierpayment_detail.document_id)%>
+      <%= 1f.select :document_id,options_from_collection_for_select(@documentos,'id','description',:selected => @supplierpayment_detail.document_id)%>
+    </div>
+    <div class="field">
+      <%= f.label :numero_documento, "Numero de Documento *", :class => "bold" %><br />
+      <%= f.text_field :numero_documento %>
+    </div>
+    <div class="field">
+      <%= f.label :fecha_documento, "Fecha de Documento *", :class => "bold" %><br />
+      <%= f.date_field :fecha_documento ,:class => "input.tf_short" %>
     </div>
     
-      <label for="ac_item" class="bold"> Documento *</label><br />
-      <input type="text" name="ac_item" id="ac_item" value="<% if @ac_documento %><%= @ac_documento %><% end %>" />
       
-      <div class="small">
-        Ingrese una termino de busqueda para encontrar un documento.
-      </div>
-      <br />
-
-      <div class="small">
-        <strong>Seleccionar :</strong>
-        <span id="selected_contrato">     <% if @ac_documento %><%= @ac_documento %><% else %><!-- i --><% end %></span>
-        <span id="selected_contrato_name"><% if @ac_documento %><%= @ac_documento %><% else %><!-- i --><% end %></span>
-        <br>
-      
-      </div>
 
     
     <div class="field">
       <%= f.label :total, "Total *", :class => "bold" %><br />
      
-      <%= f.text_field :total  %>      
+      <%= f.number_field :total , step: :any %>      
     </div>
     
 
   <div class="form-actions">
-    <%= f.hidden_field :purchase_id, :id => "ac_item_id" %>
-    <%= f.hidden_field :supplier_id, :id => "ac_supplier_id" %>
     <%= f.button :submit %>
   </div>
   
