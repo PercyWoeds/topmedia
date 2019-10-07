@@ -25,8 +25,8 @@ class SupplierPayments::SupplierpaymentDetailsController < ApplicationController
     @suppliers = Supplier.all.order(:name) 
     @purchases= Purchase.all
     @company = Company.find(1)
+
     @lcSaldoCheque = 0
-    
     @lcSaldoCheque = @supplierpayment.total - @supplierpayment_detail.sumar_total(@supplierpayment.id)
     
      
@@ -34,14 +34,15 @@ class SupplierPayments::SupplierpaymentDetailsController < ApplicationController
 
   # GET /supplierpayment_details/new
   def new2
-    
+
     @supplierpayment_detail = SupplierpaymentDetail.new
     @documentos = Document.all.order(:description) 
     @suppliers = Supplier.all.order(:name) 
     @purchases= Purchase.all
     @company = Company.find(1)
+
+
     @lcSaldoCheque = 0
-    
     @lcSaldoCheque = @supplierpayment.total - @supplierpayment_detail.sumar_total(@supplierpayment.id)
     
      

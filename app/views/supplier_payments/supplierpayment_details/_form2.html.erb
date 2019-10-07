@@ -2,15 +2,6 @@
 <%= simple_form_for([@supplierpayment , @supplierpayment_detail]) do |f| %>
   <%= f.error_notification %>
 
-      <div class="field">
-      <%= f.label :supplier_id, "Proveedor *", :class => "bold" %><br />
-      <%= f.select :supplier_id,options_from_collection_for_select(@suppliers,'id','name',:selected => @supplierpayment_detail.supplier_id)%>
-    </div>
-    
-    <div class="field">
-      <%= f.label :document_id, "Tipo de Documento *", :class => "bold" %><br />
-      <%= f.select :document_id,options_from_collection_for_select(@documentos,'id','description',:selected => @supplierpayment_detail.document_id)%>
-    </div>
     
       <label for="ac_item" class="bold"> Documento *</label><br />
       <input type="text" name="ac_item" id="ac_item" value="<% if @ac_documento %><%= @ac_documento %><% end %>" />
@@ -58,6 +49,7 @@
     $("#ac_item").result(function(event, data, formatted) {
       $("#supplierpayment_detail_total").val(data[6]); 
       $("#ac_item_id").val(data[4]);
+      $("#selected_contrato_name").html(data[8]);
       $("#ac_supplier_id").val(data[2]);
     });
     
