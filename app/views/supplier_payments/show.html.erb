@@ -133,10 +133,19 @@
           <%= productItem.document.descripshort   %>
         </td>
         
-              
-        <td class="bordered_bottom bordered_right">
-          <%=  productItem.purchase.documento  %>
-        </td>
+         <% if productItem.purchase != nil %>     
+            <td class="bordered_bottom bordered_right">
+            <%=  productItem.purchase.documento  %>
+            </td>
+
+        <% else %>
+
+            <td class="bordered_bottom bordered_right">
+            <%=  productItem.numero_documento  %>
+            </td>
+
+       
+        <% end %>
 
         <td class="bordered_bottom bordered_right">
           <%=  productItem.supplier.name    %>
