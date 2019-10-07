@@ -43,7 +43,7 @@
       <% for supplierpayment in @supplierpayments %>
         <tr>
           <td class="bordered_right bordered_bottom">
-            <%= link_to supplierpayment.code, supplierpayment, :title => "Ir a factura" %>
+            <%= link_to supplierpayment.documento , supplierpayment, :title => "Ir a factura" %>
           </td>
           <td class="bordered_right bordered_bottom">
             <%=  supplierpayment.supplier.name %>
@@ -51,6 +51,7 @@
           <td class="bordered_right bordered_bottom right">
             <%= money(supplierpayment.total) %>
           </td>
+          
           <td class="bordered_right bordered_bottom">
             <%= doDate(supplierpayment.created_at) %>
           </td>

@@ -119,8 +119,9 @@
           <%=  @supplierpayment.operacion    %>
         </td>
 
+
         <td class="bordered_bottom bordered_right">
-            <%=  @supplierpayment.total     %>
+            <%=  money(@supplierpayment.total)    %>
         </td>
 
       </tr>
@@ -158,6 +159,12 @@
         <td class="bordered_bottom bordered_right">
           <%= money(productItem.total) %>
         </td>
+
+     <td class="bordered_bottom bordered_right">
+          <%= productItem.concept.descrip  %>
+    
+        </td>
+
 
           <td><%= link_to 'Editar', edit_supplier_payment_supplierpayment_detail_path(supplier_payment_id: @supplierpayment.id,id: productItem.id ) %></td>          
           <td><%= link_to 'Eliminar',[@supplierpayment,productItem], method: :delete, data: { confirm: 'Estas seguro?' } %></td>
