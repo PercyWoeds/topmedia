@@ -1,13 +1,5 @@
 <div class="mid_box bordered_right">
-    <h3>
-    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Registrar documentos", "/companies/purchases/#{@company.id}" %>
-  </h3>
-
-  <p>
-    Registrar documentos    
-  </p>  
-  <%= hr() %>
+  
 
   <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
@@ -16,9 +8,33 @@
   <p>
      Cancelar documentos 
   </p>
+ <%= hr() %>
+
+  <h3>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+    <%= link_to "Registrar estado de cuenta ", statementaccounts_path  %>
+  </h3>
+
+  <p>
+    Registrar estado de cuenta   
+  </p>  
+
+  
+  <%= hr() %>
 
 
+  <h3>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+    <%= link_to "Conciliacion Bancaria ", accounts_path  %>
+  </h3>
 
+  <p>
+    Generar conciliacion bancaria 
+
+  </p>  
+  <%= hr() %>
+
+  
 
 </div>
 

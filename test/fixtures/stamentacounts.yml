@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  bank_account_id: 1
+  fecha1: 2019-10-07 14:53:18
+  fecha2: 2019-10-07 14:53:18
+  saldo_inicial: 1.5
+  saldo_final: 1.5
+  user_id: 1
+  company_id: 1
+
+two:
+  bank_account_id: 1
+  fecha1: 2019-10-07 14:53:18
+  fecha2: 2019-10-07 14:53:18
+  saldo_inicial: 1.5
+  saldo_final: 1.5
+  user_id: 1
+  company_id: 1

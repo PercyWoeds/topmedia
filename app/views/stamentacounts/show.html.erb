@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Bank account:</strong>
+  <%= @stamentacount.bank_account_id %>
+</p>
+
+<p>
+  <strong>Fecha1:</strong>
+  <%= @stamentacount.fecha1 %>
+</p>
+
+<p>
+  <strong>Fecha2:</strong>
+  <%= @stamentacount.fecha2 %>
+</p>
+
+<p>
+  <strong>Saldo inicial:</strong>
+  <%= @stamentacount.saldo_inicial %>
+</p>
+
+<p>
+  <strong>Saldo final:</strong>
+  <%= @stamentacount.saldo_final %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @stamentacount.user_id %>
+</p>
+
+<p>
+  <strong>Company:</strong>
+  <%= @stamentacount.company_id %>
+</p>
+
+<%= link_to 'Edit', edit_stamentacount_path(@stamentacount) %> |
+<%= link_to 'Back', stamentacounts_path %>

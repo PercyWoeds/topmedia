@@ -1,6 +1,7 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :stamentacounts
   get 'orden_product_imports/new'
 
   get 'orden_product_imports/create'
