@@ -4,16 +4,39 @@
   
   <div class="form-inputs">
     
-    <%= f.input :fecha %>
-    <%= f.input :tipomov_id %>
-    <%= f.input :cargo %>
-    <%= f.input :abono %>
-    <%= f.input :concepto %>
-    <%= f.input :nrocheque %>
+    <div class="field">
+      <%= f.label :fecha, "Fecha*", :class => "bold" %><br />
+      <%= f.date_field :fecha,:class => "input.tf_short" %>
+    </div>
+
+ <%= f.select :tipomov_id,options_from_collection_for_select(@tipomov,'id','descrip'),  {style: "width: 100px" } %>
+
+    <div class="field">
+      <%= f.label :cargo, "Cargo ", :class => "bold" %><br />
+      <%= f.number_field :cargo ,:step => 0.01 %>
+    </div>
+
+    
+    <div class="field">
+      <%= f.label :abono, "Abono ", :class => "bold" %><br />
+      <%= f.number_field :abono  ,:step => 0.01 %>
+    </div>
+
+
+    <div class="field">
+      <%= f.label :concepto, "Concepto ", :class => "bold" %><br />
+      <%= f.text_field :concepto,:step => 0.01 %>
+    </div>
+    <div class="field">
+      <%= f.label :nrocheque, "Nro.Cheque ", :class => "bold" %><br />
+      <%= f.text_field :nrocheque,:step => 0.01 %>
+    </div>
+
+
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, "Grabar" %>
   </div>
   
 <% end %>

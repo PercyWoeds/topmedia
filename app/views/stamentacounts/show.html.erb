@@ -2,17 +2,17 @@
 
 <p>
   <strong>Bank account:</strong>
-  <%= @stamentacount.bank_account_id %>
+  <%= @stamentacount.bank_acount.number %>
 </p>
 
 <p>
-  <strong>Fecha1:</strong>
-  <%= @stamentacount.fecha1 %>
+  <strong>Fecha inicial:</strong>
+  <%= doDate(@stamentacount.fecha1) %>
 </p>
 
 <p>
-  <strong>Fecha2:</strong>
-  <%= @stamentacount.fecha2 %>
+  <strong>Fecha final :</strong>
+  <%= doDate(@stamentacount.fecha2) %>
 </p>
 
 <p>
@@ -98,6 +98,7 @@
           <td class="small bordered_bottom bordered_right">
             <%= product.nrocheque %>              
           </td>
+          <% nroitem = nroitem + 1 %>
           
          
 <td><%= link_to 'Editar',edit_stamentacount_stamentacount_detail_path(stamentacount_id: @stamentacount.id, id: product.id ) %></td>
@@ -113,27 +114,29 @@
       </td>
     </tr>
     <tr>
-      <td colspan="34" class="bordered_bottom bordered_right bold">
-        Subtotal:
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+         Total Cargos:
       </td>
       <td class="bordered_bottom bordered_right bold right">
+       <%= @stamentacount.get_subtotal("cargos") %> 
+
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+         Total Abonos:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+       <%= @stamentacount.get_subtotal("abonos") %> 
         
       </td>
     </tr>
     <tr>
-      <td colspan="34" class="bordered_bottom bordered_right bold">
-        IGV:
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Saldo final :
       </td>
       <td class="bordered_bottom bordered_right bold right">
-        
-      </td>
-    </tr>
-    <tr>
-      <td colspan="34" class="bordered_bottom bordered_right bold">
-        Total:
-      </td>
-      <td class="bordered_bottom bordered_right bold right">
-       
+       <%= @stamentacount[:saldo_inicial] - @stamentacount.get_subtotal("cargos") + @stamentacount.get_subtotal("abonos") %>
       </td>
     </tr>
   </tbody>
