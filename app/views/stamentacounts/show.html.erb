@@ -35,5 +35,114 @@
   <%= @stamentacount.company_id %>
 </p>
 
-<%= link_to 'Edit', edit_stamentacount_path(@stamentacount) %> |
-<%= link_to 'Back', stamentacounts_path %>
+
+    <div class="button">
+      <%= link_to 'Agregar Item', new_stamentacount_stamentacount_detail_path(@stamentacount) %>
+    </div> 
+
+<h3>
+  Detalle
+</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+       Item
+      </th>
+      
+      <th>
+        Fecha
+      </th>
+      <th>
+        Cargo
+      </th>
+      
+      <th>
+        Abono
+      </th>
+      <th>
+        Concepto
+      </th>
+     
+      
+      <th>
+        Nro.Cheque
+      </th>
+
+    </tr>
+  </thead>
+  
+  <tbody>
+  
+  <% nroitem =  1 %>
+    <%  @stamentacount_details.each do |product| %>
+    <tr>
+          <td class="small bordered_bottom bordered_right">
+            <%= nroitem %>    
+          </td>
+
+          <td class="small bordered_bottom bordered_right">
+            <%= product.fecha  %>    
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= product.cargo %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.abono %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.concepto %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.nrocheque %>              
+          </td>
+          
+         
+<td><%= link_to 'Editar',edit_stamentacount_stamentacount_detail_path(stamentacount_id: @stamentacount.id, id: product.id ) %></td>
+<td><%= link_to 'Eliminar',[@stamentacount, product], method: :delete, data:{confirm: 'Estas seguro de eliminar ?' } %></td>
+  
+          
+    </td>
+    
+    <% end %>
+    <tr>
+      <td colspan="35" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td colspan="34" class="bordered_bottom bordered_right bold">
+        Subtotal:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        
+      </td>
+    </tr>
+    <tr>
+      <td colspan="34" class="bordered_bottom bordered_right bold">
+        IGV:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        
+      </td>
+    </tr>
+    <tr>
+      <td colspan="34" class="bordered_bottom bordered_right bold">
+        Total:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+       
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br />
+
+
+<div class="button">
+
+<%= link_to 'Editar', edit_stamentacount_path(@stamentacount) %> |
+<%= link_to 'Regresar', stamentacounts_path %>
+</div>

@@ -1,7 +1,10 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :stamentacount_details
+  resources :tipomovs
   resources :stamentacounts
+
   get 'orden_product_imports/new'
 
   get 'orden_product_imports/create'
@@ -78,6 +81,9 @@
     collection { post :import }
   end 
   
+  resources :stamentacounts do
+     resources :stamentacount_details, except: [:index,:show], controller: "stamentacounts/stamentacount_details"
+  end 
   
   
   resources :contratos do
@@ -95,10 +101,7 @@
       resources :supplierpayment_details, except: [:index,:show], controller: "supplier_payments/supplierpayment_details" do
         collection { get :new2 }    
       end 
-
       collection { get :rpt_compras_01 }
-
-
   end 
 
   resources :ciudads
@@ -109,7 +112,6 @@
   end 
   resources :medios do 
     collection { post :import }
-    
   end 
   
   resources :tipocambios

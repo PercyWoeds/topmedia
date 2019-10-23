@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha: 2019-10-22 11:09:28
+  tipomov_id: 1
+  cargo: 1.5
+  abono: 1.5
+  concepto: MyString
+  nrocheque: MyString
+
+two:
+  fecha: 2019-10-22 11:09:28
+  tipomov_id: 1
+  cargo: 1.5
+  abono: 1.5
+  concepto: MyString
+  nrocheque: MyString

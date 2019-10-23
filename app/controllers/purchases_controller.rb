@@ -998,8 +998,6 @@ WHERE purchase_details.product_id = ?',params[:id] ])
 
       end
 
-
-      
       pdf 
   end   
 
@@ -2149,6 +2147,8 @@ def newfactura2
   # POST /purchases
   # POST /purchases.xml
   def create
+
+    
     @pagetitle = "Nueva Compra"
     @action_txt = "Crear"
     

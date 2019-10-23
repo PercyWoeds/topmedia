@@ -2,8 +2,8 @@
 
 one:
   bank_account_id: 1
-  fecha1: 2019-10-07 14:53:18
-  fecha2: 2019-10-07 14:53:18
+  fecha1: 2019-10-22 10:23:34
+  fecha2: 2019-10-22 10:23:34
   saldo_inicial: 1.5
   saldo_final: 1.5
   user_id: 1
@@ -11,8 +11,8 @@ one:
 
 two:
   bank_account_id: 1
-  fecha1: 2019-10-07 14:53:18
-  fecha2: 2019-10-07 14:53:18
+  fecha1: 2019-10-22 10:23:34
+  fecha2: 2019-10-22 10:23:34
   saldo_inicial: 1.5
   saldo_final: 1.5
   user_id: 1

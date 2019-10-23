@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191207172826) do
+ActiveRecord::Schema.define(version: 20191207172832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1564,6 +1564,31 @@ ActiveRecord::Schema.define(version: 20191207172826) do
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
+  create_table "stamentacount_details", force: :cascade do |t|
+    t.datetime "fecha"
+    t.integer  "tipomov_id"
+    t.float    "cargo"
+    t.float    "abono"
+    t.string   "concepto"
+    t.string   "nrocheque"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "stamentacount_id"
+  end
+
+  create_table "stamentacounts", force: :cascade do |t|
+    t.integer  "bank_account_id"
+    t.datetime "fecha1"
+    t.datetime "fecha2"
+    t.float    "saldo_inicial"
+    t.float    "saldo_final"
+    t.integer  "user_id"
+    t.integer  "company_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "stamentacount_id"
+  end
+
   create_table "stocks", force: :cascade do |t|
     t.integer  "store_id"
     t.integer  "item_id"
@@ -1636,6 +1661,9 @@ ActiveRecord::Schema.define(version: 20191207172826) do
     t.datetime "updated_at",          null: false
     t.string   "numero_documento"
     t.datetime "fecha_documento"
+    t.float    "nrooperacion"
+    t.float    "operacion"
+    t.integer  "concept_id"
   end
 
   create_table "suppliers", force: :cascade do |t|
@@ -1698,6 +1726,14 @@ ActiveRecord::Schema.define(version: 20191207172826) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "company_id"
+  end
+
+  create_table "tipomovs", force: :cascade do |t|
+    t.string   "code"
+    t.string   "descrip"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tranportorders", force: :cascade do |t|

@@ -7,9 +7,13 @@ class StamentacountsController < ApplicationController
     @stamentacounts = Stamentacount.all
   end
 
+
   # GET /stamentacounts/1
   # GET /stamentacounts/1.json
   def show
+     @stamentacount = Stamentacount.find(params[:id])
+     @stamentacount_details  = @stamentacount.stamentacount_details
+
   end
 
   # GET /stamentacounts/new
@@ -60,6 +64,7 @@ class StamentacountsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

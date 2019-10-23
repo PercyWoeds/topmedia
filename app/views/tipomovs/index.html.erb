@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listado  Tipo movimientos </h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Descrip</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tipomovs.each do |tipomov| %>
+      <tr>
+        <td><%= tipomov.code %></td>
+        <td><%= tipomov.descrip %></td>
+        <td><%= tipomov.user_id %></td>
+        <td><%= link_to 'Ver', tipomov %></td>
+        <td><%= link_to 'Editar', edit_tipomov_path(tipomov) %></td>
+        <td><%= link_to 'Eliminar', tipomov, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Tipomov', new_tipomov_path %>

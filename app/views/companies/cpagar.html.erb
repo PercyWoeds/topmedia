@@ -12,7 +12,7 @@
 
   <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Registrar estado de cuenta ", statementaccounts_path  %>
+    <%= link_to "Registrar estado de cuenta ", stamentacounts_path  %>
   </h3>
 
   <p>
@@ -25,7 +25,7 @@
 
   <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Conciliacion Bancaria ", accounts_path  %>
+    
   </h3>
 
   <p>
@@ -58,7 +58,8 @@
   <p>
      Agregar, editar or eliminar cuentas por pagar 
   </p>
-  <%= hr() %>
+  
+<%= hr() %>
   <h3>
     <%= image_tag("reports_32.png", :class => "vmiddle") %>
     <%= link_to "Reportes", "/companies/reports/reports_cpagar/#{@company.id}" %>
@@ -68,6 +69,5 @@
     Reportes de tu negocio.
   </p>
   <%= hr() %>  
-
   
 </div>

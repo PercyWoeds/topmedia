@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Stamentacount Details</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Tipomov</th>
+      <th>Cargo</th>
+      <th>Abono</th>
+      <th>Concepto</th>
+      <th>Nrocheque</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @stamentacount_details.each do |stamentacount_detail| %>
+      <tr>
+        <td><%= stamentacount_detail.fecha %></td>
+        <td><%= stamentacount_detail.tipomov_id %></td>
+        <td><%= stamentacount_detail.cargo %></td>
+        <td><%= stamentacount_detail.abono %></td>
+        <td><%= stamentacount_detail.concepto %></td>
+        <td><%= stamentacount_detail.nrocheque %></td>
+        <td><%= link_to 'Show', stamentacount_detail %></td>
+        <td><%= link_to 'Edit', edit_stamentacount_detail_path(stamentacount_detail) %></td>
+        <td><%= link_to 'Destroy', stamentacount_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Stamentacount detail', new_stamentacount_detail_path %>

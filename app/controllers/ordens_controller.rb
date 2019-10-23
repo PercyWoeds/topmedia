@@ -589,7 +589,8 @@ class OrdensController < ApplicationController
   # Reporte de orden 
   def pdf
     @orden = Orden.find(params[:id])
-    @company = Company.find(1)        
+    @company = Company.find(1)   
+         
      $lcContrato =  @orden.contrato.code
      $lcMedio  = @orden.medio.descrip
      $lcMarca  = @orden.marca.name
