@@ -47,10 +47,7 @@ class StamentacountsController < ApplicationController
     respond_to do |format|
       if @stamentacount.save
 
-          
-           
-
-        format.html { redirect_to @stamentacount, notice: 'Item de movimiento fue creado exitosament' }
+        format.html { redirect_to @stamentacount, notice: 'Item de movimiento fue creado exitosament  ' }
         format.json { render :show, status: :created, location: @stamentacount }
       else
         format.html { render :new }
