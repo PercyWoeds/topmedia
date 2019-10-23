@@ -1,16 +1,12 @@
 class Stamentacount < ActiveRecord::Base
 
-
-  
 validates_presence_of :company_id, :saldo_inicial,:saldo_final,:user_id,:fecha1,:fecha2
-
 
 validates_numericality_of :saldo_inicial, :saldo_final, allow_nil: false 
 
 has_many :stamentacount_details, :dependent => :destroy
 
 belongs_to :bank_acount 
-
 
  
   def get_subtotal(value)
@@ -28,6 +24,7 @@ belongs_to :bank_acount
        
      end 
     end
+
     
     return ret
   end
