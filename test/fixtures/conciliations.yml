@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  bank_acount_id: 1
+  document_id: 1
+  documento: MyString
+  supplier_id: 1
+  total: 1.5
+  fecha1: 2019-10-24 15:35:37
+  fecha2: 2019-10-24 15:35:37
+  descrip: MyString
+  code: MyString
+  concept_id: 1
+
+two:
+  bank_acount_id: 1
+  document_id: 1
+  documento: MyString
+  supplier_id: 1
+  total: 1.5
+  fecha1: 2019-10-24 15:35:37
+  fecha2: 2019-10-24 15:35:37
+  descrip: MyString
+  code: MyString
+  concept_id: 1

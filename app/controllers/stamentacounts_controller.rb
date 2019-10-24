@@ -96,6 +96,21 @@ class StamentacountsController < ApplicationController
   end
 
 
+  def do_process 
+    
+    @stamentacount = Stamentacount.find(params[:id])
+    fecha1 = @stamentacount.fecha1
+    fecha2 = @stamentacount.fecha2
+    banco  = @stamentacount.bank_acount_id 
+
+    @stamentacount.process(fecha1,fecha2,banco)
+    
+    @user_id = @current_user.id 
+    flash[:notice] = "La informacion ha sido agregada."
+    redirect_to @stamentacount
+    
+  end 
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_stamentacount
@@ -104,6 +119,6 @@ class StamentacountsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def stamentacount_params
-      params.require(:stamentacount).permit(:bank_acount_id, :fecha1, :fecha2, :saldo_inicial, :saldo_final, :user_id, :company_id)
+      params.require(:stamentacount).permit(:bank_acount_id, :fecha1, :fecha2, :saldo_inicial, :saldo_final, :user_id, :company_id,:importado)
     end
 end

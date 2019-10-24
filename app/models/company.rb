@@ -2460,7 +2460,47 @@ def get_ordenes_eecc(fecha1,fecha2)
     ORDER BY 1,2,3,4 ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ])  
 
     return @contratos
+end 
 
+
+def get_statamenacount_by_day(fecha1,fecha2,banco)
+     a= Stamentacount.find_by(["fecha1 >= ? and fecha2<=? and bank_acount_id =?","#{fecha1} 00:00:00","#{fecha2} 23:59:59",banco])
+    return a.saldo_final 
+end 
+def get_statamenacount_by_days(fecha1,fecha2,banco)
+
+     a = SupplierPayment.where(["fecha1 >= ? and fecha1 <= ? and bank_acount_id = ? ","#{fecha1} 00:00:00","#{fecha2} 23:59:59",banco])
+     
+     b = Stamentacount.find_by (["fecha1 >= ? and fecha2 <= ? and bank_acount_id = ? ","#{fecha1} 00:00:00","#{fecha2} 23:59:59",banco])
+     
+
+      Conciliation.delete_all 
+  if a.size > 0
+      for @cheques in a 
+
+          f = StamentacountDetail.find_by(stamentacount_id: b.id,nrocheque: @cheques.documento) 
+
+          if f.nil? 
+
+              c = Conciliation.new( bank_acount_id: b.bank_acount_id, 
+              documento: @cheques.documento  , total: @cheques.total, fecha1: @cheques.fecha1,
+              descrip: @cheques.get_supplier(@cheques.supplier_id) )   
+             begin 
+             c.save
+              rescue
+             end 
+          else
+            
+
+          end 
+
+
+        end 
+
+        conciliacion = Conciliation.all 
+  end 
+
+  return conciliacion 
 
 end 
 

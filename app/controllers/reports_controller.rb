@@ -1396,7 +1396,6 @@ class ReportsController < ApplicationController
     
     
   end
-  
  
  
   def rpt_ordenes2_pdf
@@ -1404,6 +1403,16 @@ class ReportsController < ApplicationController
     @pagetitle = "Reportes de Ordenes "    
     @customers = @company.get_customers()
     @monedas=@company.get_monedas    
+  end
+ 
+  def rpt_concilia_1
+    @company = Company.find(1)    
+    @pagetitle = "Reportes de Conciliacion "    
+    @customers = @company.get_customers()
+    @monedas=@company.get_monedas    
+    @bancos =@company.get_bank_acounts() 
+
+
   end
 
 end

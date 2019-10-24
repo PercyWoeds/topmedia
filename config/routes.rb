@@ -83,6 +83,9 @@
   
   resources :stamentacounts do
      resources :stamentacount_details, except: [:index,:show], controller: "stamentacounts/stamentacount_details"
+
+     collection { get :rpt_concilia_1 }
+     
   end 
   
   
@@ -102,6 +105,9 @@
         collection { get :new2 }    
       end 
       collection { get :rpt_compras_01 }
+      
+      collection { get :rpt_concilia_1 }
+      
   end 
 
   resources :ciudads
@@ -345,6 +351,8 @@
   match 'companies/reports/rpt_serviceorder_all/:company_id' => 'reports#rpt_serviceorder_all', via: [:get, :post]
   match 'companies/reports/rpt_purchases_all/:company_id' => 'reports#rpt_purchases_all', via: [:get, :post]
   match 'companies/reports/rpt_purchase2_all/:company_id' => 'reports#rpt_purchase2_all', via: [:get, :post]
+
+  match 'companies/reports/rpt_concilia_1' => 'reports#rpt_concilia_1', via: [:get, :post]
 
   match 'companies/reports/rpt_purchaseorder_all/:company_id' => 'reports#rpt_purchaseorder_all', via: [:get, :post]
   match 'companies/reports/rpt_purchaseorder2_all/:company_id' => 'reports#rpt_purchaseorder2_all', via: [:get, :post]
@@ -902,10 +910,10 @@
   match 'supplier_payments/ac_facturas/:company_id' => 'supplier_payments#ac_facturas', via: [:get, :post]
   
   
+  match 'stamentacounts/do_process/:id' => 'stamentacounts#do_process', via: [:get, :post]
+
+
   resources :inventarios
-
-
-  # Sessions
   resources :sessions
   
   # Frontpage

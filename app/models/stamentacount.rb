@@ -29,5 +29,28 @@ belongs_to :bank_acount
     return ret
   end
 
+
+ 
+   def process(fecha1,fecha2,banco)
+
+
+      cheque  =SupplierPayment.where(["fecha1 >=? and fecha1 <= ? and bank_acount_id =?","#{fecha1}", "#{fecha2}",banco])
+      
+      StamentacountDetail.where(stamentacount_id: self.id,importado: "1").delete_all
+      
+      #Selecciona datos para calcular onp essalud
+    
+      
+      for ip in cheque       
+        
+        a=  StamentacountDetail.new(fecha: ip.fecha1, tipomov_id: "1", cargo: ip.total, abono: 0.0, 
+          concepto:ip.descrip , nrocheque: ip.documento , stamentacount_id: self.id, importado: "1")
+        a.save      
+
+      end
+
+    end  
+
+
 end
 

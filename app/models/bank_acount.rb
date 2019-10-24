@@ -13,6 +13,12 @@ class BankAcount < ActiveRecord::Base
 		return @a.name 
 	end
 
+     def get_moneda(id)
+
+		@a = BankAcount.find(id)
+		return @a.moneda.name  
+	end
+
 	def get_monedas
 		monedas = Moneda.all 
     	return monedas		

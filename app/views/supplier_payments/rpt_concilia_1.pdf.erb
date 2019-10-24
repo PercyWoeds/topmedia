@@ -1,0 +1,66 @@
+<html>
+<body>  
+  <h4 ><center>CONCILIACION BANCARIA  </center>   </h4>
+  <h5><center> Desde: <%= @fecha1.to_s %>  Hasta: <%= @fecha2.to_s %> </center></h5>
+  <font size="2" face="Courier New" >
+  <h5><center> BANCO   :    <%=  @banco_name %> </center></h5>
+  <h5><center> CUENTA  :  <%= @banco_cuenta %>  MONEDA:  <%= @banco_moneda %></center></h5>
+
+  <br>
+    
+
+  <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
+  <tr bgcolor="#B4D7F7">
+    <th width="88%" align="left"> Saldo segun Estado de Cuenta Bancario:   </th>
+    <th width="12%" align="right">  <%= @saldo_banco %>  </th>
+  </tr>
+  </table>
+  
+      <% nroitem= 1 %>
+      <% totg1 = 0 %>
+      <% totg2 = 0 %>
+      <% totg3 = 0 %>
+      <% totg4 = 0 %>
+
+
+
+        <% if @detalle_cheques.size  > 0   %>
+        <table style=  'font-size:80% ;width:100%'>  
+         <tr style="font-weight:bold">
+            <td width="12%"> Fecha</td>              
+            <td width="12%"> Nro.Cheque </td>
+            <td width="62%"> Detalle </td>
+            <td width="14%" align="right" > Importe </td>
+            
+            </tr>     
+
+        <%  @detalle_cheques.each do |detalle| %>
+
+            <tr >
+            <td width="12%"> <%= detalle.fecha1.strftime("%m/%d/%Y") %> </td>              
+            <td width="12%"> <%= detalle.documento %> </td>
+            <td width="62%"> <%= detalle.descrip  %> </td>
+            <td width="14%" align="right"> <%= money(detalle.total)  %> </td>
+            
+            </tr>
+            <% totg1 += detalle.total %>
+            
+        <%end%>
+        </table>
+
+        <% totg2 = @saldo_banco - totg1   %>
+
+        <%end%>
+
+
+       <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
+          <tr bgcolor="#B4D7F7"  style="font-weight:bold">
+            <td width="88%"> Saldo de banco segun Conciliacion </td>
+            <td width="12%" align="right"><%= money(totg2)  %>    </td>
+            
+            </tr>
+       </table>
+
+        
+      </body>
+      </html>

@@ -1305,6 +1305,49 @@ def rpt_cpagar5_pdf
   end
 
 
+ def rpt_concilia_1 
+  
+    @company=Company.find(1)      
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]
+    @banco = params[:bank_acount_id]
+    
+    a=    BankAcount.find(@banco)
+
+    @banco_name   =  a.bank.name
+    @banco_moneda =  a.moneda.description 
+    @banco_cuenta =  a.number
+
+
+    @saldo_banco  = @company.get_statamenacount_by_day(@fecha1,@fecha2,@banco)
+    @detalle_cheques = @company.get_statamenacount_by_days(@fecha1,@fecha2,@banco)
+
+
+
+      
+    case params[:print]
+      when "PDF"   then render  pdf: "rpt_concilia",template: "supplier_payments/rpt_concilia_1.pdf.erb",locals: {:supplierpayments => @detalle_cheques},
+      :orientation      => 'Portrait',
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-headers.html',
+                           right: '[page] of [topage]'
+                  }                  
+               } ,
+
+          :footer => { :html => { template: 'layouts/pdf-footers.html' }       }  ,   
+          :margin => {bottom: 15} 
+
+
+      when "Excel" then render xlsx: 'rpt_concilia_1'
+      else render action: "index"
+    end
+    
+  
+  end
+
+
 
   def receive
     @supplierpayment = SupplierPayment.find(params[:id])
