@@ -2465,7 +2465,13 @@ end
 
 def get_statamenacount_by_day(fecha1,fecha2,banco)
      a= Stamentacount.find_by(["fecha1 >= ? and fecha2<=? and bank_acount_id =?","#{fecha1} 00:00:00","#{fecha2} 23:59:59",banco])
-    return a.saldo_final 
+
+    if a.nil?
+      return 0
+    else  
+      return a.saldo_final 
+    end 
+
 end 
 def get_statamenacount_by_days(fecha1,fecha2,banco)
 
@@ -2477,6 +2483,8 @@ def get_statamenacount_by_days(fecha1,fecha2,banco)
       Conciliation.delete_all 
   if a.size > 0
       for @cheques in a 
+
+          unless b.nil?
 
           f = StamentacountDetail.find_by(stamentacount_id: b.id,nrocheque: @cheques.documento) 
 
@@ -2493,7 +2501,7 @@ def get_statamenacount_by_days(fecha1,fecha2,banco)
             
 
           end 
-
+          end 
 
         end 
 
