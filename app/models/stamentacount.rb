@@ -32,6 +32,9 @@ belongs_to :bank_acount
 
  
    def process(fecha1,fecha2,banco)
+    puts "fechas process"
+     puts fecha1
+     puts fecha2
 
 
       cheque  =SupplierPayment.where(["fecha1 >=? and fecha1 <= ? and bank_acount_id =?","#{fecha1}", "#{fecha2}",banco])

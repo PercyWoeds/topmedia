@@ -5,13 +5,13 @@
 <table>
   <thead>
     <tr>
-      <th>Bank account</th>
+      <th>Id</td>
+      
+      <th>Cuenta bancaria</th>
       <th>Fec.Inicial</th>
       <th>Fec.final </th>
       <th>Saldo inicial</th>
       <th>Saldo final</th>
-      <th>User</th>
-      <th>Company</th>
       <th colspan="3"></th> 
     </tr>
   </thead>
@@ -19,13 +19,13 @@
   <tbody>
     <% @stamentacounts.each do |stamentacount| %>
       <tr>
-        <td><%= stamentacount.bank_acount_id %></td>
-        <td><%= stamentacount.fecha1 %></td>
-        <td><%= stamentacount.fecha2 %></td>
+        <td><%= stamentacount.id %></td>
+        
+        <td><%= stamentacount.bank_acount.number %></td>
+        <td><%= stamentacount.fecha1.strftime("%d/%m/%Y") %></td>
+        <td><%= stamentacount.fecha2.strftime("%d/%m/%Y") %></td>
         <td><%= stamentacount.saldo_inicial %></td>
         <td><%= stamentacount.saldo_final %></td>
-        <td><%= stamentacount.user_id %></td>
-        <td><%= stamentacount.company_id %></td>
         <td><%= link_to 'Ver', stamentacount %></td>
         <td><%= link_to 'Editar', edit_stamentacount_path(stamentacount) %></td>
         <td><%= link_to 'Eliminar', stamentacount, method: :delete, data: { confirm: 'Are you sure?' } %></td>
