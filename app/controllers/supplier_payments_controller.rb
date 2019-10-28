@@ -1099,14 +1099,14 @@ def rpt_cpagar5_pdf
     puts "banco..."
     puts banco_id
     @supplierpayment[:documento] =  @supplierpayment.ultimo_cheque(banco_id) 
-    
+  
 
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @suppliers = @company.get_suppliers()
     @conceptos = Concept.all.order(:descrip )
     
-    @bank_acounts = @company.get_bank_acount_by($lcId)        
+    @bank_acounts = @company.get_bank_acount_by(banco_id)        
     @monedas  = @company.get_monedas()
     @documents  = @company.get_documents_cheque()
   
@@ -1863,7 +1863,7 @@ def list_receive_supplierpayments
   end
   def go_bancos 
     lcProcesado='1'
-    
+
     @banco_id = params[:id]    
     
     @company = Company.find(1)
