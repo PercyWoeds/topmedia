@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listado movimiento cuentas </h1>
+<h1>Listado Movimiento Cuentas </h1>
 
 <table>
   <thead>
@@ -8,11 +8,13 @@
       <th>Id</td>
       
       <th>Cuenta bancaria</th>
+      <th>Moneda </th>
+      
       <th>Fec.Inicial</th>
       <th>Fec.final </th>
       <th>Saldo inicial</th>
       <th>Saldo final</th>
-      <th colspan="3"></th> 
+      <th colspan="3">Opciones</th> 
     </tr>
   </thead>
 
@@ -22,6 +24,8 @@
         <td><%= stamentacount.id %></td>
         
         <td><%= stamentacount.bank_acount.number %></td>
+        <td><%= stamentacount.bank_acount.moneda.description %></td>
+        
         <td><%= stamentacount.fecha1.strftime("%d/%m/%Y") %></td>
         <td><%= stamentacount.fecha2.strftime("%d/%m/%Y") %></td>
         <td><%= stamentacount.saldo_inicial %></td>
@@ -35,6 +39,7 @@
 </table>
 
 <br>
+
 <div class="buttons">
 
 <%= link_to 'Nuevo Movimiento', new_stamentacount_path %>

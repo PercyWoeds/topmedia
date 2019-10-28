@@ -1100,6 +1100,7 @@ def rpt_cpagar5_pdf
     puts banco_id
     @supplierpayment[:documento] =  @supplierpayment.ultimo_cheque(banco_id) 
   
+    @supplierpayment[:total] = 0.00
 
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()

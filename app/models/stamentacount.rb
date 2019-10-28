@@ -9,6 +9,8 @@ has_many :stamentacount_details, :dependent => :destroy
 
 
 belongs_to :bank_acount 
+belongs_to :moneda  
+
 
  
   def get_subtotal(value)
