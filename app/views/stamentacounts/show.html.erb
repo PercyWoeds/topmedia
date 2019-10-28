@@ -120,7 +120,7 @@
          Total Cargos:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-       <%= @stamentacount.get_subtotal("cargos") %> 
+       <%= money(@stamentacount.get_subtotal("cargos")) %> 
 
       </td>
     </tr>
@@ -129,7 +129,7 @@
          Total Abonos:
       </td>
       <td class="bordered_bottom bordered_right bold right">
-       <%= @stamentacount.get_subtotal("abonos") %> 
+       <%= money(@stamentacount.get_subtotal("abonos")) %> 
         
       </td>
     </tr>
@@ -137,8 +137,9 @@
       <td colspan="5" class="bordered_bottom bordered_right bold">
         Saldo final :
       </td>
+      <% saldo_final = @stamentacount[:saldo_inicial] - @stamentacount.get_subtotal("cargos") + @stamentacount.get_subtotal("abonos") %>
       <td class="bordered_bottom bordered_right bold right">
-       <%= @stamentacount[:saldo_inicial] - @stamentacount.get_subtotal("cargos") + @stamentacount.get_subtotal("abonos") %>
+       <%= money(saldo_final)   %>
       </td>
     </tr>
   </tbody>
