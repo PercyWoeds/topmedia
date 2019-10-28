@@ -1321,11 +1321,10 @@ def rpt_cpagar5_pdf
     puts "concilia"
     puts @fecha1
     puts @fecha1
-
     puts @banco 
 
     
-    @saldo_banco  = @company.get_statamenacount_by_day(@fecha1,@fecha2,@banco)
+    @saldo_banco     = @company.get_statamenacount_by_day(@fecha1,@fecha2,@banco)
     @detalle_cheques = @company.get_statamenacount_by_days(@fecha1,@fecha2,@banco)
 
       
