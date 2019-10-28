@@ -1318,11 +1318,15 @@ def rpt_cpagar5_pdf
     @banco_moneda =  a.moneda.description 
     @banco_cuenta =  a.number
 
+    puts "concilia"
+    puts @fecha1
+    puts @fecha1
 
+    puts @banco 
+
+    
     @saldo_banco  = @company.get_statamenacount_by_day(@fecha1,@fecha2,@banco)
     @detalle_cheques = @company.get_statamenacount_by_days(@fecha1,@fecha2,@banco)
-
-
 
       
     case params[:print]
