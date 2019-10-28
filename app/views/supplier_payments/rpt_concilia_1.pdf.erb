@@ -24,7 +24,7 @@
 
 
 
-        <% if @detalle_cheques.size  > 0   %>
+        <% unless @detalle_cheques.nil?    %>
         <table style=  'font-size:80% ;width:100%'>  
          <tr style="font-weight:bold">
             <td width="12%"> Fecha</td>              
