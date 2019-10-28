@@ -149,5 +149,10 @@
 <div class="button">
 
 <%= link_to 'Editar', edit_stamentacount_path(@stamentacount) %> |
+
+<%= link_to 'Exportar to PDF', "/stamentacounts/pdf/#{@stamentacount.id}.pdf" %>  
+
+ 
+
 <%= link_to 'Regresar', stamentacounts_path %>
 </div>

@@ -16,6 +16,45 @@ class StamentacountsController < ApplicationController
 
   end
 
+# Export serviceorder to PDF
+  def pdf
+    @stamentacount = Stamentacount.find(params[:id])
+    company =@stamentacount.company_id
+    @company =Company.find(company)
+    @stamentacount_details  = @stamentacount.stamentacount_details.order(:id)
+    a = BankAcount.find(@stamentacount.bank_acount_id)
+    @banco_name   =  a.bank.name
+    @banco_moneda =  a.moneda.description 
+    @banco_cuenta =  a.number
+    @fecha1 = @stamentacount.fecha1
+    @fecha2 = @stamentacount.fecha2
+
+   @saldo_inicial = @stamentacount.saldo_inicial
+   @total_cargos = @stamentacount.get_subtotal("cargos")  
+   @total_abonos = @stamentacount.get_subtotal("abonos")
+   @saldo =  @saldo_inicial - @total_cargos + @total_abonos 
+
+
+    render  pdf: "rpt_concilia",template: "supplier_payments/rpt_banco_1.pdf.erb",locals: {:supplierpayments => @stamentacount},
+      :orientation      => 'Portrait',
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-headers.html',
+                           right: '[page] of [topage]'
+                  }                  
+               } ,
+
+          :footer => { :html => { template: 'layouts/pdf-footers2.html' }       }  ,   
+          :margin => {bottom: 35} 
+
+
+  
+
+  end
+  
+
+
   # GET /stamentacounts/new
   def new
      @company = Company.find(1)
@@ -27,6 +66,7 @@ class StamentacountsController < ApplicationController
      @stamentacount[:fecha2] = Date.today
      
   end
+
 
   # GET /stamentacounts/1/edit
   def edit

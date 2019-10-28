@@ -911,6 +911,7 @@
   
   
   match 'stamentacounts/do_process/:id' => 'stamentacounts#do_process', via: [:get, :post]
+  match 'stamentacounts/pdf/:id' => 'stamentacounts#pdf', via: [:get, :post]
 
 
   resources :inventarios

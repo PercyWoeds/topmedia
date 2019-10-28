@@ -1,0 +1,90 @@
+<html>
+<body>  
+  <h4 ><center>ESTADO DE CUENTA CORRIENTE Cod. <%= @stamentacount.id.to_s %> </center>   </h4>
+
+  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
+  <tr>
+    <td width="15%" align="left"> BANCO  :   </th>
+    <td width="57%" align="left"> <%=  @banco_name %>  </th>
+    
+    <td width="10%" align="right"> Del :   </th>
+    <td width="18%" align="right"> <%= @fecha1.strftime("%d/%m/%Y ") %>   </th>
+      
+  </tr>
+<% hr %>
+
+ <tr>
+    <td width="15%" align="left">Cta.No.:  </th>
+    <td width="57%" align="left"> <%= @banco_cuenta %> </th>
+    
+    <td width="10%" align="right"> Al  :   </th>
+    <td width="18%" align="right"> <%= @fecha2.strftime("%d/%m/%Y ") %>   </th>
+      
+  </tr>
+
+ <tr>
+    <td width="15%" align="left">Moneda:  </th>
+    <td width="57%" align="left"> <%= @banco_moneda %></th>
+    
+    <td width="10%" align="left">  </th>
+    <td width="18%" align="left">  </th>
+      
+  </tr>
+
+
+  </table>
+      
+      <% nroitem= 1 %>
+      <% @totg1 = 0 %>
+      <% @totg2 = 0 %>
+      <% totg3 = 0 %>
+      
+      <% @saldo_inicial = @stamentacount.saldo_inicial %>
+      <% @saldo = @saldo_inicial %>
+
+        <% if @stamentacount_details.size  > 0   %>
+        <table style=  'font-size:80% ;width:100%' border="0" >  
+            <tr bgcolor="#B4D7F7"> 
+            <td width="10%"> Fecha</td>              
+            <td width="10%"> Nro.Cheque </td>
+            <td width="50%"> Detalle </td>
+            <td width="10%" align="right" > Cargo </td>
+            <td width="10%" align="right" > Abono </td>
+            <td width="10%" align="right" > Saldo </td>
+            </tr>     
+            <tr>
+            <td width="10%"> </td>              
+            <td width="10%"> </td>
+            <td width="50%"> SALDO ANTERIOR  </td>
+            <td width="10%" align="right" >  </td>
+            <td width="10%" align="right" >  </td>
+            <td width="10%" align="right" >  <%= @saldo %>  </td>
+            </tr>     
+
+
+
+        <%  @stamentacount_details.each do |detalle| %>
+
+            <% @saldo +=  (detalle.cargo * -1)  + detalle.abono %>
+
+            <tr >
+            <td width="10%"> <%= detalle.fecha.strftime("%d/%m/%Y") %> </td>              
+            <td width="10%"> <%= detalle.nrocheque %> </td>
+            <td width="50%"> <%= detalle.concepto   %> </td>
+            <td width="10%" align="right"> <%= money(detalle.cargo)  %> </td>
+            <td width="10%" align="right"> <%= money(detalle.abono)  %> </td>
+            <td width="10%" align="right"> <%= money(@saldo)  %> </td>
+            </tr>
+             <% @totg1 += detalle.cargo %> 
+             <% @totg2 += detalle.abono %> 
+
+            
+        <%end%>
+        </table>
+
+    
+        <%end%>
+
+        
+      </body>
+      </html>
