@@ -1320,7 +1320,7 @@ def rpt_cpagar5_pdf
 
     puts "concilia"
     puts @fecha1
-    puts @fecha1
+    puts @fecha2
     puts @banco 
 
     

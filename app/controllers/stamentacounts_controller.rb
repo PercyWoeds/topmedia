@@ -139,9 +139,14 @@ class StamentacountsController < ApplicationController
   def do_process 
     
     @stamentacount = Stamentacount.find(params[:id])
-    fecha1 = @stamentacount.fecha1
-    fecha2 = @stamentacount.fecha2
+    fecha1 = @stamentacount.fecha1.to_date 
+    fecha2 = @stamentacount.fecha2.to_date
     banco  = @stamentacount.bank_acount_id 
+
+    puts "fecha do process "
+    puts fecha1
+    puts fecha2 
+    puts banco 
 
     @stamentacount.process(fecha1,fecha2,banco)
     
