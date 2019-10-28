@@ -687,7 +687,7 @@
   match 'supplier_payments/ac_documentos/:company_id' => 'supplier_payments#ac_documentos', via: [:get, :post]
   match 'supplier_payments/ac_user/:company_id' => 'supplier_payments#ac_user', via: [:get, :post]
   match 'supplier_payments/ac_suppliers/:company_id' => 'supplier_payments#ac_suppliers', via: [:get, :post]
-  match 'supplier_payments/new/:company_id' => 'supplier_payments#new', via: [:get, :post]  
+  match 'supplier_payments/new/:company_id/:banco_id' => 'supplier_payments#new', via: [:get, :post]  
 
   match 'supplier_payments/do_email/:id' => 'supplier_payments#do_email', via: [:get, :post]
   match 'supplier_payments/do_process/:id' => 'supplier_payments#do_process', via: [:get, :post]

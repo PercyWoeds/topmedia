@@ -1091,10 +1091,16 @@ def rpt_cpagar5_pdf
     @supplierpayment[:code] = "#{generate_guid9()}"
     @supplierpayment[:processed] = false
     @supplierpayment[:fecha1] =  Date.today
+
+    
     @company = Company.find(1)
     @supplierpayment.company_id = @company.id
-    banco_id = params[:id]
+    banco_id = params[:banco_id]
+    puts "banco..."
+    puts banco_id
+    @supplierpayment[:documento] =  @supplierpayment.ultimo_cheque(banco_id) 
     
+
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @suppliers = @company.get_suppliers()
@@ -1857,11 +1863,12 @@ def list_receive_supplierpayments
   end
   def go_bancos 
     lcProcesado='1'
-    $lcId = params[:id]    
+    
+    @banco_id = params[:id]    
     
     @company = Company.find(1)
     
-    @supplierpayments = SupplierPayment.where(["bank_acount_id = ?",$lcId]).order(:documento)
+    @supplierpayments = SupplierPayment.where(["bank_acount_id = ?",@banco_id]).order(:documento)
     
     return @supplierpayments
 

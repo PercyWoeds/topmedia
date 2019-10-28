@@ -6,6 +6,8 @@ validates_numericality_of :saldo_inicial, :saldo_final, allow_nil: false
 
 has_many :stamentacount_details, :dependent => :destroy
 
+
+
 belongs_to :bank_acount 
 
  

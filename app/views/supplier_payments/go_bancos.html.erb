@@ -53,7 +53,7 @@
           </td>
 
           <td class="bordered_right bordered_bottom">
-            <%= doDate(supplierpayment.created_at) %>
+            <%= supplierpayment.fecha1.strftime("%d/%m/%Y") %>
           </td>
           <td class="bordered_right bordered_bottom <%= supplierpayment.processed_color %>">
             <%= supplierpayment.get_processed_short %>
@@ -86,6 +86,6 @@
 <%= hr() %>
 
 <div class="button">
-  <%= link_to 'Nueva Cancelacion', "/supplier_payments/new/#{$lcId}" %>
+  <%= link_to 'Nueva Cancelacion', "/supplier_payments/new/#{@company.id}/#{@banco_id}" %>
   <%= link_to 'Regresar', "/companies/supplier_payments/#{@company.id}" %>
 </div> 

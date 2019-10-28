@@ -3,6 +3,8 @@ self.per_page = 20
    
   validates_presence_of :company_id, :total,:user_id,:fecha1,:code ,:supplier_id
   
+  validates_uniqueness_of :documento, scope: :bank_acount_id 
+
   belongs_to :company
   belongs_to :location
   belongs_to :division
@@ -54,7 +56,19 @@ self.per_page = 20
         Voided.where(:id=>'11').update_all(:numero =>lcnumero)        
   end
 
+  def ultimo_cheque(bank_acount)
 
+
+       a= SupplierPayment.where(bank_acount_id: bank_acount,document_id: 1).maximum("cast(documento as int)")
+       if a.nil?
+        return  1
+      else
+        return  (a + 1).to_s.rjust(8, '0') 
+
+      end 
+
+    
+  end
 
    
   def get_subtotal(items)
