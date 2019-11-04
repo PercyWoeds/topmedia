@@ -21,7 +21,7 @@ class ConciliabanksController < ApplicationController
     @conciliabank = Conciliabank.find(params[:id])
     company =@conciliabank.company_id
     @company =Company.find(company)
-    @stamentacount_details  = @conciliabank.stamentacount_details.order(:id)
+    @conciliabank_details  = @conciliabank.conciliabank_details.order(:id)
     a = BankAcount.find(@conciliabank.bank_acount_id)
     @banco_name   =  a.bank.name
     @banco_moneda =  a.moneda.description 
@@ -35,7 +35,7 @@ class ConciliabanksController < ApplicationController
    @saldo =  @saldo_inicial - @total_cargos + @total_abonos 
 
 
-    render  pdf: "rpt_concilia",template: "supplier_payments/rpt_banco_1.pdf.erb",locals: {:supplierpayments => @conciliabank},
+    render  pdf: "rpt_concilia",template: "supplier_payments/rpt_banco_2.pdf.erb",locals: {:supplierpayments => @conciliabank},
       :orientation      => 'Portrait',
          :header => {
            :spacing => 5,
@@ -43,10 +43,7 @@ class ConciliabanksController < ApplicationController
                      :template => 'layouts/pdf-headers.html',
                            right: '[page] of [topage]'
                   }                  
-               } ,
-
-          :footer => { :html => { template: 'layouts/pdf-footers2.html' }       }  ,   
-          :margin => {bottom: 35} 
+               } 
 
 
   
