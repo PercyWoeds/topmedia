@@ -6,8 +6,8 @@
     
       <div class="field">
       <%= f.label :bank_acount_id ,"Cuenta bancaria "%><br />
-       <%= f.select :bank_acount_id,options_from_collection_for_select(@bank_acounts,'id','number'),  {style: "width: 100px" } %>
-
+<%= f.collection_select :bank_acount_id, @bank_acounts, :id, :number, :prompt => true %>
+  
     </div>
 
 
