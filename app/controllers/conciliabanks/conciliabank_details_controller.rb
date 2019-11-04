@@ -89,6 +89,7 @@ class Conciliabanks::ConciliabankDetailsController < ApplicationController
 
   def destroy
     
+    
     if @conciliabank_detail.destroy 
 
            @conciliabank[:saldo_final] = @conciliabank[:saldo_inicial] - @conciliabank.get_subtotal("cargos") + @conciliabank.get_subtotal("abonos")

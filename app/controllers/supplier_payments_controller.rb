@@ -1353,10 +1353,13 @@ def rpt_cpagar5_pdf
     puts @banco 
 
     
-    @saldo_banco     = @company.get_statamenacount_by_day(@fecha1,@fecha2,@banco)
-    @detalle_cheques = @company.get_statamenacount_by_days(@fecha1,@fecha2,@banco)
-
-      
+  # @saldo_banco     = @company.get_statamenacount_by_day(@fecha1,@fecha2,@banco)
+  # @detalle_cheques = @company.get_statamenacount_by_days(@fecha1,@fecha2,@banco)
+    @cabecera = @company.get_concilia_by_day(@fecha1,@fecha2,@banco)
+    @saldo_banco = @cabecera.saldo_inicial
+    @concilia_id = @cabecera.id   
+    @detalle_cheques = @company.get_concilia_by_days(@cabecera.id) 
+    
     case params[:print]
       when "PDF"   then render  pdf: "rpt_concilia",template: "supplier_payments/rpt_concilia_1.pdf.erb",locals: {:supplierpayments => @detalle_cheques},
       :orientation      => 'Portrait',

@@ -12,7 +12,7 @@
   <table style='font-family:"Courier New", Courier, monospace; font-size:100% ;width:100%'>
   <tr bgcolor="#B4D7F7">
     <th width="88%" align="left"> Saldo segun Estado de Cuenta Bancario:   </th>
-    <th width="12%" align="right">  <%= @saldo_banco %>  </th>
+    <th width="12%" align="right">  <%= money(@saldo_banco) %>  </th>
   </tr>
   </table>
   
@@ -37,13 +37,13 @@
         <%  @detalle_cheques.each do |detalle| %>
 
             <tr >
-            <td width="12%"> <%= detalle.fecha1.strftime("%m/%d/%Y") %> </td>              
-            <td width="12%"> <%= detalle.documento %> </td>
-            <td width="62%"> <%= detalle.descrip  %> </td>
-            <td width="14%" align="right"> <%= money(detalle.total)  %> </td>
+            <td width="12%"> <%= detalle.fecha.strftime("%m/%d/%Y") %> </td>              
+            <td width="12%"> <%= detalle.nrocheque %> </td>
+            <td width="62%"> <%= detalle.concepto  %> </td>
+            <td width="14%" align="right"> <%= money(detalle.cargo)  %> </td>
             
             </tr>
-            <% totg1 += detalle.total %>
+            <% totg1 += detalle.cargo %>
             
         <%end%>
         </table>

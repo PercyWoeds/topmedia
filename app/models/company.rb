@@ -2473,6 +2473,28 @@ def get_statamenacount_by_day(fecha1,fecha2,banco)
     end 
 
 end 
+
+def get_concilia_by_day(fecha1,fecha2,banco)
+     a= Conciliabank.find_by(["fecha1 >= ? and fecha2<=? and bank_acount_id =?","#{fecha1} 00:00:00","#{fecha2} 23:59:59",banco])
+
+    if a.nil?
+      return 0
+    else  
+      return a   
+    end 
+
+end 
+
+def get_concilia_by_days(id)
+     a= ConciliabankDetail.where(conciliabank_id: id )
+
+   
+      return a
+  
+
+end 
+
+
 def get_statamenacount_by_days(fecha1,fecha2,banco)
 
      a = SupplierPayment.where(["fecha1 >= ? and fecha1 <= ? and bank_acount_id = ? ","#{fecha1} 00:00:00","#{fecha2} 23:59:59",banco])
