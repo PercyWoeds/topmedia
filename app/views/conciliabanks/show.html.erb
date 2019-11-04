@@ -1,0 +1,144 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fecha1:</strong>
+  <%= @conciliabank.fecha1.strftime("%d/%m/%Y") %>
+</p>
+
+<p>
+  <strong>Fecha2:</strong>
+  <%= @conciliabank.fecha2.strftime("%d/%m/%Y") %>
+</p>
+
+<p>
+  <strong>Saldo inicial:</strong>
+  <%= money(@conciliabank.saldo_inicial) %>
+</p>
+
+<p>
+  <strong>Saldo final:</strong>
+  <%= money(@conciliabank.saldo_final) %>
+</p>
+
+
+
+    <div class="button">
+      
+      <%= link_to 'Agregar Cheques/Tx', "/conciliabanks/do_process/#{@conciliabank.id}" %> 
+
+    </div> 
+
+<h3>
+  Detalle
+</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+       Item
+      </th>
+      
+      <th>
+        Fecha
+      </th>
+      <th>
+        Cargo
+      </th>
+      
+      <th>
+        Abono
+      </th>
+      <th>
+        Concepto
+      </th>
+     
+      
+      <th>
+        Nro.Cheque
+      </th>
+
+    </tr>
+  </thead>
+  
+  <tbody>
+  
+  <% nroitem =  1 %>
+    <%  @conciliabank_details.each do |product| %>
+    <tr>
+          <td class="small bordered_bottom bordered_right">
+            <%= nroitem %>    
+          </td>
+
+          <td class="small bordered_bottom bordered_right">
+            <%= product.fecha  %>    
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= product.cargo %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.abono %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.concepto %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.nrocheque %>              
+          </td>
+          <% nroitem = nroitem + 1 %>
+          
+         
+<td><%= link_to 'Eliminar',[@conciliabank, product], method: :delete, data:{confirm: 'Estas seguro de eliminar ?' } %></td>
+  
+          
+    </td>
+    
+    <% end %>
+    <tr>
+      <td colspan="35" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+         Total Cargos:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+       <%= money(@conciliabank.get_subtotal("cargos")) %> 
+
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+         Total Abonos:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+       <%= money(@conciliabank.get_subtotal("abonos")) %> 
+        
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Saldo final :
+      </td>
+      <% saldo_final = @conciliabank[:saldo_inicial] - @conciliabank.get_subtotal("cargos") + @conciliabank.get_subtotal("abonos") %>
+      <td class="bordered_bottom bordered_right bold right">
+       <%= money(saldo_final)   %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br />
+
+
+<div class="button">
+
+<%= link_to 'Editar', edit_conciliabank_path(@conciliabank) %> |
+
+<%= link_to 'Exportar to PDF', "/conciliabanks/pdf/#{@conciliabank.id}.pdf" %>  
+
+ 
+
+<%= link_to 'Regresar', conciliabanks_path %>
+</div>

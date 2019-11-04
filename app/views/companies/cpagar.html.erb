@@ -3,7 +3,7 @@
 
   <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Cancelar documentos ", "/companies/supplier_payments/#{@company.id}" %>
+    <%= link_to "Registro de cheques", "/companies/supplier_payments/#{@company.id}" %>
   </h3>
   <p>
      Cancelar documentos 
@@ -14,7 +14,7 @@
 
   <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Registrar estado de cuentas.", stamentacounts_path  %>
+    <%= link_to "Registrar caja bancos", stamentacounts_path  %>
 
     </h3>
 
@@ -22,13 +22,26 @@
     Registrar estado de cuenta   
   </p>  
 
-  
   <%= hr() %>
 
 
   <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-     <%= link_to "Conciliacion Bancaria.", "/companies/reports/rpt_concilia_1" %>
+     <%= link_to "Registrar Conciliacion Bancaria", conciliabanks_path %>
+  </h3>
+
+  <p>
+    Generar conciliacion bancaria 
+
+  </p>  
+  <%= hr() %>
+
+  <%= hr() %>
+
+
+  <h3>
+    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
+     <%= link_to "Conciliacion Bancaria", "/companies/reports/rpt_concilia_1" %>
   </h3>
 
   <p>

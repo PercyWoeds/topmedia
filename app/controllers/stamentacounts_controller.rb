@@ -4,7 +4,7 @@ class StamentacountsController < ApplicationController
   # GET /stamentacounts
   # GET /stamentacounts.json
   def index
-    @stamentacounts = Stamentacount.all
+    @stamentacounts = Stamentacount.all.order(:fecha1)
   end
 
 
@@ -104,7 +104,7 @@ class StamentacountsController < ApplicationController
 
            @stamentacount[:cargos] = @stamentacount.get_subtotal("cargos")
            @stamentacount[:abonos] = @stamentacount.get_subtotal("abonos")
-           @stamentacount[:saldo_final] = @orden[:saldo_inicial] - @orden[:cargos] + @orden[:abonos]
+           @stamentacount[:saldo_final] = @stamentacount[:saldo_inicial] - @stamentacount[:cargos] + @stamentacount[:abonos]
           
            @stamentacount.update_attributes(:saldo_final=> @stamentacount[:saldo_final])
            

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191207172835) do
+ActiveRecord::Schema.define(version: 20191207172840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -218,6 +218,34 @@ ActiveRecord::Schema.define(version: 20191207172835) do
     t.string   "code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "conciliabank_details", force: :cascade do |t|
+    t.datetime "fecha"
+    t.string   "tipomov_id"
+    t.string   "integer"
+    t.float    "cargo"
+    t.float    "abono"
+    t.string   "concepto"
+    t.string   "nrocheque"
+    t.string   "importado"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "conciliabank_id"
+  end
+
+  create_table "conciliabanks", force: :cascade do |t|
+    t.datetime "fecha1"
+    t.datetime "fecha2"
+    t.float    "saldo_inicial"
+    t.float    "saldo_final"
+    t.integer  "user_id"
+    t.integer  "company_id"
+    t.integer  "bank_acount_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.float    "cargos"
+    t.float    "abonos"
   end
 
   create_table "conciliations", force: :cascade do |t|

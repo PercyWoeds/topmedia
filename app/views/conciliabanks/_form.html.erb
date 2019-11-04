@@ -1,0 +1,44 @@
+<%= simple_form_for(@conciliabank) do |f| %>
+
+
+  <div class="form-inputs">
+    
+      <div class="field">
+      <%= f.label :bank_acount_id ,"Cuenta bancaria "%><br />
+      <%= f.select :bank_acount_id,options_from_collection_for_select(@bank_acounts,'id','number'),  {style: "width: 100px" } %>
+
+    </div>
+
+
+    <div class="field">
+      <%= f.label :fecha1, "Fecha*", :class => "bold" %><br />
+      <%= f.date_field :fecha1 ,:class => "input.tf_short" %>
+    </div>
+     <div class="field">
+      <%= f.label :fecha2, "Fecha*", :class => "bold" %><br />
+      <%= f.date_field :fecha2 ,:class => "input.tf_short" %>
+    </div>
+
+    
+    <div class="field">
+      <%= f.label :saldo_inicial, "Saldo Banco ", :class => "bold" %><br />
+      <%= f.number_field :saldo_inicial ,:step => 0.01 %>
+    </div>
+
+
+    
+    <div class="field">
+      <%= f.label :saldo_final, "Saldo conciliacion  ", :class => "bold" %><br />
+      <%= f.number_field :saldo_final ,:step => 0.01 %>
+    </div>
+
+
+
+  </div>
+
+
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

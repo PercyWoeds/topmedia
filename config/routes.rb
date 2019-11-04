@@ -1,6 +1,8 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :conciliabanks
+  
   resources :stamentacount_details
   resources :tipomovs
   resources :stamentacounts
@@ -32,6 +34,7 @@
   resources :quota
   resources :orden_products
   resources :quotes
+
   resources :ordens do
       resources :orden_products, except: [:index,:show], controller: "ordens/ordens_products" do
         collection { post :import }
@@ -48,7 +51,15 @@
   resources :contrato_details do 
      collection { post :import }
   end 
-    
+
+  
+  resources :conciliabanks do
+      resources :conciliabank_details, except: [:index,:show], controller: "conciliabanks/conciliabank_details" do    
+        collection { post :import }
+      end 
+  end 
+
+
   resources :orden_product_imports, only: [:new, :create]
   
   resources :marcas do 
@@ -107,6 +118,8 @@
       collection { get :rpt_compras_01 }
       
       collection { get :rpt_concilia_1 }
+       
+      collection { get :rpt_cpagar6_pdf }
       
   end 
 
@@ -364,6 +377,7 @@
   match 'companies/reports/rpt_cpagar3_pdf/:company_id' => 'reports#rpt_cpagar3_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_cpagar4_pdf/:company_id' => 'reports#rpt_cpagar4_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_cpagar5_pdf/:company_id' => 'reports#rpt_cpagar5_pdf', via: [:get, :post]  
+  match 'companies/reports/rpt_cpagar6_pdf/:company_id' => 'reports#rpt_cpagar6_pdf', via: [:get, :post]  
 
   match 'companies/reports/rpt_ccobrar2_pdf/:company_id' => 'reports#rpt_ccobrar2_pdf', via: [:get, :post]  
   match 'companies/reports/rpt_ccobrar3_pdf/:company_id' => 'reports#rpt_ccobrar3_pdf', via: [:get, :post]  
@@ -913,6 +927,8 @@
   match 'stamentacounts/do_process/:id' => 'stamentacounts#do_process', via: [:get, :post]
   match 'stamentacounts/pdf/:id' => 'stamentacounts#pdf', via: [:get, :post]
 
+  match 'conciliabanks/do_process/:id' => 'conciliabanks#do_process', via: [:get, :post]
+  match 'conciliabanks/pdf/:id' => 'conciliabanks#pdf', via: [:get, :post]
 
   resources :inventarios
   resources :sessions

@@ -1027,6 +1027,14 @@ class ReportsController < ApplicationController
     @monedas=@company.get_monedas
     @customers = @company.get_customers()
   end
+  def rpt_cpagar6_pdf
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Cuentas x pagar por vencimiento"    
+    @monedas=@company.get_monedas
+    @conceptos = Concept.all 
+    @customers = @company.get_customers()
+  end
+  
   
   
   def reports_cventas

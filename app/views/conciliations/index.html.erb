@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Conciliations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fecha1</th>
+      <th>Fecha2</th>
+      <th>Saldo inicial</th>
+      <th>Saldo final</th>
+      <th>User</th>
+      <th>Company</th>
+      <th>Bank acount</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @conciliations.each do |conciliation| %>
+      <tr>
+        <td><%= conciliation.fecha1 %></td>
+        <td><%= conciliation.fecha2 %></td>
+        <td><%= conciliation.saldo_inicial %></td>
+        <td><%= conciliation.saldo_final %></td>
+        <td><%= conciliation.user_id %></td>
+        <td><%= conciliation.company_id %></td>
+        <td><%= conciliation.bank_acount_id %></td>
+        <td><%= link_to 'Show', conciliation %></td>
+        <td><%= link_to 'Edit', edit_conciliation_path(conciliation) %></td>
+        <td><%= link_to 'Destroy', conciliation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Conciliation', new_conciliation_path %>

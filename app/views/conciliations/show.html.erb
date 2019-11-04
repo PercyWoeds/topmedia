@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fecha1:</strong>
+  <%= @conciliation.fecha1 %>
+</p>
+
+<p>
+  <strong>Fecha2:</strong>
+  <%= @conciliation.fecha2 %>
+</p>
+
+<p>
+  <strong>Saldo inicial:</strong>
+  <%= @conciliation.saldo_inicial %>
+</p>
+
+<p>
+  <strong>Saldo final:</strong>
+  <%= @conciliation.saldo_final %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @conciliation.user_id %>
+</p>
+
+<p>
+  <strong>Company:</strong>
+  <%= @conciliation.company_id %>
+</p>
+
+<p>
+  <strong>Bank acount:</strong>
+  <%= @conciliation.bank_acount_id %>
+</p>
+
+<%= link_to 'Edit', edit_conciliation_path(@conciliation) %> |
+<%= link_to 'Back', conciliations_path %>

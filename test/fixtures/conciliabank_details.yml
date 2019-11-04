@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha: 2019-10-29 12:08:23
+  tipomov_id: MyString
+  integer: MyString
+  cargo: 1.5
+  abono: 1.5
+  concepto: MyString
+  concepto: MyString
+  nrocheque: MyString
+  conciliabank_id: MyString
+  integer: MyString
+  importado: MyString
+
+two:
+  fecha: 2019-10-29 12:08:23
+  tipomov_id: MyString
+  integer: MyString
+  cargo: 1.5
+  abono: 1.5
+  concepto: MyString
+  concepto: MyString
+  nrocheque: MyString
+  conciliabank_id: MyString
+  integer: MyString
+  importado: MyString

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fecha1:</strong>
+  <%= @conciliatiom.fecha1 %>
+</p>
+
+<p>
+  <strong>Fecha2:</strong>
+  <%= @conciliatiom.fecha2 %>
+</p>
+
+<p>
+  <strong>Saldo inicial:</strong>
+  <%= @conciliatiom.saldo_inicial %>
+</p>
+
+<p>
+  <strong>Saldo final:</strong>
+  <%= @conciliatiom.saldo_final %>
+</p>
+
+<%= link_to 'Edit', edit_conciliatiom_path(@conciliatiom) %> |
+<%= link_to 'Back', conciliatioms_path %>

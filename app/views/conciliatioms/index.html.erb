@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Conciliatioms</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fecha1</th>
+      <th>Fecha2</th>
+      <th>Saldo inicial</th>
+      <th>Saldo final</th>
+      <th>User</th>
+      <th>Company</th>
+      <th>Bank acount</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @conciliatioms.each do |conciliatiom| %>
+      <tr>
+        <td><%= conciliatiom.fecha1 %></td>
+        <td><%= conciliatiom.fecha2 %></td>
+        <td><%= conciliatiom.saldo_inicial %></td>
+        <td><%= conciliatiom.saldo_final %></td>
+        <td><%= conciliatiom.user_id %></td>
+        <td><%= conciliatiom.company_id %></td>
+        <td><%= conciliatiom.bank_acount_id %></td>
+        <td><%= link_to 'Show', conciliatiom %></td>
+        <td><%= link_to 'Edit', edit_conciliatiom_path(conciliatiom) %></td>
+        <td><%= link_to 'Destroy', conciliatiom, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Conciliatiom', new_conciliatiom_path %>

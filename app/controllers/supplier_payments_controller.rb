@@ -791,6 +791,7 @@ def rpt_cpagar5_pdf
 
 
 
+
   # Export supplierpayment to PDF
   def pdf
     @supplierpayment = SupplierPayment.find(params[:id])
@@ -1305,6 +1306,27 @@ def rpt_cpagar5_pdf
     case params[:print]
       when "PDF" then render  pdf: "rpt_compras ",template: "supplier_payments/rpt_compras_01.pdf.erb",locals: {:contrato => @contratos_rpt}
       when "Excel" then render xlsx: 'rpt_compras_01'
+      else render action: "index"
+    end
+    
+  end
+
+
+ def rpt_cpagar6_pdf 
+  
+    @company=Company.find(1)      
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]
+
+    @conceptos = Concept.all 
+    @compras  = @company.get_purchases_by_day_detalle(@fecha1,@fecha2)  
+    @purchases_all_1 = @company.get_purchases_by_day2(@fecha1,@fecha2,"1")
+    @purchases_all_2 = @company.get_purchases_by_day2(@fecha1,@fecha2,"2")
+    @purchase = Purchase.first
+      
+    case params[:print]
+      when "PDF" then render  pdf: "rpt_cpagar6_pdf",template: "supplier_payments/rpt_cpagar6_pdf.erb",locals: {:contrato => @contratos_rpt}
+      when "Excel" then render xlsx: 'rpt_cpagar6_pdf'
       else render action: "index"
     end
     

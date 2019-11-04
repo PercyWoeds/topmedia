@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listado Conciliacion Bancaria</h1>
+
+<table>
+  <thead>
+    <tr>
+       <th>Id</td>
+      <th>Banco</th>
+      <th>Cuenta bancaria</th>
+      <th>Moneda</th>
+      <th>Fec.Inicial</th>
+      <th>Fec.Final</th>
+      <th>Saldo Banco</th>
+      <th>Saldo Conciliacion</th>
+      
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @conciliabanks.each do |conciliabank| %>
+      <tr>
+        <td><%= conciliabank.id %></td>
+        <td><%= conciliabank.bank_acount.bank.name %></td>
+        
+        <td><%= conciliabank.bank_acount.number %></td>
+        <td><%= conciliabank.bank_acount.moneda.description %></td>
+        <td><%= conciliabank.fecha1.strftime("%d/%m/%Y") %></td>
+        <td><%= conciliabank.fecha2.strftime("%d/%m/%Y") %></td>
+        <td><%= conciliabank.saldo_inicial %></td>
+        <td><%= conciliabank.saldo_final %></td>
+      
+        <td><%= link_to 'Ver', conciliabank %></td>
+        <td><%= link_to 'Editar', edit_conciliabank_path(conciliabank) %></td>
+        <td><%= link_to 'Eliminar', conciliabank, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<div class="buttons">
+<%= link_to 'Nuevo', new_conciliabank_path %>
+<%= link_to 'Regresar', "/companies/cpagar/1" %>
+
+</div>
