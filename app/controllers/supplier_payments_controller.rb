@@ -1299,8 +1299,8 @@ def rpt_cpagar5_pdf
 
     
     @compras  = @company.get_purchases_by_day_detalle(@fecha1,@fecha2)  
-    @purchases_all_1 = @company.get_purchases_by_day2(@fecha1,@fecha2,"1")
-    @purchases_all_2 = @company.get_purchases_by_day2(@fecha1,@fecha2,"2")
+    @purchases_all_1 = @company.get_purchases_by_day2(@fecha1,@fecha2,"2")
+    @purchases_all_2 = @company.get_purchases_by_day2(@fecha1,@fecha2,"1")
     @purchase = Purchase.first
       
     case params[:print]
