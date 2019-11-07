@@ -79,6 +79,8 @@ class Ordens::OrdensProductsController < ApplicationController
                 @orden_product.d29 + @orden_product.d30 + @orden_product.d31)
     @orden_product.quantity = sum_dias 
     @orden_product.total = @orden_product.price * sum_dias
+
+    
     
      respond_to do |format|
        if @orden_product.save

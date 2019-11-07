@@ -77,6 +77,7 @@
     
     $("#ac_item").result(function(event, data, formatted) {
       $("#supplierpayment_detail_total").val(data[6]); 
+      $("#supplierpayment_detail_fecha_documento").Date(data[12].val()); 
       $("#ac_item_id").val(data[4]);
       $("#selected_contrato_name").html(data[8]);
       $("#ac_supplier_id").val(data[2]);
@@ -92,7 +93,7 @@
         if(isNumeric(saldocheque) && isNumeric(total)) {
           
           if(saldocheque > total ){
-          alert("OMG !! Importe de factura excede saldo Cheque");    
+          alert(" Importe de factura excede saldo Cheque");    
     
           }
         } else {

@@ -131,7 +131,8 @@
 
       </tr>
       
-        
+    <% @totalhaber = 0%>
+    <% @total_diferencia = 0%>    
     <%    @supplierpayment_details.each do |productItem| %>
     
       <tr>
@@ -175,6 +176,8 @@
           <td><%= link_to 'Eliminar',[@supplierpayment,productItem], method: :delete, data: { confirm: 'Estas seguro?' } %></td>
 
       </tr>
+      <% @totalhaber += productItem.total %>
+
     <% end %>
     
     
@@ -186,12 +189,32 @@
 
     <tr>
       <td colspan="4" class="bordered_bottom bordered_right bold">
-        Total:
+        Total Debe:
       </td>
       <td class="bordered_bottom bordered_right bold right">
         <%= money(@supplierpayment.total) %>
       </td>
     </tr>
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Total Haber:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@totalhaber) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Diferencia :
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <% @total_diferencia = @totalhaber -  @supplierpayment.total %>
+        <%= money(@total_diferencia) %>
+      </td>
+    </tr>
+
+
+
     
   </tbody>
 </table>

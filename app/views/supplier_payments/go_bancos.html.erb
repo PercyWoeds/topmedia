@@ -14,6 +14,13 @@
   
 </p>
 
+
+<div class="button">
+  <%= link_to 'Nueva Cancelacion', "/supplier_payments/new/#{@company.id}/#{@banco_id}" %>
+  <%= link_to 'Regresar', "/companies/supplier_payments/#{@company.id}" %>
+</div> 
+
+
 <% if @supplierpayments.count > 0 %>
   <table>
     <thead>
@@ -84,8 +91,3 @@
 
 
 <%= hr() %>
-
-<div class="button">
-  <%= link_to 'Nueva Cancelacion', "/supplier_payments/new/#{@company.id}/#{@banco_id}" %>
-  <%= link_to 'Regresar', "/companies/supplier_payments/#{@company.id}" %>
-</div> 

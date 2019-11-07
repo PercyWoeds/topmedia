@@ -40,7 +40,9 @@ class SupplierPayments::SupplierpaymentDetailsController < ApplicationController
     @suppliers = Supplier.all.order(:name) 
     @purchases= Purchase.all
     @company = Company.find(1)
-   @conceptos = Concept.all.order(:descrip )
+    @conceptos = Concept.all.order(:descrip )
+    @supplierpayment_detail[:nrooperacion]= 0
+    @supplierpayment_detail[:operacion] = 0
 
     @lcSaldoCheque = 0
     @lcSaldoCheque = @supplierpayment.total - @supplierpayment_detail.sumar_total(@supplierpayment.id)
