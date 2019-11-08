@@ -13,7 +13,7 @@
       <input type="text" name="ac_item" id="ac_item" value="<% if @ac_documento %><%= @ac_documento %><% end %>" />
       
       <div class="small">
-        Ingrese una termino de busqueda para encontrar un documento.
+      Ingresar una termino de busqueda para encontrar un documento.
       </div>
       <br />
 
@@ -76,13 +76,31 @@
     });
     
     $("#ac_item").result(function(event, data, formatted) {
-      $("#supplierpayment_detail_total").val(data[6]); 
-      $("#supplierpayment_detail_fecha_documento").Date(data[12].val()); 
+      
+      $("#supplierpayment_detail_total").val(data[6]);    
       $("#ac_item_id").val(data[4]);
       $("#selected_contrato_name").html(data[8]);
       $("#ac_supplier_id").val(data[2]);
       $("#ac_document_id").val(data[10]);
-      
+
+alert(date[12]); 
+var today  = Date.parseDate(data[12], "dd-MM-yyyy HH:mm:ss") ;
+var dd = today.getDate();
+var mm = today.getMonth() + 1; //January is 0!
+var yyyy = today.getFullYear();
+if (dd < 10) {
+  dd = '0' + dd;
+} 
+if (mm < 10) {
+  mm = '0' + mm;
+} 
+var today = dd + '/' + mm + '/' + yyyy;
+
+$("#supplierpayment_detail_fecha_documento").val(today);
+
+alert("hollaa");
+
+
     });
     
      $("#supplierpayment_detail_total").bind("keyup", function() {

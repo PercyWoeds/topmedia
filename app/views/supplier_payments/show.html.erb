@@ -137,7 +137,13 @@
     
       <tr>
         <td class="bordered_bottom bordered_right">
-          <%= productItem.document.descripshort   %>
+           <% if productItem.document.nil? %> 
+              "NN"
+          
+            <% else %>
+            <%= productItem.document.descripshort   %>
+          
+            <% end %>
         </td>
         
          <% if productItem.purchase != nil %>     
