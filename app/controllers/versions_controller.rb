@@ -10,6 +10,7 @@ class VersionsController < ApplicationController
   
   def index
     @versions = Version.all
+    
     respond_to do |format|
       format.html
       format.csv { send_data @versions.to_csv, filename: "versions-#{Date.today}.csv" }

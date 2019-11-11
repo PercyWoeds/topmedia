@@ -1244,7 +1244,7 @@ class OrdensController < ApplicationController
     
     @orden[:processed] = "1"
     @orden[:tipo] = "N"
-    @orden[:contrato_id] = 1
+    @orden[:contrato_id] = 1449
     
     respond_to do |format|
       if @orden.save
