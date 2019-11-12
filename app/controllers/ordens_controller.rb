@@ -606,7 +606,7 @@ class OrdensController < ApplicationController
      
 
 
-    Prawn::Document.generate "app/pdf_output/rpt_orden2.pdf" , :page_layout => :landscape,:size=> "A4",:margin => [10,10,5,10] do |pdf|        
+    Prawn::Document.generate "app/pdf_output/rpt_orden2.pdf" , :page_layout => :landscape,:size=> "A4",:margin => [2,2,5,2] do |pdf|        
     
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt2(pdf)
