@@ -58,7 +58,7 @@ class OrdensController < ApplicationController
       end
 
        
-       pdf.bounding_box([570, 540], :width => 170, :height => 70) do
+       pdf.bounding_box([600, 540], :width => 170, :height => 70) do
         pdf.stroke_bounds
         pdf.move_down 15
         pdf.font "Helvetica", :style => :bold do
@@ -82,7 +82,7 @@ class OrdensController < ApplicationController
     
    
     
-    pdf.font "Helvetica" , :size => 6
+    pdf.font "Helvetica" , :size => 5
         
      pdf.move_down 10
       headers = []
