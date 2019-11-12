@@ -502,9 +502,6 @@ class OrdensController < ApplicationController
                                           
                                           
                                           columns([31]).align=:center
-
-                                          columns([31]).width= 28
-
                                           
                                           columns([32]).align=:right
 
@@ -514,7 +511,7 @@ class OrdensController < ApplicationController
                                           columns([33]).width=34
 
                                           columns([34]).align=:right
-                                          columns([34]).width=42
+                                          columns([34]).width=34
                                           
 
                                           columns([35]).align=:right
