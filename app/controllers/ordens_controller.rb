@@ -435,7 +435,6 @@ class OrdensController < ApplicationController
                                         
                                         } do 
                                           columns([0]).align=:left 
-
                                           columns([0]).width = 60
 
                                           columns([1]).align=:left
@@ -509,9 +508,7 @@ class OrdensController < ApplicationController
                                           
                                           columns([32]).align=:right
 
-                                          if fechadia31 != ""
-                                          columns([32]).width= 10
-                                          end 
+                                         
                                           columns([33]).align=:right
                                           
                                           columns([33]).width=34
