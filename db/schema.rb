@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191207172841) do
+ActiveRecord::Schema.define(version: 20191207172842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -647,6 +647,7 @@ ActiveRecord::Schema.define(version: 20191207172841) do
     t.integer  "medio_id"
     t.integer  "document_id"
     t.string   "tc"
+    t.string   "nacional"
   end
 
   create_table "histories", force: :cascade do |t|

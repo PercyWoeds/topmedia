@@ -746,7 +746,7 @@ new_invoice_item.save
       @invoice[:subtotal] = @invoice.get_subtotal_items(items)
       
       begin
-        @invoice[:tax] = @invoice.get_tax(items, @invoice[:customer_id])
+        @invoice[:tax] = @invoice.get_tax(items, @invoice[:medio_id])
       rescue
         @invoice[:tax] = 0
       end
@@ -807,7 +807,7 @@ new_invoice_item.save
     @divisions = @company.get_divisions()
     
     @invoice[:subtotal] = @invoice.get_subtotal(items)
-    @invoice[:tax] = @invoice.get_tax(items, @invoice[:customer_id])
+    @invoice[:tax] = @invoice.get_tax(items, @invoice[:medio_id])
     @invoice[:total] = @invoice[:subtotal] + @invoice[:tax]
 
     respond_to do |format|

@@ -33,7 +33,6 @@
       <div class="small">
           Ingrese una termino de busqueda para encontrar un cliente.
       </div>
-
       <br />
 
       <div class="small">
@@ -45,7 +44,7 @@
  
     <div class="field">
       <%= f.label :medio_id %><br />
-      <%= f.select :medio_id,options_from_collection_for_select(@medios,'id','full_name') %>
+      <%= f.collection_select :medio_id, @medios,:id,:full_name,{:prompt   => "Selec un medio"} %>
     </div>
 
     <div class="field">

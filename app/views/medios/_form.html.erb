@@ -27,6 +27,11 @@
     <%= f.text_field :estacion %>
   </div>
 
+  <div class="field">
+    <%= f.check_box :taxable , "IGV." %>
+    <%= f.label :taxable %>
+  </div>
+
   <div class="form-actions">
     <%= f.button :submit %>
   </div>

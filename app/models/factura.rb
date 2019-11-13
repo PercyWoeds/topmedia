@@ -146,10 +146,10 @@ class Factura < ActiveRecord::Base
     return ret
   end
   
-  def get_tax(items, customer_id)
+  def get_tax(items, medio_id)
     tax = 0
     
-    customer = Customer.find(customer_id)
+    customer = Medio.find(medio_id)
     
     if(customer)
       if(customer.taxable == "1")
