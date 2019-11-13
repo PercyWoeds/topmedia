@@ -257,7 +257,7 @@ class Factura < ActiveRecord::Base
   end
 
   def identifier
-    return "#{self.code} - #{self.contrato.code}"
+    return "#{self.code}"
   end
 
   def get_invoices
