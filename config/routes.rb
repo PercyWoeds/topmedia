@@ -412,6 +412,7 @@
   match 'companies/reports/sales/:company_id' => 'reports#report_sales', via: [:get, :post]
   match 'companies/reports/:company_id' => 'reports#reports', via: [:get, :post]
   match 'companies/reports/reports_contratos/:company_id' => 'reports#reports_contratos', via: [:get, :post]
+  match 'companies/reports/rpt_ordenes1_pdf/:company_id' => 'reports#rpt_ordenes1_pdf', via: [:get, :post]
   
   match 'companies/reports/rpt_contratos1_pdf/:company_id' => 'reports#rpt_contratos1_pdf', via: [:get, :post]
   match 'companies/reports/rpt_contratos2_pdf/:company_id' => 'reports#rpt_contratos2_pdf', via: [:get, :post]
