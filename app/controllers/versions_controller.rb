@@ -9,11 +9,12 @@ class VersionsController < ApplicationController
    end 
   
   def index
+    
     @versions = Version.order(:descrip)
     
     respond_to do |format|
       format.html
-      format.csv { send_data @versions.to_csv, filename: "versions-#{Date.today}.csv" }
+      format.csv { send_data @versions.to_csv, filename: "Versions-#{Date.today}.csv" }
       format.xls 
     end
 
