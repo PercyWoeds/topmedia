@@ -45,7 +45,7 @@
       collection { get :update_marcas}
       collection { get :update_productos}
       collection { get :exportxls }
-      collection { get :rpt_ordenes1_pdf}
+    
       collection { post :import }
   end 
   resources :contrato_details do 
