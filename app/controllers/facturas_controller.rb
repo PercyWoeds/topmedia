@@ -739,6 +739,10 @@ new_invoice_item.save
     @invoice[:location_id] = 1
     @invoice[:division_id] = 1
     @invoice[:tc] = @lcTipoFactura 
+  # contrato generico sino no hay contrato 
+    if @invoice[:contrato_id] == nil
+      @invoice[:contrato_id] = 1449 
+    end 
     
     
     if items != nil or items !=""
