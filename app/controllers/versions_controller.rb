@@ -9,7 +9,7 @@ class VersionsController < ApplicationController
    end 
   
   def index
-    @versions = Version.all.order(:descrip)
+    @versions = Version.order(:descrip)
     
     respond_to do |format|
       format.html

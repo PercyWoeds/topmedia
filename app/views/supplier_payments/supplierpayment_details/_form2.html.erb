@@ -2,8 +2,6 @@
 <%= simple_form_for([@supplierpayment , @supplierpayment_detail]) do |f| %>
   <%= f.error_notification %>
 
-    
-
     <div class="field">
       <%= f.label  :concept_id ,"Conceptos de Cheque / Transferencia "%><br />
       <%= f.select :concept_id,options_from_collection_for_select(@conceptos,'id','descrip') %>
@@ -31,11 +29,7 @@
       <%= f.label :numero_documento, "Numero de Document *", :class => "bold" %><br />
       <%= f.text_field :numero_documento %>
     </div>
-    <div class="field">
-      <%= f.label :fecha_documento, "Fecha de Documento *", :class => "bold" %><br />
-      <%= f.date_field :fecha_documento ,:class => "input.tf_short" %>
-    </div>
-
+    
 
      <div class="field">
       <%= f.label :nrooperacion, "Nro.Operacion *", :class => "bold" %><br />
@@ -83,7 +77,6 @@
       $("#ac_supplier_id").val(data[2]);
       $("#ac_document_id").val(data[10]);
 
-alert(date[12]); 
 var today  = Date.parseDate(data[12], "dd-MM-yyyy HH:mm:ss") ;
 var dd = today.getDate();
 var mm = today.getMonth() + 1; //January is 0!
