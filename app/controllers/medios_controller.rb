@@ -4,7 +4,7 @@ class MediosController < ApplicationController
   # GET /medios
   # GET /medios.json
   def index
-    @medios = Medio.order(:id)
+    @medios = Medio.order(:descrip)
     
      respond_to do |format|
       format.html
