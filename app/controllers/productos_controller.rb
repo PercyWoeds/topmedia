@@ -4,7 +4,17 @@ class ProductosController < ApplicationController
   # GET /productos
   # GET /productos.json
   def index
-    @productos = Producto.all
+
+
+     @productos = Producto.order(:name)
+    
+    respond_to do |format|
+      format.html
+      format.csv { send_data @productos.to_csv, filename: "Productos-#{Date.today}.csv" }
+      format.xls 
+    end
+
+
   end
 
   # GET /productos/1
