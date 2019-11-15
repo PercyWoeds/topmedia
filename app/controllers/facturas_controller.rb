@@ -93,6 +93,8 @@ class FacturasController < ApplicationController
     @invoice[:moneda_id] = 2
     @invoice[:document_id] = 2  
     @invoice[:contrato_id] = 1 
+    @invoice[:payment_id] = 2 
+    
     
     
   end
