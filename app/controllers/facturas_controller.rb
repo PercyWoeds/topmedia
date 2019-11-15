@@ -89,7 +89,7 @@ class FacturasController < ApplicationController
     @ac_user = getUsername()
     @invoice[:user_id] = getUserId()
     @invoice[:moneda_id] = 2
-    @invoice[:document_id] = 1  
+    @invoice[:document_id] = 2  
     @invoice[:contrato_id] = 1 
     
     

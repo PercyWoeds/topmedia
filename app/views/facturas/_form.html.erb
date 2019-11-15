@@ -19,22 +19,33 @@
     </h4>
 
     <div class="field">
-      <div class="field">
-      <%= f.label :tipo , "Factura", :class => "bold" %><br />
-      <%= f.select :tipo, options_from_collection_for_select(@tipofacturas,'id','descrip') %>
-      </div>
 
+      
       <div class="field">
       <%= f.label :fecha , "Fecha *", :class => "bold" %><br />
 
       <% if @current_user.level = "admin" %>
-        <%= f.text_field :fecha, value: Time.now.strftime("%d/%m/%Y") %>
+        <%= f.date_field :fecha %>
       <% else %>
-        <%= f.text_field :fecha, value: Time.now.strftime("%d/%m/%Y"), :readonly => true %>
+        <%= f.date_field :fecha , :readonly => true %>
       <% end %>
       </div>
 
-    
+      <div class="field">
+        <%= f.label :tipo , "Factura", :class => "bold" %><br />
+        <%= f.select :tipo, options_from_collection_for_select(@tipofacturas,'id','descrip') %>
+      </div>
+
+    <div class="field">
+      <%= f.label :code, "Code*", :class => "bold" %><br />
+      <%= f.text_field :code, :onclick => "$(this).select();" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :moneda_id ,"  "%><br />
+      <%= f.select :moneda_id, options_from_collection_for_select(@monedas,'id','description') %>
+    </div>
+
     <%= hr() %>
     
     <div class="field">
@@ -71,16 +82,7 @@
     <%= hr() %>
         
 
-    <div class="field">
-      <%= f.label :code, "Code*", :class => "bold" %><br />
-      <%= f.text_field :code, :onclick => "$(this).select();" %>
-    </div>
-
-      <div class="field">
-      <%= f.label :moneda_id ,"  "%><br />
-      <%= f.select :moneda_id, options_from_collection_for_select(@monedas,'id','description') %>
-    </div>
-
+    
      
     <div class="field" id="list_items">
       <p class="bold big">Products:</p>
