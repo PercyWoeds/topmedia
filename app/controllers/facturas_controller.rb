@@ -69,6 +69,8 @@ class FacturasController < ApplicationController
     
     @invoice[:processed] = false
     
+    @invoice[:fecha] = Date.today
+    
     
     @company = Company.find(params[:company_id])
     @invoice.company_id = @company.id
