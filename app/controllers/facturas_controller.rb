@@ -65,11 +65,11 @@ class FacturasController < ApplicationController
     
     @invoice = Factura.new
     
-    @invoice[:code] = "#{generate_guid3()}"
+    @invoice[:code] = @invoice.ultimo_numero
     
     @invoice[:processed] = false
     
-  
+    
     @company = Company.find(params[:company_id])
     @invoice.company_id = @company.id
     

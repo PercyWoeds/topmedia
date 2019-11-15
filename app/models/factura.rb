@@ -282,6 +282,22 @@ class Factura < ActiveRecord::Base
     
   end 
 
+
+  def ultimo_numero
+
+
+       a= Factura.where(document_id: 2).maximum("cast(code as int)")
+       if a.nil?
+        return  1
+      else
+        return  (a + 1).to_s.rjust(8, '0') 
+
+      end 
+
+    
+  end
+
+
   def get_products2(id)    
     @itemproducts = InvoiceService.find_by_sql(['Select invoice_services.price,
       invoice_services.quantity,invoice_services.discount,invoice_services.total,services.name 
