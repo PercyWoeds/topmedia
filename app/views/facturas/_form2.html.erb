@@ -81,7 +81,8 @@
     
      <div class="field">
       <%= f.label :payment_id,"Forma de Pago " %><br />
-      <%= f.select :payment_id,options_from_collection_for_select(@payments,'id','descrip') %>
+       <%= f.collection_select :payment_id, @payments, :id,:descrip, :prompt => true %>
+      
     </div>
   
     <%= hr() %>
