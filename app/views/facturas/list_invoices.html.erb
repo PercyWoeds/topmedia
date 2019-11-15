@@ -20,6 +20,12 @@
   </form>
 </div>
 
+<div class="button">
+  <%= link_to 'Factura Contratos', "/facturas/new/#{@company.id}" %>  
+  
+  <%= link_to "Factura Servicios", "/facturas/new2/#{@company.id}" %>
+</div>
+
 <br />
 <%= render "facturas/list" %>
 
@@ -27,13 +33,6 @@
 
 <%= will_paginate @invoices %>  
 
-<div class="button">
-  <%= link_to 'Factura Contratos', "/facturas/new/#{@company.id}" %>  
-  
-  <%= link_to "Factura Servicios", "/facturas/new2/#{@company.id}" %>
-
-
-</div>
 </div>
 
 <%= render 'layouts/autocomplete' %>
