@@ -290,7 +290,7 @@ class Factura < ActiveRecord::Base
        if a.nil?
         return  1
       else
-        return  (a + 1).to_s.rjust(8, '0') 
+        return  (a + 1).to_s.rjust(6, '0') 
 
       end 
 
