@@ -1297,7 +1297,6 @@ def rpt_cpagar5_pdf
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]
 
-    
     @compras  = @company.get_purchases_by_day_detalle(@fecha1,@fecha2)  
     @purchases_all_1 = @company.get_purchases_by_day2(@fecha1,@fecha2,"2")
     @purchases_all_2 = @company.get_purchases_by_day2(@fecha1,@fecha2,"1")
