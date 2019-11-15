@@ -21,23 +21,36 @@
 
     <div class="field">
     
-      <div class="field">
-      <%= f.label :document_id,"Documento :" %><br />
-      <%= f.collection_select :document_id, @tipodocumento, :id, :description, :prompt => true %>
       
-      </div>
 
       <div class="field">
       <%= f.label :fecha , "Fecha *", :class => "bold" %><br />
 
       <% if @current_user.level = "admin" %>
-        <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y") %>
+        <%= f.date_field :fecha %>
       <% else %>
-        <%= f.text_field :fecha, value: Time.zone.now.strftime("%d/%m/%Y"), :readonly => true %>
+        <%= f.date_field :fecha , :readonly => true %>
       <% end %>
       </div>
 
   
+      <div class="field">
+        <%= f.label :document_id,"Documento :" %><br />
+        <%= f.collection_select :document_id, @tipodocumento, :id, :description, :prompt => true %>
+      
+      </div>
+
+      
+    <div class="field">
+      <%= f.label :code, "Code*", :class => "bold"  %><br />
+      <%= f.text_field :code, :onclick => "$(this).select();" %>
+    </div>
+
+      <div class="field">
+      <%= f.label :moneda_id ,"  "%><br />
+      <%= f.collection_select :moneda_id, @monedas, :id, :description, :prompt => true %>
+      
+    </div>
 
 
     <%= hr() %>
@@ -73,17 +86,6 @@
   
     <%= hr() %>
         
-
-    <div class="field">
-      <%= f.label :code, "Code*", :class => "bold"  %><br />
-      <%= f.text_field :code, :onclick => "$(this).select();" %>
-    </div>
-
-      <div class="field">
-      <%= f.label :moneda_id ,"  "%><br />
-      <%= f.collection_select :moneda_id, @monedas, :id, :description, :prompt => true %>
-      
-    </div>
 
     <div class="field" id="list_items">
       <p class="bold big">Products:</p>
