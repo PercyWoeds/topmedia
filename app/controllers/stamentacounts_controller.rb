@@ -102,9 +102,9 @@ class StamentacountsController < ApplicationController
     respond_to do |format|
       if @stamentacount.update(stamentacount_params)
 
-           @stamentacount[:cargos] = @stamentacount.get_subtotal("cargos")
-           @stamentacount[:abonos] = @stamentacount.get_subtotal("abonos")
-           @stamentacount[:saldo_final] = @stamentacount[:saldo_inicial] - @stamentacount[:cargos] + @stamentacount[:abonos]
+           @cargos = @stamentacount.get_subtotal("cargos")
+           @abonos = @stamentacount.get_subtotal("abonos")
+           @stamentacount[:saldo_final] = @stamentacount[:saldo_inicial] - @cargos + @abonos 
           
            @stamentacount.update_attributes(:saldo_final=> @stamentacount[:saldo_final])
            

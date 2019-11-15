@@ -36,11 +36,7 @@ belongs_to :moneda
 
  
    def process(fecha1,fecha2,banco)
-    puts "fechas process"
-     puts fecha1
-     puts fecha2
-
-
+   
       cheque  =SupplierPayment.where(["fecha1 >= ? and fecha1 <= ? and bank_acount_id =?","#{fecha1} 00:00:00", "#{fecha2} 23:59:59",banco])
       
       StamentacountDetail.where(stamentacount_id: self.id,importado: "1").delete_all
