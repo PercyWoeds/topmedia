@@ -22,7 +22,7 @@
         <td><%= customer_contrato.customer.name  %></td>
         <td><%= customer_contrato.secu_cont %></td>
          <% if customer_contrato.medio.nil? %> 
-            <td><%= customer.medio_id %> </td>
+            <td><%= customer_contrato.medio_id %> </td>
         <% else %>
             <td><%= customer_contrato.medio.descrip %></td>
         <% end %>
