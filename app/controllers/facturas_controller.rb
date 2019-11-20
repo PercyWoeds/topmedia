@@ -911,7 +911,7 @@ new_invoice_item.save
       nroitem=1
 
       lcDoc='FT'
-      
+      @moneda = "1"
 
        for  product in @facturas_rpt_1
 
@@ -951,7 +951,8 @@ new_invoice_item.save
       services_tax = 0
       services_total = 0
 
-    if $lcFacturasall == '1'    
+    if $lcFacturasall == '1'   
+
       subtotal = @company.get_facturas_day_value(@fecha1,@fecha2, "subtotal",@moneda)
       subtotals.push(subtotal)
       services_subtotal += subtotal          
@@ -1005,6 +1006,7 @@ new_invoice_item.save
       table_content << row
 
 
+       @moneda = "2"
 
 
        for  product in @facturas_rpt_2

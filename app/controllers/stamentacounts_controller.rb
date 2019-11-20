@@ -21,7 +21,7 @@ class StamentacountsController < ApplicationController
     @stamentacount = Stamentacount.find(params[:id])
     company =@stamentacount.company_id
     @company =Company.find(company)
-    @stamentacount_details  = @stamentacount.stamentacount_details.order(:id)
+    @stamentacount_details  = @stamentacount.stamentacount_details.order(:fecha)
     a = BankAcount.find(@stamentacount.bank_acount_id)
     @banco_name   =  a.bank.name
     @banco_moneda =  a.moneda.description 
