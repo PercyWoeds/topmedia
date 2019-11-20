@@ -5,7 +5,7 @@
 <table>
   <thead>
     <tr>
-      <th>Id</td>
+      <th>Banco</td>
       
       <th>Cuenta bancaria</th>
       <th>Moneda </th>
@@ -21,7 +21,7 @@
   <tbody>
     <% @stamentacounts.each do |stamentacount| %>
       <tr>
-        <td><%= stamentacount.id %></td>
+        <td><%= stamentacount.bank_acount.bank.name  %></td>
         
         <td><%= stamentacount.bank_acount.number %></td>
         <td><%= stamentacount.bank_acount.moneda.description %></td>
@@ -32,7 +32,9 @@
         <td><%= stamentacount.saldo_final %></td>
         <td><%= link_to 'Ver', stamentacount %></td>
         <td><%= link_to 'Editar', edit_stamentacount_path(stamentacount) %></td>
+        <% if current_user.email == "percywoeds@gmail.com"%>
         <td><%= link_to 'Eliminar', stamentacount, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%end %>
       </tr>
     <% end %>
   </tbody>
