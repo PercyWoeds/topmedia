@@ -909,10 +909,11 @@ new_invoice_item.save
       table_content << headers
 
       nroitem=1
+
       lcDoc='FT'
       
 
-       for  product in @facturas_rpt
+       for  product in @facturas_rpt_1
 
             row = []          
             row << lcDoc
@@ -1002,6 +1003,103 @@ new_invoice_item.save
 
       
       table_content << row
+
+
+
+
+       for  product in @facturas_rpt_2
+
+            row = []          
+            row << lcDoc
+            row << product.fecha.strftime("%d/%m/%Y")            
+            row << product.code
+            row << product.medio.descrip 
+            if product.tc == "1"
+              row << product.contrato.customer.name  
+            else 
+              row << product.customer.name
+            end 
+
+            if product.moneda_id == 1
+              row << "USD"
+            else
+              row << "S/."
+            end 
+
+            row << product.subtotal.to_s
+            row << product.tax.to_s
+            row << product.total.to_s
+                        
+            table_content << row
+
+            nroitem=nroitem + 1
+       
+        end
+
+
+
+      subtotals = []
+      taxes = []
+      totals = []
+      services_subtotal = 0
+      services_tax = 0
+      services_total = 0
+
+    if $lcFacturasall == '1'    
+      subtotal = @company.get_facturas_day_value(@fecha1,@fecha2, "subtotal",@moneda)
+      subtotals.push(subtotal)
+      services_subtotal += subtotal          
+      #pdf.text subtotal.to_s
+    
+    
+      tax = @company.get_facturas_day_value(@fecha1,@fecha2, "tax",@moneda)
+      taxes.push(tax)
+      services_tax += tax
+    
+      #pdf.text tax.to_s
+      
+      total = @company.get_facturas_day_value(@fecha1,@fecha2, "total",@moneda)
+      totals.push(total)
+      services_total += total
+      #pdf.text total.to_s
+
+    else
+        #total x cliente 
+      subtotal = @company.get_facturas_day_value_cliente(@fecha1,@fecha2,@cliente, "subtotal")
+      subtotals.push(subtotal)
+      services_subtotal += subtotal          
+      #pdf.text subtotal.to_s
+    
+    
+      tax = @company.get_facturas_day_value_cliente(@fecha1,@fecha2,@cliente, "tax")
+      taxes.push(tax)
+      services_tax += tax
+    
+      #pdf.text tax.to_s
+      
+      total = @company.get_facturas_day_value_cliente(@fecha1,@fecha2,@cliente, "total")
+      totals.push(total)
+      services_total += total
+    
+    end
+
+      row =[]
+      row << ""
+      row << ""
+      row << ""
+      row << "TOTALES => "
+      row << ""
+      row << ""
+      
+      row << subtotal.round(2).to_s
+      row << tax.round(2).to_s
+      row << total.round(2).to_s
+
+      
+      table_content << row
+
+
+
       
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
@@ -1272,10 +1370,10 @@ new_invoice_item.save
     @company=Company.find(params[:company_id])          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
-    @moneda = params[:moneda_id]    
+  
 
-    @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2,@moneda)      
-
+    @facturas_rpt_1 = @company.get_facturas_day(@fecha1,@fecha2,"1")      
+    @facturas_rpt_2 = @company.get_facturas_day(@fecha1,@fecha2,"2")      
 #    respond_to do |format|
 #      format.html    
 #      format.xls # { send_data @products.to_csv(col_sep: "\t") }
@@ -1286,8 +1384,12 @@ new_invoice_item.save
         pdf = build_pdf_header_rpt(pdf)
         pdf = build_pdf_body_rpt(pdf)
         build_pdf_footer_rpt(pdf)
+
+
         $lcFileName =  "app/pdf_output/rpt_factura_all.pdf"              
     end     
+
+
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
     send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
 

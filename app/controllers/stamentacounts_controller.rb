@@ -12,7 +12,7 @@ class StamentacountsController < ApplicationController
   # GET /stamentacounts/1.json
   def show
      @stamentacount = Stamentacount.find(params[:id])
-     @stamentacount_details  = @stamentacount.stamentacount_details.order(:id)
+     @stamentacount_details  = @stamentacount.stamentacount_details.order(:fecha)
 
   end
 
