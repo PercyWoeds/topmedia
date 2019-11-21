@@ -77,11 +77,12 @@
           <%if lcCanal == product.medio_id%>
           
               <% nroitem = 1 %>
+               <table style=  'font-size:80% ;width:100%'>
                 <% for product_detail  in @orden_details %>
                 
                     <tr>
                     <td width="5%"> <%= nroitem %> </td>
-                    <td width= "40%" ><%=  product_detail.avisodetail.descrip %></td>
+                    <td width= "40%" ><%=  product_detail.description %></td>
                     <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.quantity.to_s)   %></td>
                     <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.tarifa.to_s)   %> </td>
                     <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.price.to_s)   %></td>
@@ -89,6 +90,7 @@
                     </tr>
                     <% nroitem = nroitem+1 %>
                <%end %>
+             </table>
                
                <% @total_qty = product.get_sumas("quantity") %>
                <% @total_money = product.get_sumas("total") %>
@@ -166,7 +168,7 @@
                       <tr>
                         
                       <td width="5%"> <%= nroitem %> </td>
-                      <td width= "40%" ><%=  product_detail.avisodetail.descrip %></td>
+                      <td width= "40%" ><%=  product_detail.description %></td>
                       <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.quantity.to_s)   %></td>
                       <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.tarifa.to_s)   %> </td>
                       <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.price.to_s)   %></td>
@@ -261,7 +263,7 @@
             <% for product_detail  in @orden_details %>
                 <tr>
                 <td width="5%"> <%= nroitem %> </td>
-                <td width= "40%" ><%=  product_detail.avisodetail.descrip %></td>
+                <td width= "40%" ><%=  product_detail.description %></td>
                 <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.quantity.to_s)   %></td>
                 <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.tarifa.to_s)   %> </td>
                 <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.price.to_s)   %></td>
