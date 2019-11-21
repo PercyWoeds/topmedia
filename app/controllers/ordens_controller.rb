@@ -367,10 +367,9 @@ class OrdensController < ApplicationController
             row << sprintf("%.2f",@total_linea.to_s)
             row << order.rating2
 
-            row << ActiveSupport::NumberHelper::number_to_delimited(order.price.round(2),delimiter_pattern: /(\d+?)(?=(\d\d)+(\d)(?!\d))/).to_s
+            row << money(order.price)
             
-            row << ActiveSupport::NumberHelper::number_to_delimited(order.total.round(2),delimiter:",",separator:".").to_s
-            
+            row << money(order.total)         
             
             table_content << row            
              @total_linea_general += @total_linea
@@ -1554,7 +1553,7 @@ def crear
             row << ""
             row << "TOTAL => "
             row << ""
-            row << @subtotal 
+            row << money(@subtotal) 
             table_content << row
       
       
@@ -1752,8 +1751,8 @@ def foot_data_headers_1
   def invoice_summary
       invoice_summary = []
       invoice_summary << ["SubTotal :", money(@orden.subtotal) ]
-      invoice_summary << ["IGV    : ",ActiveSupport::NumberHelper::number_to_delimited(@orden.tax.round(2),delimiter:",",separator:".").to_s]
-      invoice_summary << ["Total  : ",ActiveSupport::NumberHelper::number_to_delimited(@orden.total.round(2),delimiter:",",separator:".").to_s]
+      invoice_summary << ["IGV    : ",money(@orden.tax) ]
+      invoice_summary << ["Total  : ", money(@orden.total) ]
       
       invoice_summary
     end

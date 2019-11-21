@@ -105,7 +105,7 @@
                        
                      <% @detalle.each do |orden1| %> 
 
-                            <%  @saldo -= orden1.total %>
+                            <%  @saldo -= orden1.subtotal %>
 
                             <% if lcMes  == orden1.month %> 
 
