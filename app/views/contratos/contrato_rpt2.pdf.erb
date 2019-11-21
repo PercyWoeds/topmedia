@@ -53,12 +53,12 @@
                    <table style=  'font-size:80% ;width:100%'>    
                     <tr style="font-weight:bold">
                    
-                      <td> Contrato : </td>
-                      <td> <%= product.secu_cont %> </td>
-                      <td> <%= product.get_nro_contrato(product.secu_cont) %></td>
-                      <td></td>
-                      <td></td>
-                       <td>Mon: <%= product.get_moneda(product.moneda_id ) %></td>
+                      <td width="10%">  Contrato : </td>
+                      <td width="5%"> <%= product.secu_cont %> </td>
+                      <td width="40%"> <%= product.get_nro_contrato(product.secu_cont) %></td>
+                      <td width="10%"></td>
+                      <td width="10%"></td>
+                      <td width="25%">Mon: <%= product.get_moneda(product.moneda_id ) %></td>
                     </tr>
                     </table>
 
@@ -122,13 +122,13 @@
                                     <td width="5%"  align="right"><%= orden1.tiempo %></td>
                                     <td width="10%" align="right"> </td>
                                     
-                                    <td width="10%" align="right"><%= sprintf("%.2f",orden1.total.to_s)  %> </td>
+                                    <td width="10%" align="right"><%= sprintf("%.2f",orden1.subtotal.to_s)  %> </td>
                                     <td width="10%" align="right"> </td>
                                     <td width="10%" align="right"><%= sprintf("%.2f",@saldo.to_s)%></td>
                                     </tr>
                                    </table>                                       
                                 
-                                  <%   @total_mes += orden1.total %>
+                                  <%   @total_mes += orden1.subtotal %>
 
                            
                                 <% else %>
@@ -167,12 +167,12 @@
                                     <td width="5%"  align="right"><%= orden1.tiempo %></td>
                                     <td width="10%" align="right"> </td>
                                     
-                                    <td width="10%" align="right"><%= sprintf("%.2f",orden1.total.to_s)  %> </td>
+                                    <td width="10%" align="right"><%= sprintf("%.2f",orden1.subtotal.to_s)  %> </td>
                                     <td width="10%" align="right"> </td>
                                     <td width="10%" align="right"><%= sprintf("%.2f",@saldo.to_s)%></td>
                                     </tr>
                                    </table>     
-                                    <%   @total_mes += orden1.total %>      
+                                    <%   @total_mes += orden1.subtotal %>      
                                   
                                                                 
                                    <% lcMes = orden1.month %> 
