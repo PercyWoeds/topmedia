@@ -1360,7 +1360,7 @@ class ReportsController < ApplicationController
     
     @medios    = Medio.all 
     
-    @marcas    = Marca.where("customer_id = ?", Customer.first.id)
+    @marcas    = Marca.where("customer_id = ?", 38)
     @productos = Producto.where(marca_id: @marcas.first.id) 
     @versions  = Version.where(producto_id: @productos.first.id)
     
