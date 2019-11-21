@@ -1710,9 +1710,9 @@ def foot_data_headers_1
     #{@purchaseorder.description}
      
      client_data_headers_1  = [["Cliente : ", $lcCli]]
+      client_data_headers_1 <<  ["Producto : ",$lcProducto ]
       client_data_headers_1 <<  ["Motivo : ", $lcVersion]
       client_data_headers_1 <<  ["Duracion : ",$lcDuracion ]
-      client_data_headers_1 <<  ["Producto : ",$lcProducto ]
       
       client_data_headers_1
       
@@ -1751,7 +1751,7 @@ def foot_data_headers_1
 
   def invoice_summary
       invoice_summary = []
-      invoice_summary << ["SubTotal",  ActiveSupport::NumberHelper::number_to_delimited(@orden.subtotal,delimiter:",",separator:".").to_s]
+      invoice_summary << ["SubTotal :", money(@orden.subtotal) ]
       invoice_summary << ["IGV    : ",ActiveSupport::NumberHelper::number_to_delimited(@orden.tax.round(2),delimiter:",",separator:".").to_s]
       invoice_summary << ["Total  : ",ActiveSupport::NumberHelper::number_to_delimited(@orden.total.round(2),delimiter:",",separator:".").to_s]
       
