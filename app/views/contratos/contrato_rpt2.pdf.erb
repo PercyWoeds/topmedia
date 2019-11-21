@@ -37,10 +37,7 @@
                 </table>
 
 
-  @medios = product.get_ordenes_detalle0(@fecha1,@fecha2,product.customer_id)
-
-
-                    <% if @medios.all.size > 0 %>
+ 
                     
 
                         <% @medios.each do |detalle_medios| %> 
@@ -223,7 +220,7 @@
        
 
               <%end%>
-          <%end%>
+      
         
         <hr>
         
