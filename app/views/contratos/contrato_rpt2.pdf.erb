@@ -36,17 +36,23 @@
                 </tr>
                 </table>
 
-                
+
+  @medios = product.get_ordenes_detalle0(@fecha1,@fecha2,product.customer_id)
 
 
-                
+                    <% if @medios.all.size > 0 %>
+                    
+
+                        <% @medios.each do |detalle_medios| %> 
+
+
                   <table style=  'font-size:80% ;width:100%'>    
                     <tr style="font-weight:bold">
                     <td>Medio: </td>
-                      <% if product.medio.nil? %>
-                        <td> <%= product.medio_id %></td>
+                      <% if detalle_medios.medio.nil? %>
+                        <td> <%= detalle_medios.medio_id %></td>
                       <% else %>
-                        <td> <%= product.medio.descrip %></td>
+                        <td> <%= detalle_medios.medio.descrip %></td>
                       <% end %>    
                     <td> </td>
                     <td></td>
@@ -215,6 +221,9 @@
               <%end%>
           <%end%>
        
+
+              <%end%>
+          <%end%>
         
         <hr>
         
