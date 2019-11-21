@@ -126,7 +126,11 @@
                   <table style ='font-size:80% ;width:100%'>
                   <tr style="font-weight:bold">
                   <td>MEDIO</td>
-                  <td> <%= product.medio.full_name %></td>
+                  <% if product.medio.nil? %>  
+                       <td><%= product.medio_id %></td>   
+                   <% else %>
+                      <td> <%= product.medio.full_name %></td>
+                   <% end %> 
                   <td></td>
                   <td></td>
                   <td></td>
