@@ -23,7 +23,7 @@
       
         <%  @ordenes.each do |product| %>
 
-                <table style=  'font-size:90% ;width:100%'>
+             <table style=  'font-size:90% ;width:100%'>
                 <tr style="font-weight:bold">
                 <td>CLIENTE</td>
                 <td><%= product.customer.ruc %> </td>
@@ -35,22 +35,11 @@
                 <td></td>
                 </tr>
                 </table>
-
-
- 
-                    
-
-                        <% @medios.each do |detalle_medios| %> 
-
-
+                
                   <table style=  'font-size:80% ;width:100%'>    
                     <tr style="font-weight:bold">
                     <td>Medio: </td>
-                      <% if detalle_medios.medio.nil? %>
-                        <td> <%= detalle_medios.medio_id %></td>
-                      <% else %>
-                        <td> <%= detalle_medios.medio.descrip %></td>
-                      <% end %>    
+                    <td> <%= product.medio.descrip %></td>
                     <td> </td>
                     <td></td>
                     <td></td>
@@ -218,9 +207,6 @@
               <%end%>
           <%end%>
        
-
-              <%end%>
-      
         
         <hr>
         
