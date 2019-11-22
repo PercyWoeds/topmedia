@@ -32,7 +32,12 @@
          <td class="small bordered_bottom bordered_right"><%= contrato.code %></td>
          <td class="small bordered_bottom bordered_right"><%= contrato.fecha.strftime("%d/%m/%Y") %></td>
         <td class="small bordered_bottom bordered_right"><%= contrato.customer.name  %></td>
+         <% if contrato.medio.nil ? %> 
+        <td class="small bordered_bottom bordered_right"><%= contrato.medio_id  %></td>
+         
+         <% else %>
         <td class="small bordered_bottom bordered_right"><%= contrato.medio.descrip  %></td>
+        <% end %>
         <td class="small bordered_bottom bordered_right"><%= money(contrato.importe) %></td>
         <td class="small bordered_bottom bordered_right"><%= contrato.moneda.description  %></td>
         <td class="small bordered_bottom bordered_right"><%= contrato.get_contrato %></td>
