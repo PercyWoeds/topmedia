@@ -2433,6 +2433,9 @@ def get_contratos_day(fecha1,fecha2)
     @contratos = Contrato.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:customer_id,:medio_id,:moneda_id,:fecha)
     return @contratos
 end 
+
+
+
 def get_ordenes_eecc(fecha1,fecha2)    
 
     @factura = Orden.where(:month => nil)
@@ -2464,6 +2467,39 @@ def get_ordenes_eecc(fecha1,fecha2)
 
     return @contratos
 end 
+
+def get_ordenes_eecc_cliente(fecha1,fecha2,customer)    
+
+    @factura = Orden.where(:month => nil)
+    for factura in @factura
+        f = Orden.find(factura.id)
+      if f
+        @fechas =f.fecha.to_s
+        parts = @fechas.split("-")
+        anio = parts[0]
+        mes  = parts[1]
+        dia  = parts[2]      
+        f.month = mes
+        f.year = anio 
+        f.save
+      end 
+    end 
+
+
+     @contratos = Orden.find_by_sql(["
+     SELECT  customer_id,medio_id, secu_cont, moneda_id,
+       SUM(total) as balance   
+       FROM Ordens 
+       WHERE fecha >= ? and fecha<=?  and customer_id = ? 
+       GROUP BY 1,2,3,4
+       ORDER BY 1,2,3,4 ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",customer  ])  
+
+     #@contratos = Orden.select("customers.ruc,ordens.customer_id").group( "customers.ruc,ordens.customer_id").joins(:customer).order("customers.ruc")
+
+
+    return @contratos
+end 
+
 
 
 def get_statamenacount_by_day(fecha1,fecha2,banco)
