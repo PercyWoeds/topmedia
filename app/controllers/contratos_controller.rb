@@ -173,7 +173,12 @@ class ContratosController < ApplicationController
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")
             row << product.customer.name 
-            row << product.medio.descrip
+            if product.medio.nil?
+                row << product.medio_id 
+            else
+
+              row << product.medio.descrip
+            end 
             row << product.get_moneda
             row << product.get_contrato
             row << sprintf("%.2f",product.nrocuotas.to_s)

@@ -2501,6 +2501,15 @@ def get_ordenes_eecc_cliente(fecha1,fecha2,customer)
 end 
 
 
+def get_saldo_cliente_contrato(customer,medio,contrato,moneda,fecha1)
+
+      a = Orden.find_by(["fecha1>=? and fecha2 < ? and customer_id =? and medio_id =? and contrato_id =? 
+        and moneda_id =?","2019-01-01 00:00:00", "#{fecha1} 00:00:00",customer,medio,contrato.moneda ])
+
+      return a   
+  
+end
+
 
 def get_statamenacount_by_day(fecha1,fecha2,banco)
      a= Stamentacount.find_by(["fecha1 >= ? and fecha2<=? and bank_acount_id =?","#{fecha1} 00:00:00","#{fecha2} 23:59:59",banco])
