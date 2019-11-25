@@ -335,8 +335,12 @@ class ContratosController < ApplicationController
             row << nroitem.to_s
             row << product.code
             row << product.fecha.strftime("%d/%m/%Y")
-            row << product.customer.name 
-            row << product.medio.descrip
+            row << product.customer.name
+            if product.medio.nil?
+              row << product.medio_id 
+            else 
+             row << product.medio.descrip
+            end 
             row << product.get_moneda
             row << product.get_contrato
             row << sprintf("%.2f",product.nrocuotas.to_s)
