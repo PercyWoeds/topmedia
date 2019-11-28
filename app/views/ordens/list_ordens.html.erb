@@ -12,7 +12,16 @@
 </h1>
 
 
-  
+
+<div class="small">
+  <form method="get" action="/companies/ordens/<%= @company.id %>">
+    <strong>Search:</strong>
+    <input type="text" name="search" value="<% if @q_org %><%= @q_org %><% end %>" class="small" onclick="$(this).select();" />
+    <input type="submit" value="Find" class="bold small_btn" />
+    <a href="/companies/ordens/<%= @company.id %>" class="small_btn">Clear</a>
+  </form>
+</div>
+
  
 
 <br />
