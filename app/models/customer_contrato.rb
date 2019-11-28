@@ -16,9 +16,9 @@ validates_presence_of :secu_cont, :customer_id, :contrato_id,:medio_id, :moneda_
 
 	def generate_orden(customer)
 	    if CustomerContrato.where("customer_id = ?",customer).maximum("cast(secu_cont  as int)") == nil 
-	      self.code = "001"
+	      self.secu_cont = "001"
 	    else
-	      self.code = CustomerContrato.where("customer_id = ?",customer).maximum("cast(secu_cont  as int)").next.to_s.rjust(3, '0') 
+	      self.secu_cont = CustomerContrato.where("customer_id = ?",customer).maximum("cast(secu_cont  as int)").next.to_s.rjust(3, '0') 
 	          
 	    end 
 	    
