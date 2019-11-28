@@ -62,6 +62,13 @@ TABLE_HEADERS2 = ["Nº",
                     "TARIFA  ",
                     "IMPORTE "]
 
+
+
+  def self.search(search)
+    # Title is for the above case, the OP incorrectly had 'name'
+    where("code iLIKE ?", "%#{search}%")
+  end
+
   def correlativo        
       numero = Voided.find(14).numero.to_i + 1
       lcnumero = numero.to_s

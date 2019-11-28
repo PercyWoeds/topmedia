@@ -2507,8 +2507,12 @@ def get_saldo_cliente_contrato(customer,medio,contrato,moneda,fecha1)
         and moneda_id =?","2019-01-01 00:00:00", "#{fecha1} 00:00:00",customer,medio,contrato.moneda ])
 
       return a   
+
+      
   
 end
+
+
 
 
 def get_statamenacount_by_day(fecha1,fecha2,banco)
