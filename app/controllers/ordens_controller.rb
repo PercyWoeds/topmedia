@@ -808,7 +808,7 @@ class OrdensController < ApplicationController
     if(@company.can_view(current_user))
 
     if(params[:search] and params[:search] != "")         
-          @ordens = Orden.where([" (code iLIKE ?)", @company.id,"%" + params[:search] + "%", "%" + params[:search] + "%"]).order('fecha').paginate(:page => params[:page]) 
+          @ordens = Orden.where([" (code iLIKE ?)","%" + params[:search] + "%", "%" + params[:search] + "%"]).order('fecha').paginate(:page => params[:page]) 
         else
           @ordens = Orden.order('fecha').paginate(:page => params[:page]) 
         end
