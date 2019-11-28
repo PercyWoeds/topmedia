@@ -23,6 +23,6 @@ validates_presence_of :secu_cont, :customer_id, :contrato_id,:medio_id, :moneda_
 	    end 
 	    
 	end
-a
+
 
 end
