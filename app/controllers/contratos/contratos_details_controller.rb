@@ -29,6 +29,8 @@ class Contratos::ContratosDetailsController < ApplicationController
   
     @contrato_detail = ContratoDetail.new
     @contrato_detail[:fecha]= Date.today 
+
+    
     @contrato_detail[:importe]= 0.00
     @contrato_detail[:vventa]= 0.00
     @contrato_detail[:comision1]= 0.00
@@ -114,6 +116,6 @@ class Contratos::ContratosDetailsController < ApplicationController
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def contrato_detail_params
-      params.require(:contrato_detail).permit(:nro, :fecha, :importe, :vventa, :comision1, :comision2, :comision3,:total, :facturacanal, :fecha2, :factura1, :factura2,:contrato_id,:sit,:fechafac1,:fechafac2)
+      params.require(:contrato_detail).permit(:nro, :fecha, :importe, :vventa, :comision1, :comision2, :comision3,:total, :facturacanal, :fecha2, :factura1, :factura2,:contrato_id,:sit,:fechafac1,:fechafac2,:fecha_pago)
     end
 end
