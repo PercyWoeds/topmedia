@@ -45,6 +45,8 @@ class CustomerContratosController < ApplicationController
     @contratos = Contrato.all
     @monedas = Moneda.all 
 
+    @customer_contrato[:secu_cont] = @customer_contrato.generate_orden(@customer_contrato[:customer_id] )
+
 
     respond_to do |format|
       if @customer_contrato.save
