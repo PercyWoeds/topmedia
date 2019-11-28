@@ -800,12 +800,13 @@ class OrdensController < ApplicationController
   
   # Show ordens for a company
   def list_ordens
+
    @company = Company.find(params[:company_id])
     @pagetitle = "#{@company.name} - Products"
   
     if(@company.can_view(current_user))
         if(params[:search] and params[:search] != "")         
-          @ordens = Orden.where(["company_id = ? and (code LIKE ? OR name LIKE ?)", @company.id,"%" + params[:search] + "%", "%" + params[:search] + "%"]).order('code').paginate(:page => params[:page]) 
+          @ordens = Orden.where(["company_id = ? and (code iLIKE ?)", @company.id,"%" + params[:search] + "%", "%" + params[:search] + "%"]).order('code').paginate(:page => params[:page]) 
         else
           @ordens = Orden.where(["company_id = ?",@company.id ]).order('code').paginate(:page => params[:page]) 
         end
