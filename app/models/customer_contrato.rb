@@ -18,11 +18,11 @@ validates_presence_of :secu_cont, :customer_id, :contrato_id,:medio_id, :moneda_
 	    if CustomerContrato.where("customer_id = ?",customer).maximum("cast(secu_cont  as int)") == nil 
 	      self.code = "001"
 	    else
-	    self.code = Manifest.where("customer_id = ?",customer).maximum("secu_cont  as int)").next.to_s.rjust(3, '0') 
+	    self.code = Manifest.where("customer_id = ?",customer).maximum("cast(secu_cont  as int)").next.to_s.rjust(3, '0') 
 	          
 	    end 
 	    
 	end
-
+a
 
 end
