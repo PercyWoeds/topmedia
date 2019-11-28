@@ -805,16 +805,12 @@ class OrdensController < ApplicationController
     @filters_display = "block"
 
     
-    if(@company.can_view(current_user))
-
-    if(params[:search] and params[:search] != "")         
-          @ordens = Orden.where([" (code iLIKE ?)","%" + params[:search] + "%", "%" + params[:search] + "%"]).order('fecha').paginate(:page => params[:page]) 
-        else
-          @ordens = Orden.order('fecha').paginate(:page => params[:page]) 
-        end
-    else
-      errPerms()
-    end
+       if(params[:search] and params[:search] != "")         
+             @ordens = Orden.where([" (code iLIKE ?)","%" + params[:search] + "%", "%" + params[:search] + "%"]).order('fecha').paginate(:page => params[:page]) 
+       else
+            @ordens = Orden.order('fecha').paginate(:page => params[:page]) 
+       end
+    
   end
 
   
