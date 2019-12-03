@@ -59,7 +59,18 @@ self.per_page = 20
   def ultimo_cheque(bank_acount)
 
 
-       a= SupplierPayment.where(bank_acount_id: bank_acount,document_id: 1).maximum("cast(documento as int)")
+       a= SupplierPayment.where(bank_acount_id: bank_acount,document_id: 1)
+
+
+
+
+
+
+
+
+
+
+       
        if a.nil?
         return  1
       else

@@ -27,7 +27,12 @@
 </p>
 
 <b>Marca:</b>
+  <% if marca.name.nil? %>
+  <% @orden.marca_id %>
+  <% else %>
   <%= @orden.marca.name %>
+  
+  <% end %>
 </p>
 <b>Producto:</b>
   <%= @orden.producto.name %>
@@ -72,6 +77,20 @@
 
    
 <% end %>
+
+<%= hr() %>
+
+
+<div class="button">
+  <%= link_to 'Agregar item', new_add_orden_orden_product_path %>
+  
+</div>
+
+
+
+
+<%= hr() %>
+
 
 
 <h3>

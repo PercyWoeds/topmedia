@@ -63,6 +63,7 @@
     
     <div class="field">
       <%= f.label :marca_id %><br />
+
       <%= f.collection_select :marca_id, Marca.order(:id), :id, :name,{:prompt   => "Selec una marca"} %>
     </div>
    
