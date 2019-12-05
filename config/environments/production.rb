@@ -55,8 +55,11 @@ Mnygo::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.assets.version = '1.1'
+  config.assets.version = '1.2'
+  config.assets.compress = true
+  
   config.assets.precompile =  ['*.js', '*.css', '*.css.erb']
+
 
 end
 
