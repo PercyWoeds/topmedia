@@ -1311,6 +1311,26 @@ def rpt_cpagar5_pdf
   end
 
 
+ def rpt_contrato1_pdf 
+  
+    @company=Company.find(1)      
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]
+
+
+    @contratos_rpt = @company.get_contratos_medio(@fecha1,@fecha2)
+      
+    case params[:print]
+      when "PDF" then render  pdf: "rpt_contratos",template: "supplier_payments/rpt_contrato_01.pdf.erb",locals: {:contrato => @contratos_rpt}
+      when "Excel" then render xlsx: 'rpt_contratos_1'
+      else render action: "index"
+    end
+    
+  end
+
+
+
+
  def rpt_cpagar6_pdf 
   
     @company=Company.find(1)      

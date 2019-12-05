@@ -120,6 +120,8 @@
       collection { get :rpt_concilia_1 }
        
       collection { get :rpt_cpagar6_pdf }
+      collection { get :rpt_contrato1_pdf }
+      
       
   end 
 

@@ -19,25 +19,26 @@ totals = []
 </h1>
 
 
+<%= form_tag(rpt_contrato1_pdf_supplier_payments_path, :method => "get") do %>
 
-<form method="get" action="/contratos/rpt_contratos2/<%= @company.id %>">
-  
 
   <div class="field">
-    Desde <input type="date" name="fecha1" value="2017-10-01" style = "width: 150px" >
+    Desde <input type="date" name="fecha1" value="2019-10-01" style = "width: 150px" >
   </div>
 
 	<div class="field">
-    Hasta <input type="date" name="fecha2" value="2017-11-15" style = "width: 150px" >
+    Hasta <input type="date" name="fecha2" value="2019-10-30" style = "width: 150px" >
   </div>
 
   
 
-  <input type="submit" value="Generar Reporte "  />
 
-  
-  
-</form>
+  <%= submit_tag  "PDF", :name => "print"    %>
+
+  <%= submit_tag "Excel", :name => "print" %>
+     
+<% end %>
+
 
 <br />
 
