@@ -410,10 +410,14 @@
 
 <div class="button">
   <%= link_to 'Export to PDF', "/ordens/pdf/#{@orden.id} " %>
-  
-  <% if  @orden.processed != "1" %>
+
+<% if @factura.processed =="0" || @factura.processed==nil %>
   <%= link_to 'Procesar orden', "/ordens/do_process/#{@orden.id}" %>
-  <%end %>
+
+
+<% elsif @factura.processed =="1" %>  
+  <%= link_to 'Anular', "/ordens/do_anular/#{@orden.id}" %>
+<% end %>
   
   <%= link_to 'Editar', edit_orden_path(@orden) %>
   <%= link_to 'Regresar', "/companies/ordens/#{@orden.company.id}" %>

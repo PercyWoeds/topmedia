@@ -69,6 +69,8 @@ TABLE_HEADERS2 = ["Nº",
     where("code iLIKE ?", "%#{search}%")
   end
 
+
+
   def correlativo        
       numero = Voided.find(14).numero.to_i + 1
       lcnumero = numero.to_s

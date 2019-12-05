@@ -6,6 +6,19 @@ class OrdensController < ApplicationController
   before_filter :authenticate_user!,:checkProducts
   
   
+
+
+  def do_anular
+    @orden = Orden.find(params[:id])
+    @orden[:processed] = "2"
+    
+    @orden.anular 
+   
+    flash[:notice] = "Documento a sido anulado."
+    redirect_to @orden  
+  end
+  
+   
 ##-------------------------------------------------------------------------------------
 ## REPORTE DE ESTADISTICA DE VENTAS
 ##-------------------------------------------------------------------------------------
