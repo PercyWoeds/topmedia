@@ -35,6 +35,9 @@
     var dia_30 = $("#orden_product_d30").val();
     var dia_31 = $("#orden_product_d31").val();
 
+    alert(dia_01);
+       
+
     var cantidad = dia_01+ dia_02+dia_03+dia_04+dia_05+dia_06+dia_07+dia_08+dia_09+dia_10+
                    dia_11+ dia_12+dia_13+dia_14+dia_15+dia_16+dia_17+dia_18+dia_19+dia_20+ 
                    dia_21+ dia_22+dia_23+dia_24+dia_25+dia_26+dia_27+dia_28+dia_29+dia_30+dia_31 ;
