@@ -435,7 +435,8 @@
   match 'ordens/ac_customers/:company_id' => 'ordens#ac_customers', via: [:get, :post]
   match 'ordens/new/:company_id' => 'ordens#new', via: [:get, :post]
   match 'ordens/neworden/:company_id' => 'ordens#neworden', via: [:get, :post]
-    
+  match 'ordens/do_anular/:id' => 'ordens#do_anular', via: [:get, :post]
+   
   match 'ordens/do_email/:id' => 'ordens#do_email', via: [:get, :post]
   match 'ordens/do_process/:id' => 'ordens#do_process', via: [:get, :post]
   match 'ordens/email/:id' => 'ordens#email', via: [:get, :post]
