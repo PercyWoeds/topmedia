@@ -2157,14 +2157,15 @@ function createMarca() {
 
     var quantity = $("#ac_item_quantity").val();
     var tarifa = $("#ac_item_tarifa").val();
+    var duracion = $("#ac_item_duracion").val();
     
     if(isNumeric(quantity)  && isNumeric(tarifa)) {
 
-      price = (tarifa / 30 ) * 10
+      price = (tarifa / duracion  ) * 10
 
       var total = quantity * price;
       
-      $#ac_item_price").html(price);
+      $("#ac_item_price").html(price);
       $("#ac_item_total").html(total);
 
     } else {
