@@ -27,7 +27,7 @@
 </p>
 
 <b>Marca:</b>
-  <% if marca.name.nil? %>
+  <% if @orden.marca.nil? %>
   <% @orden.marca_id %>
   <% else %>
   <%= @orden.marca.name %>
