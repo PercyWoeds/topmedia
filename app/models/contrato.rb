@@ -104,7 +104,8 @@ class Contrato < ActiveRecord::Base
       return ""
     else
      return a.name 
-     end   
+    end
+
    end  
      
   def get_contrato
@@ -116,7 +117,7 @@ class Contrato < ActiveRecord::Base
   	end
 
   end 	
-
+  end 
 
   def get_contrato_cuotas(id)
       @contrato_cuotas = ContratoDetail.where(:contrato_id=>id)
