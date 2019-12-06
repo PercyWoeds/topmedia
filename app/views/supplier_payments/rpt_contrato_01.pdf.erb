@@ -44,6 +44,7 @@
       <% totg3 = 0 %>
       <% totg4 = 0 %>
 
+
     
 <%  @contratos_rpt.each do |detalle| %>
                 
@@ -51,7 +52,7 @@
 
                   <tr style="font-weight:bold">
                   <td width="8%" >CANAL : </td>
-                  <td width="20%"align="left"> <%= detalle.medio.name   %></td>
+                  <td width="20%"align="left"> <%= detalle.get_medio(detalle.medio_id)   %></td>
                   <td width="72%"> </td>    
                   </tr>
 
@@ -63,104 +64,113 @@
             <% tot_payable = 0 %>
             <% tot_tax   = 0 %>
             <% tot_total = 0 %>
-             <table style=  'font-size:80% ;width:100%'>    
+
+            
+
+                  
+        <%  @detalle.each do |compra| %>
+
+              <table style=  'font-size:80% ;width:100%'>    
 
                   <tr style="font-weight:bold">
                   <td width="8%" > CLIENTE : </td>
-                  <td width="20%"align="left"> <%= detalle.customer.name   %></td>
+                  <td width="20%"align="left"> <%= compra.get_cliente(compra.customer_id)   %></td>
                   <td width="72%"> </td>    
                   </tr>
 
               </table>
 
 
-                  
-        <%  @detalle.each do |compra| %>
+
+            <% @detalle2 = compra.get_contratos_customer_contrato(@fecha1,@fecha2,detalle.medio_id,compra.customer_id) %>
 
 
-            <% @detalle2 = compra.get_contratos_customer_contrato(@fecha1,@fecha2,detalle.medio_id,detalle.customer_id) %>
-
-
-           <table style=  'font-size:80% ;width:100%'>    
+            <% @detalle2.each do |contrato| %> 
+    
+                 <table style=  'font-size:80% ;width:100%'>    
 
                   <tr style="font-weight:bold">
                   <td width="8%" > Contrato : </td>
-        <td width="20%"align="left"> <%= detalle.contrato.code %></td>
-        <td width="20%"align="left"> <%= detalle.get_contrato %></td>
-        <td>Mon: </td>
-        <td width="20%"align="left"> <%= detalle.get_moneda %></td>
-        <td width="20%"align="left"> <%= sprintf("%.2f",product.importe.to_s) %></td>
-        <td>Cuotas: </td>
-        <td>Com1: </td>
-        <td align="left"> <%= sprintf("%.2f",product.comision1.to_s) %>%</td>
-        <td>Com2: </td>
-        <td align="left"> <%= sprintf("%.2f",product.comision2.to_s) %>%</td>
+                  <td width="20%"align="left"> <%= contrato.contrato.code %></td>
+                  <td width="20%"align="left"> <%= contrato.get_contrato %></td>
+                  <td>Mon: </td>
+                  <td width="20%"align="left"> <%= contrato.get_moneda %></td>
+                  <td width="20%"align="left"> <%= sprintf("%.2f",contrato.importe.to_s) %></td>
+                  <td>Cuotas: </td>
+                  <td>Com1: </td>
+                  <td align="left"> <%= sprintf("%.2f",contrato.comision1.to_s) %>%</td>
+                  <td>Com2: </td>
+                  <td align="left"> <%= sprintf("%.2f",contrato.comision2.to_s) %>%</td>
 
                   </tr>
-
-              </table>
+                </table>
 
                <%nroitem = 1%> 
-             <% @detalle2.each do |contrato| %> 
+
+
+               @contratodetalle = contrato.get_contrato_cuotas(contrato.id)
+
+
+           <% @detalle3.each do |contrato2| %> 
+    
 
             <table style=  'font-size:80% ;width:100%'>       
             <tr>
             <td width="8%"><%= nroitem %> </td>
-            <td width="8%"><%= contrato.fecha.strftime("%d/%m/%Y") %> </td>
-            <td width="30%"><%= sprintf("%.2f",contrato.vventa.to_s) %> </td>
+            <td width="8%"><%= contrato2.fecha.strftime("%d/%m/%Y") %> </td>
+            <td width="30%"><%= sprintf("%.2f",contrato2.vventa.to_s) %> </td>
             <td width="10%" align="left"></td>
             <td width="5%" align="right"> </td>
             <td width="10%" align="right"></td>
             <td width="10%" align="right"> <%=sprintf("%.2f",contrato.importe.to_s) %></td>
-            <td width="10%" align="right"> <%= contrato.facturacanal %></td>
-            <td width="10%" align="right"> <%= contrato.factura1 %> </td>
-            <td width="10%" align="right"> <%= contrato.fechafac1.strftime("%d%m%Y") %> </td>
-            <td width="10%" align="right"> <%= contrato.factura2 %> </td>
-<td width="10%" align="right"> <%= contrato.fechafac2.strftime("%d%m%Y") %> </td>
-            <td width="10%" align="right"> <%= contrato.estado %> </td>
+            <td width="10%" align="right"> <%= contrato2.facturacanal %></td>
+            <td width="10%" align="right"> <%= contrato2.factura1 %> </td>
+            <td width="10%" align="right"> <%= contrato2.fechafac1.strftime("%d%m%Y") %> </td>
+            <td width="10%" align="right"> <%= contrato2.factura2 %> </td>
+            <td width="10%" align="right"> <%= contrato2.fechafac2.strftime("%d%m%Y") %> </td>
+            <td width="10%" align="right"> <%= contrato2.estado %> </td>
 
             </tr>       
             </table>
 
             <%  nroitem = nroitem + 1 %>
 
-             <%if contrato.fec_pago.nil? %> 
-               <% tot_canc1 += contrato.vventa %>
-               <% tot_canc2 += contrato.total  %> 
+             <%if contrato2.fec_pago.nil? %> 
+               <% tot_canc1 += contrato2.vventa %>
+               <% tot_canc2 += contrato2.total  %> 
 
              <%else %>
-               <% tot_pago1 += contrato.vventa %>
-               <% tot_pago2 += contrato.total  %> 
+               <% tot_pago1 += contrato2.vventa %>
+               <% tot_pago2 += contrato2.total  %> 
 
              <% end %>
 
-             <%if contrato.factura1.nil? %>
+             <%if contrato2.factura1.nil? %>
 
-               <% tot_fact1 += contrato.vventa %>
-               <% tot_fact2 += contrato.total  %> 
+               <% tot_fact1 += contrato2.vventa %>
+               <% tot_fact2 += contrato2.total  %> 
 
 
              <%end %>
-                  
+            <% end %>            
              
             <table style=  'font-size:80% ;width:100%'>       
             <tr>
             <td width="8%"> </td>
             <td width="8%">  </td>
-            <td width="30%">Total por Documento: </td>
+            <td width="30%">Total por Contrato: </td>
             <td width="10%" align="right"> </td>
             <td width="5%" align="right"> </td>
             <td width="10%" align="right"> <%= sprintf("%.2f",tot_pago1.to_s) %></td>
-            <td width="10%" align="right"> <%=sprintf("%.2f",tot_pago2.to_s) %></td>
+            <td width="10%" align="right"> <%= sprintf("%.2f",tot_pago2.to_s) %></td>
             <td width="10%" align="right"> <%= sprintf("%.2f",tot_fact1.to_s) %></td>
             <td width="10%" align="right"> <%= sprintf("%.2f",tot_fact2.to_s) %> </td>
             </tr>
+
             </table>
 
-            
+
         <%end%>
-
-
 
      
                  <table style=  'font-size:80% ;width:100%'>       

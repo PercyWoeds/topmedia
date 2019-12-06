@@ -87,7 +87,24 @@ class Contrato < ActiveRecord::Base
           
     end
 
-  
+    def   get_medio(medio)
+
+    a= Medio.find(medio)
+    if a.nil?
+      return ""
+      else
+    return a.name 
+      endi
+    end   
+   def   get_customer(customer)
+
+    a= Customer.find(customer)
+    if a.nil?
+      return ""
+      else
+    return a.name 
+      endi
+    end   
 
    
   def get_contrato
