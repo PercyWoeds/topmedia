@@ -2441,18 +2441,18 @@ end
 
 
 def get_contratos_medio(fecha1,fecha2)    
-    @contratos = Contrato.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).group(:medio_id).order(:medio_id)
+    @contratos = Contrato.select("medio_id").where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).group(:medio_id).order(:medio_id)
     return @contratos
 end 
 
 
 
 def get_contratos_medio_customer(fecha1,fecha2,medio)    
-    @contratos = Contrato.where(["fecha >= ? and fecha <= ? and medio_id=?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",medio ]).group(:customer_id).order(:customer_id)
+    @contratos = Contrato.select("customer_id").where(["fecha >= ? and fecha <= ? and medio_id=?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",medio ]).group(:customer_id).order(:customer_id)
     return @contratos
 end 
 def get_contratos_customer_contrato(fecha1,fecha2,medio,customer)    
-    @contratos = Contrato.where(["fecha >= ? and fecha <= ? and medio_id=?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",medio,customer ]).group(:contrato_id).order(:contrato_id)
+    @contratos = Contrato.select("code,id").where(["fecha >= ? and fecha <= ? and medio_id=?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",medio,customer ]).group(:code).order(:code)
     return @contratos
 end 
 
