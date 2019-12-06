@@ -95,18 +95,18 @@ class Contrato < ActiveRecord::Base
       else
     return a.name 
       endi
-    end   
+    end 
+
    def   get_customer(customer)
 
     a= Customer.find(customer)
     if a.nil?
       return ""
-      else
-    return a.name 
-      endi
-    end   
-
-   
+    else
+     return a.name 
+     end   
+   end  
+     
   def get_contrato
 
 	if self.tipocontrato_id == 1
@@ -116,7 +116,7 @@ class Contrato < ActiveRecord::Base
   	end
 
   end 	
- 
+
 
   def get_contrato_cuotas(id)
       @contrato_cuotas = ContratoDetail.where(:contrato_id=>id)
