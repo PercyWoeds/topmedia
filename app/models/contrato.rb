@@ -93,7 +93,7 @@ class Contrato < ActiveRecord::Base
     if a.nil?
       return ""
       else
-    return a.name 
+    return a.descrip
       endi
     end 
 
