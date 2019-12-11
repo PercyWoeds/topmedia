@@ -165,7 +165,7 @@
                <% tot_canc2 += contrato2.importe  %>
             <% end %>    
 
-             <% if contrato2.factura1 != nil  and  contrato2.sit.nil? %>
+             <% if contrato2.factura1 != nil  and  contrato2.sit != "1" %>
                <% tot_cob1 += contrato2.vventa %>
                <% tot_cob2 += contrato2.importe  %> 
 
