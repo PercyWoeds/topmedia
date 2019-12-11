@@ -89,35 +89,60 @@ class Contrato < ActiveRecord::Base
 
     def   get_medio(medio)
 
-    a= Medio.find(medio)
-    if a.nil?
-      return ""
+      a = Medio.find(medio)
+      if a.nil?
+        return " "
       else
-    return a.descrip
-      endi
+        return a.descrip
+      end 
+      
     end 
+
 
    def   get_customer(customer)
 
-    a= Customer.find(customer)
-    if a.nil?
-      return ""
-    else
-     return a.name 
-    end
+      a= Customer.find(customer)
+      if a.nil?
+        return ""
+      else
+       return a.name 
+      end
 
-   end  
+   end
+
      
   def get_contrato
 
-	if self.tipocontrato_id == 1
+  	if self.tipocontrato_id == 1
     	return "CUOTAS "
   	else
     	return  "CONTRA AVISO "
-  	end
-
-  end 	
+  	end 	
   end 
+
+ def get_contrato_id(id)
+
+  a = Contrato.find(id)
+
+    if a.tipocontrato_id == 1
+      return "CUOTAS "
+    else
+      return  "CONTRA AVISO "
+    end   
+  end 
+
+
+
+def get_contratos_medio_customer(fecha1,fecha2,medio)    
+    @contratos = Contrato.select("customer_id").where(["fecha >= ? and fecha <= ? and medio_id=?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",medio ]).group(:customer_id).order(:customer_id)
+    return @contratos
+end 
+
+def get_contratos_customer_contrato(fecha1,fecha2,medio,customer)    
+    @contratos = Contrato.where(["fecha >= ? and fecha <= ? and medio_id=? and customer_id = ?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",medio,customer ])
+    return @contratos
+end 
+
 
   def get_contrato_cuotas(id)
       @contrato_cuotas = ContratoDetail.where(:contrato_id=>id)
@@ -130,6 +155,15 @@ class Contrato < ActiveRecord::Base
   	else
     	return  "DOLARES"
   	end
+
+  end 
+  
+  def get_moneda_id(moneda_id)
+    if self.moneda_id == 2
+      return "SOLES"
+    else
+      return  "DOLARES"
+    end
 
   end 
   
