@@ -85,7 +85,7 @@
                   <td width="20%"align="left"> <%= contrato1.get_contrato_id(contrato1.id) %></td>
                   <td>Mon: </td>
                   <td width="20%"align="left"> <%= contrato1.get_moneda_id(contrato1.id) %></td>
-                  <td width="20%"align="left"> <%= sprintf("%.2f",contrato1.importe.to_s) %></td>
+                  <td width="20%"align="left"> <%= money(contrato1.importe ) %></td>
                   <td>Cuotas: </td>
                   <td>Com1: </td>
                   <td align="left"> <%= sprintf("%.2f",contrato1.comision1.to_s) %>%</td>
@@ -105,7 +105,7 @@
                 <p> </p>            
             <%else %>
 
-                  
+
             <% tot_pago1 = 0 %>
             <% tot_pago2 = 0 %>
             <% tot_cob1 = 0 %>
@@ -124,7 +124,7 @@
 
             <table style=  'font-size:80% ;width:100%'>       
             <tr>
-            <td width="8%"><%= nroitem %> </td>
+            <td width="8%"><%= contrato2.nro %> </td>
             <td width="10%"><%= contrato2.fecha.strftime("%d/%m/%Y") %> </td>
             <td width="10%" align="right" ><%= money(contrato2.vventa) %> </td>
             <td width="10%" align="left"></td>
