@@ -57,23 +57,11 @@
               </table>
 
             <% @detalle = @contratolist.get_contratos_medio_customer(@fecha1,@fecha2,detalle.medio_id) %>
-                 
-            <% tot_pago1 = 0 %>
-            <% tot_pago2 = 0 %>
-            <% tot_cob1 = 0 %>
-            <% tot_cob2 = 0 %>
-            
-            <% tot_fact1 = 0 %>
-            <% tot_fact2 = 0 %>
-            <% tot_canc1 = 0 %>
-            <% tot_canc2 = 0 %>
-
-            <% tot_cont1 = 0 %>
-            <% tot_cont2 = 0 %>
+           
             
                   
         <%  @detalle.each do |compra| %>
-
+            <br> 
               <table style=  'font-size:80% ;width:100%'>    
 
                   <tr style="font-weight:bold">
@@ -85,6 +73,7 @@
               </table>
 
             <% @detalle2 = @contratolist.get_contratos_customer_contrato(@fecha1,@fecha2,detalle.medio_id,compra.customer_id) %>
+
 
             <% @detalle2.each do |contrato1| %> 
     
@@ -115,6 +104,20 @@
             <%if @contratodetalle.nil?%>
                 <p> </p>            
             <%else %>
+
+                  
+            <% tot_pago1 = 0 %>
+            <% tot_pago2 = 0 %>
+            <% tot_cob1 = 0 %>
+            <% tot_cob2 = 0 %>
+            
+            <% tot_fact1 = 0 %>
+            <% tot_fact2 = 0 %>
+            <% tot_canc1 = 0 %>
+            <% tot_canc2 = 0 %>
+
+            <% tot_cont1 = 0 %>
+            <% tot_cont2 = 0 %>
 
            <% @contratodetalle.each do |contrato2| %> 
     
@@ -211,7 +214,7 @@
             </table>   
             <table style=  'font-size:80% ;width:100%'>       
             <tr>
-             <hr> 
+            
             <td width="26%">Total por Contrato: </td>
             <td width="10%" align="right"> <%= money(tot_cont1) %></td>
             <td width="10%" align="right"> </td>
