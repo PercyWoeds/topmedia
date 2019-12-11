@@ -147,8 +147,13 @@
                  <td width="10%" align="right"> <%= contrato2.fechafac2.strftime("%d%m%Y") %> </td>
             <% end %>
 
-            <td width="4%" align="right"> <%= contrato2.sit %> </td>
+            <% if contrato2.sit == "1" %>
 
+            <td width="4%" align="right"> "C" </td>
+            <% else %>
+            <td width="4%" align="right">   </td>
+            
+            <% end %>
             </tr>       
             </table>
 
