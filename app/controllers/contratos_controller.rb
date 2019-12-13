@@ -848,7 +848,7 @@ class ContratosController < ApplicationController
       
     case params[:print]
       when "PDF" then render  pdf: "Contratos ",template: "contratos/contrato_rpt2.pdf.erb",locals: {:contrato => @contratos_rpt}
-      when "Excel" then render xlsx: 'exportxls'
+      when "Excel" then render xlsx: 'contrato_xls'
       else render action: "index"
     end
     

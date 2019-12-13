@@ -1,0 +1,36 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+wb.styles do |s|
+    date = s.add_style(:format_code => "yyyy-mm-dd", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+    
+    wb.add_worksheet(name: "EECC") do |sheet|
+    
+    sheet.add_row ["", "", "Desde : "+@fecha1.to_s, "Hasta" +@fecha2.to_s ], :style => title 
+    sheet.add_row ["Orden", "Fecha", "Motivos", "Avisos", "Seg","Abonos","Cargo", "Cargos Acum.","Saldo" ], :style => title
+    
+   @ordenes.each do |payment|
+        
+        sheet.add_row [payment.document.descripshort, payment.documento,payment.date1,payment.date2,payment.supplier.ruc,payment.supplier.name,payment.moneda.symbol,payment.get_importe_soles1,payment.get_importe_soles2,payment.get_importe_soles], :style => [cadena,cadena,date,date,cadena,cadena,cadena,currency,currency,currency]
+    
+   end
+   
+
+   
+end
+end 
+
+    

@@ -87,9 +87,12 @@
     <%= f.number_field :tiempo   %>
     
     </div>
+
     <div class="field">
       <%= select_tag(:year, options_for_select(@years, @year)) %>
     </div>
+
+    
     <div class="field">
       <%= select_tag(:month, options_for_select(@months, @month)) %>
     </div>

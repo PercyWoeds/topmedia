@@ -2,6 +2,7 @@ include UsersHelper
 include CustomersHelper
 include ProductsHelper
 
+
 class InvoicesController < ApplicationController
   before_filter :authenticate_user!, :checkProducts
   
@@ -157,6 +158,7 @@ class InvoicesController < ApplicationController
     end
   
     if(@company.can_view(current_user))
+      
       if(params[:ac_customer] and params[:ac_customer] != "")
         @customer = Customer.find(:first, :conditions => {:company_id => @company.id, :name => params[:ac_customer].strip})
         
@@ -182,6 +184,7 @@ class InvoicesController < ApplicationController
       elsif(params[:division] and params[:division] != "")
         @invoices = Invoice.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :division_id => params[:division]}, :order => "id DESC")
       else
+
         if(params[:q] and params[:q] != "")
           fields = ["description", "comments", "code"]
 
@@ -195,6 +198,7 @@ class InvoicesController < ApplicationController
           @invoices = Invoice.where(company_id:  @company.id).order("id DESC").paginate(:page => params[:page])
           @filters_display = "none"
         end
+
       end
     else
       errPerms()

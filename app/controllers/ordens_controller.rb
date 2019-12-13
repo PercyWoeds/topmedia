@@ -816,14 +816,60 @@ class OrdensController < ApplicationController
 
    @company = Company.find(params[:company_id])
     @pagetitle = "#{@company.name} - Products"
-  
+    @filters_display = "block"
+
+    @customers = Customer.all.order(:name)
+    @motivos =Motivo.all.order(:name)
+    @medios = Medio.all.order(:descrip)    
+    @marcas= Marca.all.order(:name) 
+    @versions = Version.all.order(:descrip) 
+    @contratos = Contrato.all 
+    @productos = Producto.all.order(:name)
+
     if(@company.can_view(current_user))
-        if(params[:search] and params[:search] != "")         
-          @ordens = Orden.where(["company_id = ? and (code iLIKE ?)", @company.id ,"%" + params[:search] + "%" ]).order('fecha DESC').paginate(:page => params[:page]) 
+
+       if(params[:ac_customer] and params[:ac_customer] != "")
+        @customer = Customer.where(:company_id => @company.id, :name => params[:ac_customer].strip).first
+        
+        if @customer
+          @ordens = Orden.paginate(:page => params[:page]).where(:company_id => @company.id, :customer_id => @customer.id).order("id DESC")
+        else
+          flash[:error] = "We couldn't find any ordens for that customer."
+          redirect_to "/companies/ordens/#{@company.id}"
+        end
+      elsif(params[:customer] and params[:customer] != "")
+        @customer = Customer.find(params[:customer])
+        
+        if @customer
+          @ordens = Orden.paginate(:page => params[:page]).where(:company_id => @company.id, :customer_id => @customer.id).order("id DESC")
+        else
+          flash[:error] = "We couldn't find any ordens for that customer."
+          redirect_to "/companies/ordens/#{@company.id}"
+        end
+      elsif(params[:location] and params[:location] != "" and params[:division] and params[:division] != "")
+        @ordens = Orden.paginate(:page => params[:page]).where(:company_id => @company.id, :producto_id => params[:location], :medio_id => params[:division]).order("id DESC")
+      elsif(params[:location] and params[:location] != "")
+        @ordens = Orden.paginate(:page => params[:page]).where(:company_id => @company.id, :producto_id => params[:location]).order("id DESC")
+      elsif(params[:division] and params[:division] != "")
+        @ordens = Orden.paginate(:page => params[:page]).where(:company_id => @company.id, :medio_id => params[:division]).order("id DESC")
+      else
+#        if(params[:search] and params[:search] != "")         
+ #         @ordens = Orden.where(["company_id = ? and (code iLIKE ?)", @company.id ,"%" + params[:search] + "%" ]).order('fecha DESC').paginate(:page => params[:page]) 
+        if(params[:q] and params[:q] != "")
+          fields = ["code", "description"]
+
+          q = params[:q].strip
+          @q_org = q
+
+          query = str_sql_search(q, fields)
+
+          @ordens = Orden.paginate(:page => params[:page]).order('id DESC').where(["company_id = ? AND (#{query})", @company.id])
         else
           @ordens = Orden.where(["company_id = ?",@company.id ]).order('fecha DESC').paginate(:page => params[:page]) 
+           @filters_display = "none"
         end
     end
+  end 
 
   end
 
@@ -1079,6 +1125,11 @@ class OrdensController < ApplicationController
     end
     
     @dates = []
+
+
+
+    @year = @orden.year
+    @month = @orden.month 
     
     last_day_of_month = last_day_of_month(@year, @month)
     @date_cats = []
@@ -1117,6 +1168,9 @@ class OrdensController < ApplicationController
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
+
+
+
   end
 
   # POST /ordens
