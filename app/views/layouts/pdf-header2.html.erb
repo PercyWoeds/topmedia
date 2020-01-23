@@ -33,14 +33,14 @@
     <tr>
     
     <th  width="60%"> <h4 ><center>ESTADO DE CUENTA CLIENTES </center>   </h4></th>
-    <th  width="20%">Fecha: <span class="page"></th>
+    <th  width="20%">Fecha: <%= Date.today.strftime("%d-%m-%Y") %> </th>
     
     </tr>
 
      <tr >
   
     <th width="60%"> <h5><center> Desde: <%= @fecha1.to_s %>  Hasta: <%= @fecha2.to_s %> </center></h5></th>
-    <th width="20%"> Pag.: <span class="page"></span> </th>
+    <th width="20%"> Pag.:<span class="page">[page]  </span> / <span class="topage">[topage]  </span> </th>
   
     
     </tr> 
