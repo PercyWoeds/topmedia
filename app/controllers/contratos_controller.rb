@@ -855,7 +855,7 @@ class ContratosController < ApplicationController
          :header => {
            :spacing => 5,
                            :html => {
-                     :template => 'layouts/pdf-header5.html',
+                     :template => 'layouts/pdf-header2.html',
                            right: '[page] of [topage]'
                   }
                }
