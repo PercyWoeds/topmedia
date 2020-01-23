@@ -1339,12 +1339,25 @@ class ReportsController < ApplicationController
     @customers = @company.get_customers()
     @monedas=@company.get_monedas    
   end
+
+  
   def rpt_contratos2_pdf
+
     @company = Company.find(params[:company_id])    
     @pagetitle = "Reportes de Contratos "    
     @customers = @company.get_customers()
-    @monedas=@company.get_monedas    
+    @medios    = @company.get_medios()
+    @monedas   = @company.get_monedas    
+
+    if (params[:year] and params[:year].numeric?)
+      @year = params[:year].to_i
+    else
+      @year = Time.now.year
+    end
+
   end
+
+
   def rpt_contratos3_pdf
     @company = Company.find(params[:company_id])    
     @pagetitle = "Reportes de Contratos "    
@@ -1354,12 +1367,12 @@ class ReportsController < ApplicationController
   
   
   def rpt_ordenes1_pdf
+
     @company   = Company.find(params[:company_id])    
     @pagetitle = "Reportes de Ordenes "    
     @customers = Customer.all 
     
     @medios    = Medio.all 
-    
     @marcas    = Marca.where("customer_id = ?", 38)
     @productos = Producto.where(marca_id: @marcas.first.id) 
     @versions  = Version.where(producto_id: @productos.first.id)

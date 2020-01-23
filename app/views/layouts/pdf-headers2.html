@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br">
+  <head>
+      
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    
+     <script>
+      function number_pages() {
+        var vars={};
+        var x=document.location.search.substring(1).split('&');
+        for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = decodeURIComponent(z[1]);}
+        var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+        for(var i in x) {
+          var y = document.getElementsByClassName(x[i]);
+          for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+        }
+      }
+    </script>
+    
+  </head>
+
+  <body style="margin-top: 70px;" onload="number_pages()">
+      
+
+
+
+<table style='font-family:"Courier New", Courier, monospace; font-size:70% ;width:100% ,border-collapse:collapse;' , border="1",cellpadding="0" cellspacing="0">
+
+
+
+    <tr>
+    <th width="20%"><%= wicked_pdf_image_tag('images/logo.jpg')%></th>
+    <th width="60%"> </th>
+    <th width="20%"> TR-RHF-F-054</th>
+    </tr>
+
+    <tr>
+    <th  width="20%"> </th>
+    <th  width="60%"> ESTADO DE CUENTA CLIENTES</th>
+    <th  width="20%">Fecha: <span class="page"></th>
+    
+    </tr>
+
+     <tr >
+    <th width="20%"> </th>
+    <th width="60%">Desde: <%= @fecha1 %> Hasta: <%= @fecha2 %></th>
+    <th width="20%"> Pag.: <span class="page"></span> </th>
+  
+    
+    </tr> 
+    </table>
+
+  </body>
+  
+  
+</html>

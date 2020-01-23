@@ -1633,7 +1633,7 @@ def crear
     @mes1 = params[:month1]    
     @anio1 = params[:year1]    
     
-      @marca= Marca.find_by("id = ?", params[:marca_id])
+    @marca= Marca.find_by("id = ?", params[:marca_id])
     
     @cliente_check = params[:check_cliente]   
     @medio_check = params[:check_medio]   
@@ -1687,18 +1687,7 @@ def crear
     else
       @tipoorden = params[:tipo]     
     end 
-    puts @mes
-    puts @anio
-    puts @mes1
-    puts @anio1
-    puts @medio_check
-    puts @customer
-    puts @medio
-    puts @marca
-    puts @producto
-    puts @version
-    puts @ciudad
-    puts @tipoorden
+   
     
     
     @ordenes_rpt = @company.get_ordenes_cliente_all(@mes,@anio,@mes1,@anio1,@customer,@medio,@marca,@producto,@version,@ciudad,@tipoorden)

@@ -1314,14 +1314,36 @@ def rpt_cpagar5_pdf
  def rpt_contrato1_pdf 
   
     @company=Company.find(1)      
-    @fecha1 = params[:fecha1]    
-    @fecha2 = params[:fecha2]
+    @cliente_check = params[:check_cliente]   
+    @medio_check = params[:check_medio]   
+    @anio = params[:year]    
 
+    if(params[:year] and params[:year].numeric?)
+      @year = params[:year].to_i
+    else
+      @year = Time.now.year
+    end
+  
+
+    if @cliente_check == "true"
+      @customer = ""
+      @customer_name = ""
+    else
+      @customer = params[:customer_id]     
+      @customer_name =  @company.get_cliente_name(@customer)
+    end 
+    
+    if @medio_check == "true"
+        @medio=""
+    else
+        @medio =params[:medio_id]     
+    end 
+    
 
     @contratos_rpt = @company.get_contratos_medio(@fecha1,@fecha2)
       
     case params[:print]
-      when "PDF" then render  pdf: "rpt_contratos",template: "supplier_payments/rpt_contrato_01.pdf.erb",locals: {:contrato => @contratos_rpt}
+      when "PDF"   then render  pdf: "rpt_contratos",template: "supplier_payments/rpt_contrato_01.pdf.erb",locals: {:contrato => @contratos_rpt}
       when "Excel" then render xlsx: 'rpt_contratos_1'
       else render action: "index"
     end
