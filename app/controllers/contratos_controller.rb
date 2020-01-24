@@ -108,6 +108,7 @@ class ContratosController < ApplicationController
     end
   end
 
+
   # reporte completo
   
   def build_pdf_header_rpt5(pdf)
@@ -819,54 +820,6 @@ class ContratosController < ApplicationController
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
     send_file("app/pdf_output/rpt_contrato3.pdf", :type => 'application/pdf', :disposition => 'inline')
 
-  end
-
- def ec_01 
-  
-    $lcxCliente ="1"
-    @company=Company.find(1)      
-    @fecha1 = params[:fecha1]    
-    @fecha2 = params[:fecha2]
-    @customer= params[:customer_id]
-
-    lcmonedadolares ="1"
-    lcmonedasoles ="2"
-    @cliente_check = params[:check_cliente]  
-
-    if @cliente_check == "true"
-      @customer = ""
-      @customer_name = ""
-      @ordenes = @company.get_ordenes_eecc(@fecha1,@fecha2)
-
-    else
-      @customer = params[:customer_id]     
-      @customer_name =  @company.get_cliente_name(@customer)
-      @ordenes = @company.get_ordenes_eecc_cliente(@fecha1,@fecha2,@customer)
-
-    end 
-
-      
-    case params[:print]
-
-
-      when "PDF" then 
-       begin 
-         render  pdf: "Contratos ",template: "contratos/contrato_rpt2.pdf.erb",locals: {:contrato => @contratos_rpt},
-         :header => {
-           :spacing => 5,
-                           :html => {
-                     :template => 'layouts/pdf-header2.html',
-                           right: '[page] of [topage]'
-                  }
-               }
-
-        end   
-
-      when "Excel" then render xlsx: 'contrato_xls'
-      else render action: "index"
-    end
-    
-  
   end
 
 

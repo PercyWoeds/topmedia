@@ -17,18 +17,20 @@ wb.styles do |s|
     comma = wb.styles.add_style :num_fmt => 3
     super_funk = wb.styles.add_style :format_code => '[Green]#'
     
-    wb.add_worksheet(name: "EECC") do |sheet|
+    wb.add_worksheet(name: "Basic work sheet") do |sheet|
     
-    sheet.add_row ["", "", "Desde : "+@fecha1.to_s, "Hasta" +@fecha2.to_s ], :style => title 
-    sheet.add_row ["Orden", "Fecha", "Motivos", "Avisos", "Seg","Abonos","Cargo", "Cargos Acum.","Saldo" ], :style => title
+
+
+    sheet.add_row ["Cliente "], :style => title 
     
    @ordenes.each do |payment|
-        
-        sheet.add_row [payment.document.descripshort, payment.documento,payment.date1,payment.date2,payment.supplier.ruc,payment.supplier.name,payment.moneda.symbol,payment.get_importe_soles1,payment.get_importe_soles2,payment.get_importe_soles], :style => [cadena,cadena,date,date,cadena,cadena,cadena,currency,currency,currency]
+
+       product.customer.ruc 
+
+        sheet.add_row [payment.customer.ruc], :style => [cadena]
     
    end
-   
-
+  
    
 end
 end 

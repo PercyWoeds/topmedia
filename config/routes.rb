@@ -103,7 +103,7 @@
   resources :contratos do
     resources :contrato_details, except: [:index,:show], controller: "contratos/contratos_details"
     collection { get :ec_01 }
-    
+ 
   end 
   
   resources :facturas do
@@ -229,7 +229,7 @@
     collection { post :imprimir }        
     collection { post :pagar }        
     collection { post :create }        
-  end 
+  end  
 
   resources :facturas do
     collection { get :search  }
@@ -238,7 +238,7 @@
     collection { post :import }
     collection { get :excel }
     collection { get :rpt_compras_01 }
-    
+    collection { get :ec_01 }
     collection { post :discontinue }
     collection do 
       put :discontinue 
