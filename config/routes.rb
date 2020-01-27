@@ -2,6 +2,7 @@
 
 
   resources :conciliabanks
+
   
   resources :stamentacount_details
   resources :tipomovs
@@ -102,7 +103,7 @@
   
   resources :contratos do
     resources :contrato_details, except: [:index,:show], controller: "contratos/contratos_details"
-    collection { get :ec_01 }
+
  
   end 
   
@@ -121,7 +122,8 @@
        
       collection { get :rpt_cpagar6_pdf }
       collection { get :rpt_contrato1_pdf }
-      
+      collection { get :contratos_ec01 }
+  
       
   end 
 
@@ -238,8 +240,9 @@
     collection { post :import }
     collection { get :excel }
     collection { get :rpt_compras_01 }
-    collection { get :ec_01 }
+
     collection { post :discontinue }
+  
     collection do 
       put :discontinue 
     end 
@@ -298,6 +301,8 @@
     resources :quotes    
     collection { post :import }
 
+   
+  
     
   end 
   
@@ -510,6 +515,7 @@
   match 'facturas/ac_customers/:company_id' => 'facturas#ac_customers', via: [:get, :post]
   match 'facturas/ac_contratos/:company_id' => 'facturas#ac_contratos', via: [:get, :post]
   match 'facturas/ac_contrato_cuotas/:id' => 'facturas#ac_contrato_cuotas', via: [:get, :post]
+
   match 'facturas/ac_guias/:company_id' => 'facturas#ac_guias', via: [:get, :post]
   match 'facturas/new/:company_id' => 'facturas#new', via: [:get, :post]
   match 'facturas/new2/:company_id' => 'facturas#new2', via: [:get, :post]
@@ -526,6 +532,7 @@
   
   match 'facturas/rpt_ccobrar2_pdf/:company_id' => 'facturas#rpt_ccobrar2_pdf', via: [:get, :post]
   match 'facturas/rpt_ccobrar3_pdf/:company_id' => 'facturas#rpt_ccobrar3_pdf', via: [:get, :post]
+  match 'facturas/contratos_ec_01/:id' => 'facturas#contratos_ec_01', via: [:get, :post]
 
   match 'companies/facturas/generar/:company_id' => 'facturas#generar', via: [:get, :post]
 

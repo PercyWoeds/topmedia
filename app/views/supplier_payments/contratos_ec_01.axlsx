@@ -1,0 +1,135 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+wb.styles do |s|
+    date = s.add_style(:format_code => "yyyy-mm-dd", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right})
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    title = s.add_style(:bg_color => "FFFF0000", 
+    :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left})
+
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+    merged_title_cell_style = s.add_style    :bg_color => "D8D8D8",
+                                                   :b => true,
+                                                   :sz => 9,
+                                                   :border => { :style => :thin, :color => "00" },
+                                                   :alignment => { :horizontal => :center,
+                                                                   :vertical => :center ,
+                                                                   :wrap_text => true}
+    
+
+    
+
+  wb.add_worksheet(name: "Basic work sheet") do |sheet|
+    
+
+
+    sheet.add_row ["Orden ", "Fecha","Motivos","Avisos","Seg.","Abonos","Cargos","Cargos.Acum.","Saldo"],  :style =>    merged_title_cell_style
+  
+    
+   @ordenes.each do |product|
+
+                
+        sheet.add_row ["CLIENTE: ",product.customer.ruc,product.customer.name], :style => merged_title_cell_style
+         if product.medio.nil? 
+          sheet.add_row  ["MEDIO: ","" ,product.medio_id ], :style =>    merged_title_cell_style
+         else           
+          sheet.add_row ["MEDIO: ","",product.medio.descrip],  :style =>    merged_title_cell_style
+         end 
+
+        sheet.add_row ["CONTRATO: ",product.get_nro_contrato(product.secu_cont),"Mon:",product.get_moneda(product.moneda_id )], :style =>    merged_title_cell_style
+    
+          @saldo = 0 
+
+          @abonos = product.get_abonos_detalle(@fecha1,@fecha2,product.customer_id,product.medio_id,product.secu_cont,product.moneda_id)
+          espacio =" "  
+           if @abonos.all.size > 0 
+
+                @abonos.each do |abonos|
+
+                @saldo += abonos.importe 
+                espacio =" "  
+                sheet.add_row [ espacio,abonos.fecha,espacio,espacio,espacio,abonos.importe,espacio,espacio,@saldo], 
+                :style => [cadena,date,cadena,cadena,cadena,currency,cadena,cadena,currency]
+                
+                end 
+
+                @detalle = product.get_ordenes_detalle(@fecha1,@fecha2,product.customer_id,product.medio_id,product.secu_cont,product.moneda_id)
+
+                if @detalle.all.size > 0
+
+                      @total_cargos = 0 
+                      @total_mes  = 0
+                      lcMes = @detalle.first.month  
+                      last_month = @detalle.last.month
+                       
+                      @detalle.each do |orden1| 
+
+                            @saldo -= orden1.subtotal 
+
+                             if lcMes  == orden1.month 
+
+
+
+                                   
+                                    if orden1.version != nil 
+                                       version0 =  orden1.version.descrip 
+                                     else
+                                      version0 = orden1.version_id 
+                                    end
+
+                                  
+
+                                    sheet.add_row [ orden1.code,orden1.fecha,version0, orden1.quantity,orden1.tiempo,espacio, orden1.subtotal,espacio, @saldo], 
+                                    :style => [cadena,date,cadena,currency,currency,cadena,currency,cadena,currency]
+
+                                    @total_mes += orden1.subtotal
+
+                            else
+                                @total_cargos += @total_mes
+
+                                 sheet.add_row [espacio,"Total Mes :",orden1.get_mes(lcMes),espacio,espacio,@total_mes,@total_cargos],:style => [cadena,cadena,cadena,cadena,cadena,currency,currency]
+
+                                 @total_mes  = 0
+
+                                   if orden1.version != nil 
+                                     version0 =  orden1.version.descrip 
+                                   else
+                                    version0 = orden1.version_id 
+                                   end
+
+                                  sheet.add_row [ orden1.code,orden1.fecha,version0, orden1.quantity,orden1.tiempo,espacio, orden1.subtotal,espacio, @saldo], 
+                                  :style => [cadena,date,cadena,currency,currency,cadena,currency,cadena,currency]
+
+                                   @total_mes += orden1.subtotal
+
+                                  lcMes = orden1.month 
+
+
+                           end   
+                   end    
+
+                   @total_cargos += @total_mes
+
+                    sheet.add_row [espacio,"Total Mes :",product.get_mes(last_month  ),espacio,espacio,@total_mes,@total_cargos],:style => [cadena,cadena,cadena,cadena,cadena,currency,currency]
+
+
+
+           else
+              sheet.add_row ["No hay registros"],:style=> [title]
+           end 
+                    
+          end
+      end
+   end    
+end 
+
+    

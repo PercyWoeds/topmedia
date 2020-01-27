@@ -10,6 +10,7 @@ class SupplierPaymentsController < ApplicationController
 ## REPORTE DE ESTADISTICA DE VENTAS
 ##-------------------------------------------------------------------------------------
   
+
   def build_pdf_header_rpt2(pdf)
      pdf.font "Helvetica" , :size => 6
       
@@ -1747,9 +1748,6 @@ def list_receive_supplierpayments
             
 
             row = []
-            row << nroitem.to_s
-            row << product.supplier.ruc 
-            row << product.supplier.name  
             row << product.documento
             row << product.date1.strftime("%d/%m/%Y")
 
@@ -1941,7 +1939,53 @@ def list_receive_supplierpayments
 
   end   
 
+  #**************************************************************************+++++++++++++++++++++
+  #
+  #**************************************************************************+++++++++++++++++++++
+
+ def contratos_ec01 
   
+    $lcxCliente ="1"
+    @company=Company.find(1)      
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]
+    @customer= params[:customer_id]
+
+    lcmonedadolares ="1"
+    lcmonedasoles ="2"
+    @cliente_check = params[:check_cliente]  
+
+    if @cliente_check == "true"
+      @customer = ""
+      @customer_name = ""
+      @ordenes = @company.get_ordenes_eecc(@fecha1,@fecha2)
+
+    else
+      @customer = params[:customer_id]     
+      @customer_name =  @company.get_cliente_name(@customer)
+      @ordenes = @company.get_ordenes_eecc_cliente(@fecha1,@fecha2,@customer)
+
+    end 
+      
+    case params[:print]
+      when "PDF" then 
+       begin 
+         render  pdf: "Contratos ",template: "contratos/contrato_rpt2.pdf.erb",locals: {:contrato => @contratos_rpt},
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header2.html',
+                           right: '[page] of [topage]'
+                  }
+               }
+       end   
+
+      when "Excel" then render xlsx: 'contratos_ec_01'
+       
+      else render action: "index"
+    end
+  end
+
 
   
   private

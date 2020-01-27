@@ -81,8 +81,16 @@ gem 'bower-rails'
 gem 'bootstrap-modal-rails'
 gem 'typeahead-rails'
 gem "cocoon"
+
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+
+gem 'rubyzip', '~> 1.1', '>= 1.1.7'
+
+gem 'axlsx', '~> 2.0'
+gem "axlsx_rails"
+
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
