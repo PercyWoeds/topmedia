@@ -120,14 +120,12 @@ wb.styles do |s|
 
                     sheet.add_row [espacio,"Total Mes :",product.get_mes(last_month  ),espacio,espacio,@total_mes,@total_cargos],:style => [cadena,cadena,cadena,cadena,cadena,currency,currency]
 
-
-
            else
               sheet.add_row ["No hay registros"],:style=> [title]
            end 
                     
       
-      end
+      
    end    
 end
 
