@@ -111,6 +111,7 @@ wb.styles do |s|
 
 
                            end   
+                        end 
 
                    else
                            sheet.add_row ["No hay registros"],:style=> [title]
