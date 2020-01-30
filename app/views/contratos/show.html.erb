@@ -167,7 +167,10 @@
             <%= quote.factura2 %>
           </td>
          <td class="bordered_right bordered_bottom">
-            <%= quote.fecha_pago.strftime("%d/%m/%Y")  %>
+             <% if quote.fecha.nil? %>
+             <% else %> 
+                  <%= quote.fecha_pago.strftime("%d/%m/%Y")  %>
+             <% end %>
           </td>
          <td class="bordered_ right bordered_bottom">
             <% if quote.nil? %>
