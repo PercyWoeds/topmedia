@@ -7,6 +7,7 @@ class ContratosController < ApplicationController
 
 
 
+
   def index
 
     if params[:search] and params[:search] != ""
@@ -15,6 +16,11 @@ class ContratosController < ApplicationController
     else
       @contratos = Contrato.all.order('code ').paginate(:page => params[:page])
        
+    end
+  respond_to do |format|
+      format.html
+  
+      format.xls 
     end
 
 
@@ -31,7 +37,9 @@ class ContratosController < ApplicationController
      respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @contrato }
+
     end
+
   end
 
   # GET /contratos/new

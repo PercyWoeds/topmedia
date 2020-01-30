@@ -61,7 +61,6 @@
 <%= will_paginate @contratos %>  
 
 
-
 <div class="button">
 <%= link_to 'Nuevo Contrato',new_contrato_path  %>
 </div>
@@ -74,3 +73,5 @@
 <% end %>
 
 
+
+<%= link_to "Excel", contratos_path(format: "xls") %>
