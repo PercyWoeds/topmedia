@@ -51,6 +51,7 @@ wb.styles do |s|
 
           @abonos = product.get_abonos_detalle(@fecha1,@fecha2,product.customer_id,product.medio_id,product.secu_cont,product.moneda_id)
           espacio =" "  
+
            if @abonos.all.size > 0 
 
                 @abonos.each do |abonos|
@@ -76,18 +77,13 @@ wb.styles do |s|
                             @saldo -= orden1.subtotal 
 
                              if lcMes  == orden1.month 
-
-
-
-                                   
+ 
                                     if orden1.version != nil 
                                        version0 =  orden1.version.descrip 
                                      else
                                       version0 = orden1.version_id 
                                     end
-
                                   
-
                                     sheet.add_row [ orden1.code,orden1.fecha,version0, orden1.quantity,orden1.tiempo,espacio, orden1.subtotal,espacio, @saldo], 
                                     :style => [cadena,date,cadena,currency,currency,cadena,currency,cadena,currency]
 
@@ -115,6 +111,9 @@ wb.styles do |s|
 
 
                            end   
+
+                   else
+                           sheet.add_row ["No hay registros"],:style=> [title]
                    end    
 
                    @total_cargos += @total_mes
@@ -127,8 +126,8 @@ wb.styles do |s|
               sheet.add_row ["No hay registros"],:style=> [title]
            end 
                     
-          end
-      end
+      
+      
    end    
 end 
 

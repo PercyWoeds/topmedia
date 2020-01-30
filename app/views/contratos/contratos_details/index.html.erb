@@ -16,6 +16,8 @@
       <th>Fecha2</th>
       <th>Factura1</th>
       <th>Factura2</th>
+      <th>Fecha Pago</th>
+      
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -34,6 +36,8 @@
         <td><%= contrato_detail.fecha2 %></td>
         <td><%= contrato_detail.factura1 %></td>
         <td><%= contrato_detail.factura2 %></td>
+        <td><%= contrato_detail.fecha_pago %></td>
+  
         <td><%= link_to 'Ver', contrato_detail %></td>
         <td><%= link_to 'Editar', edit_contrato_detail_path(contrato_detail) %></td>
         <td><%= link_to 'Eliminar', contrato_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
