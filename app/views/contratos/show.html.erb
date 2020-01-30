@@ -88,14 +88,14 @@
           Fecha
         </th>
         <th class="bordered_right bordered_bottom" style="width: 100px;">
-          Importe
+          Cuota c/IGV
         </th>
         
         <th class="bordered_right bordered_bottom" style="width: 100px;">
           V.Venta
         </th>
         <th class="bordered_right bordered_bottom" style="width: 100px;">
-          Comision1 
+          Comision 1 
         </th>
         <th class="bordered_right bordered_bottom" style="width: 100px;">
           Comision 2
@@ -114,6 +114,15 @@
         <th class="bordered_right bordered_bottom" style="width: 100px;">
          Factura 2
         </th>
+        <th class="bordered_right bordered_bottom" style="width: 100px;">
+         Fecha Pago 
+        </th>
+         <th class="bordered_right bordered_bottom" style="width: 100px;">
+           Sit 
+        </th>
+
+
+
       </tr>
     </thead>
     <tbody>
@@ -158,6 +167,13 @@
         <td class="bordered_right bordered_bottom">
             <%= quote.factura2 %>
           </td>
+         <td class="bordered_right bordered_bottom">
+            <%= quote.fecha_pago %>
+          </td>
+         <td class="bordered_ right bordered_bottom">
+            <%= quote.situacion %>
+          </td>
+          
         <% t_importe += quote.importe    %>        
         <% t_vventa += quote.vventa    %>        
         <% t_comision1 += quote.comision1    %>        
