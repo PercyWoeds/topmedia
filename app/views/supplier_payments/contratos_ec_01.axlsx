@@ -127,8 +127,8 @@ wb.styles do |s|
            end 
                     
       
-      
+      end
    end    
-end 
+end
 
     
