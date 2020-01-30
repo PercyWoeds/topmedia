@@ -1292,6 +1292,7 @@ def rpt_cpagar5_pdf
   end
 
 
+
  def rpt_compras_01 
   
     @company=Company.find(1)      
@@ -1326,19 +1327,19 @@ def rpt_cpagar5_pdf
     end
   
 
-    if @cliente_check == "true"
-      @customer = ""
-      @customer_name = ""
-    else
-      @customer = params[:customer_id]     
-      @customer_name =  @company.get_cliente_name(@customer)
-    end 
+    # if @cliente_check == "true"
+    #   @customer = ""
+    #   @customer_name = ""
+    # else
+    #   @customer = params[:customer_id]     
+    #   @customer_name =  @company.get_cliente_name(@customer)
+    # end 
     
-    if @medio_check == "true"
-        @medio=""
-    else
-        @medio =params[:medio_id]     
-    end 
+    # if @medio_check == "true"
+    #     @medio=""
+    # else
+    #     @medio =params[:medio_id]     
+    # end 
     
 
     @contratos_rpt = @company.get_contratos_medio(@fecha1,@fecha2)
