@@ -108,11 +108,11 @@
           Factura Canal
         </th>
         <th class="bordered_right bordered_bottom" style="width: 100px;">
-          Factura 1
+          Factura 1 Masa
         </th>
         
         <th class="bordered_right bordered_bottom" style="width: 100px;">
-         Factura 2
+         Factura 2 Masa
         </th>
         <th class="bordered_right bordered_bottom" style="width: 100px;">
          Fecha Pago 
@@ -163,7 +163,6 @@
           </td>
         <td class="bordered_right bordered_bottom">
             <%= quote.factura1  %>
-          </td>
         <td class="bordered_right bordered_bottom">
             <%= quote.factura2 %>
           </td>
@@ -171,7 +170,11 @@
             <%= quote.fecha_pago %>
           </td>
          <td class="bordered_ right bordered_bottom">
-            <%= quote.situacion %>
+            <% if quote.nil? %>
+                <%   %>
+            <%else%>
+                  Cancelado 
+            <%end %>
           </td>
           
         <% t_importe += quote.importe    %>        
