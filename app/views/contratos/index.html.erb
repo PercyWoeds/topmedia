@@ -71,7 +71,7 @@
   <%= file_field_tag :file %>
   <%= submit_tag "Importar " %>
 <% end %>
-
-
-
-<%= link_to "Excel", contratos_path(format: "xls") %>
+<%=
+  link_to 'Download as Excel',
+  contratos_path(format: :xlsx)
+%>

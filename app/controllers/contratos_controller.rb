@@ -20,7 +20,12 @@ class ContratosController < ApplicationController
   respond_to do |format|
       format.html
   
-      format.xls 
+      format.xlsx {
+      response.headers[
+        'Content-Disposition'
+      ] = "attachment; filename='contratos.xlsx'"
+    }
+
     end
 
 
