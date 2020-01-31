@@ -2,9 +2,10 @@ wb = xlsx_package.workbook
 
 wb.add_worksheet(name: "Items") do |sheet|
   # Create the header row
-  sheet.add_row ["Item Name", "Quantity"]
+  sheet.add_row ["Item Name", "Code","Descrip"]
   # Create entries for each item
   @contratos.each do |item|
     sheet.add_row [item.id, item.code,item.description]
   end
 end
+

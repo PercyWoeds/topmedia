@@ -17,17 +17,10 @@ class ContratosController < ApplicationController
       @contratos = Contrato.all.order('code ').paginate(:page => params[:page])
        
     end
-  respond_to do |format|
-      format.html
-  
-      format.xlsx {
-      response.headers[
-        'Content-Disposition'
-      ] = "attachment; filename='contratos.xlsx'"
-    }
-
-    end
-
+   respond_to do |format|
+    format.xlsx 
+    format.html
+  end
 
   end
 
