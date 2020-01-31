@@ -10,14 +10,14 @@ class ContratosController < ApplicationController
 
   def index
 
-    # if params[:search] and params[:search] != ""
+     if params[:search] and params[:search] != ""
 
-    #   @contratos = Contrato.search(params[:search]).order("code").paginate(:page => params[:page])
-    # else
-    #   @contratos = Contrato.all.order('code ').@@paginate(:page => params[:page])
-    # end    
-
-   @contratos = Contrato.all.order('code ')
+       @contratos = Contrato.search(params[:search]).order("code").paginate(:page => params[:page])
+     else
+       @contratos = Contrato.all.order('code ').@@paginate(:page => params[:page])
+     end    
+  
+   #@contratos = Contrato.all.order('code ').
 
    respond_to do |format|
     format.xlsx 
