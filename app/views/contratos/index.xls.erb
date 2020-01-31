@@ -18,17 +18,15 @@
     <% @contratos.each do |contrato| %>
 
           <Row>
-            <Cell><Data ss:Type="String"><%= product.id %></Data></Cell>
-            <Cell><Data ss:Type="String"><%= product.code %></Data></Cell>
-            <Cell><Data ss:Type="String"><%= product.importe %></Data></Cel>
-            <Cell><Data ss:Type="String"><%= product.description %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= contrato.id %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= contrato.code %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= contrato.importe %></Data></Cel>
+            <Cell><Data ss:Type="String"><%= contrato.description %></Data></Cell>
             
             
           </Row>
     
      <% end %> 
-
-    <% end %>
     </Table>
   </Worksheet>
 </Workbook>
