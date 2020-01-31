@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Contratos">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">ID</Data></Cell>
+        <Cell><Data ss:Type="String">Nombre</Data></Cell>
+        <Cell><Data ss:Type="String">Unidad</Data></Cell>
+        <Cell><Data ss:Type="String">Ubicacion</Data></Cell>
+      </Row>
+  
+   
+      
+    <% @contratos.each do |contrato| %>
+
+          <Row>
+            <Cell><Data ss:Type="String"><%= product.id %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= product.code %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= product.importe %></Data></Cel>
+            <Cell><Data ss:Type="String"><%= product.description %></Data></Cell>
+            
+            
+          </Row>
+    
+     <% end %> 
+
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>
