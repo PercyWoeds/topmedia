@@ -14,7 +14,7 @@ class ContratosController < ApplicationController
 
        @contratos = Contrato.search(params[:search]).order("code").paginate(:page => params[:page])
      else
-       @contratos = Contrato.all.order('code ').@paginate(:page => params[:page])
+       @contratos = Contrato.all.order('code ').paginate(:page => params[:page])
      end    
   
    #@contratos = Contrato.all.order('code ').
