@@ -1324,25 +1324,29 @@ def rpt_cpagar5_pdf
     puts "rpt contrato "
     puts @fecha1 
     puts @fecha1 
-    # if @cliente_check == "true"
-    #   @customer = ""
-    #   @customer_name = ""
-    # else
-    #   @customer = params[:customer_id]     
-    #   @customer_name =  @company.get_cliente_name(@customer)
-    # end 
-    
-    # if @medio_check == "true"
-    #     @medio=""
-    # else
-    #     @medio =params[:medio_id]     
-    # end 
-    
+  
 
     @contratos_rpt = @company.get_contratos_medio(@fecha1,@fecha2)
       
     case params[:print]
-      when "PDF"   then render  pdf: "rpt_contratos",template: "supplier_payments/rpt_contrato_01.pdf.erb",locals: {:contrato => @contratos_rpt,:fecha1=> @fecha1, :fecha2=> @fecha2 }
+      when "PDF"   then 
+
+      begin 
+        render  pdf: "rpt_contratos",template: "supplier_payments/rpt_contrato_01.pdf.erb",locals: {:contrato => @contratos_rpt,:fecha1=> @fecha1, :fecha2=> @fecha2 },
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header3.html', 
+                           right: '[page] of [topage]'
+                  }
+               },
+
+                :footer => { :html => { template: 'layouts/pdf-footers.html' }       }  ,   
+               :margin => {bottom: 35} 
+                
+       end   
+
+
       when "Excel" then render xlsx: 'rpt_contratos_1'
       else render action: "index"
     end
