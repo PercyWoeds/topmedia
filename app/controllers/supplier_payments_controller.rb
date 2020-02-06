@@ -10,7 +10,6 @@ class SupplierPaymentsController < ApplicationController
 ## REPORTE DE ESTADISTICA DE VENTAS
 ##-------------------------------------------------------------------------------------
   
-
   def build_pdf_header_rpt2(pdf)
      pdf.font "Helvetica" , :size => 6
       
@@ -1315,18 +1314,16 @@ def rpt_cpagar5_pdf
 
  def rpt_contrato1_pdf 
   
-    @company=Company.find(1)      
+    @company=Company.find(1)  
+
     @cliente_check = params[:check_cliente]   
     @medio_check = params[:check_medio]   
     @anio = params[:year]    
-
-    if(params[:year] and params[:year].numeric?)
-      @year = params[:year].to_i
-    else
-      @year = Time.now.year
-    end
-  
-
+    @fecha1 = params[:fecha1]   
+    @fecha2 = params[:fecha2]   
+    puts "rpt contrato "
+    puts @fecha1 
+    puts @fecha1 
     # if @cliente_check == "true"
     #   @customer = ""
     #   @customer_name = ""
@@ -1345,7 +1342,7 @@ def rpt_cpagar5_pdf
     @contratos_rpt = @company.get_contratos_medio(@fecha1,@fecha2)
       
     case params[:print]
-      when "PDF"   then render  pdf: "rpt_contratos",template: "supplier_payments/rpt_contrato_01.pdf.erb",locals: {:contrato => @contratos_rpt}
+      when "PDF"   then render  pdf: "rpt_contratos",template: "supplier_payments/rpt_contrato_01.pdf.erb",locals: {:contrato => @contratos_rpt,:fecha1=> @fecha1, :fecha2=> @fecha2 }
       when "Excel" then render xlsx: 'rpt_contratos_1'
       else render action: "index"
     end
