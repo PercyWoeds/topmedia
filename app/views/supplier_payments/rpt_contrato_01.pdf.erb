@@ -92,7 +92,7 @@
 
             <table style=  'font-size:80% ;width:100%'>       
             <tr>
-            <td width="8%"><%= contrato2.nro %> </td>
+            <td width="4%"><%= contrato2.nro %> </td>
             <td width="10%"><%= contrato2.fecha.strftime("%d/%m/%Y") %> </td>
             <td width="10%" align="right" ><%= money(contrato2.vventa) %> </td>
             <td width="10%" align="left"></td>
@@ -101,24 +101,14 @@
 
             <td width="10%" align="right"> <%= contrato2.factura1 %> </td>
 
-            <% if contrato2.fechafac1.nil? %> 
-                <td width="10%" align="right"> </td>
-            <% else %> 
-                <td width="10%" align="right"> <%= contrato2.fechafac1.strftime("%d%m%Y") %> </td>
-            <% end %>
 
             <td width="10%" align="right"> <%= contrato2.factura2 %> </td>
 
-            <% if contrato2.fechafac2.nil? %>
-                 <td width="10%" align="right">  </td>
-            <% else %>
-                 <td width="10%" align="right"> <%= contrato2.fechafac2.strftime("%d%m%Y") %> </td>
-            <% end %>
 
              <% if contrato2.fecha_pago.nil? %>
                  <td width="10%" align="right">  </td>
             <% else %>
-                 <td width="10%" align="right"> <%= contrato2.fecha_pago.strftime("%d%m%Y") %> </td>
+                 <td width="10%" align="right"> <%= contrato2.fecha_pago.strftime("%d/%m/%Y") %> </td>
             <% end %>
 
             <% if contrato2.sit == "1" %>
