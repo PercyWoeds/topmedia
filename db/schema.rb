@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200206154100) do
+ActiveRecord::Schema.define(version: 20200206173153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -312,10 +312,10 @@ ActiveRecord::Schema.define(version: 20200206154100) do
     t.datetime "fec_pago"
     t.float    "vv_f_emp1"
     t.float    "vv_f_emp2"
-    t.float    "estado"
     t.text     "comments"
     t.float    "igv"
     t.datetime "fecha_pago"
+    t.string   "estado"
   end
 
   create_table "contratos", force: :cascade do |t|
