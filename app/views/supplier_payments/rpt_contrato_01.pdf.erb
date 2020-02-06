@@ -115,6 +115,12 @@
                  <td width="10%" align="right"> <%= contrato2.fechafac2.strftime("%d%m%Y") %> </td>
             <% end %>
 
+             <% if contrato2.fecha_pago.nil? %>
+                 <td width="10%" align="right">  </td>
+            <% else %>
+                 <td width="10%" align="right"> <%= contrato2.fecha_pago.strftime("%d%m%Y") %> </td>
+            <% end %>
+
             <% if contrato2.sit == "1" %>
 
             <td width="4%" align="right"> "C" </td>
