@@ -43,8 +43,11 @@
 
       collection { get :crear}
       collection { get :reportes}
+      
       collection { get :update_marcas}
       collection { get :update_productos}
+      collection { get :update_versions}
+      
       collection { get :exportxls }
     
       collection { post :import }

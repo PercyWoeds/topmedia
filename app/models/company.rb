@@ -2714,6 +2714,15 @@ def get_ordenes_cliente(fecha1,fecha2,cliente)
   else
    @ordenes = Orden.where(["month >= ? and year >= ? and month <= ? and year <= ? and #{sql_dato}", "#{mes} ","#{anio} ", "#{mes1}","#{anio1}"  ]).order(:customer_id,:medio_id,:contrato_id)
   end 
+  puts "sql " 
+  puts sql_dato
+
+  puts "**"
+ puts "#{mes}"
+ puts "#{anio}"
+ puts  "#{mes1}"
+ puts "#{anio1}"
+
  
   return @ordenes
     

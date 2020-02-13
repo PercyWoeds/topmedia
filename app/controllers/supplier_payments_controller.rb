@@ -1989,6 +1989,35 @@ def list_receive_supplierpayments
   end
 
 
+
+  def update_marcas 
+     customer = Customer.find(params[:customer_id])
+    # map to name and id for use in our options_for_select
+     puts customer.id 
+     @marcas = Marca.where(customer_id: customer.id)
+     @productos = Producto.where(marca_id: @marcas.last.id)
+     @versions = Version.where(producto_id: @productos.last.id)
+  
+  end
+  
+
+  def update_productos
+    # updates songs based on artist selected
+     @marcas = Marca.find(params[:marca_id])
+     @productos = Producto.where(marca_id: @marcas.id)
+     @versions = Version.where(producto_id: @productos.last.id)
+  end
+
+  def update_versions
+    # updates songs based on artist selected
+    @productos = Producto.find(params[:producto_id])
+    @versions = Version.where(producto_id: @productos.id)
+  end
+  
+
+
+
+
   
   private
   def supplierpayment_params

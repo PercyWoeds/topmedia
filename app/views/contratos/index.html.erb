@@ -8,7 +8,11 @@
   <%= submit_tag "Buscar" %>
   <% end %>
 
+ <%= form_tag(contratos_path, :method => "get", id: "search-form") do %>
 
+  <%= text_field_tag :search, params[:search], placeholder: "Buscar por numero de contratos" %>
+  <%= submit_tag "Buscar" %>
+  <% end %>
 <table>
   <thead>
     <tr>

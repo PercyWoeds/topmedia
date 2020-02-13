@@ -1362,7 +1362,20 @@ class ReportsController < ApplicationController
     @company = Company.find(params[:company_id])    
     @pagetitle = "Reportes de Contratos "    
     @customers = @company.get_customers()
+   
+
+     @customers = Customer.all 
+    
+    @medios    = Medio.all 
+    @marcas    = Marca.where("customer_id = ?", 38)
+    @productos = Producto.where(marca_id: @marcas.first.id) 
+    @versions  = Version.where(producto_id: @productos.first.id)
+    
+    @ciudads  = @company.get_ciudads()
+    @tipoordens  = @company.get_tipoordens()
     @monedas=@company.get_monedas    
+
+
   end
   
   
@@ -1370,12 +1383,12 @@ class ReportsController < ApplicationController
 
     @company   = Company.find(params[:company_id])    
     @pagetitle = "Reportes de Ordenes "    
-    @customers = Customer.all 
+    @customers = Customer.all.order(:name)
     
     @medios    = Medio.all 
-    @marcas    = Marca.where("customer_id = ?", 38)
-    @productos = Producto.where(marca_id: @marcas.first.id) 
-    @versions  = Version.where(producto_id: @productos.first.id)
+    @marcas    = Marca.where("customer_id = ?", 38).order(:name)
+    @productos = Producto.where(marca_id: @marcas.first.id).order(:name)
+    @versions  = Version.where(producto_id: @productos.last.id).order(:descrip)
     
     @ciudads  = @company.get_ciudads()
     @tipoordens  = @company.get_tipoordens()

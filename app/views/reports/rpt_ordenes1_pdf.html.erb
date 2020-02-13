@@ -57,6 +57,7 @@
           </div>
         </div>
         
+        
       </td>
       <td>
       <div class="field">
@@ -341,12 +342,27 @@ $(document).ready(function() {
         url: "/ordens/update_productos",
         data: {
           marca_id : $('#marca_select').val()
+
         },
         dataType: "script"
       });
     });
+
     
-    
+
+     $('#producto_select').change(function() {
+      $.ajax({
+        url: "/ordens/update_versions",
+        data: {
+          producto_id : $('#producto_select').val()
+        },
+        dataType: "script"
+      });
+    });
+
+
+
+
   });
   
   </script>

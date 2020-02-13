@@ -5,7 +5,6 @@ include AvisodetailsHelper
 class OrdensController < ApplicationController
   before_filter :authenticate_user!,:checkProducts
   
-  
 
 
   def do_anular
@@ -1633,7 +1632,7 @@ def crear
     @mes1 = params[:month1]    
     @anio1 = params[:year1]    
     
-    @marca= Marca.find_by("id = ?", params[:marca_id])
+    @marca= Marca.find_by("id = ?", params[:marca_id]).order(:name)
     
     @cliente_check = params[:check_cliente]   
     @medio_check = params[:check_medio]   
@@ -1688,6 +1687,7 @@ def crear
       @tipoorden = params[:tipo]     
     end 
    
+
     
     
     @ordenes_rpt = @company.get_ordenes_cliente_all(@mes,@anio,@mes1,@anio1,@customer,@medio,@marca,@producto,@version,@ciudad,@tipoorden)
@@ -1806,20 +1806,28 @@ def foot_data_headers_1
   def update_productos
     # updates songs based on artist selected
      @marcas = Marca.find(params[:marca_id])
-     @productos = Producto.where(marca_id: @marcas.last.id)
+     @productos = Producto.where(marca_id: @marcas.id)
      @versions = Version.where(producto_id: @productos.last.id)
+
+     
   end
 
   def update_versions
     # updates songs based on artist selected
     @productos = Producto.find(params[:producto_id])
-    @versions = Version.where(producto_id: @productos.last.id)
+   
+    @versions = Version.where(producto_id: @productos.id)
+
+
+     puts "update versions..."
+     puts @versions.last.descrip  
+
   end
   
    def reportes
   
      @company=Company.find(1)          
-    @mes = params[:month]    
+    @mes  = params[:month]    
     @anio = params[:year]    
     @mes1 = params[:month1]    
     @anio1 = params[:year1]    
@@ -1877,17 +1885,23 @@ def foot_data_headers_1
       @tipoorden = params[:tipo]     
     end 
     
-    @ordenes_rpt = @company.get_ordenes_cliente_all(@mes,@anio,@mes1,@anio1,@customer,@medio,@marca,@producto,@version,@ciudad,@tipoorden)
+    @ordenes_rpt = @company.get_ordenes_cliente_all(@mes.to_i ,@anio.to_i,@mes1.to_i,@anio1.to_i,@customer,@medio,@marca,@producto,@version,@ciudad,@tipoorden)
+
+    if  @ordenes_rpt.count > 0 
+
+        case params[:print]
+          when "To PDF" then 
+            begin 
+             render  pdf: "Ordenes ",template: "ordens/orden_rpt.pdf.erb",locals: {:orden => @ordenes_rpt}
+            
+            end   
+          when "To Excel" then render xlsx: 'exportxls'
+          else render action: "index"
+        end
     
-    case params[:print]
-      when "To PDF" then 
-        begin 
-         render  pdf: "Ordenes ",template: "ordens/orden_rpt.pdf.erb",locals: {:orden => @ordenes_rpt}
-        
-        end   
-      when "To Excel" then render xlsx: 'exportxls'
-      else render action: "index"
-    end
+    end 
+
+   
   end
   
   def import

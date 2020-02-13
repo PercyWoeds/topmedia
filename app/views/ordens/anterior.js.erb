@@ -1,0 +1,12 @@
+
+
+$("#producto_select").empty()
+  .append("<%= escape_javascript(render(:partial => @productos)) %>")
+
+$('#version_select').empty()
+.append("<%= escape_javascript(render(:partial => @versions )) %>");
+
+
+****
+$('#version_select').empty()
+.append("<%= escape_javascript(render(:partial => @versions )) %>");

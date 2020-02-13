@@ -1,2 +1,9 @@
 <%= collection_select(nil, :version_id, versions, :id, :descrip,
-                     {:prompt   => "Select a version"}) %>
+                     {:prompt   => "Select a version"},
+                     {:onchange => "#{ link_to(:url  => {:action => "update_versions"},
+                                                      :with => "'version_id='+value")}"}) %>
+
+                     ) %>
+
+
+                  
