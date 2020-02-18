@@ -145,7 +145,7 @@ end
 
 
   def get_contrato_cuotas(id)
-      @contrato_cuotas = ContratoDetail.where(:contrato_id=>id)
+      @contrato_cuotas = ContratoDetail.where(:contrato_id=>id).order(:fecha,:nro)
       return @contrato_cuotas
   end 
 

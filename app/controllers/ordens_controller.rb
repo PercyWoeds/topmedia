@@ -1892,7 +1892,7 @@ def foot_data_headers_1
         case params[:print]
           when "To PDF" then 
             begin 
-             render  pdf: "Ordenes ",template: "ordens/orden_rpt.pdf.erb",locals: {:orden => @ordenes_rpt}
+             render  pdf: "Ordenes ",template: "ordens/orden_rpt2.pdf.erb",locals: {:orden => @ordenes_rpt}
             
             end   
           when "To Excel" then render xlsx: 'exportxls'
