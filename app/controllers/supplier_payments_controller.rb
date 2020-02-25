@@ -1336,12 +1336,12 @@ def rpt_cpagar5_pdf
          :header => {
            :spacing => 5,
                            :html => {
-                     :template => 'layouts/pdf-header3.html', 
+                           :template => 'layouts/pdf-header3.html', 
                            right: '[page] of [topage]'
                   }
                },
 
-                :footer => { :html => { template: 'layouts/pdf-footers.html' }       }  ,   
+               :footer => { :html => { template: 'layouts/pdf-footers.html' }       }  ,   
                :margin => {bottom: 35} 
                 
        end   

@@ -70,7 +70,7 @@ class OrdensController < ApplicationController
       end
 
        
-       pdf.bounding_box([600, 540], :width => 170, :height => 70) do
+       pdf.bounding_box([550, 540], :width => 170, :height => 70) do
         pdf.stroke_bounds
         pdf.move_down 15
         pdf.font "Helvetica", :style => :bold do
@@ -83,6 +83,7 @@ class OrdensController < ApplicationController
         end
       end
 
+pdf.move_down 50
 
    
     pdf 
@@ -529,8 +530,12 @@ class OrdensController < ApplicationController
                                           columns([35]).width=38
                                           
 
+                                          columns([36]).align=:right
+                                          columns([36]).width=38
+                                          
+
                                          
-                                        end                                          
+          end                                          
       pdf
 
     end
@@ -616,8 +621,8 @@ class OrdensController < ApplicationController
      $lcCobertura = @orden.ciudad.descrip 
      
 
-
-    Prawn::Document.generate "app/pdf_output/rpt_orden2.pdf" , :page_layout => :landscape,:size=> "A4",:margin => [2,2,5,2] do |pdf|        
+    #:margin => [2,2,5,2] 
+    Prawn::Document.generate "app/pdf_output/rpt_orden2.pdf" , :page_layout => :landscape,:size=> "A4" do |pdf|        
     
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt2(pdf)
