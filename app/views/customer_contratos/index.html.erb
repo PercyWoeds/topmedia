@@ -26,8 +26,8 @@
         <% else %>
             <td><%= customer_contrato.medio.descrip %></td>
         <% end %>
-         <% if customer_contrato.code.nil? %> 
-          <td><%= customer_contrato.code %> </td>
+         <% if customer_contrato.contrato.nil? %> 
+          <td><%= customer_contrato.contrato_id %> </td>
         <% else %>
             <td><%= customer_contrato.contrato.code %></td>
         <% end %>
