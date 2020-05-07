@@ -1,13 +1,13 @@
 class Ordens::OrdensProductsController < ApplicationController
-   before_action :set_orden 
+   before_action :set_orden
    before_action :set_orden_product, :except=> [:new,:create,:import ]
-   
+
   # GET /orden_products/1
   # GET /orden_products/1.json
-  
+
   # GET /orden_products/new
   def new
-    
+
     @orden_product = OrdenProduct.new
     @company = Company.find(1)
     @orden_product.d01 = 0
@@ -53,23 +53,23 @@ class Ordens::OrdensProductsController < ApplicationController
     @aviso = Avisodetail.find(@orden_product.avisodetail_id)
     @ac_item = @aviso.descrip
     @ac_item_id = @aviso.id
-    
-   
+
+
   end
 
   # POST /orden_products
   # POST /orden_products.json
   def create
-    
-    
+
+
     @orden_product = OrdenProduct.new(orden_product_params)
-    
-    @orden_product.orden_id  = @orden.id 
-    
+
+    @orden_product.orden_id  = @orden.id
+
     @orden_product.avisodetail_id = 131
     @orden_product.price = (@orden_product.tarifa / 30 * @orden.tiempo )
     @company = Company.find(1)
-    sum_dias = (@orden_product.d01 + @orden_product.d02 + @orden_product.d03 + @orden_product.d04+ 
+    sum_dias = (@orden_product.d01 + @orden_product.d02 + @orden_product.d03 + @orden_product.d04+
                 @orden_product.d05 + @orden_product.d06 + @orden_product.d07 + @orden_product.d08+
                 @orden_product.d09 + @orden_product.d10 + @orden_product.d11 + @orden_product.d12+
                 @orden_product.d13 + @orden_product.d14 + @orden_product.d15 + @orden_product.d16+
@@ -77,26 +77,24 @@ class Ordens::OrdensProductsController < ApplicationController
                 @orden_product.d21 + @orden_product.d22 + @orden_product.d23 + @orden_product.d24+
                 @orden_product.d25 + @orden_product.d26 + @orden_product.d27 + @orden_product.d28+
                 @orden_product.d29 + @orden_product.d30 + @orden_product.d31)
-    @orden_product.quantity = sum_dias 
+    @orden_product.quantity = sum_dias
     @orden_product.total = @orden_product.price * sum_dias
 
-    
-    
      respond_to do |format|
        if @orden_product.save
-        
+
            @orden[:subtotal] = @orden.get_subtotal("subtotal")
            @orden[:tax] = @orden.get_subtotal("tax")
            @orden[:total] = @orden[:subtotal] + @orden[:tax]
-          
+
            @orden.update_attributes(:subtotal=> @orden[:subtotal])
-           
-          
-          
-        
+
+
+
+
          format.html { redirect_to @orden, notice: 'Orden product was successfully created.' }
          format.json { render :show, status: :created, location: @orden }
-         
+
        else
          format.html { render :new }
          format.json { render json: @orden.errors, status: :unprocessable_entity }
@@ -108,16 +106,16 @@ class Ordens::OrdensProductsController < ApplicationController
   # PATCH/PUT /orden_products/1.json
   def update
     @orden = Orden.find(params[:orden_id])
-    
-    @orden_product = OrdenProduct.find(params[:id]) 
-    
+
+    @orden_product = OrdenProduct.find(params[:id])
+
     @orden_product[:avisodetail_id] = params[:ac_item_id]
-    
-    
+
+
     @orden_product[:price] = (@orden_product.tarifa / 30 * @orden.tiempo )
     @company = Company.find(1)
-    
-    sum_dias = (@orden_product.d01 + @orden_product.d02 + @orden_product.d03 + @orden_product.d04+ 
+
+    sum_dias = (@orden_product.d01 + @orden_product.d02 + @orden_product.d03 + @orden_product.d04+
                 @orden_product.d05 + @orden_product.d06 + @orden_product.d07 + @orden_product.d08+
                 @orden_product.d09 + @orden_product.d10 + @orden_product.d11 + @orden_product.d12+
                 @orden_product.d13 + @orden_product.d14 + @orden_product.d15 + @orden_product.d16+
@@ -125,21 +123,21 @@ class Ordens::OrdensProductsController < ApplicationController
                 @orden_product.d21 + @orden_product.d22 + @orden_product.d23 + @orden_product.d24+
                 @orden_product.d25 + @orden_product.d26 + @orden_product.d27 + @orden_product.d28+
                 @orden_product.d29 + @orden_product.d30 + @orden_product.d31)
-                
-    @orden_product[:quantity] = sum_dias 
+
+    @orden_product[:quantity] = sum_dias
     @orden_product[:total] = @orden_product.price * sum_dias
-    
-      
+
+
     respond_to do |format|
       if @orden_product.update(orden_product_params)
-        
+
            @orden[:subtotal] = @orden.get_subtotal("subtotal")
            @orden[:tax] = @orden.get_subtotal("tax")
            @orden[:total] = @orden[:subtotal] + @orden[:tax]
-          
-           @orden.update_attributes(:subtotal=> @orden[:subtotal])
-           
-          
+
+           @orden.update_attributes(:subtotal=> @orden[:subtotal],:quantity => @orden[:quantity])
+
+
         format.html { redirect_to @orden, notice: 'Orden product was successfully updated.' }
         format.json { render :show, status: :ok, location: @orden }
       else
@@ -152,40 +150,40 @@ class Ordens::OrdensProductsController < ApplicationController
   # DELETE /orden_products/1
   # DELETE /orden_products/1.json
   def destroy
-    
+
     @company = Company.find(1)
-    
-    title =@orden_product.avisodetail.descrip 
-    
+
+    title =@orden_product.avisodetail.descrip
+
     if @orden_product.destroy
       flash[:notice]= "Item fue eliminado satisfactoriamente "
-      redirect_to @orden 
+      redirect_to @orden
     else
       flash[:error]= "Item ha tenido un error y no fue eliminado"
-      render :show 
-    end 
-    
+      render :show
+    end
+
   end
 
 
   def import
 
       OrdenProduct.import(params[:file])
-      
+
         @orden[:subtotal] = @orden.get_subtotal("subtotal")
            @orden[:tax] = @orden.get_subtotal("tax")
            @orden[:total] = @orden[:subtotal] + @orden[:tax]
-          
+
            @orden.update_attributes(:subtotal=> @orden[:subtotal])
 
        redirect_to root_url, notice: "Orden importadas"
-  end 
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_orden 
+    def set_orden
       @orden = Orden.find(params[:orden_id])
-    end 
+    end
     def set_orden_product
       @orden_product = OrdenProduct.find(params[:id])
     end

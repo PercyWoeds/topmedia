@@ -4,41 +4,41 @@ include AvisodetailsHelper
 
 class OrdensController < ApplicationController
   before_filter :authenticate_user!,:checkProducts
-  
+
 
 
   def do_anular
     @orden = Orden.find(params[:id])
     @orden[:processed] = "2"
-    
-    @orden.anular 
-   
+
+    @orden.anular
+
     flash[:notice] = "Documento a sido anulado."
-    redirect_to @orden  
+    redirect_to @orden
   end
-  
-   
+
+
 ##-------------------------------------------------------------------------------------
 ## REPORTE DE ESTADISTICA DE VENTAS
 ##-------------------------------------------------------------------------------------
-  
+
   def build_pdf_header_rpt2(pdf)
      pdf.font "Helvetica" , :size => 8
-      
-     $lcCli  =  @orden.customer.name 
+
+     $lcCli  =  @orden.customer.name
      $lcRucCli =  @orden.customer.ruc
-     $lcDirCli = ""  
-     
+     $lcDirCli = ""
+
      $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
-     $lcHora  = Time.now.to_s    
-        
+     $lcHora  = Time.now.to_s
+
       pdf.image "#{Dir.pwd}/public/images/logo.jpg", :width => 130
-        
+
 
       pdf.move_down 20
 
-      pdf.text "   Lima, " << @orden.fecha.strftime("%d/%m/%Y") ,:size =>10 ,:style=> :bold 
-    
+      pdf.text "   Lima, " << @orden.fecha.strftime("%d/%m/%Y") ,:size =>10 ,:style=> :bold
+
       #pdf.text supplier.street, :size => 10
       #pdf.text supplier.district, :size => 10
       #pdf.text supplier.city, :size => 1
@@ -50,7 +50,7 @@ class OrdensController < ApplicationController
         rows[rows_index] = []
         rows[rows_index] += (client_data_headers_1.length >= row ? client_data_headers_1[rows_index] : ['',''])
         rows[rows_index] += (invoice_headers_1.length >= row ? invoice_headers_1[rows_index] : ['',''])
-      
+
       end
 
       if rows.present?
@@ -59,17 +59,17 @@ class OrdensController < ApplicationController
           :position => :left,
           :cell_style => {:border_width => 0,:height => 17 },
           :width => pdf.bounds.width/3*2
-        
+
         }) do
           columns([0, 2]).font_style = :bold
-          
+
         end
 
         pdf.move_down 5
 
       end
 
-       
+
        pdf.bounding_box([550, 540], :width => 170, :height => 70) do
         pdf.stroke_bounds
         pdf.move_down 15
@@ -79,33 +79,33 @@ class OrdensController < ApplicationController
           pdf.text "#{@orden.code}"+" REV."+"#{@orden.revision}", :align => :center,:size  =>10
           pdf.text @month_name, :align => :center,:size  =>10,
                                  :style => :bold
-          
+
         end
       end
 
 pdf.move_down 50
 
-   
-    pdf 
+
+    pdf
 
 
-  end   
+  end
 
   def build_pdf_body_rpt2(pdf)
-    
-   
-    
+
+
+
     pdf.font "Helvetica" , :size => 5
-        
+
      pdf.move_down 10
       headers = []
       table_content = []
       total_general = 0
       total_factory = 0
-      
+
 
       Orden::TABLE_HEADERS2.each do |header|
-        
+
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -113,7 +113,7 @@ pdf.move_down 50
       #table_content << headers
 
       nroitem = 1
-      
+
 
       # tabla pivoteadas
       # hash of hashes
@@ -121,7 +121,7 @@ pdf.move_down 50
 
       @total_general = 0
       @total_anterior = 0
-      @total_cliente = 0 
+      @total_cliente = 0
 
       @total_dia01 = 0
       @total_dia02 = 0
@@ -189,18 +189,18 @@ pdf.move_down 50
       @total_dia28_column = 0
       @total_dia29_column = 0
       @total_dia30_column = 0
-      @total_dia31_column = 0                      
+      @total_dia31_column = 0
 
       @orden_detalle =  @orden.get_orden_products()
 
       lcCli = @orden_detalle.first.avisodetail_id
       $lcCliName = ""
-      
-      mes = @orden.month 
+
+      mes = @orden.month
       anio = @orden.year
       days_mes = days_of_month(mes,anio)
-      
-      
+
+
       fechadia1 = anio.to_s << "-" << mes.to_s.rjust(2, '0') << "-" << "01"
       fechadia2 = anio.to_s << "-" << mes.to_s << "-" << "02"
       fechadia3 = anio.to_s << "-" << mes.to_s << "-" << "03"
@@ -230,28 +230,28 @@ pdf.move_down 50
       fechadia27 = anio.to_s << "-" << mes.to_s << "-" << "27"
       if days_mes >=28
         fechadia28 = anio.to_s << "-" << mes.to_s << "-" << "28"
-      else 
+      else
         fechadia28=""
-      end 
+      end
       if days_mes >=29
         fechadia29 = anio.to_s << "-" << mes.to_s << "-" << "29"
       else
         fechadia29=""
-      end 
+      end
       if days_mes >=30
         fechadia30 = anio.to_s << "-" << mes.to_s << "-" << "30"
       else
         fechadia30=""
-      end 
+      end
       if days_mes >=31
         fechadia31 = anio.to_s << "-" << mes.to_s << "-" << "31"
       else
         fechadia31=""
-      end 
-      
-      
+      end
+
+
      row = []
-      
+
       row << "PROGRAMA"
       row << "HORA "
       row << "01"+"\n"+get_name_dia(fechadia1)
@@ -284,25 +284,25 @@ pdf.move_down 50
       row << "28"+"\n"+get_name_dia(fechadia28)
       if fechadia29 != ""
         row << "29"+"\n"+get_name_dia(fechadia29)
-      end 
+      end
       if fechadia30 != ""
         row << "30"+"\n"+get_name_dia(fechadia30)
-      end 
+      end
       if fechadia31 != ""
         row << "31"+"\n"+get_name_dia(fechadia31)
-      end 
+      end
       row << "TOTAL"
       row << "R.MILES"
       row << "TARIFA"
       row << "IMPORTE"
-      
-     
-     table_content << row            
-     
-     for  order in @orden_detalle 
+
+
+     table_content << row
+
+     for  order in @orden_detalle
             row = []
-            row << order.descrip[0..14]        
-            row << order.h  
+            row << order.descrip[0..14]
+            row << order.h
             row << formatea_number(order.d01)
             row << formatea_number(order.d02)
             row << formatea_number(order.d03)
@@ -333,15 +333,15 @@ pdf.move_down 50
             row << formatea_number(order.d28)
             if fechadia29 != ""
               row << formatea_number(order.d29)
-            end 
+            end
             if fechadia30 != ""
               row << formatea_number(order.d30)
-            end 
+            end
             if fechadia31 != ""
               row << formatea_number(order.d31)
-            end 
-            
-          
+            end
+
+
             @total_dia01_column += order.d01
             @total_dia02_column += order.d02
             @total_dia03_column += order.d03
@@ -381,21 +381,21 @@ pdf.move_down 50
             row << order.rating2
 
             row << money(order.price)
-            
-            row << money(order.total)         
-            
-            table_content << row            
-             @total_linea_general += @total_linea
-             @total_linea = 0 
-          nroitem = nroitem + 1 
 
-       end   
+            row << money(order.total)
+
+            table_content << row
+             @total_linea_general += @total_linea
+             @total_linea = 0
+          nroitem = nroitem + 1
+
+       end
 
 
 
         row = []
-         row << "TOTAL =>"       
-         row << "  "         
+         row << "TOTAL =>"
+         row << "  "
          row << formatea_number(@total_dia01_column)
          row << formatea_number(@total_dia02_column)
          row << formatea_number(@total_dia03_column)
@@ -426,116 +426,116 @@ pdf.move_down 50
          row << formatea_number(@total_dia28_column)
           if fechadia29 != ""
              row << formatea_number(@total_dia29_column)
-          end 
+          end
              if fechadia30 != ""
            row << formatea_number(@total_dia30_column)
-         end 
+         end
             if fechadia31 != ""
            row << formatea_number(@total_dia31_column)
-         end 
-           
+         end
+
            row << sprintf("%.2f",@total_linea_general.to_s)
            row << " "
          row << " "
          row << " "
-        
-         table_content << row            
+
+         table_content << row
 
         result = pdf.table table_content, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width
-                                        
-                                        } do 
-                                          columns([0]).align=:left 
+
+                                        } do
+                                          columns([0]).align=:left
                                           columns([0]).width = 60
 
                                           columns([1]).align=:left
                                           columns([1]).width = 26
 
                                           columns([2]).align=:center
-                                          
+
 
                                           columns([3]).align=:center
-                                          
+
                                           columns([4]).align=:center
-                                          
-                                          columns([5]).align=:center 
-                                          
+
+                                          columns([5]).align=:center
+
                                           columns([6]).align=:center
-                                          
+
 
                                           columns([7]).align=:center
-                                          
+
                                           columns([8]).align=:center
-                                          
+
                                           columns([9]).align=:center
-                                          
+
                                           columns([10]).align=:center
-                                          
-                                          columns([11]).align=:center 
-                                          
+
+                                          columns([11]).align=:center
+
                                           columns([12]).align=:center
-                                          
+
                                           columns([13]).align=:center
-                                          
+
                                           columns([14]).align=:center
-                                          
+
                                           columns([15]).align=:center
-                                          
+
                                           columns([16]).align=:center
-                                          
+
                                           columns([17]).align=:center
-                                          
+
                                           columns([18]).align=:center
-                                          
+
                                           columns([19]).align=:center
-                                          
+
                                           columns([20]).align=:center
-                                          
+
                                           columns([21]).align=:center
-                                          
+
                                           columns([22]).align=:center
-                                          
+
 
                                           columns([23]).align=:center
-                                          
+
                                           columns([24]).align=:center
-                                          
+
                                           columns([25]).align=:center
-                                          
+
                                           columns([26]).align=:center
-                                          
+
                                           columns([27]).align=:center
-                                          
-                                          columns([28]).align=:center 
-                                          
-                                          columns([29]).align=:center 
+
+                                          columns([28]).align=:center
+
+                                          columns([29]).align=:center
                                           columns([30]).align=:center
-                                          
-                                          
+
+
                                           columns([31]).align=:center
-                                          
+
                                           columns([32]).align=:right
 
-                                         
+
                                           columns([33]).align=:right
-                                          
+
                                           columns([33]).width=34
 
                                           columns([34]).align=:right
                                           columns([34]).width=34
-                                          
+
 
                                           columns([35]).align=:right
                                           columns([35]).width=38
-                                          
+
 
                                           columns([36]).align=:right
                                           columns([36]).width=38
-                                          
 
-                                         
-          end                                          
+
+
+          end
       pdf
 
     end
@@ -549,23 +549,23 @@ pdf.move_down 50
         totals = []
         services_subtotal = 0
         services_tax = 0
-        services_total = 0    
-        
-        pdf.move_down 2      
+        services_total = 0
+
+        pdf.move_down 2
         lcTexto=     "Los espacios,fechas y ubicaciones no seran modificados sin permiso de la agencia.No se ubicarán en la misma tanda/página, al lado, al frente o a continuación de otra publicación de similares"
- 
+
         data =[ ["Observaciones:" + @orden.description," ",""],
-               
+
                [lcTexto,"Departamento de  medios.
                Firma.
                ","Recibido por el medio. "]          ]
 
             pdf.text " "
-            
-            
+
+
         table_content = [["This table"], ["covers the"], ["whole page width"]]
-        
-  
+
+
         pdf.table invoice_summary, {
             :position => :right,
             :cell_style => {:border_width => 1},
@@ -573,13 +573,13 @@ pdf.move_down 50
           } do
             columns([0]).font_style = :bold
             columns([1]).align = :right
-            
+
           end
-      
-      
+
+
        # pdf.table(data,:cell_style=> {:border_width=>1} ,:width => pdf.bounds.width/2,:position=> :center )
-        
-        pdf.text "" 
+
+        pdf.text ""
         pdf.bounding_box([0, 70],:width => pdf.bounds.width, :height => 70,:position=> :center) do
         #pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom ]
             pdf.table data, {
@@ -592,7 +592,7 @@ pdf.move_down 50
             columns([1]).align = :center
             columns([2]).align = :center
           end
-          
+
       end
 
       pdf
@@ -601,76 +601,76 @@ pdf.move_down 50
 
 
 
-  # Reporte de orden 
+  # Reporte de orden
   def pdf
     @orden = Orden.find(params[:id])
-    @company = Company.find(1)   
-         
+    @company = Company.find(1)
+
      $lcContrato =  @orden.contrato.code
      $lcMedio  = @orden.medio.descrip
      $lcMarca  = @orden.marca.name
-     $lcProducto = @orden.producto.name 
+     $lcProducto = @orden.producto.name
      $lcVersion = @orden.version.descrip
-     $lcFechaMes = @orden.month.to_i  
+     $lcFechaMes = @orden.month.to_i
      $lcDuracion = @orden.tiempo
      @months = monthsArr
      @month_name = @months[$lcFechaMes - 1][0] <<" - " <<@orden.year.to_s
-    
+
      $lcMoneda = @orden.get_moneda(@orden.moneda_id)
      $lcMedio = @orden.medio.descrip
-     $lcCobertura = @orden.ciudad.descrip 
-     
+     $lcCobertura = @orden.ciudad.descrip
 
-    #:margin => [2,2,5,2] 
-    Prawn::Document.generate "app/pdf_output/rpt_orden2.pdf" , :page_layout => :landscape,:size=> "A4" do |pdf|        
-    
+
+    #:margin => [2,2,5,2]
+    Prawn::Document.generate "app/pdf_output/rpt_orden2.pdf" , :page_layout => :landscape,:size=> "A4" do |pdf|
+
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt2(pdf)
         pdf = build_pdf_body_rpt2(pdf)
         build_pdf_footer_rpt2(pdf)
 
-        $lcFileName =  "app/pdf_output/rpt_orden2.pdf"      
-        
-    end     
+        $lcFileName =  "app/pdf_output/rpt_orden2.pdf"
 
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
+    end
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
 
 
   end
-  
+
   # Process an orden
   def do_process
     @orden = Orden.find(params[:id])
     @orden[:processed] = "1"
-    
+
     @orden.process
-    
+
     flash[:notice] = "The orden order has been processed."
     redirect_to @orden
   end
-  
+
   # Do send orden via email
   def do_email
     @orden = Orden.find(params[:id])
     @email = params[:email]
-    
+
     Notifier.orden(@email, @orden).deliver
-    
+
     flash[:notice] = "The orden has been sent successfully."
     redirect_to "/ordens/#{@orden.id}"
   end
 
-  
+
   # Send orden via email
   def email
     @orden = Orden.find(params[:id])
     @company = @orden.company
   end
-  
+
   # List items
   def list_items
-    
+
     @company = Company.find(params[:company_id])
     items = params[:items]
     items = items.split(",")
@@ -680,13 +680,13 @@ pdf.move_down 50
 
     for item in items
       if item != ""
-        parts = item.split("|BRK|")        
+        parts = item.split("|BRK|")
         id = parts[0]
-             
+
 #item_id + "|BRK|"+fecha_dd + "|BRK|" + fecha_mm + "|BRK|" +fecha_yy + "|BRK|" + quantity + "|BRK|" + tarifa ;
-       # fecha_dd   = parts[1]        
-       # fecha_mm   = parts[2]        
-       # fecha_aa   = parts[3]        
+       # fecha_dd   = parts[1]
+       # fecha_mm   = parts[2]
+       # fecha_aa   = parts[3]
         dia_01 = parts[1]
         dia_02 = parts[2]
         dia_03 = parts[3]
@@ -718,19 +718,19 @@ pdf.move_down 50
         dia_29 = parts[29]
         dia_30 = parts[30]
         dia_31 = parts[31]
-        
-        
-        price      = parts[32]        
+
+
+        price      = parts[32]
         tarifa     = parts[33]
-        total      = parts[34]  
-        
+        total      = parts[34]
+
         product = Avisodetail.find(id.to_i)
 
         product[:i] = i
         product[:tarifa] = tarifa.to_f
         product[:price]  = price.to_f
         product[:total]  = total.to_f
-        
+
         product[:d01] = dia_01.to_f
         product[:d02] = dia_02.to_f
         product[:d03] = dia_03.to_f
@@ -762,59 +762,59 @@ pdf.move_down 50
         product[:d29] = dia_29.to_f
         product[:d30] = dia_30.to_f
         product[:d31] = dia_31.to_f
-        
-  
+
+
         @products.push(product)
       end
-      
+
       i += 1
    end
-    
+
     render :layout => false
   end
-  
-  
+
+
   # Autocomplete for products
   def ac_programs
     if params[:orden_id] == "D"
      @products = Avisodetail.where(["(descrip iLIKE ? and category_program_id = 3 )", "%" +params[:q] + "%"])
     else
      @products = Avisodetail.where(["(descrip iLIKE ? and category_program_id <> 3 )", "%" +params[:q] + "%"])
-    end 
-   
+    end
+
     render :layout => false
   end
-  
+
   # Autocomplete for users
   def ac_user
     company_users = CompanyUser.where(company_id: params[:company_id])
     user_ids = []
-    
+
     for cu in company_users
       user_ids.push(cu.user_id)
     end
-    
+
     @users = User.where(["id IN (#{user_ids.join(",")}) AND (email LIKE ? OR username LIKE ?)", "%" + params[:q] + "%", "%" + params[:q] + "%"])
     alr_ids = []
-    
+
     for user in @users
       alr_ids.push(user.id)
     end
-    
+
     if(not alr_ids.include?(getUserId()))
       @users.push(current_user)
     end
-   
+
     render :layout => false
   end
-  
+
   # Autocomplete for customers
   def ac_customers
     @customers = Customer.where(["company_id = ? AND (ruc  iLIKE ? OR name iLIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
-   
+
     render :layout => false
   end
-  
+
   # Show ordens for a company
   def list_ordens
 
@@ -824,17 +824,17 @@ pdf.move_down 50
 
     @customers = Customer.all.order(:name)
     @motivos =Motivo.all.order(:name)
-    @medios = Medio.all.order(:descrip)    
-    @marcas= Marca.all.order(:name) 
-    @versions = Version.all.order(:descrip) 
-    @contratos = Contrato.all 
+    @medios = Medio.all.order(:descrip)
+    @marcas= Marca.all.order(:name)
+    @versions = Version.all.order(:descrip)
+    @contratos = Contrato.all
     @productos = Producto.all.order(:name)
 
     if(@company.can_view(current_user))
 
        if(params[:ac_customer] and params[:ac_customer] != "")
         @customer = Customer.where(:company_id => @company.id, :name => params[:ac_customer].strip).first
-        
+
         if @customer
           @ordens = Orden.paginate(:page => params[:page]).where(:company_id => @company.id, :customer_id => @customer.id).order("id DESC")
         else
@@ -843,7 +843,7 @@ pdf.move_down 50
         end
       elsif(params[:customer] and params[:customer] != "")
         @customer = Customer.find(params[:customer])
-        
+
         if @customer
           @ordens = Orden.paginate(:page => params[:page]).where(:company_id => @company.id, :customer_id => @customer.id).order("id DESC")
         else
@@ -857,8 +857,8 @@ pdf.move_down 50
       elsif(params[:division] and params[:division] != "")
         @ordens = Orden.paginate(:page => params[:page]).where(:company_id => @company.id, :medio_id => params[:division]).order("id DESC")
       else
-#        if(params[:search] and params[:search] != "")         
- #         @ordens = Orden.where(["company_id = ? and (code iLIKE ?)", @company.id ,"%" + params[:search] + "%" ]).order('fecha DESC').paginate(:page => params[:page]) 
+#        if(params[:search] and params[:search] != "")
+ #         @ordens = Orden.where(["company_id = ? and (code iLIKE ?)", @company.id ,"%" + params[:search] + "%" ]).order('fecha DESC').paginate(:page => params[:page])
         if(params[:q] and params[:q] != "")
           fields = ["code", "description"]
 
@@ -869,22 +869,22 @@ pdf.move_down 50
 
           @ordens = Orden.paginate(:page => params[:page]).order('id DESC').where(["company_id = ? AND (#{query})", @company.id])
         else
-          @ordens = Orden.where(["company_id = ?",@company.id ]).order('fecha DESC').paginate(:page => params[:page]) 
+          @ordens = Orden.where(["company_id = ?",@company.id ]).order('fecha DESC').paginate(:page => params[:page])
            @filters_display = "none"
         end
     end
-  end 
+  end
 
   end
 
-  
+
   # GET /ordens
   # GET /ordens.xml
   def index
     @companies = Company.where(user_id: current_user.id).order("name")
     @path = 'ordens'
     @pagetitle = "ordens"
-     
+
   end
 
   # GET /ordens/1
@@ -894,19 +894,19 @@ pdf.move_down 50
     @customer = @orden.customer
     @motivos =Motivo.all
     @medios = Medio.all
-    @marcas= Marca.all 
-    @versions = Version.all 
-    @productos = Producto.all 
+    @marcas= Marca.all
+    @versions = Version.all
+    @productos = Producto.all
     @ciudad = Ciudad.all
-    
+
     @ordens_products = @orden.orden_products
   end
 
   # GET /ordens/new
   # GET /ordens/new.xml
 
-  
-  
+
+
   def new
     @pagetitle = "New orden"
     @action_txt = "Create"
@@ -916,165 +916,165 @@ pdf.move_down 50
     else
       @year = Time.now.year
     end
-    
+
     if(params[:month] and params[:month].numeric?)
       @month = params[:month].to_i
     else
       @month = Time.now.month
     end
-    
+
     if(@month < 10)
       month_s = "0#{@month}"
     else
       month_s = @month.to_s
     end
-    
+
     curr_year = Time.now.year
     c_year = curr_year
     c_month = 1
-    
+
     @years = []
     @months = monthsArr
     @month_name = @months[@month - 1][0]
-    
-    
-    
+
+
+
     while(c_year > Time.now.year - 5)
       @years.push(c_year)
       c_year -= 1
     end
-    
+
     @dates = []
-    
+
     last_day_of_month = last_day_of_month(@year, @month)
     @date_cats = []
-    
+
     i = 1
-    
+
     while(i <= last_day_of_month)
       if(i < 10)
         i_s = "0#{i}"
       else
         i_s = i.to_s
       end
-      
+
       @dates.push("#{@year}-#{month_s}-#{i_s}")
       @date_cats.push("'" + doDate(Time.parse("#{@year}-#{@month}-#{i_s}"), 5) + "'")
-      
+
       i += 1
     end
-  
+
 
     @customers = Customer.all.order(:name)
     @motivos =Motivo.all.order(:name)
-    @medios = Medio.all.order(:descrip)    
-    @marcas= Marca.all.order(:name) 
-    @versions = Version.all.order(:descrip) 
-    @contratos = Contrato.all 
+    @medios = Medio.all.order(:descrip)
+    @marcas= Marca.all.order(:name)
+    @versions = Version.all.order(:descrip)
+    @contratos = Contrato.all
     @productos = Producto.all.order(:name)
-    
+
 
     @orden = Orden.new
     @orden[:code] = "#{generate_guid12()}"
-    
+
     @orden[:processed] = false
     @orden[:tiempo] = 30
-    @orden[:fecha] = Date.today 
+    @orden[:fecha] = Date.today
     @company = Company.find(params[:company_id])
     @orden.company_id = @company.id
 
-    @monedas = Moneda.all 
+    @monedas = Moneda.all
 
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
     @ciudad = Ciudad.all
 
     @contratos2 = @company.get_customer_contratos()
-    
+
     @ac_user = getUsername()
     @orden[:user_id] = getUserId()
   end
 
-  def neworden 
+  def neworden
       @pagetitle = "New orden"
       @action_txt = "Create"
-  
+
       if(params[:year] and params[:year].numeric?)
         @year = params[:year].to_i
       else
         @year = Time.now.year
       end
-      
+
       if(params[:month] and params[:month].numeric?)
         @month = params[:month].to_i
       else
         @month = Time.now.month
       end
-      
+
       if(@month < 10)
         month_s = "0#{@month}"
       else
         month_s = @month.to_s
       end
-      
+
       curr_year = Time.now.year
       c_year = curr_year
       c_month = 1
-      
+
       @years = []
       @months = monthsArr
       @month_name = @months[@month - 1][0]
-      
+
 
       while(c_year > Time.now.year - 5)
         @years.push(c_year)
         c_year -= 1
       end
-      
+
       @dates = []
-      
+
       last_day_of_month = last_day_of_month(@year, @month)
       @date_cats = []
-      
+
       i = 1
-      
+
       while(i <= last_day_of_month)
         if(i < 10)
           i_s = "0#{i}"
         else
           i_s = i.to_s
         end
-        
+
         @dates.push("#{@year}-#{month_s}-#{i_s}")
         @date_cats.push("'" + doDate(Time.parse("#{@year}-#{@month}-#{i_s}"), 5) + "'")
-        
+
         i += 1
       end
-      
+
       @customers = Customer.all
       @motivos =Motivo.all
-      @medios = Medio.all    
-      @marcas= Marca.all 
-      @versions = Version.all 
-      @contratos = Contrato.all 
-      @productos = Producto.all 
-  
+      @medios = Medio.all
+      @marcas= Marca.all
+      @versions = Version.all
+      @contratos = Contrato.all
+      @productos = Producto.all
+
       @orden = Orden.new
       @orden[:code] = "#{generate_guid12()}"
-      
+
       @orden[:processed] = false
       @orden[:tiempo] = 0
-      @orden[:fecha] = Date.today 
-      @orden[:fecha_inicio] = Date.today 
-      @orden[:fecha_fin] = Date.today 
+      @orden[:fecha] = Date.today
+      @orden[:fecha_inicio] = Date.today
+      @orden[:fecha_fin] = Date.today
       @company = Company.find(1)
       @orden.company_id = @company.id
       @orden[:tarifa] = 0.00
-      
+
       @locations = @company.get_locations()
       @divisions = @company.get_divisions()
       @ciudad = Ciudad.all
-      
+
       @ac_user = getUsername()
       @orden[:user_id] = getUserId()
     end
@@ -1085,13 +1085,13 @@ pdf.move_down 50
   def edit
     @pagetitle = "Edit orden"
     @action_txt = "Update"
-    
-    
+
+
     @orden = Orden.find(params[:id])
     @company = @orden.company
     @ac_customer = @orden.customer.name
     @ac_user = @orden.user.username
-    @contratos2 = CustomerContrato.all.order(:secu_cont)  
+    @contratos2 = CustomerContrato.all.order(:secu_cont)
 
 
 #-------
@@ -1100,76 +1100,76 @@ pdf.move_down 50
     else
       @year = Time.now.year
     end
-    
+
     if(params[:month] and params[:month].numeric?)
       @month = params[:month].to_i
     else
       @month = Time.now.month
     end
-    
+
     if(@month < 10)
       month_s = "0#{@month}"
     else
       month_s = @month.to_s
     end
-    
+
     curr_year = Time.now.year
     c_year = curr_year
     c_month = 1
-    
+
     @years = []
     @months = monthsArr
     @month_name = @months[@month - 1][0]
-    
-    
-    
+
+
+
     while(c_year > Time.now.year - 5)
       @years.push(c_year)
       c_year -= 1
     end
-    
+
     @dates = []
 
 
 
     @year = @orden.year
-    @month = @orden.month 
-    
+    @month = @orden.month
+
     last_day_of_month = last_day_of_month(@year, @month)
     @date_cats = []
-    
+
     i = 1
-    
+
     while(i <= last_day_of_month)
       if(i < 10)
         i_s = "0#{i}"
       else
         i_s = i.to_s
       end
-      
+
       @dates.push("#{@year}-#{month_s}-#{i_s}")
       @date_cats.push("'" + doDate(Time.parse("#{@year}-#{@month}-#{i_s}"), 5) + "'")
-      
+
       i += 1
     end
-    
+
     #-------
-    
-    
+
+
     @customers = Customer.all
     @motivos =Motivo.all
     @medios = Medio.all
-    @marcas= Marca.all 
-    @versions = Version.all 
-    @contratos = Contrato.all 
-    @productos = Producto.all 
+    @marcas= Marca.all
+    @versions = Version.all
+    @contratos = Contrato.all
+    @productos = Producto.all
     @ciudad = Ciudad.all
     @contratos2 = @company.get_customer_contratos()
-    @monedas = Moneda.all         
+    @monedas = Moneda.all
 
 
     @products_lines = @orden.products_lines
-    
+
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
 
@@ -1182,114 +1182,114 @@ pdf.move_down 50
   def create
     @pagetitle = "New orden"
     @action_txt = "Create"
-    
+
     #-------
       if(params[:year] and params[:year].numeric?)
       @year = params[:year].to_i
     else
       @year = Time.now.year
     end
-    
+
     if(params[:month] and params[:month].numeric?)
       @month = params[:month].to_i
     else
       @month = Time.now.month
     end
-    
+
     if(@month < 10)
       month_s = "0#{@month}"
     else
       month_s = @month.to_s
     end
-    
+
     curr_year = Time.now.year
     c_year = curr_year
     c_month = 1
-    
+
     @years = []
     @months = monthsArr
     @month_name = @months[@month - 1][0]
-    
-    
-    
+
+
+
     while(c_year > Time.now.year - 5)
       @years.push(c_year)
       c_year -= 1
     end
-    
+
     @dates = []
-    
+
     last_day_of_month = last_day_of_month(@year, @month)
     @date_cats = []
-    
+
     i = 1
-    
+
     while(i <= last_day_of_month)
       if(i < 10)
         i_s = "0#{i}"
       else
         i_s = i.to_s
       end
-      
+
       @dates.push("#{@year}-#{month_s}-#{i_s}")
       @date_cats.push("'" + doDate(Time.parse("#{@year}-#{@month}-#{i_s}"), 5) + "'")
-      
+
       i += 1
     end
-    
+
     #-------
-    
+
     items = params[:items].split(",")
-    
+
     @orden = Orden.new(orden_params)
     @company = Company.find(params[:orden][:company_id])
-    
+
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
-    
+
     @customers = Customer.all
     @motivos =Motivo.all
     @medios = Medio.all
-    @marcas= Marca.all 
-    @versions = Version.all 
-    @contratos = Contrato.all 
-    @productos = Producto.all 
+    @marcas= Marca.all
+    @versions = Version.all
+    @contratos = Contrato.all
+    @productos = Producto.all
     @ciudad = Ciudad.all
-    @monedas = Moneda.all 
-    @contratos2 = CustomerContrato.all.order(:secu_cont)  
+    @monedas = Moneda.all
+    @contratos2 = CustomerContrato.all.order(:secu_cont)
 
 
-    @orden[:month]= @month 
+    @orden[:month]= @month
     @orden[:year]= @year
-    
+
     @orden[:subtotal] = @orden.get_subtotal(items)
-    
+
     begin
       @orden[:tax] = @orden.get_tax(items, @orden[:customer_id])
     rescue
       @orden[:tax] = 0
     end
-    
+
     @orden[:total] = @orden[:subtotal] + @orden[:tax]
-    
+
     if(params[:orden][:user_id] and params[:orden][:user_id] != "")
       curr_seller = User.find(params[:orden][:user_id])
       @ac_user = curr_seller.username
     end
-    
+
     @orden[:processed] = "1"
     @orden[:tipo] = "N"
     @orden[:contrato_id] = 1449
-    
+
     respond_to do |format|
       if @orden.save
         # Create products for kit
         #@orden.add_products(items)
-        
+
         # Check if we gotta process the orden
         @orden.process()
         @orden.correlativo()
-        
+
         format.html { redirect_to(@orden, :notice => 'orden was successfully created.') }
         format.xml  { render :xml => @orden, :status => :created, :location => @orden }
       else
@@ -1298,7 +1298,7 @@ pdf.move_down 50
       end
     end
   end
-  
+
 
   # PUT /ordens/1
   # PUT /ordens/1.xml
@@ -1308,40 +1308,41 @@ pdf.move_down 50
     @customers = Customer.all
     @motivos =Motivo.all
     @medios = Medio.all
-    @marcas= Marca.all 
-    @versions = Version.all 
-    @contratos = Contrato.all 
-    @contratos2 = CustomerContrato.all.order(:secu_cont)  
+    @marcas= Marca.all
+    @versions = Version.all
+    @contratos = Contrato.all
+    @contratos2 = CustomerContrato.all.order(:secu_cont)
 
     items = params[:items].split(",")
-    
+
     @orden =Orden.find(params[:id])
     @company = Company.find(1)
-    
+
     if(params[:ac_customer] and params[:ac_customer] != "")
       @ac_customer = params[:ac_customer]
     else
       @ac_customer = @orden.customer.name
     end
-    
-    
+
+
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
-       
+
      @orden.calcularTarifa(params[:orden][:tiempo])
      @orden[:month] = params[:month]
      @orden[:year] = params[:year]
-     
+
      @orden[:subtotal] = @orden.get_subtotal("subtotal")
      @orden[:tax] = @orden.get_subtotal("tax")
      @orden[:total] = @orden[:subtotal] + @orden[:tax]
-    
+
     respond_to do |format|
       if @orden.update_attributes(orden_params)
-        
-          #@orden.calcularTarifa(@orden.tiempo)    
+
+          #@orden.calcularTarifa(@orden.tiempo)
           @orden.process()
-        
+          
+
         format.html { redirect_to(@orden, :notice => 'orden was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -1367,95 +1368,95 @@ pdf.move_down 50
 
 ####################################################################
 
-def crear 
+def crear
     @pagetitle = "Nueva Orden Digital "
     @action_txt = "Create"
-    
+
     #-------
     if(params[:year] and params[:year].numeric?)
       @year = params[:year].to_i
     else
       @year = Time.now.year
     end
-    
+
     if(params[:month] and params[:month].numeric?)
       @month = params[:month].to_i
     else
       @month = Time.now.month
     end
-    
+
     if(@month < 10)
       month_s = "0#{@month}"
     else
       month_s = @month.to_s
     end
-    
+
     curr_year = Time.now.year
     c_year = curr_year
     c_month = 1
-    
+
     @years = []
     @months = monthsArr
     @month_name = @months[@month - 1][0]
-    
-    
-    
+
+
+
     while(c_year > Time.now.year - 5)
       @years.push(c_year)
       c_year -= 1
     end
-    
+
     @dates = []
-    
+
     last_day_of_month = last_day_of_month(@year, @month)
     @date_cats = []
-    
+
     i = 1
-    
+
     while(i <= last_day_of_month)
       if(i < 10)
         i_s = "0#{i}"
       else
         i_s = i.to_s
       end
-      
+
       @dates.push("#{@year}-#{month_s}-#{i_s}")
       @date_cats.push("'" + doDate(Time.parse("#{@year}-#{@month}-#{i_s}"), 5) + "'")
-      
+
       i += 1
     end
-    
+
     #-------
-    
+
     items = params[:items].split(",")
-    
+
     @orden = Orden.new(orden_params)
     @company = Company.find(params[:orden][:company_id])
-    
+
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
-    
+
     @customers = Customer.all
     @motivos =Motivo.all
     @medios = Medio.all
-    @marcas= Marca.all 
-    @versions = Version.all 
-    @contratos = Contrato.all 
-    @productos = Producto.all 
+    @marcas= Marca.all
+    @versions = Version.all
+    @contratos = Contrato.all
+    @productos = Producto.all
     @ciudad = Ciudad.all
-    
-    @orden[:month]= @month 
+
+    @orden[:month]= @month
     @orden[:year]= @year
     @orden[:customer_id]= params[:orden][:customer_id]
     @orden[:avisodetail_id]= params[:orden][:avisodetail_id]
     @orden[:processed] = "1"
     @orden[:tipo] = "D"
     @orden[:subtotal] = params[:orden][:tarifa]
-    
+
     @orden[:total] = @orden[:subtotal] * 1.18
-    
+
     @orden[:tax] = @orden[:total] - @orden[:subtotal]
-    
+
     if(params[:orden][:user_id] and params[:orden][:user_id] != "")
       curr_seller = User.find(params[:orden][:user_id])
       @ac_user = curr_seller.username
@@ -1463,12 +1464,12 @@ def crear
 
     respond_to do |format|
     if  @orden.save
-        
+
         @orden.add_digital()
-        
+
         @orden.process()
         @orden.correlativo()
-        
+
         format.html { redirect_to(@orden, :notice => 'Orden fue creada con exito.') }
         format.xml  { render :xml => @orden, :status => :created, :location => @orden }
       else
@@ -1477,7 +1478,7 @@ def crear
       end
     end
   end
-  
+
 
 
 ####################################################################
@@ -1485,7 +1486,7 @@ def crear
   # reporte completo
   def build_pdf_header_rpt5(pdf)
       pdf.font "Helvetica" , :size => 8
-     $lcCli  =  @company.name 
+     $lcCli  =  @company.name
      $lcdir1 = @company.address1+@company.address2+@company.city
 
      $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
@@ -1512,14 +1513,14 @@ def crear
         end
 
         pdf.move_down 10
-      end      
-      pdf 
-  end   
+      end
+      pdf
+  end
 
   def build_pdf_body_rpt5(pdf)
-    
-    pdf.text "Listado de Ordenes.   Mes:"+ @mes.to_s + " Año : "+@anio.to_s , :size => 8 
-    
+
+    pdf.text "Listado de Ordenes.   Mes:"+ @mes.to_s + " Año : "+@anio.to_s , :size => 8
+
     pdf.font "Helvetica" , :size => 6
 
       headers = []
@@ -1537,39 +1538,39 @@ def crear
 
       @totales = 0
       @cantidad = 0
-      
+
       @subtotal = 0
       @tax = 0
       @total  = 0
-      
+
       nroitem = 1
 
 
        for  product in @ordenes_rpt
-            
-            
-            row = []         
+
+
+            row = []
             row << nroitem.to_s
-            if product.contrato != nil 
+            if product.contrato != nil
             row << product.contrato.code
-            else 
+            else
             row << ""
             end
             if product.contrato != nil
-            row << product.contrato.customer.name 
-            else 
+            row << product.contrato.customer.name
+            else
               row << ""
-            end 
-            row << product.medio.descrip 
-            row << product.marca.name 
-            
-            row << product.producto.name 
-            
+            end
+            row << product.medio.descrip
+            row << product.marca.name
+
+            row << product.producto.name
+
             row << product.version.descrip
-            row << product.tiempo 
-            row << product.subtotal 
-            
-            
+            row << product.tiempo
+            row << product.subtotal
+
+
             table_content << row
 
             @subtotal += product.subtotal
@@ -1577,11 +1578,11 @@ def crear
             @total += product.total
 
             nroitem=nroitem + 1
-       
+
         end
-      
-      
-            row = []         
+
+
+            row = []
             row << ""
             row << ""
             row << ""
@@ -1590,142 +1591,142 @@ def crear
             row << ""
             row << "TOTAL => "
             row << ""
-            row << money(@subtotal) 
+            row << money(@subtotal)
             table_content << row
-      
-      
+
+
       result = pdf.table table_content, {:position => :center,
                                         :header => true,
                                         :width => pdf.bounds.width
-                                        } do 
+                                        } do
                                           columns([0]).align=:center
                                           columns([1]).align=:left
                                           columns([2]).align=:left
                                           columns([3]).align=:left
                                           columns([4]).align=:left
-                                          columns([5]).align=:center  
+                                          columns([5]).align=:center
                                           columns([6]).align=:right
                                           columns([7]).align=:right
                                           columns([8]).align=:right
                                           columns([9]).align=:right
                                           columns([10]).align=:right
-                                        end                                          
-      pdf.move_down 10      
-      #totales 
-      
-      pdf 
+                                        end
+      pdf.move_down 10
+      #totales
+
+      pdf
 
     end
 
-    def build_pdf_footer_rpt5(pdf)            
-                        
-      pdf.text "" 
+    def build_pdf_footer_rpt5(pdf)
+
+      pdf.text ""
       pdf.bounding_box([0, 30], :width => 535, :height => 40) do
       pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
 
       end
 
       pdf
-      
+
   end
 
   def rpt_ordenes1_pdf
-   
-    @company=Company.find(1)          
-    @mes = params[:month]    
-    @anio = params[:year]    
-    @mes1 = params[:month1]    
-    @anio1 = params[:year1]    
-    
+
+    @company=Company.find(1)
+    @mes = params[:month]
+    @anio = params[:year]
+    @mes1 = params[:month1]
+    @anio1 = params[:year1]
+
     @marca= Marca.find_by("id = ?", params[:marca_id]).order(:name)
-    
-    @cliente_check = params[:check_cliente]   
-    @medio_check = params[:check_medio]   
-    @producto_check = params[:check_producto]   
-    @marca_check = params[:check_marca]   
+
+    @cliente_check = params[:check_cliente]
+    @medio_check = params[:check_medio]
+    @producto_check = params[:check_producto]
+    @marca_check = params[:check_marca]
     @version_check = params[:check_version]
-    @ciudad_check = params[:check_ciudad]   
-    @tipoorden_check = params[:check_tipoorden]   
-  
-    
+    @ciudad_check = params[:check_ciudad]
+    @tipoorden_check = params[:check_tipoorden]
+
+
     if @cliente_check == "true"
       @customer = ""
       @customer_name = ""
     else
-      @customer = params[:customer_id]     
+      @customer = params[:customer_id]
       @customer_name =  @company.get_cliente_name(@customer)
-    end 
-    
+    end
+
     if @medio_check == "true"
         @medio=""
     else
-        @medio =params[:medio_id]     
-    end 
-    
-    
+        @medio =params[:medio_id]
+    end
+
+
     if @producto_check == "true"
       @producto=""
-    else 
-      @producto =params[:producto_id]     
-    end 
-    
+    else
+      @producto =params[:producto_id]
+    end
+
     if @marca_check == "true"
         @marca=""
     else
-        @marca =params[:marca_id]     
-    end 
-    
+        @marca =params[:marca_id]
+    end
+
     if @version_check == "true"
       @version = ""
     else
-      @version =params[:version_id]     
-    end 
+      @version =params[:version_id]
+    end
     if @ciudad_check == "true"
       @ciudad = ""
     else
-      @ciudad =params[:ciudad_id]     
-    end 
-    
+      @ciudad =params[:ciudad_id]
+    end
+
     if @tipoorden_check == "true"
       @tipoorden =""
     else
-      @tipoorden = params[:tipo]     
-    end 
-   
+      @tipoorden = params[:tipo]
+    end
 
-    
-    
+
+
+
     @ordenes_rpt = @company.get_ordenes_cliente_all(@mes,@anio,@mes1,@anio1,@customer,@medio,@marca,@producto,@version,@ciudad,@tipoorden)
-    
-    
+
+
       Prawn::Document.generate("app/pdf_output/rpt_ordenes1.pdf") do |pdf|
-      
+
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt5(pdf)
         pdf = build_pdf_body_rpt5(pdf)
         build_pdf_footer_rpt5(pdf)
-        $lcFileName =  "app/pdf_output/rpt_ordenes1.pdf"              
-    end     
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+        $lcFileName =  "app/pdf_output/rpt_ordenes1.pdf"
+    end
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
     send_file("app/pdf_output/rpt_ordenes1.pdf", :type => 'application/pdf', :disposition => 'inline')
 
   end
 
 
-#fin reporte de ingresos x producto 
+#fin reporte de ingresos x producto
 
 
 def foot_data_headers_1
 
     #{@purchaseorder.description}
-     
+
      client_data_headers_1  = [["Cliente : ", $lcCli]]
       client_data_headers_1 <<  ["RUC : ", $lcRucCli]
       client_data_headers_1 <<  ["Direccion : ", $lcDircli]
       client_data_headers_1 <<  ["Contrato : ", $lcContrato]
       client_data_headers_1
-      
-      
+
+
   end
 
 
@@ -1734,18 +1735,18 @@ def foot_data_headers_1
  def client_data_headers_1
 
     #{@purchaseorder.description}
-     
+
      client_data_headers_1  = [["Cliente : ", $lcCli]]
       client_data_headers_1 <<  ["Producto : ",$lcProducto ]
       client_data_headers_1 <<  ["Motivo : ", $lcVersion]
       client_data_headers_1 <<  ["Duracion : ",$lcDuracion ]
-      
+
       client_data_headers_1
-      
-      
+
+
   end
 
-  def invoice_headers_1            
+  def invoice_headers_1
       invoice_headers_1  = [["Medio : ", $lcMedio]]
       invoice_headers_1 <<  ["Cobertura : ", $lcCobertura]
       invoice_headers_1 <<  ["Moneda : ", $lcMoneda]
@@ -1753,14 +1754,14 @@ def foot_data_headers_1
   end
 
  def invoice_headers_2
-      invoice_headers_2  = [["Marca: ", $lcMarca]] 
+      invoice_headers_2  = [["Marca: ", $lcMarca]]
       invoice_headers_2 << ["Producto  : ",$lcProducto]
       invoice_headers_2 << ["Version  : ",$lcVersion]
       invoice_headers_2 << ["Duracion  : ",$lcDuracion]
-          
+
       invoice_headers_2
-      
-      
+
+
   end
 
 
@@ -1770,8 +1771,8 @@ def foot_data_headers_1
       client_headers
   end
 
-  def orden_headers_rpt            
-      orden_headers  = [["Fecha : ",$lcHora]]    
+  def orden_headers_rpt
+      orden_headers  = [["Fecha : ",$lcHora]]
       orden_headers
   end
 
@@ -1780,33 +1781,33 @@ def foot_data_headers_1
       invoice_summary << ["SubTotal :", money(@orden.subtotal) ]
       invoice_summary << ["IGV    : ",money(@orden.tax) ]
       invoice_summary << ["Total  : ", money(@orden.total) ]
-      
+
       invoice_summary
     end
-    
+
    def invoice_summary2
       invoice_summary2 = []
       invoice_summary2 << ["SubTotal",  ActiveSupport::NumberHelper::number_to_delimited(@orden.subtotal,delimiter:",",separator:".").to_s]
       invoice_summary2 << ["IGV",ActiveSupport::NumberHelper::number_to_delimited(@orden.tax,delimiter:",",separator:".").to_s]
       invoice_summary2 << ["Total", ActiveSupport::NumberHelper::number_to_delimited(@orden.total ,delimiter:",",separator:".").to_s]
-      
+
       invoice_summary2
     end
 
 
-  
 
-  def update_marcas 
-    
+
+  def update_marcas
+
      customer = Customer.find(params[:customer_id])
     # map to name and id for use in our options_for_select
-     puts customer.id 
+     puts customer.id
      @marcas = Marca.where(customer_id: customer.id)
      @productos = Producto.where(marca_id: @marcas.last.id)
      @versions = Version.where(producto_id: @productos.last.id)
-  
+
   end
-  
+
 
   def update_productos
     # updates songs based on artist selected
@@ -1814,108 +1815,108 @@ def foot_data_headers_1
      @productos = Producto.where(marca_id: @marcas.id)
      @versions = Version.where(producto_id: @productos.last.id)
 
-     
+
   end
 
   def update_versions
     # updates songs based on artist selected
     @productos = Producto.find(params[:producto_id])
-   
+
     @versions = Version.where(producto_id: @productos.id)
 
 
      puts "update versions..."
-     puts @versions.last.descrip  
+     puts @versions.last.descrip
 
   end
-  
+
    def reportes
-  
-     @company=Company.find(1)          
-    @mes  = params[:month]    
-    @anio = params[:year]    
-    @mes1 = params[:month1]    
-    @anio1 = params[:year1]    
-    
+
+     @company=Company.find(1)
+    @mes  = params[:month]
+    @anio = params[:year]
+    @mes1 = params[:month1]
+    @anio1 = params[:year1]
+
       @marca= Marca.find_by("id = ?", params[:marca_id])
-    
-    @cliente_check = params[:check_cliente]   
-    @medio_check = params[:check_medio]   
-    @marca_check = params[:check_marca]   
-    @producto_check = params[:check_producto]   
+
+    @cliente_check = params[:check_cliente]
+    @medio_check = params[:check_medio]
+    @marca_check = params[:check_marca]
+    @producto_check = params[:check_producto]
     @version_check = params[:check_version]
-    @ciudad_check = params[:check_ciudad]   
-    @tipoorden_check = params[:check_tipoorden]   
-  
-    
+    @ciudad_check = params[:check_ciudad]
+    @tipoorden_check = params[:check_tipoorden]
+
+
     if @cliente_check == "true"
       @customer = ""
       @customer_name = ""
     else
-      @customer = params[:customer_id]     
+      @customer = params[:customer_id]
       @customer_name =  @company.get_cliente_name(@customer)
-    end 
-    
+    end
+
     if @producto_check == "true"
       @producto=""
-    else 
-      @producto =params[:producto_id]     
-    end 
+    else
+      @producto =params[:producto_id]
+    end
     if @medio_check == "true"
         @medio=""
     else
-        @medio =params[:medio_id]     
-    end 
-    
+        @medio =params[:medio_id]
+    end
+
     if @marca_check == "true"
         @marca=""
     else
-        @marca =params[:marca_id]     
-    end 
-    
+        @marca =params[:marca_id]
+    end
+
     if @version_check == "true"
       @version = ""
     else
-      @version =params[:version_id]     
-    end 
+      @version =params[:version_id]
+    end
     if @ciudad_check == "true"
       @ciudad = ""
     else
-      @ciudad =params[:ciudad_id]     
-    end 
-    
+      @ciudad =params[:ciudad_id]
+    end
+
     if @tipoorden_check == "true"
       @tipoorden =""
     else
-      @tipoorden = params[:tipo]     
-    end 
-    
+      @tipoorden = params[:tipo]
+    end
+
     @ordenes_rpt = @company.get_ordenes_cliente_all(@mes.to_i ,@anio.to_i,@mes1.to_i,@anio1.to_i,@customer,@medio,@marca,@producto,@version,@ciudad,@tipoorden)
 
-    if  @ordenes_rpt.count > 0 
+    if  @ordenes_rpt.count > 0
 
         case params[:print]
-          when "To PDF" then 
-            begin 
+          when "To PDF" then
+            begin
              render  pdf: "Ordenes ",template: "ordens/orden_rpt2.pdf.erb",locals: {:orden => @ordenes_rpt}
-            
-            end   
+
+            end
           when "To Excel" then render xlsx: 'exportxls'
           else render action: "index"
         end
-    
-    end 
 
-   
+    end
+
+
   end
-  
+
   def import
       Orden.import(params[:file])
        redirect_to root_url, notice: "Contratos importados."
-  end 
+  end
 
 
-  
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -1929,7 +1930,7 @@ def foot_data_headers_1
     params.require(:orden).permit(:contrato_id , :fecha, :medio_id , :marca_id,:version_id,
     :fecha1, :fecha2, :tiempo, :code , :company_id , :subtotal, :tax, :total, :user_id ,
     :processed , :customer_id, :description, :rating , :month, :year, :revision, :producto_id,
-    :ciudad_id,:fecha_inicio, :fecha_fin, :tarifa , :aviso_detail_id, :avisodetail_id, 
+    :ciudad_id,:fecha_inicio, :fecha_fin, :tarifa , :aviso_detail_id, :avisodetail_id,
     :tipo, :secu_cont, :moneda_id, :quantity)
 
 
