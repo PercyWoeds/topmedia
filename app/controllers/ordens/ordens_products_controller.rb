@@ -135,7 +135,7 @@ class Ordens::OrdensProductsController < ApplicationController
            @orden[:tax] = @orden.get_subtotal("tax")
            @orden[:total] = @orden[:subtotal] + @orden[:tax]
 
-           @orden.update_attributes(:subtotal=> @orden[:subtotal],:quantity => @orden[:quantity])
+           @orden.update_attributes(:subtotal=> @orden[:subtotal])
 
 
         format.html { redirect_to @orden, notice: 'Orden product was successfully updated.' }
