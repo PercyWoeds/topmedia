@@ -115,19 +115,10 @@ class Ordens::OrdensProductsController < ApplicationController
     @orden_product[:price] = (@orden_product.tarifa / 30 * @orden.tiempo )
     @company = Company.find(1)
 
-    sum_dias = (@orden_product.d01 + @orden_product.d02 + @orden_product.d03 + @orden_product.d04+
-                @orden_product.d05 + @orden_product.d06 + @orden_product.d07 + @orden_product.d08+
-                @orden_product.d09 + @orden_product.d10 + @orden_product.d11 + @orden_product.d12+
-                @orden_product.d13 + @orden_product.d14 + @orden_product.d15 + @orden_product.d16+
-                @orden_product.d17 + @orden_product.d18 + @orden_product.d19 + @orden_product.d20+
-                @orden_product.d21 + @orden_product.d22 + @orden_product.d23 + @orden_product.d24+
-                @orden_product.d25 + @orden_product.d26 + @orden_product.d27 + @orden_product.d28+
-                @orden_product.d29 + @orden_product.d30 + @orden_product.d31)
+   
 
-    @orden_product[:quantity] = sum_dias
-    @orden_product[:total] = @orden_product.price * sum_dias
-
-
+    puts "cantidadess...."
+    puts sum_dias
     respond_to do |format|
       if @orden_product.update(orden_product_params)
 

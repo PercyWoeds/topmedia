@@ -4,6 +4,7 @@ class OrdenProduct < ActiveRecord::Base
 
 	belongs_to :orden 
 	belongs_to :avisodetail
+  before_save :set_quantity 
 
 
 
@@ -110,5 +111,19 @@ class OrdenProduct < ActiveRecord::Base
         end
     end      
 
+  def set_quantity 
+   
 
+     self.quantity =(self.d01 + self.d02 + self.d03 + self.d04 +  self.d05 + self.d06 +  self.d07 +
+                self.d08 + self.d09 + self.d10 + self.d11 +  self.d12 + self.d13 +  self.d14 +
+                self.d15 + self.d16 + self.d17 + self.d18 +  self.d19 + self.d20 +  self.d21 +
+                self.d22 + self.d23 + self.d24 + self.d25 +  self.d26 +  self.d27 + self.d28 + 
+                self.d29 + self.d30 + self.d31 )
+    self.total = self.price * self.quantity
+
+    puts self.quantity 
+    puts self.d25 
+
+  end 
+  
 end

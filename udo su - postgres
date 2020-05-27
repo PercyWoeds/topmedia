@@ -1,0 +1,9 @@
+[0;1;32m●[0m postgresql.service - PostgreSQL RDBMS
+   Loaded: loaded (/lib/systemd/system/postgresql.service; enabled; vendor preset: enabled)
+   Active: [0;1;32mactive (exited)[0m since Mon 2020-05-25 12:49:32 -05; 28min ago
+ Main PID: 1069 (code=exited, status=0/SUCCESS)
+    Tasks: 0 (limit: 2134)
+   CGroup: /system.slice/postgresql.service
+
+may 25 12:49:32 percy2020 systemd[1]: Starting PostgreSQL RDBMS...
+may 25 12:49:32 percy2020 systemd[1]: Started PostgreSQL RDBMS.

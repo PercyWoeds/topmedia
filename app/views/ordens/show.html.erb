@@ -204,6 +204,9 @@
       <th>
         Cantidad 
       </th>
+       <th>
+        R.Miles
+      </th>
       
       <th>
         Tarifa
@@ -325,6 +328,10 @@
           <td class="small bordered_bottom bordered_right">
             <%= money(product.quantity) %>
           </td>
+           <td class="small bordered_bottom bordered_right">
+            <%= money(product.rating2) %>
+          </td>
+          
           
           <td class="small bordered_bottom bordered_right">
             <%= money(product.tarifa) %>
@@ -345,12 +352,12 @@
     
     <% end %>
     <tr>
-      <td colspan="35" class="bordered_bottom bordered_right">
+      <td colspan="38" class="bordered_bottom bordered_right">
         &nbsp;
       </td>
     </tr>
     <tr>
-      <td colspan="34" class="bordered_bottom bordered_right bold">
+      <td colspan="37" class="bordered_bottom bordered_right bold">
         Subtotal:
       </td>
       <td class="bordered_bottom bordered_right bold right">
@@ -358,7 +365,7 @@
       </td>
     </tr>
     <tr>
-      <td colspan="34" class="bordered_bottom bordered_right bold">
+      <td colspan="37" class="bordered_bottom bordered_right bold">
         IGV:
       </td>
       <td class="bordered_bottom bordered_right bold right">
@@ -366,7 +373,7 @@
       </td>
     </tr>
     <tr>
-      <td colspan="34" class="bordered_bottom bordered_right bold">
+      <td colspan="37" class="bordered_bottom bordered_right bold">
         Total:
       </td>
       <td class="bordered_bottom bordered_right bold right">
