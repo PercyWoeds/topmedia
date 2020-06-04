@@ -938,9 +938,10 @@ new_invoice_item.save
               row << "S/."
             end 
 
-            row << product.subtotal.to_s
-            row << product.tax.to_s
-            row << product.total.to_s
+
+            row << money(product.subtotal)
+            row << money(product.tax)
+            row << money(product.total)
                         
             table_content << row
 
