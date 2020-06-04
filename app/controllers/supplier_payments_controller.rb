@@ -1970,7 +1970,7 @@ def list_receive_supplierpayments
     end 
       
     case params[:print]
-      when "PDF" then 
+      when "To PDF" then 
        begin 
          render  pdf: "Contratos ",template: "contratos/contrato_rpt2.pdf.erb",locals: {:contrato => @contratos_rpt},
          :header => {

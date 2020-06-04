@@ -1129,7 +1129,6 @@ new_invoice_item.save
       #totales 
 
       pdf 
-
     end
 
     def build_pdf_footer_rpt(pdf)
