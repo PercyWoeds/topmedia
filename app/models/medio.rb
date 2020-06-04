@@ -1,6 +1,6 @@
 class Medio < ActiveRecord::Base
     validates_uniqueness_of :estacion 
-	validates_presence_of :descrip,:grupo,:estacion,:code 
+	validates_presence_of :descrip,:grupo,:estacion
 	
 	before_save :set_full_name
 	
