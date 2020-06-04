@@ -1955,7 +1955,7 @@ def list_receive_supplierpayments
 
     lcmonedadolares ="1"
     lcmonedasoles ="2"
-    @cliente_check = params[:check_cliente]  
+    @cliente_check = params[:check_medio]  
 
     if @cliente_check == "true"
       @customer = ""
