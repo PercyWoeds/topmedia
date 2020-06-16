@@ -28,8 +28,8 @@
         
         <td><%= stamentacount.fecha1.strftime("%d/%m/%Y") %></td>
         <td><%= stamentacount.fecha2.strftime("%d/%m/%Y") %></td>
-        <td><%= stamentacount.saldo_inicial %></td>
-        <td><%= stamentacount.saldo_final %></td>
+        <td><%= money(stamentacount.saldo_inicial) %></td>
+        <td><%= money(stamentacount.saldo_final) %></td>
         <td><%= link_to 'Ver', stamentacount %></td>
         <td><%= link_to 'Editar', edit_stamentacount_path(stamentacount) %></td>
         <% if current_user.email == "percywoeds@gmail.com"%>

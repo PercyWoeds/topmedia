@@ -16,6 +16,7 @@ class ConciliabanksController < ApplicationController
 
   end
 
+
 # Export serviceorder to PDF
   def pdf
     @conciliabank = Conciliabank.find(params[:id])
@@ -133,6 +134,7 @@ class ConciliabanksController < ApplicationController
       format.json { head :no_content }
     end
   end
+
 
 
   def do_process 

@@ -28,8 +28,8 @@
         <td><%= conciliabank.bank_acount.moneda.description %></td>
         <td><%= conciliabank.fecha1.strftime("%d/%m/%Y") %></td>
         <td><%= conciliabank.fecha2.strftime("%d/%m/%Y") %></td>
-        <td><%= conciliabank.saldo_inicial %></td>
-        <td><%= conciliabank.saldo_final %></td>
+        <td><%= money(conciliabank.saldo_inicial) %></td>
+        <td><%= money(conciliabank.saldo_final) %></td>
       
         <td><%= link_to 'Ver', conciliabank %></td>
         <td><%= link_to 'Editar', edit_conciliabank_path(conciliabank) %></td>
