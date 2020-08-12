@@ -58,7 +58,7 @@
         <td class="small bordered_bottom bordered_right"><%= link_to 'Cuotas', contrato %></td>
         <td class="small bordered_bottom bordered_right"><%= link_to 'Editar', edit_contrato_path(contrato) %></td>
         <% if current_user.email== "percywoeds@gmail.com"%>
-        <td class="small bordered_bottom bordered_right"><%= link_to 'Eliminar', contrato, method: :delete, data: { confirm: 'Esta seguro de eliminar ?' } %></td>
+        <td class="small bordered_bottom bordered_right"><%= link_to 'Eliminar', contrato, method: :delete,  confirm: 'Esta seguro de eliminar ?'  %></td>
         <% end%>
       </tr>
     <% end %>

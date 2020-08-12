@@ -157,19 +157,22 @@ class CustomersController < ApplicationController
 
     if  Contrato.exists?(customer_id: @customer)
           flash[:notice] = "No puede eliminar cliente vinculado a Contrato."
+
+       respond_to do |format|
+        format.html { redirect_to("/companies/customers/" + company_id.to_s )}
+        format.xml  { head :ok }
+      end
+
     else 
 
        @customer.destroy
 
       respond_to do |format|
-        format.html { redirect_to("/companies/customers/" + company_id.to_s)  :notice => 'Customer was successfully updated.')}
+        format.html { redirect_to("/companies/customers/" + company_id.to_s ,  :notice => 'Customer was successfully updated.')}
         format.xml  { head :ok }
       end
+
     end 
-    
-    end
-
-
 
   end
   

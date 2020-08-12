@@ -18,10 +18,10 @@ class Contrato < ActiveRecord::Base
 
 
 
-  validates_presence_of :code,:fecham:customer_id,:medio_id, :moneda_id,:tipocontrato_id,:description,:codigointerno
+  validates_presence_of :code,:fecha,:customer_id,:medio_id, :moneda_id,:tipocontrato_id,:description,:codigointerno
   validates_numericality_of :importe,:nrocuotas,:comision1,:comision2,:comision3
 
-  
+
   TABLE_HEADERS = [ "CUOTA","VALOR VENTA",
                      "IGV.",
                      "TOTAL
