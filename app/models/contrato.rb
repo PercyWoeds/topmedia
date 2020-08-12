@@ -1,7 +1,7 @@
 class Contrato < ActiveRecord::Base
   validates_uniqueness_of :code
 
-  #validates_numericality_of :importe,:nrocuotas,:comision1,:comision2,:comision3
+  
   
   belongs_to :customer 
   belongs_to :medio
@@ -17,12 +17,18 @@ class Contrato < ActiveRecord::Base
   scope :by_year, lambda { |year| where('extract(year from fecha ) = ?', year) }
 
 
+
+  validates_presence_of :code,:fecham:customer_id,:medio_id, :moneda_id,:tipocontrato_id,:description,:codigointerno
+  validates_numericality_of :importe,:nrocuotas,:comision1,:comision2,:comision3
+
+  
   TABLE_HEADERS = [ "CUOTA","VALOR VENTA",
                      "IGV.",
                      "TOTAL
                      CUOTA",
                      "FACTURA
                      CANAL",
+
                      "FACTURA
                      MASA",
                      "FECHA
