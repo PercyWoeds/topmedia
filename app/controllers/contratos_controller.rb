@@ -76,8 +76,8 @@ class ContratosController < ApplicationController
   def create
     @contrato = Contrato.new(contrato_params)
     @customers = Customer.all.order(:name)
-    @medios =  Medio.all.order(:name) 
-    
+    @monedas = Moneda.all
+    @medios =Medio.all.order(:full_name)
     
     respond_to do |format|
       if @contrato.save

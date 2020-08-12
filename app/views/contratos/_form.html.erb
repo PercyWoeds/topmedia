@@ -41,6 +41,7 @@
     </div>
   
 
+
     <div class="field">
       <%= f.label :customer_id,"Clientes  " %><br />
     <%= f.collection_select :customer_id, @customers, :id, :name, :prompt => true %>
@@ -58,7 +59,7 @@
 
 
     <div class="field">
-    <%= f.label :moneda_id ,"  "%><br />
+    <%= f.label :moneda_id ," Moneda "%><br />
     <%= f.collection_select :moneda_id, @monedas, :id, :description, :prompt => true %>
     </div>
 
