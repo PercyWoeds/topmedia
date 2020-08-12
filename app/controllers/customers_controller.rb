@@ -165,6 +165,7 @@ class CustomersController < ApplicationController
         format.html { redirect_to("/companies/customers/" + company_id.to_s)  :notice => 'Customer was successfully updated.')}
         format.xml  { head :ok }
       end
+    end 
     
     end
 
