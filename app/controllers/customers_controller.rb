@@ -154,12 +154,22 @@ class CustomersController < ApplicationController
   def destroy
     @customer = Customer.find(params[:id])
     company_id = @customer[:company_id]
-    @customer.destroy
 
-    respond_to do |format|
-      format.html { redirect_to("/companies/customers/" + company_id.to_s) }
-      format.xml  { head :ok }
+    if  Contrato.exists?(customer_id: @customer)
+          flash[:notice] = "No puede eliminar cliente vinculado a Contrato."
+    else 
+
+       @customer.destroy
+
+      respond_to do |format|
+        format.html { redirect_to("/companies/customers/" + company_id.to_s)  :notice => 'Customer was successfully updated.')}
+        format.xml  { head :ok }
+      end
+    
     end
+
+
+
   end
   
     private
