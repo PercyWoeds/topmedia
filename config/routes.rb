@@ -43,6 +43,12 @@
 
       collection { get :crear}
       collection { get :reportes}
+collection { get :rpt_ccobrar10}
+    collection { get :rpt_ccobrar20}
+    collection { get :rpt_ccobrar30}
+    collection { get :rpt_ccobrar40}
+
+      
       
       collection { get :update_marcas}
       collection { get :update_productos}
@@ -184,7 +190,12 @@
 
     end 
     
+    resources :supplier_payments do
+          
     
+    
+    
+    end 
     
   resources :deliverymines   
 
@@ -242,15 +253,21 @@
     collection { get :generar  }
     collection { post :import }
     collection { get :excel }
+
+
     collection { get :rpt_compras_01 }
 
     collection { post :discontinue }
+
+    
   
     collection do 
       put :discontinue 
     end 
     
   end 
+
+
   resources :stores  do 
     collection { post :search }    
   end 
@@ -374,6 +391,9 @@
   match 'companies/reports/rpt_serviceorder_all/:company_id' => 'reports#rpt_serviceorder_all', via: [:get, :post]
   match 'companies/reports/rpt_purchases_all/:company_id' => 'reports#rpt_purchases_all', via: [:get, :post]
   match 'companies/reports/rpt_purchase2_all/:company_id' => 'reports#rpt_purchase2_all', via: [:get, :post]
+ 
+  match 'companies/reports/rpt_ccobrar10/:company_id' => 'reports#rpt_ccobrar10', via: [:get, :post]
+  match 'companies/reports/rpt_ccobrar20/:company_id' => 'reports#rpt_ccobrar20', via: [:get, :post]
 
   match 'companies/reports/rpt_concilia_1' => 'reports#rpt_concilia_1', via: [:get, :post]
 
@@ -430,6 +450,8 @@
   
   match 'companies/reports/rpt_parte_1/:company_id' => 'reports#rpt_parte_1', via: [:get, :post]
   
+   
+
   # Company users
 
   match 'company_users/ac_users' => 'company_users#ac_users', via: [:get, :post]

@@ -1857,6 +1857,7 @@ def foot_data_headers_1
       @customer_name =  @company.get_cliente_name(@customer)
     end
 
+
     if @producto_check == "true"
       @producto=""
     else
@@ -1914,6 +1915,69 @@ def foot_data_headers_1
       Orden.import(params[:file])
        redirect_to root_url, notice: "Contratos importados."
   end
+
+
+
+  #**************************************************************************+++++++++++++++++++++
+  #
+  #**************************************************************************+++++++++++++++++++++
+
+ def rpt_ccobrar10 
+  
+    $lcxCliente ="1"
+    @company=Company.find(1)      
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]
+    @customer= params[:customer_id]
+
+    lcmonedadolares ="1"
+    lcmonedasoles ="2"
+    @medio_check = params[:check_medio]  
+    puts "valor medio checkl "
+    puts @medio_check
+ 
+
+    if @medio_check == "true"
+     
+        @medio = ""
+        @medio_name = ""
+        @contratos_rpt = @company.get_contratos_medio1(@fecha1,@fecha2)
+
+    else
+       @medio = params[:medio_id]
+       @medio_name = ""
+       @medio_name =  @company.get_medio_name(@medio)
+       @contratos_rpt = @company.get_contratos_medio_canal1(@fecha1,@fecha2,@medio)
+
+    end
+
+
+
+    case params[:print]
+      when "PDF" then 
+       begin 
+         render  pdf: "Contratos ",template: "supplier_payments/rpt_ccobrar10.pdf.erb",locals: {:contrato => @contratos_rpt},
+          :orientation => 'Landscape',
+         :header => {
+           :spacing => 5,
+                           :html => {
+                           :template => 'layouts/pdf-header4.html', 
+                           right: '[page] of [topage]'
+                  }
+               },
+
+               :footer => { :html => { template: 'layouts/pdf-footers.html' }       }  ,   
+               :margin => {bottom: 35} 
+                
+       end   
+
+
+      when "Excel" then render xlsx: 'rpt_contratos_1'
+      else render action: "index"
+    end
+  end
+
+
 
 
 

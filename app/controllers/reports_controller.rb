@@ -1449,4 +1449,20 @@ class ReportsController < ApplicationController
 
   end
 
+  def rpt_ccobrar10
+
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Reportes de Contratos "    
+    @customers = @company.get_customers()
+     @medios    = Medio.order(:descrip)
+    @monedas=@company.get_monedas    
+  end
+
+def rpt_ccobrar20 
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Reportes de Contratos "    
+    @customers = @company.get_customers()
+    @monedas=@company.get_monedas    
+     @medios    = Medio.order(:descrip)
+  end
 end

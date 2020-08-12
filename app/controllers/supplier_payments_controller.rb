@@ -2017,7 +2017,6 @@ def list_receive_supplierpayments
 
 
 
-
   
   private
   def supplierpayment_params

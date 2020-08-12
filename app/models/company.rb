@@ -227,6 +227,11 @@ class Company < ActiveRecord::Base
      cliente = Customer.find(id)
      return cliente.name 
   end 
+def get_medio_name(id)
+     cliente = Medio.find(id) 
+     return cliente.descrip 
+  end 
+
   def get_categoria_name(id)
      category = ProductsCategory.find(id)
      return category.category
@@ -2444,11 +2449,34 @@ def get_contratos_medio(fecha1,fecha2)
     @contratos = Contrato.select("medio_id").where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).group(:medio_id).order(:medio_id)
     return @contratos
 end 
-
-def get_contratos_medio_customer(fecha1,fecha2,medio)    
-    @contratos = Contrato.where(["fecha >= ? and fecha <= ? and medio_id=?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",medio ]).group(:customer_id).order(:customer_id)
+def get_contratos_medio_canal(fecha1,fecha2,medio)    
+    @contratos = Contrato.where(["fecha >= ? and fecha <= ? and medio_id=?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",medio ]).group(:medio_id).order(:medio_id)
     return @contratos
 end 
+
+def get_contratos_medio1(fecha1,fecha2)    
+    @contratos = Contrato.select("medio_id").joins(:contrato_details).where(["contratos.fecha >= ? and contratos.fecha <= ? and contrato_details.factura1 is not null and contrato_details.sit != ?  ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1" ]).group(:medio_id).order(:medio_id)
+    return @contratos
+end
+
+def get_contratos_medio_canal1(fecha1,fecha2,medio)    
+    @contratos = Contrato.select("medio_id").joins(:contrato_details).
+    where(["contratos.fecha >= ? and contratos.fecha <= ? and contrato_details.factura1 
+      is not null and contrato_details.sit != ? and contratos.medio_id = ? ",
+       "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1",medio ])
+    .group(:medio_id).order(:medio_id)
+    return @contratos
+end 
+
+
+
+def get_contratos_medio_customer(fecha1,fecha2,medio)    
+    @contratos = Contrato.where(["fecha >= ? and fecha <= ? and medio_id=?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",medio ]).group(:medio_id).order(:medio_id)
+    return @contratos
+end 
+
+
+
 def get_contratos_customer_contrato(fecha1,fecha2,medio,customer)    
     @contratos = Contrato.where(["fecha >= ? and fecha <= ? and medio_id=?", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",medio,customer ]).group(:code).order(:code)
     return @contratos

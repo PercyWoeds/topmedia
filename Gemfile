@@ -51,29 +51,7 @@ gem 'rails_autolink', '~> 1.1', '>= 1.1.6'
 
 gem 'annotate'
 
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
-# gem 'ruby-debug'
-# gem 'ruby-debug19', :require => 'ruby-debug'
-
-# Bundle the extra gems:
-# gem 'bj'
-# gem 'nokogiri'
-# gem 'sqlite3-ruby', :require => 'sqlite3'
-# gem 'aws-s3', :require => 'aws/s3'
-
-# Bundle gems for the local environment. Make sure to
-# put test-only gems in this group so their generators
-# and rake tasks are available in development mode:
-# group :development, :test do
-#   gem 'w
-
-  gem 'pg', '~> 0.18.4'
+gem 'pg', '~> 0.18.4'
 
 gem "roo", "~> 2.7.0"
 
@@ -103,7 +81,7 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'better_errors', '~> 2.1', '>= 2.1.1'
+ gem 'better_errors', '~> 2.7', '>= 2.7.1'
   gem 'binding_of_caller', '~> 0.7.2'
   gem 'web-console', '~> 2.0'
 
