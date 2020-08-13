@@ -74,7 +74,7 @@ class OrdensController < ApplicationController
         pdf.stroke_bounds
         pdf.move_down 15
         pdf.font "Helvetica", :style => :bold do
-          pdf.text "R.U.C: 20545232031", :align => :center,:size => 10
+          pdf.text "R.U.C: 20100105609", :align => :center,:size => 10
           pdf.text "ORDEN DE TRANSMISION", :align => :center,:size  =>10
           pdf.text "#{@orden.code}"+" REV."+"#{@orden.revision}", :align => :center,:size  =>10
           pdf.text @month_name, :align => :center,:size  =>10,
