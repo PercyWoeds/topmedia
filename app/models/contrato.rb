@@ -138,32 +138,39 @@ class Contrato < ActiveRecord::Base
   end 
 
 
-
 def get_contratos_medio_customer(fecha1,fecha2,medio)    
     @contratos = Contrato.select("customer_id").joins(:contrato_details).
     where(["contratos.fecha >= ? and contratos.fecha <= ? and medio_id=? 
-     and contrato_details.factura1 is not null and contrato_details.sit != ?  ", 
-     "#{fecha1} 00:00:00","#{fecha2} 23:59:59",medio,"1" ]).distinct.group(:customer_id).order(:customer_id)
+     and contrato_details.factura1 <> ? and contrato_details.fecha_pago  is null ", 
+     "#{fecha1} 00:00:00","#{fecha2} 23:59:59",medio,"" ]).distinct.group(:customer_id).order(:customer_id)
     return @contratos
 end 
 
 def get_contratos_customer_contrato(fecha1,fecha2,medio,customer)    
     @contratos = Contrato.joins(:contrato_details).
     where(["contratos.fecha >= ? and contratos.fecha <= ? and contratos.medio_id=? and contratos.customer_id = ?
-     and contrato_details.factura1 is not null and contrato_details.sit != ?  ", 
-     "#{fecha1} 00:00:00","#{fecha2} 23:59:59",medio,customer, "1" ]).distinct
+     and contrato_details.factura1 <> ? and contrato_details.fecha_pago is null  ", 
+     "#{fecha1} 00:00:00","#{fecha2} 23:59:59",medio,customer, "" ]).distinct
 
     return @contratos
 end 
 
 
+def get_contratos_customer_contrato2(fecha1,fecha2,medio,customer)    
+    @contratos = Contrato.joins(:contrato_details).
+    where(["contratos.fecha >= ? and contratos.fecha <= ? and contratos.medio_id=? and contratos.customer_id = ?
+     and contrato_details.factura1 <> ? and contrato_details.fecha_pago is null  ", 
+     "#{fecha1} 00:00:00","#{fecha2} 23:59:59",medio,customer, "" ]).distinct
+    return @contratos
+end 
   def get_contrato_cuotas(id)
       @contrato_cuotas = ContratoDetail.where(:contrato_id=>id).order(:fecha,:nro)
       return @contrato_cuotas
   end 
 
   def get_contrato_cuotas_cobrar(id)
-      @contrato_cuotas = ContratoDetail.where(["contrato_id = ? and factura1 is not null and sit != ? ",id ,"1" ]).order(:fecha,:nro)
+      @factura1=""
+      @contrato_cuotas = ContratoDetail.where(["contrato_id = ? and factura1 <> ? and fecha_pago is null ",id, "" ]).order(:fecha,:nro)
       return @contrato_cuotas
   end 
  def get_contrato_cuotas_facturar(id)

@@ -125,28 +125,19 @@
 
             <%  nroitem = nroitem + 1 %>
 
-             <%if contrato2.sit == "1" %>
+                
 
-               <% tot_canc1 += contrato2.vventa %>
-               <% tot_canc2 += contrato2.importe  %>
-            <% end %>    
-
-             <% if contrato2.factura1 != nil  and  contrato2.sit != "1" %>
-               <% tot_cob1 += contrato2.vventa %>
-               <% tot_cob2 += contrato2.importe  %> 
+             <% if !contrato2.factura1.blank? and  contrato2.fecha_pago.nil? %>
+               <% tot_cob1 += contrato2.total %>
+               <% tot_cob2 += total1  %> 
 
              <% end %>
 
-             <%if contrato2.factura1.nil? %>
-
-               <% tot_fact1 += contrato2.vventa %>
-               <% tot_fact2 += contrato2.importe  %> 
-
-             <%end %>
+             
 
              
-               <% tot_cont1 += contrato2.vventa %>
-               <% tot_cont2 += contrato2.importe  %> 
+               <% tot_cont1 = tot_cob1 %>
+               <% tot_cont2 = tot_cob2  %> 
 
             <% end %>            
 
