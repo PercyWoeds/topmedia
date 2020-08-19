@@ -1464,5 +1464,6 @@ def rpt_ccobrar20
     @customers = @company.get_customers()
     @monedas=@company.get_monedas    
      @medios    = Medio.order(:descrip)
+     
   end
 end

@@ -1979,6 +1979,66 @@ def foot_data_headers_1
 
 
 
+  #**************************************************************************+++++++++++++++++++++
+  #
+  #**************************************************************************+++++++++++++++++++++
+
+ def rpt_ccobrar20
+  
+    $lcxCliente ="1"
+    @company=Company.find(1)      
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]
+    @customer= params[:customer_id]
+
+    lcmonedadolares ="1"
+    lcmonedasoles ="2"
+    @medio_check = params[:check_medio]  
+    puts "valor medio checkl "
+    puts @medio_check
+ 
+
+    if @medio_check == "true"
+     
+        @medio = ""
+        @medio_name = ""
+        @contratos_rpt = @company.get_contratos_medio2(@fecha1,@fecha2)
+
+    else
+       @medio = params[:medio_id]
+       @medio_name = ""
+       @medio_name =  @company.get_medio_name(@medio)
+       @contratos_rpt = @company.get_contratos_medio_canal2(@fecha1,@fecha2,@medio)
+
+    end
+
+
+    case params[:print]
+      when "PDF" then 
+       begin 
+         render  pdf: "Contratos ",template: "supplier_payments/rpt_ccobrar20.pdf.erb",locals: {:contrato => @contratos_rpt},
+          :orientation => 'Landscape',
+         :header => {
+           :spacing => 5,
+                           :html => {
+                           :template => 'layouts/pdf-header4.html', 
+                           right: '[page] of [topage]'
+                  }
+               },
+
+               :footer => { :html => { template: 'layouts/pdf-footers.html' }       }  ,   
+               :margin => {bottom: 35} 
+                
+       end   
+
+
+      when "Excel" then render xlsx: 'rpt_contratos_1'
+      else render action: "index"
+    end
+  end
+
+
+
 
 
 

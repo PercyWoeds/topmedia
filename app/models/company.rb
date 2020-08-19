@@ -2459,11 +2459,30 @@ def get_contratos_medio1(fecha1,fecha2)
     return @contratos
 end
 
+
 def get_contratos_medio_canal1(fecha1,fecha2,medio)    
     @contratos = Contrato.select("medio_id").joins(:contrato_details).
     where(["contratos.fecha >= ? and contratos.fecha <= ? and contrato_details.factura1 
       is not null and contrato_details.sit != ? and contratos.medio_id = ? ",
        "#{fecha1} 00:00:00","#{fecha2} 23:59:59","1",medio ])
+    .group(:medio_id).order(:medio_id)
+    return @contratos
+end 
+
+
+
+def get_contratos_medio2(fecha1,fecha2)    
+    @contratos = Contrato.select("medio_id").joins(:contrato_details).where(["contratos.fecha >= ? 
+      and contratos.fecha <= ? and contrato_details.facturacanal <> ? and
+      contrato_details.factura1 = ?  ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","","" ]).group(:medio_id).order(:medio_id)
+    return @contratos
+end
+
+
+def get_contratos_medio_canal2(fecha1,fecha2,medio)    
+    @contratos = Contrato.select("medio_id").joins(:contrato_details).
+    where(["contratos.fecha >= ? and contratos.fecha <= ? and contrato_details.facturacanal <> ? and
+      contrato_details.factura1 = ? and medio_id =? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59","","" ,medio ])
     .group(:medio_id).order(:medio_id)
     return @contratos
 end 

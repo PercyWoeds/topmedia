@@ -33,7 +33,7 @@
 
               </table>
 
-            <% @detalle = @contratolist.get_contratos_medio_customer(@fecha1,@fecha2,detalle.medio_id) %>
+            <% @detalle = @contratolist.get_contratos_medio_customer2(@fecha1,@fecha2,detalle.medio_id) %>
            
             
                   
@@ -49,7 +49,7 @@
 
               </table>
 
-            <% @detalle2 = @contratolist.get_contratos_customer_contrato(@fecha1,@fecha2,detalle.medio_id,compra.customer_id) %>
+            <% @detalle2 = @contratolist.get_contratos_customer_contrato20(@fecha1,@fecha2,detalle.medio_id,compra.customer_id) %>
 
 
             <% @detalle2.each do |contrato1| %> 
@@ -75,7 +75,7 @@
                <%nroitem = 1%> 
 
 
-       <%        @contratodetalle = contrato1.get_contrato_cuotas_cobrar(contrato1.id) %>
+       <%        @contratodetalle = contrato1.get_contrato_cuotas_cobrar2(contrato1.id) %>
 
 
             <%if @contratodetalle.nil?%>
@@ -127,9 +127,9 @@
 
                 
 
-             <% if !contrato2.factura1.blank? and  contrato2.fecha_pago.nil? %>
-               <% tot_cob1 += contrato2.total %>
-               <% tot_cob2 += total1  %> 
+             <% if !contrato2.facturacanal.blank? and  contrato2.factura1.blank? %>
+               <% tot_fact1 += contrato2.total %>
+               <% tot_fact2 += total1  %> 
 
              <% end %>
 
