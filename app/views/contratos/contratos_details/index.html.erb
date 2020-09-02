@@ -28,13 +28,13 @@
       <tr>
         <td><%= contrato_detail.nro %></td>
         <td><%= contrato_detail.fecha %></td>
-        <td><%= contrato_detail.comision1 %></td>
-        <td><%= contrato_detail.comision2 %></td>
-        <td><%= contrato_detail.total %></td>
+        <td><%= money(contrato_detail.comision1) %></td>
+        <td><%= money(contrato_detail.comision2) %></td>
+        <td><%= money(contrato_detail.total) %></td>
 
-        <td><%= contrato_detail.vventa %></td>
+        <td><%= money(contrato_detail.vventa) %></td>
         
-        <td><%= contrato_detail.importe %></td>
+        <td><%= money(contrato_detail.importe) %></td>
 
         <td><%= contrato_detail.facturacanal %></td>
         <td><%= contrato_detail.fecha2 %></td>
