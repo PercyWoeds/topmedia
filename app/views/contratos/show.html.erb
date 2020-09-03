@@ -143,20 +143,20 @@
             <%= quote.fecha.strftime("%d/%m/%Y")  %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= quote.importe %>
+            <%= money(quote.importe) %>
           </td>
                     
           <td class="bordered_right bordered_bottom">
-            <%= quote.vventa  %>
+            <%= money(quote.vventa) %>
           </td>
            <td class="bordered_right bordered_bottom">
-            <%= quote.comision1  %>
+            <%= money(quote.comision1)  %>
           </td>
            <td class="bordered_right bordered_bottom">
-            <%= quote.comision2  %>
+            <%= money(quote.comision2) %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= quote.total  %>
+            <%= money(quote.total) %>
           </td>
         <td class="bordered_right bordered_bottom">
             <%= quote.facturacanal  %>
