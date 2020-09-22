@@ -13,8 +13,15 @@ class ContratosController < ApplicationController
      if params[:search] and params[:search] != ""
 
        @contratos = Contrato.search(params[:search]).order(:fecha).paginate(:page => params[:page])
-     else
-       @contratos = Contrato.all.order('code ').paginate(:page => params[:page])
+
+     elsif params[:search2] and params[:search2] != ""
+
+      @contratos = Contrato.search2(params[:search2]).order(:fecha).paginate(:page => params[:page])
+
+
+     else 
+        
+       @contratos = Contrato.all.order('code').paginate(:page => params[:page])
      end    
   
    #@contratos = Contrato.all.order('code ').

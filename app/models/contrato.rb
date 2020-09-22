@@ -89,9 +89,17 @@ class Contrato < ActiveRecord::Base
     def self.search(search)
     # Title is for the above case, the OP incorrectly had 'name'
       
-        where("extract(year from fecha ) = ?", "#{search}")
+        where("extract(year from fecha ) = ? ", "#{search}")
           
     end
+
+    def self.search2(search2)
+    # Title is for the above case, the OP incorrectly had 'name'
+      
+        where("code like ? ", "#{search2}")
+          
+    end
+
 
     def   get_medio(medio)
 
