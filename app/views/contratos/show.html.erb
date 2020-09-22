@@ -37,7 +37,7 @@
 
 <p>
   <strong>Importe:</strong>
-  <%= @contrato.importe %>
+  <%= money(@contrato.importe) %>
 </p>
 
 <p>
@@ -61,16 +61,12 @@
 
 <p>
   <strong>Comision1:</strong>
-  <%= @contrato.comision1 %>
+  <%= money(@contrato.comision1) %>
 </p>
 
 <p>
   <strong>Comision2:</strong>
-  <%= @contrato.comision2 %>
-</p>
-<p>
-  <strong>Comision3:</strong>
-  <%= @contrato.comision3 %>
+  <%= money(@contrato.comision2) %>
 </p>
 
 <div class="row">
@@ -142,28 +138,28 @@
           <td class="bordered_right bordered_bottom">
             <%= quote.fecha.strftime("%d/%m/%Y")  %>
           </td>
-          <td class="bordered_left bordered_bottom">
+          <td class="bordered_left bordered_bottom"align="right">
             <%= money(quote.importe) %>
           </td>
                     
-          <td class="bordered_left bordered_bottom">
+          <td class="bordered_left bordered_bottom" align="right">
             <%= money(quote.vventa) %>
           </td>
-           <td class="bordered_left bordered_bottom">
+           <td class="bordered_left bordered_bottom" align="right">
             <%= money(quote.comision1)  %>
           </td>
-           <td class="bordered_left bordered_bottom">
+           <td class="bordered_left bordered_bottom" align="right">
             <%= money(quote.comision2) %>
           </td>
-          <td class="bordered_left bordered_bottom">
+          <td class="bordered_left bordered_bottom"align="right">
             <%= money(quote.total) %>
           </td>
-        <td class="bordered_right bordered_bottom">
+        <td class="bordered_right bordered_bottom" align="right">
             <%= quote.facturacanal  %>
           </td>
-        <td class="bordered_right bordered_bottom">
+        <td class="bordered_right bordered_bottom" align="right">
             <%= quote.factura1  %>
-        <td class="bordered_right bordered_bottom">
+        <td class="bordered_right bordered_bottom" align="right">
             <%= quote.factura2 %>
           </td>
           
@@ -199,22 +195,22 @@
           <td class="bordered_right bordered_bottom">
             Totales 
           </td>
-          <td class="bordered_right bordered_bottom">
-            <%= sprintf("%2.2f",t_importe) %>
+          <td class="bordered_right bordered_bottom" align="right">
+            <%= money(t_importe.round(2)) %>
           </td>
                     
                     
-          <td class="bordered_right bordered_bottom">
-            <%= sprintf("%2.2f",t_vventa)  %>
+          <td class="bordered_right bordered_bottom" align="right">
+            <%= money(t_vventa.round(2))  %>
           </td>
-           <td class="bordered_right bordered_bottom">
-            <%= sprintf("%2.2f",t_comision1)  %>
+           <td class="bordered_right bordered_bottom" align="right">
+            <%= money(t_comision1.round(2))  %>
           </td>
-           <td class="bordered_right bordered_bottom">
-            <%= sprintf("%2.2f",t_comision2)  %>
+           <td class="bordered_right bordered_bottom" align="right">
+            <%= money(t_comision2.round(2))  %>
           </td>
-          <td class="bordered_right bordered_bottom">
-            <%= sprintf("%2.2f",t_total)  %>
+          <td class="bordered_right bordered_bottom" align="right">
+            <%= money(t_total.round(2))  %>
           </td>
         <td class="bordered_right bordered_bottom">
             

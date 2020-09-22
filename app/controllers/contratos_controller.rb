@@ -32,7 +32,7 @@ class ContratosController < ApplicationController
   # GET /contratos/1.json
   def show
     @contrato= Contrato.find(params[:id])
-    @contrato_details = @contrato.contrato_details
+    @contrato_details = @contrato.contrato_details.order(:fecha)
     
      respond_to do |format|
       format.html # show.html.erb
@@ -78,6 +78,7 @@ class ContratosController < ApplicationController
     @customers = Customer.all.order(:name)
     @monedas = Moneda.all
     @medios =Medio.all.order(:full_name)
+    @contrato[:comision3] = 0.00 
     
     respond_to do |format|
       if @contrato.save
