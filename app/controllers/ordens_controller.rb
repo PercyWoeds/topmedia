@@ -43,13 +43,14 @@ class OrdensController < ApplicationController
       #pdf.text supplier.district, :size => 10
       #pdf.text supplier.city, :size => 1
 
-    max_rows = [client_data_headers_1.length, invoice_headers_1.length, 0].max
+    max_rows = [client_data_headers_1.length, invoice_headers_1.length, invoice_headers_2.length].max
       rows = []
       (1..max_rows).each do |row|
         rows_index = row - 1
         rows[rows_index] = []
         rows[rows_index] += (client_data_headers_1.length >= row ? client_data_headers_1[rows_index] : ['',''])
         rows[rows_index] += (invoice_headers_1.length >= row ? invoice_headers_1[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_2.length >= row ? invoice_headers_2[rows_index] : ['',''])
 
       end
 
@@ -61,7 +62,7 @@ class OrdensController < ApplicationController
           :width => pdf.bounds.width/3*2
 
         }) do
-          columns([0, 2]).font_style = :bold
+          columns([0, 2,4]).font_style = :bold
 
         end
 
@@ -1739,8 +1740,7 @@ def foot_data_headers_1
      client_data_headers_1  = [["Cliente : ", $lcCli]]
       client_data_headers_1 <<  ["Producto : ",$lcProducto ]
       client_data_headers_1 <<  ["Motivo : ", $lcVersion]
-      client_data_headers_1 <<  ["Duracion : ",$lcDuracion ]
-
+     
       client_data_headers_1
 
 
@@ -1754,9 +1754,8 @@ def foot_data_headers_1
   end
 
  def invoice_headers_2
-      invoice_headers_2  = [["Marca: ", $lcMarca]]
-      invoice_headers_2 << ["Producto  : ",$lcProducto]
-      invoice_headers_2 << ["Version  : ",$lcVersion]
+      invoice_headers_2  = [["",""]]
+      invoice_headers_2 << ["",""]
       invoice_headers_2 << ["Duracion  : ",$lcDuracion]
 
       invoice_headers_2
