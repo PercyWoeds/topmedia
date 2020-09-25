@@ -539,7 +539,7 @@ module ApplicationHelper
       cells = []
       
       for a in arr
-        cells.push("(#{field} LIKE \"%#{a}%\")")
+        cells.push("(#{field} iLIKE \"%#{a}%\")")
       end
       
       rows.push("(" + cells.join(" AND ") + ")")
@@ -547,6 +547,8 @@ module ApplicationHelper
     
     return rows.join(" OR ")
   end
+  
+
   
   # Remove comas from a string
   def format_csv()

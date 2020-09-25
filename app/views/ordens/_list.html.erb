@@ -46,7 +46,7 @@
             <%= money(orden.total) %>
           </td>
           <td class="bordered_right bordered_bottom">
-            <%= doDate(orden.fecha) %>
+            <%= orden.fecha.strftime("%d/%m/%Y") %>
           </td>
 
           
