@@ -59,7 +59,7 @@ class OrdensController < ApplicationController
         pdf.table(rows, {
           :position => :left,
           :cell_style => {:border_width => 0,:height => 17 },
-          :width => pdf.bounds.width/3*2
+          :width => pdf.bounds.width/3*3
 
         }) do
           columns([0, 2,4]).font_style = :bold
