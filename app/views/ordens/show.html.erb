@@ -42,7 +42,7 @@
   <%= @orden.version.descrip %>
 </p>
 
-<b>Unidad de medida:</b>
+<b>Duracion:</b>
   <%= @orden.tiempo %>
 </p>
 
@@ -327,6 +327,9 @@
           </td>
           <td class="small bordered_bottom bordered_right">
             <%= money(product.quantity) %>
+
+          
+          
           </td>
            <td class="small bordered_bottom bordered_right">
             <%= money(product.rating2) %>
@@ -341,7 +344,7 @@
             <%= money(product.price) %>
           </td>
           <td class="small bordered_bottom bordered_right">
-            <%= money(product.total) %>
+            <%= money(product.total) %> 
           </td>
           <% if @orden.tipo == "N" %>
           <td><%= link_to 'Editar', edit_orden_orden_product_path(orden_id: @orden.id,id: product.id ) %></td>          
@@ -427,4 +430,7 @@
   <%= link_to 'Editar', edit_orden_path(@orden) %>
   <%= link_to 'Regresar', "/companies/ordens/#{@orden.company.id}" %>
 </div>
+
+
+
 

@@ -877,7 +877,7 @@ pdf.move_down 50
     @productos = Producto.all
     @ciudad = Ciudad.all
 
-    @ordens_products = @orden.orden_products
+    @ordens_products = @orden.orden_products.order(:id)
   end
 
   # GET /ordens/new

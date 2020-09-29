@@ -487,6 +487,8 @@
       documentReady();
     });
   }
+
+  
   // Removes an item from an invoice
   function removeItemFromOrden1(id) {
     var items = $("#items2").val();
