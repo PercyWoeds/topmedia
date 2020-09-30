@@ -171,7 +171,7 @@ def get_contratos_medio_customer2(fecha1,fecha2,medio)
 end 
 
 def get_contratos_customer_contrato_detalle(fecha1,fecha2,medio,customer)    
-    @contratos = Contrato.joins(:contrato_details).
+    @contratos = Contrato.
     where(["contratos.fecha >= ? and contratos.fecha <= ? and contratos.medio_id=? and contratos.customer_id = ?
    ", 
      "#{fecha1} 00:00:00","#{fecha2} 23:59:59",medio,customer ]).distinct
