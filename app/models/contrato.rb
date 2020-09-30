@@ -146,9 +146,8 @@ class Contrato < ActiveRecord::Base
   end 
 def get_contratos_medio_customer_detalle(fecha1,fecha2,medio)    
     @contratos = Contrato.select("customer_id").joins(:contrato_details).
-    where(["contratos.fecha >= ? and contratos.fecha <= ? and medio_id=? 
-     and contrato_details.factura1 <> ?  ", 
-     "#{fecha1} 00:00:00","#{fecha2} 23:59:59",medio,"" ]).distinct.group(:customer_id).order(:customer_id)
+    where(["contratos.fecha >= ? and contratos.fecha <= ? and medio_id=? ", 
+     "#{fecha1} 00:00:00","#{fecha2} 23:59:59",medio]).distinct.group(:customer_id).order(:customer_id)
     return @contratos
 end 
 
@@ -174,8 +173,8 @@ end
 def get_contratos_customer_contrato_detalle(fecha1,fecha2,medio,customer)    
     @contratos = Contrato.joins(:contrato_details).
     where(["contratos.fecha >= ? and contratos.fecha <= ? and contratos.medio_id=? and contratos.customer_id = ?
-     and contrato_details.factura1 <> ?  ", 
-     "#{fecha1} 00:00:00","#{fecha2} 23:59:59",medio,customer, "" ]).distinct
+   ", 
+     "#{fecha1} 00:00:00","#{fecha2} 23:59:59",medio,customer ]).distinct
 
     return @contratos
 end 
