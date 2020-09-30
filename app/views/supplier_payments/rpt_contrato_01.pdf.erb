@@ -1,7 +1,6 @@
 <html>
 
 <body>         
-
     
       <% nroitem= 1 %>
       <% totg1 = 0 %>
@@ -34,7 +33,7 @@
 
               </table>
 
-            <% @detalle = @contratolist.get_contratos_medio_customer(@fecha1,@fecha2,detalle.medio_id) %>
+        <% @detalle = @contratolist.get_contratos_medio_customer_detalle(@fecha1,@fecha2,detalle.medio_id) %>
            
             
                   
@@ -50,7 +49,7 @@
 
               </table>
 
-            <% @detalle2 = @contratolist.get_contratos_customer_contrato(@fecha1,@fecha2,detalle.medio_id,compra.customer_id) %>
+            <% @detalle2 = @contratolist.get_contratos_customer_contrato_detalle(@fecha1,@fecha2,detalle.medio_id,compra.customer_id) %>
 
 
             <% @detalle2.each do |contrato1| %> 
