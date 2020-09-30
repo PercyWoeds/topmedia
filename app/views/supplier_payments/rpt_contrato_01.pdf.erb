@@ -15,16 +15,10 @@
                 
              <table style=  'font-size:80% ;width:100%'>    
 
-               <% if  "[page]" == 1  %>
-               <% puts "pagina" %> 
-               <% puts "" %>
-                  <tr style="font-weight:bold  ">
-
-
-               <% else %>
+             
 
                   <tr style="font-weight:bold; display:block; clear:both; page-break-before: always;">
-               <% end %>       
+              
 
                   <td width="8%" >CANAL : </td>
                   <td width="50%"align="left"> <%= detalle.get_medio(detalle.medio_id)   %></td>
