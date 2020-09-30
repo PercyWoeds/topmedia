@@ -105,6 +105,8 @@ class OrdenProduct < ActiveRecord::Base
           if row['d31'] == nil
            row['d31'] = 0
           end 
+
+          
               	
 	
           OrdenProduct.create! row.to_hash 

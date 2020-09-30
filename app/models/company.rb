@@ -2534,9 +2534,9 @@ def get_ordenes_eecc(fecha1,fecha2)
      SELECT  customer_id,medio_id, secu_cont, moneda_id,
        SUM(total) as balance   
        FROM Ordens 
-       WHERE fecha >= ? and fecha<=? 
+       WHERE fecha >= ? and fecha<=? and processed = ?
        GROUP BY 1,2,3,4
-       ORDER BY 1,2,3,4 ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ])  
+       ORDER BY 1,2,3,4 ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" , "1" ])  
 
      #@contratos = Orden.select("customers.ruc,ordens.customer_id").group( "customers.ruc,ordens.customer_id").joins(:customer).order("customers.ruc")
 
@@ -2566,9 +2566,9 @@ def get_ordenes_eecc_cliente(fecha1,fecha2,customer)
      SELECT  customer_id,medio_id, secu_cont, moneda_id,
        SUM(total) as balance   
        FROM Ordens 
-       WHERE fecha >= ? and fecha<=?  and customer_id = ? 
+       WHERE fecha >= ? and fecha<=?  and customer_id = ? and processed = ?
        GROUP BY 1,2,3,4
-       ORDER BY 1,2,3,4 ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",customer  ])  
+       ORDER BY 1,2,3,4 ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",customer ,"1" ])  
 
      #@contratos = Orden.select("customers.ruc,ordens.customer_id").group( "customers.ruc,ordens.customer_id").joins(:customer).order("customers.ruc")
 
