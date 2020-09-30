@@ -145,7 +145,7 @@ class Contrato < ActiveRecord::Base
     end   
   end 
 def get_contratos_medio_customer_detalle(fecha1,fecha2,medio)    
-    @contratos = Contrato.select("customer_id").joins(:contrato_details).
+    @contratos = Contrato.select("customer_id").
     where(["contratos.fecha >= ? and contratos.fecha <= ? and medio_id=? ", 
      "#{fecha1} 00:00:00","#{fecha2} 23:59:59",medio]).distinct.group(:customer_id).order(:customer_id)
     return @contratos
