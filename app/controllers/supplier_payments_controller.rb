@@ -1968,6 +1968,7 @@ def list_receive_supplierpayments
       @ordenes = @company.get_ordenes_eecc_cliente(@fecha1,@fecha2,@customer)
 
     end 
+    
       
     case params[:print]
       when "To PDF" then 

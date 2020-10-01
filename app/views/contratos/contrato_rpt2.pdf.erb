@@ -57,6 +57,7 @@
                   </table>
 
 
+
                    <table style=  'font-size:80% ;width:100%'>    
                     <tr style="font-weight:bold">
                    
@@ -125,7 +126,7 @@
                                     <% else %>
                                     <td width="23%"> <%= orden1.version_id %> </td>
                                     <% end %>
-                                    <td width="10%" align="right"><%= orden1.quantity %></td>
+                                    <td width="10%" align="right"><%= orden1.get_quantity(orden1.id ) %></td>
                                     <td width="5%"  align="right"><%= orden1.tiempo %></td>
                                     <td width="10%" align="right"> </td>
                                     
@@ -175,7 +176,7 @@
                                     <% else %>
                                     <td width="23%"> <%= orden1.version_id %> </td>
                                     <% end %>
-                                    <td width="10%" align="right"><%= orden1.quantity %></td>
+                                    <td width="10%" align="right"><%= orden1.get_quantity(orden1.id )%></td>
                                     <td width="5%"  align="right"><%= orden1.tiempo %></td>
                                     <td width="10%" align="right"> </td>
                                     
