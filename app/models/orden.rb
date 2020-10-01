@@ -579,8 +579,11 @@ TABLE_HEADERS2 = ["Nº",
     @orden = Orden.joins(:orden_products).select("SUM(orden_products.quantity) as quantity").
     where("ordens.id = ? ", id ).order("ordens.id").group("ordens.id")
 
-
+    if @orden.last.nil? 
+      return 0
+    else
     return @orden.last.quantity
+    end 
     
 
   end 
