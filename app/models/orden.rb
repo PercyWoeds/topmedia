@@ -1,7 +1,7 @@
 class Orden < ActiveRecord::Base  	
 
    	validates_uniqueness_of :code 
-   	validates_presence_of :marca_id, :medio_id,:producto_id, :version_id,:tiempo ,:code ,:moneda_id 
+   	validates_presence_of :marca_id, :medio_id,:producto_id, :version_id,:tiempo ,:code ,:moneda_id ,:customer_id 
 	
   	belongs_to :company
   	belongs_to :customer
