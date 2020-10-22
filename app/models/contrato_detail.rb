@@ -11,8 +11,8 @@ class ContratoDetail < ActiveRecord::Base
     end      
 
     def get_sit
-    	if self.sit,nil?
-    		return  ""
+    	if self.sit.nil?
+    		  return  ""
        else
        		return "Cancelado"
        end 
