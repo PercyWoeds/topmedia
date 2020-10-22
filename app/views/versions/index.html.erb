@@ -17,9 +17,16 @@
     <% @versions.each do |version| %>
       <tr>
         <td><%= version.descrip %></td>
+        <% if !version.producto.nil? %>
         <td><%= version.producto.name %></td>
         <td><%= version.producto.marca.name %></td>
         <td><%= version.producto.marca.customer.name %></td>
+        <%else %>
+         <td>  <%= version.product_id %></td>
+        <td> producto no existe </td>
+        <td>.. </td>
+
+        <% end %>
         <td><%= link_to 'Ver', version %></td>
         <td><%= link_to 'Editar', edit_version_path(version) %></td>
         <td><%= link_to 'Elimnar', version, method: :delete, data: { confirm: 'Are you sure?' } %></td>

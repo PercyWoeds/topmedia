@@ -170,11 +170,9 @@
              <% end %>
           </td>
          <td class="bordered_ right bordered_bottom">
-            <% if quote.sit.nil? %>
-                
-            <%else%>
-                  Cancelado
-            <%end %>
+
+            <% quote.get_sit  %>
+            
           </td>
           
         <% t_importe += quote.importe    %>        
