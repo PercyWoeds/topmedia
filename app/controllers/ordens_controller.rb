@@ -845,9 +845,9 @@ pdf.move_down 50
 
           query = params[:q]
 
-          @ordens = Orden.paginate(:page => params[:page]).order('fecha, code').where(["company_id = ? AND code ilike ?", @company.id, query])
+          @ordens = Orden.paginate(:page => params[:page]).order('fecha desc , code').where(["company_id = ? AND code ilike ?", @company.id, query])
         else
-          @ordens = Orden.where(["company_id = ?",@company.id ]).order('fecha, code').paginate(:page => params[:page])
+          @ordens = Orden.where(["company_id = ?",@company.id ]).order('fecha desc , code').paginate(:page => params[:page])
            @filters_display = "none"
         end
   
