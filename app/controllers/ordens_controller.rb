@@ -84,7 +84,7 @@ class OrdensController < ApplicationController
         end
       end
 
-pdf.move_down 50
+      pdf.move_down 50
 
 
     pdf
@@ -1733,7 +1733,7 @@ def foot_data_headers_1
 
  def invoice_headers_2
       invoice_headers_2  = [["",""]]
-      invoice_headers_2 << ["",""]
+      invoice_headers_2 << ["Estado : ",@orden.get_processed]
       invoice_headers_2 << ["Duracion  : ",$lcDuracion]
 
       invoice_headers_2
@@ -1770,7 +1770,6 @@ def foot_data_headers_1
 
       invoice_summary2
     end
-
 
 
 
