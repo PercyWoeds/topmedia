@@ -1,8 +1,7 @@
 <html>
 <body>
     
-  
-  
+
  
   <font size="2" face="Courier New" >  
   
@@ -22,6 +21,8 @@
   </table>
       
         <%  @ordenes.each do |product| %>
+
+          <% if !product.customer.nil?%>
 
              <table style=  'font-size:90% ;width:100%'>
                 <tr style="font-weight:bold">
@@ -70,8 +71,7 @@
                     </tr>
                     </table>
 
-                <% @saldo = 0 %>    
-
+                <% @saldo =  product.get_saldo_inicial(@fecha1,@fecha2,product.customer_id,product.medio_id,product.secu_cont,product.moneda_id,product.get_contrato_id( product.secu_cont ))  %>    
 
                  <%  @abonos = product.get_abonos_detalle(@fecha1,@fecha2,product.customer_id,product.medio_id,product.secu_cont,product.moneda_id)%>    
 
@@ -220,7 +220,7 @@
 
               <%end%>
           <%end%>
-       
+        <%end%>
         
         <hr>
         

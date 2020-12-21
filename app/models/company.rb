@@ -2529,7 +2529,6 @@ def get_ordenes_eecc(fecha1,fecha2)
       end 
     end 
 
-
      @contratos = Orden.find_by_sql(["
      SELECT  customer_id,medio_id, secu_cont, moneda_id,
        SUM(total) as balance   
@@ -2539,7 +2538,6 @@ def get_ordenes_eecc(fecha1,fecha2)
        ORDER BY 1,2,3,4 ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" , "1" ])  
 
      #@contratos = Orden.select("customers.ruc,ordens.customer_id").group( "customers.ruc,ordens.customer_id").joins(:customer).order("customers.ruc")
-
 
     return @contratos
 end 

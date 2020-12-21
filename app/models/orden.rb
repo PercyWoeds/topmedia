@@ -92,6 +92,23 @@ TABLE_HEADERS2 = ["Nº",
       end 
 
   end 
+
+
+   def get_contrato_id(secu_contrato)
+
+      @numero_contrato = CustomerContrato.find_by(secu_cont: secu_contrato)
+
+      if @numero_contrato != nil  
+        if @numero_contrato.contrato.nil? 
+         return "-" 
+        else 
+        return @numero_contrato.contrato_id 
+        end 
+      else
+         return "-"
+      end 
+
+  end 
   
   def get_subtotal(value)
     ret  = 0
@@ -570,11 +587,76 @@ TABLE_HEADERS2 = ["Nº",
     return @orden
   end 
 
+  def get_abonos_detalle(fecha1,fecha2,customer,medio,secuencia,moneda)
+    
+    @abono =ContratoAbono.where(["fecha >= ? and fecha <= ? and customer_id=? and medio_id=? and secu_cont =? and moneda_id=?  ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",customer,medio,secuencia,moneda ]).order(:secu_cont )
+    return @abono 
 
-  def get_quantity(id)
+  end
+
+   def get_saldo_inicial(fecha1,fecha2,customer,medio,secuencia,moneda,contrato_id)
+
+    puts "saldo inicial..."
+
+     saldo = 0
+
+    if Contrato.exists?(id: contrato_id)
+
+        a = Contrato.find(contrato_id)
+        saldo = a.importe 
+
+        puts a.code 
+    else
+
+      saldo = 0
+
+    end 
 
   
+    puts saldo 
+
     
+     @abono =ContratoAbono.where(["fecha < ? and customer_id=? and medio_id=? and secu_cont =? and moneda_id=?  ", 
+      "#{fecha1} 00:00:00",customer,medio,secuencia,moneda ]).order(:secu_cont )
+    
+
+     @orden =Orden.where(["fecha < ? and customer_id=? and medio_id=? 
+      and secu_cont =? and moneda_id=? and processed = ? ", 
+      "#{fecha1} 00:00:00",customer,medio,secuencia,moneda ,"1"]).order(:month,:code )
+
+     
+
+      for abono  in @abono 
+        
+            saldo += abono.importe
+      
+      end 
+
+
+      for orden  in @orden
+        
+            saldo -= orden.subtotal 
+      
+      end 
+
+      puts saldo
+
+      return saldo 
+
+
+
+  end
+
+ def get_contrato(customer_id,medio_id, secu_cont, moneda_id)
+
+    a = Contrato.where(customer_id: customer_id, medio_id: medio_id, secu_cont: secu_cont , moneda_id: moneda_id )
+
+    return a.first.contrato_id 
+
+ end 
+
+
+  def get_quantity(id)
 
     @orden = Orden.joins(:orden_products).select("SUM(orden_products.quantity) as quantity").
     where("ordens.id = ? ", id ).order("ordens.id").group("ordens.id")
@@ -588,12 +670,8 @@ TABLE_HEADERS2 = ["Nº",
 
   end 
 
-  def get_abonos_detalle(fecha1,fecha2,customer,medio,secuencia,moneda)
-    
-    @abono =ContratoAbono.where(["fecha >= ? and fecha <= ? and customer_id=? and medio_id=? and secu_cont =? and moneda_id=?  ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",customer,medio,secuencia,moneda ]).order(:secu_cont )
-    return @abono 
-
-  end 
+  
+  
 
     def self.import(file)
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|
