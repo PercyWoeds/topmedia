@@ -573,28 +573,32 @@ TABLE_HEADERS2 = ["Nº",
 
     def get_ordenes_detalle0(fecha1,fecha2,customer)
     
-    @orden =Orden.where(["fecha >= ? and fecha <= ? and customer_id=? and medio_id=? and secu_cont =? and moneda_id=?  ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",customer,medio,secuencia,moneda ]).order(:month,:code )
+    @orden =Orden.where(["extract(month from fecha ) >= ? and extract(year from fecha ) >= ? 
+      and extract(month from fecha ) <= ? and extract(year from fecha ) <= ?  and customer_id=? and medio_id=? and secu_cont =? and moneda_id=?  ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",customer,medio,secuencia,moneda ]).order(:month,:code )
     return @orden
 
   end 
 
 
   
-  def get_ordenes_detalle(fecha1,fecha2,customer,medio,secuencia,moneda)
+  def get_ordenes_detalle(mes1,anio1,mes2,anio2,customer,medio,secuencia,moneda)
     
-    @orden =Orden.where(["fecha >= ? and fecha <= ? and customer_id=? and medio_id=? 
-      and secu_cont =? and moneda_id=? and processed = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",customer,medio,secuencia,moneda ,"1"]).order(:month,:code )
+    @orden =Orden.where(["extract(month from fecha ) >= ? and extract(year from fecha ) >= ? 
+      and extract(month from fecha ) <= ? and extract(year from fecha ) <= ?  and customer_id=? and medio_id=? 
+      and secu_cont =? and moneda_id=? and processed = ? ", "#{mes1}","#{anio1}", "#{mes2}","#{anio2}",customer,medio,secuencia,moneda ,"1"]).order(:month,:code )
     return @orden
   end 
 
-  def get_abonos_detalle(fecha1,fecha2,customer,medio,secuencia,moneda)
+  def get_abonos_detalle(mes1,anio1,mes2,anio2,customer,medio,secuencia,moneda)
     
-    @abono =ContratoAbono.where(["fecha >= ? and fecha <= ? and customer_id=? and medio_id=? and secu_cont =? and moneda_id=?  ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",customer,medio,secuencia,moneda ]).order(:secu_cont )
+    @abono =ContratoAbono.where(["extract(month from fecha ) >= ? and extract(year from fecha ) >= ? 
+      and extract(month from fecha ) <= ? and extract(year from fecha ) <= ? and customer_id=? and medio_id=? 
+      and secu_cont =? and moneda_id=?  ", "#{mes1}","#{anio1}", "#{mes2}","#{anio2}",customer,medio,secuencia,moneda ]).order(:secu_cont )
     return @abono 
 
   end
 
-   def get_saldo_inicial(fecha1,fecha2,customer,medio,secuencia,moneda,contrato_id)
+   def get_saldo_inicial(mes1,anio1,mes2,anio2,customer,medio,secuencia,moneda,contrato_id)
 
     puts "saldo inicial..."
 
@@ -616,13 +620,13 @@ TABLE_HEADERS2 = ["Nº",
     puts saldo 
 
     
-     @abono =ContratoAbono.where(["fecha < ? and customer_id=? and medio_id=? and secu_cont =? and moneda_id=?  ", 
-      "#{fecha1} 00:00:00",customer,medio,secuencia,moneda ]).order(:secu_cont )
+     @abono =ContratoAbono.where(["extract(month from fecha ) < ? and extract(year from fecha ) < ? and customer_id=? and medio_id=? and secu_cont =? and moneda_id=?  ", 
+      "#{mes1}", "#{anio1}",customer,medio,secuencia,moneda ]).order(:secu_cont )
     
 
-     @orden =Orden.where(["fecha < ? and customer_id=? and medio_id=? 
+     @orden =Orden.where(["extract(month from fecha ) < ? and extract(year from fecha ) < ? and customer_id=? and medio_id=? 
       and secu_cont =? and moneda_id=? and processed = ? ", 
-      "#{fecha1} 00:00:00",customer,medio,secuencia,moneda ,"1"]).order(:month,:code )
+      "#{mes1}","#{anio1}",customer,medio,secuencia,moneda ,"1"]).order(:month,:code )
 
      
 

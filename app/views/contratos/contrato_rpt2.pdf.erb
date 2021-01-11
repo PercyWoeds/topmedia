@@ -71,9 +71,9 @@
                     </tr>
                     </table>
 
-                <% @saldo =  product.get_saldo_inicial(@fecha1,@fecha2,product.customer_id,product.medio_id,product.secu_cont,product.moneda_id,product.get_contrato_id( product.secu_cont ))  %>    
+                <%  @saldo =  product.get_saldo_inicial(@mes1,@anio1,@mes2,@anio2,product.customer_id,product.medio_id,product.secu_cont,product.moneda_id,product.get_contrato_id( product.secu_cont ))  %>    
 
-                 <%  @abonos = product.get_abonos_detalle(@fecha1,@fecha2,product.customer_id,product.medio_id,product.secu_cont,product.moneda_id)%>    
+                <%  @abonos = product.get_abonos_detalle(@mes1,@anio1,@mes2,@anio2,product.customer_id,product.medio_id,product.secu_cont,product.moneda_id)%>    
 
                     <% if @abonos.all.size > 0 %>
                     
@@ -101,7 +101,7 @@
                
                     <% end %>  
 
-                <%  @detalle = product.get_ordenes_detalle(@fecha1,@fecha2,product.customer_id,product.medio_id,product.secu_cont,product.moneda_id)%>      
+                <%  @detalle = product.get_ordenes_detalle(@mes1,@anio1,@mes2,@anio2,product.customer_id,product.medio_id,product.secu_cont,product.moneda_id)%>      
 
                 
                 <% if @detalle.all.size > 0 %>
