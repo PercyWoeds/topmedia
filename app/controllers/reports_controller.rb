@@ -1364,9 +1364,9 @@ class ReportsController < ApplicationController
     @customers = @company.get_customers()
    
 
-     @customers = Customer.all 
+     @customers = Customer.all.order(:name)
     
-    @medios    = Medio.all 
+    @medios    = Medio.all.order(:descrip)
     @marcas    = Marca.where("customer_id = ?", 38)
     @productos = Producto.where(marca_id: @marcas.first.id) 
     @versions  = Version.where(producto_id: @productos.first.id)
