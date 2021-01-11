@@ -1949,8 +1949,12 @@ def list_receive_supplierpayments
   
     $lcxCliente ="1"
     @company=Company.find(1)      
-    @fecha1 = params[:fecha1]    
-    @fecha2 = params[:fecha2]
+    @mes1 = params[:month]    
+    @anio1 = params[:year]
+
+    @mes2 = params[:month2]    
+    @anio2 = params[:year2]
+
     @customer= params[:customer_id]
 
     lcmonedadolares ="1"
@@ -1961,12 +1965,12 @@ def list_receive_supplierpayments
     if @cliente_check == "true"
       @customer = ""
       @customer_name = ""
-      @ordenes = @company.get_ordenes_eecc(@fecha1,@fecha2)
+      @ordenes = @company.get_ordenes_eecc(@mes1,@anio1,@mes2,@anio2)
 
     else
       @customer = params[:customer_id]     
       @customer_name =  @company.get_cliente_name(@customer)
-      @ordenes = @company.get_ordenes_eecc_cliente(@fecha1,@fecha2,@customer)
+      @ordenes = @company.get_ordenes_eecc_cliente(@mes1,@anio1,@mes2,@anio2,@customer)
 
     end 
     

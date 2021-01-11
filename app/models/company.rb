@@ -2512,7 +2512,7 @@ end
 
 #####
 
-def get_ordenes_eecc(fecha1,fecha2)    
+def get_ordenes_eecc(mes1,anio1,mes2,anio2)    
 
     @factura = Orden.where(:month => nil)
     for factura in @factura
@@ -2529,20 +2529,22 @@ def get_ordenes_eecc(fecha1,fecha2)
       end 
     end 
 
-     @contratos = Orden.find_by_sql(["
+
+
+         @contratos = Orden.find_by_sql(["
      SELECT  customer_id,medio_id, secu_cont, moneda_id,
        SUM(total) as balance   
        FROM Ordens 
-       WHERE fecha >= ? and fecha<=? and processed = ?
+       WHERE month  >= ? and year <=?  and month <=? and year <=? and processed = ?
        GROUP BY 1,2,3,4
-       ORDER BY 1,2,3,4 ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" , "1" ])  
+       ORDER BY 1,2,3,4 ", "#{mes1}","#{anio1}" , "#{mes2}","#{anio2}" ,"1" ])  
 
      #@contratos = Orden.select("customers.ruc,ordens.customer_id").group( "customers.ruc,ordens.customer_id").joins(:customer).order("customers.ruc")
 
     return @contratos
 end 
 
-def get_ordenes_eecc_cliente(fecha1,fecha2,customer)    
+def get_ordenes_eecc_cliente(mes1,anio1,mes2,anio2,customer)    
 
     @factura = Orden.where(:month => nil)
     for factura in @factura
@@ -2564,9 +2566,9 @@ def get_ordenes_eecc_cliente(fecha1,fecha2,customer)
      SELECT  customer_id,medio_id, secu_cont, moneda_id,
        SUM(total) as balance   
        FROM Ordens 
-       WHERE fecha >= ? and fecha<=?  and customer_id = ? and processed = ?
+       WHERE month  >= ? and year <=?  and month <=? and year <=? and customer_id = ? and processed = ?
        GROUP BY 1,2,3,4
-       ORDER BY 1,2,3,4 ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59",customer ,"1" ])  
+       ORDER BY 1,2,3,4 ", "#{mes1}","#{anio1}" , "#{mes2}","#{anio2}" ,customer ,"1" ])  
 
      #@contratos = Orden.select("customers.ruc,ordens.customer_id").group( "customers.ruc,ordens.customer_id").joins(:customer).order("customers.ruc")
 

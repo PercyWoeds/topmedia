@@ -13,13 +13,21 @@
 
   <%= form_tag(contratos_ec01_supplier_payments_path, :method => "get") do %>
 
-  <div class="field">
-    Desde <input type="date" name="fecha1" value="2019-01-01" style = "width: 150px" >
-  </div>
+<p>  Mes - Desde </p><br> 
+<%= select_tag(:month, options_for_select(@months, @month), :style => "width:120px") %>
 
-	<div class="field">
-    Hasta <input type="date" name="fecha2" value="2019-12-31" style = "width: 150px" >
-  </div>
+
+<%= select_tag(:year, options_for_select(@years, @year),:style => "width:120px") %>
+
+
+<br>
+
+<p>  Mes - Hasta </p><br>
+<%= select_tag(:month2, options_for_select(@months, @month),:style => "width:120px") %>
+
+
+<%= select_tag(:year2, options_for_select(@years, @year),:style => "width:120px") %>
+
 
 <tr>
       <td>
