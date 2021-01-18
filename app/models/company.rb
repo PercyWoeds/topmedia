@@ -2535,7 +2535,7 @@ def get_ordenes_eecc(mes1,anio1,mes2,anio2)
      SELECT  customer_id,medio_id, secu_cont, moneda_id,
        SUM(total) as balance   
        FROM Ordens 
-       WHERE month  >= ? and year <=?  and month <=? and year <=? and processed = ?
+       WHERE month  >= ? and year >=?  and month <=? and year <=? and processed = ?
        GROUP BY 1,2,3,4
        ORDER BY 1,2,3,4 ", "#{mes1}","#{anio1}" , "#{mes2}","#{anio2}" ,"1" ])  
 
