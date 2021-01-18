@@ -591,7 +591,7 @@ TABLE_HEADERS2 = ["Nº",
     
     @orden =Orden.where(["mesanio  >= ? and mesanio <=? 
        and customer_id=? and medio_id=? 
-      and secu_cont =? and moneda_id=? and processed = ? ", "#{mesanio0}","#{mesanio1}", customer,medio,secuencia,moneda ,"1"]).order(:month,:code )
+      and secu_cont =? and moneda_id=? and processed = ? ", "#{mesanio0}","#{mesanio1}", customer,medio,secuencia,moneda ,"1"]).order(:mesanio,:code )
     return @orden
   end 
 
@@ -638,7 +638,7 @@ TABLE_HEADERS2 = ["Nº",
 
      @orden =Orden.where(["mesanio < ?  and customer_id=? and medio_id=? 
       and secu_cont =? and moneda_id=? and processed = ? ", 
-      "#{mesanio0}",customer,medio,secuencia,moneda ,"1"]).order(:month,:code )
+      "#{mesanio0}",customer,medio,secuencia,moneda ,"1"]).order(:mesanio,:code )
 
      
 
