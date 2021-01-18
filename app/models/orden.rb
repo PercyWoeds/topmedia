@@ -638,7 +638,7 @@ TABLE_HEADERS2 = ["Nº",
 
      @orden =Orden.where(["mesanio < ?  and customer_id=? and medio_id=? 
       and secu_cont =? and moneda_id=? and processed = ? ", 
-      "#{mesanio0}",customer,medio,secuencia,moneda ,"1"]).order(:mesanio,:code )
+      "#{mesanio0}",customer,medio,secuencia,moneda ,"1"]).order("cast(mesanio as double precision),code ")
 
      
 
