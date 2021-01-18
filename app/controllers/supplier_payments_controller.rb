@@ -1961,10 +1961,12 @@ def list_receive_supplierpayments
     lcmonedasoles ="2"
     @cliente_check = params[:check_medio]  
     
+      @company.get_orden_mesanio
 
     if @cliente_check == "true"
       @customer = ""
       @customer_name = ""
+     
       @ordenes = @company.get_ordenes_eecc(@mes1,@anio1,@mes2,@anio2)
 
     else
@@ -1973,7 +1975,7 @@ def list_receive_supplierpayments
       @ordenes = @company.get_ordenes_eecc_cliente(@mes1,@anio1,@mes2,@anio2,@customer)
 
     end 
-    
+
     
       
     case params[:print]

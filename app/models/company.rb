@@ -2511,38 +2511,59 @@ end
 
 
 #####
+def get_orden_mesanio    
 
-def get_ordenes_eecc(mes1,anio1,mes2,anio2)    
-
-    @factura = Orden.where(:month => nil)
+    @factura = Orden.where(:mesanio => nil)
     for factura in @factura
         f = Orden.find(factura.id)
+          if f
+            a = f.year.to_s
+            b = f.month.to_s
+
+            f.mesanio = a + b 
+          
+
+            f.save
+          end 
+    end 
+   @factura = ContratoAbono.where(:mesanio=> nil)
+    for factura in @factura
+        f = ContratoAbono.find(factura.id)
       if f
         @fechas =f.fecha.to_s
         parts = @fechas.split("-")
-        anio = parts[0]
+        year = parts[0]
         mes  = parts[1]
         dia  = parts[2]      
-        f.month = mes
-        f.year = anio 
+        f.mesanio  = year+mes 
         f.save
       end 
     end 
 
 
+end 
+def get_ordenes_eecc(mes1,anio1,mes2,anio2)    
+  mes0 = ""
+  anio0 =  ""
 
-         @contratos = Orden.find_by_sql(["
+   mes0   = anio1 +  mes1 
+   anio0  = anio2 +  mes2 
+
+
+     @contratos = Orden.find_by_sql(["
      SELECT  customer_id,medio_id, secu_cont, moneda_id,
        SUM(total) as balance   
        FROM Ordens 
-       WHERE month  >= ? and year >=?  and month <=? and year <=? and processed = ?
+       WHERE mesanio  >= ?  and mesanio <=?   and processed = ?
        GROUP BY 1,2,3,4
-       ORDER BY 1,2,3,4 ", "#{mes1}","#{anio1}" , "#{mes2}","#{anio2}" ,"1" ])  
+       ORDER BY 1,2,3,4 ", "#{mes0}","#{anio0}","1" ])  
 
      #@contratos = Orden.select("customers.ruc,ordens.customer_id").group( "customers.ruc,ordens.customer_id").joins(:customer).order("customers.ruc")
 
     return @contratos
 end 
+
+
 
 def get_ordenes_eecc_cliente(mes1,anio1,mes2,anio2,customer)    
 
@@ -2560,15 +2581,18 @@ def get_ordenes_eecc_cliente(mes1,anio1,mes2,anio2,customer)
         f.save
       end 
     end 
+  mes0   = anio1 +  mes1 
+   anio0  = anio2  + mes2 
+
 
 
      @contratos = Orden.find_by_sql(["
      SELECT  customer_id,medio_id, secu_cont, moneda_id,
        SUM(total) as balance   
        FROM Ordens 
-       WHERE month  >= ? and year <=?  and month <=? and year <=? and customer_id = ? and processed = ?
+       WHERE mesanio  >= ?  and mesanio<=?  and customer_id = ? and processed = ?
        GROUP BY 1,2,3,4
-       ORDER BY 1,2,3,4 ", "#{mes1}","#{anio1}" , "#{mes2}","#{anio2}" ,customer ,"1" ])  
+       ORDER BY 1,2,3,4 ", "#{mes0}","#{anio0}" ,customer ,"1" ])  
 
      #@contratos = Orden.select("customers.ruc,ordens.customer_id").group( "customers.ruc,ordens.customer_id").joins(:customer).order("customers.ruc")
 
