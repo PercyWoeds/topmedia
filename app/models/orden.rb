@@ -583,8 +583,8 @@ TABLE_HEADERS2 = ["Nº",
   
   def get_ordenes_detalle(mes1,anio1,mes2,anio2,customer,medio,secuencia,moneda)
     
-    @orden =Orden.where(["extract(month from fecha ) >= ? and extract(year from fecha ) >= ? 
-      and extract(month from fecha ) <= ? and extract(year from fecha ) <= ?  and customer_id=? and medio_id=? 
+    @orden =Orden.where(["month  >= ? and year  >= ? 
+      and month <= ? and year  <= ?  and customer_id=? and medio_id=? 
       and secu_cont =? and moneda_id=? and processed = ? ", "#{mes1}","#{anio1}", "#{mes2}","#{anio2}",customer,medio,secuencia,moneda ,"1"]).order(:month,:code )
     return @orden
   end 
@@ -624,7 +624,7 @@ TABLE_HEADERS2 = ["Nº",
       "#{mes1}", "#{anio1}",customer,medio,secuencia,moneda ]).order(:secu_cont )
     
 
-     @orden =Orden.where(["extract(month from fecha ) < ? and extract(year from fecha ) < ? and customer_id=? and medio_id=? 
+     @orden =Orden.where(["month  < ? and year  < ? and customer_id=? and medio_id=? 
       and secu_cont =? and moneda_id=? and processed = ? ", 
       "#{mes1}","#{anio1}",customer,medio,secuencia,moneda ,"1"]).order(:month,:code )
 

@@ -1974,6 +1974,7 @@ def list_receive_supplierpayments
 
     end 
     
+    
       
     case params[:print]
       when "To PDF" then 
