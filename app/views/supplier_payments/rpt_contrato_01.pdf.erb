@@ -128,13 +128,13 @@
             <% end %>    
 
 
-             <% if contrato2.factura1.nil? and  contrato2.facturacanal != nil %>
+             <% if contrato2.factura1 == "" and  contrato2.facturacanal != "" %>
                <% tot_cob1 += contrato2.vventa %>
                <% tot_cob2 += contrato2.importe  %> 
 
              <% end %>
 
-             <%if contrato2.facturacanal.nil?   %>
+             <%if contrato2.facturacanal == ""   %>
 
                <% tot_fact1 += contrato2.vventa %>
                <% tot_fact2 += contrato2.importe  %> 
