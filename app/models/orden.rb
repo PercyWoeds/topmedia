@@ -583,9 +583,8 @@ TABLE_HEADERS2 = ["Nº",
   
   def get_ordenes_detalle(mes1,anio1,mes2,anio2,customer,medio,secuencia,moneda)
 
-      mesanio0  = anio1 +  mes1 
-      mesanio1  = anio2 +  mes2 
-
+      mesanio0  = anio1 + mes1.to_s.rjust(2, '0')
+      mesanio1  = anio2 + mes2.to_s.rjust(2, '0')
       puts mesanio0
       puts mesanio1 
     
@@ -598,8 +597,8 @@ TABLE_HEADERS2 = ["Nº",
   def get_abonos_detalle(mes1,anio1,mes2,anio2,customer,medio,secuencia,moneda)
     
 
-      mesanio0  = anio1 +  mes1 
-      mesanio1  = anio2 +  mes2 
+      mesanio0  = anio1 + mes1.to_s.rjust(2, '0')
+      mesanio1  = anio2 + mes2.to_s.rjust(2, '0')
 
     @abono =ContratoAbono.where(["mesanio  >= ?  and mesanio <= ? and customer_id=? and medio_id=? 
       and secu_cont =? and moneda_id=?  ", "#{mesanio0}","#{mesanio1}",customer,medio,secuencia,moneda ]).order(:secu_cont )
@@ -609,8 +608,8 @@ TABLE_HEADERS2 = ["Nº",
 
    def get_saldo_inicial(mes1,anio1,mes2,anio2,customer,medio,secuencia,moneda,contrato_id)
 
-      mesanio0  = anio1 +  mes1 
-      mesanio1  = anio2 +  mes2 
+      mesanio0  = anio1 + mes1.to_s.rjust(2, '0')
+      mesanio1  = anio2 + mes2.to_s.rjust(2, '0')
 
     puts "saldo inicial..."
 

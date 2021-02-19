@@ -248,21 +248,6 @@ ActiveRecord::Schema.define(version: 20210118172646) do
     t.float    "abonos"
   end
 
-  create_table "conciliations", force: :cascade do |t|
-    t.integer  "bank_acount_id"
-    t.integer  "document_id"
-    t.string   "documento"
-    t.integer  "supplier_id"
-    t.float    "total"
-    t.datetime "fecha1"
-    t.datetime "fecha2"
-    t.string   "descrip"
-    t.string   "code"
-    t.integer  "concept_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
   create_table "contrato_abonos", force: :cascade do |t|
     t.datetime "fecha"
     t.integer  "customer_id"

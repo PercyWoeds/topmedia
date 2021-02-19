@@ -2546,8 +2546,8 @@ def get_ordenes_eecc(mes1,anio1,mes2,anio2)
   mes0 = ""
   anio0 =  ""
 
-   mes0   = anio1 +  mes1 
-   anio0  = anio2 +  mes2 
+   mes0   = anio1 + mes1.to_s.rjust(2, '0')
+   anio0  = anio2 + mes2.to_s.rjust(2, '0')
 
 
      @contratos = Orden.find_by_sql(["
@@ -2562,6 +2562,7 @@ def get_ordenes_eecc(mes1,anio1,mes2,anio2)
 
     return @contratos
 end 
+
 
 
 
@@ -2581,8 +2582,10 @@ def get_ordenes_eecc_cliente(mes1,anio1,mes2,anio2,customer)
         f.save
       end 
     end 
-  mes0   = anio1 +  mes1 
-   anio0  = anio2  + mes2 
+  
+
+   mes0   = anio1 + mes1.to_s.rjust(2, '0')
+   anio0  = anio2 + mes2.to_s.rjust(2, '0')
 
 
 
