@@ -2518,7 +2518,7 @@ def get_orden_mesanio
         f = Orden.find(factura.id)
           if f
             a = f.year.to_s
-            b = f.month.to_s
+            b = f.month.to_s.rjust(2, '0')
 
             f.mesanio = a + b 
           
@@ -2586,6 +2586,9 @@ def get_ordenes_eecc_cliente(mes1,anio1,mes2,anio2,customer)
 
    mes0   = anio1 + mes1.to_s.rjust(2, '0')
    anio0  = anio2 + mes2.to_s.rjust(2, '0')
+
+   puts mes0
+   puts anio0
 
 
 
