@@ -1324,7 +1324,6 @@ def rpt_cpagar5_pdf
     puts "rpt contrato "
     puts @fecha1 
     puts @fecha1 
-  
 
     @contratos_rpt = @company.get_contratos_medio(@fecha1,@fecha2)
       
@@ -1935,7 +1934,7 @@ def list_receive_supplierpayments
     
     @company = Company.find(1)
     
-    @supplierpayments = SupplierPayment.where(["bank_acount_id = ?",@banco_id]).order(:documento)
+    @supplierpayments = SupplierPayment.where(["bank_acount_id = ?",@banco_id]).order("fecha1 DESC,documento DESC")
     
     return @supplierpayments
 

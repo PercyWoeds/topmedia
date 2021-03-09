@@ -169,6 +169,8 @@
 <%= render 'layouts/autocomplete' %>
 
 <script type="text/javascript">
+
+  
   $(document).ready(function() {
     $("#ac_customer").autocomplete("/ordens/ac_customers/<%= @company.id %>", {
 			matchSubset: 1,

@@ -969,6 +969,7 @@ class OrdensController < ApplicationController
     @ciudad = Ciudad.all
 
     @contratos2 = @company.get_customer_contratos()
+    
 
     @ac_user = getUsername()
     @orden[:user_id] = getUserId()
