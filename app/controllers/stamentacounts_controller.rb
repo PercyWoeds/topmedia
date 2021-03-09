@@ -4,7 +4,7 @@ class StamentacountsController < ApplicationController
   # GET /stamentacounts
   # GET /stamentacounts.json
   def index
-    @stamentacounts = Stamentacount.all.order(:fecha1)
+    @stamentacounts = Stamentacount.all.order("fecha1 DESC")
   end
 
 
