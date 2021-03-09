@@ -12,9 +12,7 @@
         <th class="bordered_right bordered_bottom" style="width: 350px;">
           Cliente
         </th>
-        <th class="bordered_right bordered_bottom" style="width: 100px;">
-          Contrato 
-        </th>
+       
         <th class="bordered_right bordered_bottom">
           Moneda
         </th>
@@ -62,11 +60,7 @@
 
           </td>
           
-          <td class="bordered_right bordered_bottom">
-            <%if invoice.contrato != nil %>
-            <%= invoice.contrato.code %>
-            <% end %>
-          </td>
+          
           <td class="bordered_right bordered_bottom">
             <%= invoice.moneda.symbol %>  
           </td>
