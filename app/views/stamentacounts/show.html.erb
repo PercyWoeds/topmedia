@@ -17,23 +17,15 @@
 
 <p>
   <strong>Saldo inicial:</strong>
-  <%= @stamentacount.saldo_inicial %>
+  <%= money(@stamentacount.saldo_inicial) %>
 </p>
 
 <p>
   <strong>Saldo final:</strong>
-  <%= @stamentacount.saldo_final %>
+  <%= money(@stamentacount.saldo_final) %>
 </p>
 
-<p>
-  <strong>User:</strong>
-  <%= @stamentacount.user_id %>
-</p>
 
-<p>
-  <strong>Company:</strong>
-  <%= @stamentacount.company_id %>
-</p>
 
 
     <div class="button">
@@ -89,10 +81,10 @@
           </td>
           
           <td class="small bordered_bottom bordered_right">
-            <%= product.cargo %>              
+            <%= money(product.cargo) %>              
           </td>
           <td class="small bordered_bottom bordered_right">
-            <%= product.abono %>              
+            <%= money(product.abono) %>              
           </td>
           <td class="small bordered_bottom bordered_right">
             <%= product.concepto %>              
