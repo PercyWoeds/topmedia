@@ -1005,9 +1005,9 @@ new_invoice_item.save
       row << ""
       row << ""
       
-       row << money(product.subtotal)
-            row << money(product.tax)
-            row << money(product.total)
+       row << money(services_subtotal)
+      row << money(services_tax)
+      row << money(services_total)
 
       
       table_content << row
@@ -1100,10 +1100,9 @@ new_invoice_item.save
       row << ""
       row << ""
       
-      row << money(product.subtotal)
-            row << money(product.tax)
-            row << money(product.total)
-
+      row << money(services_subtotal)
+      row << money(services_tax)
+      row << money(services_total)
       
       table_content << row
 
