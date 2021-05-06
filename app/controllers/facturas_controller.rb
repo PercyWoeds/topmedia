@@ -1005,9 +1005,9 @@ new_invoice_item.save
       row << ""
       row << ""
       
-      row << subtotal.round(2).to_s
-      row << tax.round(2).to_s
-      row << total.round(2).to_s
+       row << money(product.subtotal)
+            row << money(product.tax)
+            row << money(product.total)
 
       
       table_content << row
@@ -1100,9 +1100,9 @@ new_invoice_item.save
       row << ""
       row << ""
       
-      row << subtotal.round(2).to_s
-      row << tax.round(2).to_s
-      row << total.round(2).to_s
+      row << money(product.subtotal)
+            row << money(product.tax)
+            row << money(product.total)
 
       
       table_content << row
