@@ -1785,6 +1785,8 @@ def foot_data_headers_1
 
   end
 
+  
+
 
   def update_productos
     # updates songs based on artist selected

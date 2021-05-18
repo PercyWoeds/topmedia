@@ -43,7 +43,7 @@
 
       collection { get :crear}
       collection { get :reportes}
-collection { get :rpt_ccobrar10}
+     collection { get :rpt_ccobrar10}
     collection { get :rpt_ccobrar20}
     collection { get :rpt_ccobrar30}
     collection { get :rpt_ccobrar40}
