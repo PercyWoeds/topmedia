@@ -69,6 +69,22 @@ class OrdensController < ApplicationController
         pdf.move_down 5
 
       end
+   
+
+     if @orden.processed == "2"
+
+
+    pdf.bounding_box([250, 540], :width => 200, :height => 70) do
+      
+        pdf.move_down 15
+        pdf.font "Helvetica", :style => :bold do
+          pdf.text "**  A N U L A D O ** ", :align => :center,:size => 20
+         
+
+        end
+      end
+
+    end 
 
 
        pdf.bounding_box([550, 540], :width => 170, :height => 70) do
