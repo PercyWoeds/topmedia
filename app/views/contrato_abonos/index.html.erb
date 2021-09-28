@@ -20,10 +20,10 @@
     <% @contrato_abonos.each do |contrato_abono| %>
       <tr>
         <td><%= contrato_abono.fecha %></td>
-         <% if customer_contrato.customer.nil? %> 
-        <td><%= customer_contrato.customer_id   %></td>
+         <% if contrato_abono.customer.nil? %> 
+        <td><%= contrato_abono.customer_id   %></td>
           <% else %>
-        <td><%= customer_contrato.customer.name  %></td>
+        <td><%= contrato_abono.customer.name  %></td>
 
         <% end %>
         <td><%= contrato_abono.medio.descrip %></td>
