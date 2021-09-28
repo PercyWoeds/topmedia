@@ -155,8 +155,12 @@ class CustomersController < ApplicationController
     @customer = Customer.find(params[:id])
     company_id = @customer[:company_id]
 
-    if  Contrato.exists?(customer_id: @customer)
+    if  Contrato.exists?(customer_id: @customer) or  CustomerContrato.exists?(customer_id: @customer) or 
+      ContratoAbono.exists?(customer_id: @customer) or Marca.exists?(customer_id: @customer)
+
           flash[:notice] = "No puede eliminar cliente vinculado a Contrato."
+
+
 
        respond_to do |format|
         format.html { redirect_to("/companies/customers/" + company_id.to_s )}

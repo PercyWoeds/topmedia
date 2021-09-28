@@ -26,7 +26,10 @@
         <td><%= service.company_id %></td>
         <td><%= link_to 'Ver', service %></td>
         <td><%= link_to 'Editar', edit_service_path(service) %></td>
+         <%     if current_user.level != "admin"  %>
+
         <td><%= link_to 'Eliminar', service, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

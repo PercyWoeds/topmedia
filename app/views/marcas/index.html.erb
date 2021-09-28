@@ -14,10 +14,18 @@
     <% @marcas.each do |marca| %>
       <tr>
         <td><%= marca.name %></td>
+        <% if marca.customer.nil? %>
+
+        <td><%= marca.customer_id %></td>
+        <% else  %>
         <td><%= marca.customer.name %></td>
+        <% end %>
         <td><%= link_to 'Ver', marca %></td>
         <td><%= link_to 'Editar', edit_marca_path(marca) %></td>
+         <%     if current_user.level != "admin"  %>
+
         <td><%= link_to 'Eliminar ', marca, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

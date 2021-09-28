@@ -20,7 +20,11 @@
         <td><%= producto.marca.customer.name %></td>
         <td><%= link_to 'Show', producto %></td>
         <td><%= link_to 'Editar', edit_producto_path(producto) %></td>
+         <%     if current_user.level != "admin"  %>
+
         <td><%= link_to 'Eliminar', producto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+        <% end %>
       </tr>
     <% end %>
   </tbody>

@@ -20,7 +20,11 @@
         <td><%= tipomov.user_id %></td>
         <td><%= link_to 'Ver', tipomov %></td>
         <td><%= link_to 'Editar', edit_tipomov_path(tipomov) %></td>
+         <%     if current_user.level != "admin"  %>
+
         <td><%= link_to 'Eliminar', tipomov, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+        <% end %>
       </tr>
     <% end %>
   </tbody>

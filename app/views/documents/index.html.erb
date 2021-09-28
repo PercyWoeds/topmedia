@@ -16,7 +16,11 @@
         <td><%= document.description %></td>
         <td><%= link_to 'Show', document %></td>
         <td><%= link_to 'Edit', edit_document_path(document) %></td>
+         <%     if current_user.level != "admin"  %>
+
         <td><%= link_to 'Destroy', document, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+        <% end %>
       </tr>
     <% end %>
   </tbody>

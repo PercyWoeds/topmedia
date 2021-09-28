@@ -53,9 +53,9 @@
             
     
         <td><%= link_to 'Ver', purchase %></td>
-       
+        <%     if current_user.level != "admin"  %>
         <td><%= link_to 'Eliminar', purchase, method: :delete, data: { confirm: 'Are you sure?' } %>
-       
+       <% end %>
         </td>
       </tr>
     <% end %>

@@ -18,7 +18,10 @@
         <td><%= concept.code %></td>
         <td><%= link_to 'Show', concept %></td>
         <td><%= link_to 'Edit', edit_concept_path(concept) %></td>
+         <%     if current_user.level != "admin"  %>
+
         <td><%= link_to 'Destroy', concept, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

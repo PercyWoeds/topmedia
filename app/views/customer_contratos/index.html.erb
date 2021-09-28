@@ -19,7 +19,15 @@
   <tbody>
     <% @customer_contratos.each do |customer_contrato| %>
       <tr>
+
+          <% if customer_contrato.medio.nil? %> 
+        <td><%= customer_contrato.customer_id   %></td>
+          <% else %>
         <td><%= customer_contrato.customer.name  %></td>
+
+        <% end %>
+
+
         <td><%= customer_contrato.secu_cont %></td>
          <% if customer_contrato.medio.nil? %> 
             <td><%= customer_contrato.medio_id %> </td>
