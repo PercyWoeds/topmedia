@@ -20,7 +20,12 @@
     <% @contrato_abonos.each do |contrato_abono| %>
       <tr>
         <td><%= contrato_abono.fecha %></td>
-        <td><%= contrato_abono.customer.name  %></td>
+         <% if customer_contrato.customer.nil? %> 
+        <td><%= customer_contrato.customer_id   %></td>
+          <% else %>
+        <td><%= customer_contrato.customer.name  %></td>
+
+        <% end %>
         <td><%= contrato_abono.medio.descrip %></td>
 
         <td><%= contrato_abono.secu_cont %></td>

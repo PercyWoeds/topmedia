@@ -20,7 +20,7 @@
     <% @customer_contratos.each do |customer_contrato| %>
       <tr>
 
-          <% if customer_contrato.medio.nil? %> 
+          <% if customer_contrato.customer.nil? %> 
         <td><%= customer_contrato.customer_id   %></td>
           <% else %>
         <td><%= customer_contrato.customer.name  %></td>
