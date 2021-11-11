@@ -16,15 +16,20 @@ class MediosController < ApplicationController
   # GET /medios/1
   # GET /medios/1.json
   def show
+
+  
   end
 
   # GET /medios/new
   def new
     @medio = Medio.new
+    30.times {@medio.medio_details.build }
+
   end
 
   # GET /medios/1/edit
   def edit
+     30.times {@medio.medio_details.build }
   end
 
   # POST /medios
@@ -32,8 +37,14 @@ class MediosController < ApplicationController
   def create
     @medio = Medio.new(medio_params)
 
+    nroitem = 1
+
+
     respond_to do |format|
       if @medio.save
+
+         
+
         format.html { redirect_to @medio, notice: 'Medio was successfully created.' }
         format.json { render :show, status: :created, location: @medio }
       else
@@ -80,9 +91,17 @@ class MediosController < ApplicationController
     def set_medio
       @medio = Medio.find(params[:id])
     end
+   
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def medio_params
-      params.require(:medio).permit(:descrip, :comments,:grupo,:estacion,:full_name,:taxable,:code  )
+      params.require(:medio).permit(:descrip, :comments,:grupo,:estacion,:full_name,:taxable,:code  ,
+         :medio_details_attributes => [:id,:code, :name  ,:user_id,:medio_id, :destroy]  )
+
+
     end
+
+
+     
+
 end

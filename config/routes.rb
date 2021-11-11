@@ -1,6 +1,9 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :medio_details
+  resources :tipo_tarifas
+  resources :tipo_avisos
   resources :conciliabanks
 
   
@@ -58,6 +61,7 @@
     
       collection { post :import }
   end 
+
   resources :contrato_details do 
      collection { post :import }
   end 
@@ -115,7 +119,11 @@
 
  
   end 
-  
+   resources :medios do
+    resources :medio_details, except: [:index,:show], controller: "medios/medio_details"
+
+ 
+  end 
   resources :facturas do
     resources :factura_details, except: [:index,:show], controller: "facturas/facturas_details"
     

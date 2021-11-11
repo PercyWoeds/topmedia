@@ -1,24 +1,0 @@
-{:uriI"¬file://app/assets/stylesheets/plugins/jquery-scrollTo/tests/WinMaxY-to-iframe-quirks.html?type=text/html&id=3fbc23c158219df7a30eead1eca10697803bb61fc84a0e6e2027ebc02ee4825c:ET:load_pathI"app/assets/stylesheets;T:filenameI"Wapp/assets/stylesheets/plugins/jquery-scrollTo/tests/WinMaxY-to-iframe-quirks.html;T:	nameI";plugins/jquery-scrollTo/tests/WinMaxY-to-iframe-quirks;T:logical_pathI"@plugins/jquery-scrollTo/tests/WinMaxY-to-iframe-quirks.html;T:content_typeI"text/html;T:sourceI"<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<title>jQuery.scrollTo - Test Window MaxY to Iframe - Quirks Mode</title>
-	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.js"></script>
-	<script type="text/javascript" src="../jquery.scrollTo.js"></script>
-	<script type="text/javascript" src="test.js"></script>
-</head>
-<body>
-	<h1>jQuery.scrollTo - Test Window MaxY to Iframe - Quirks Mode</h1>
-	
-	<iframe src="WinMaxY-quirks.html?notest" style="width:500px"></iframe>
-	
-	<script type="text/javascript">
-		setTimeout(function(){
-			$('iframe').test();
-		}, 1500 );
-	</script>
-</html>
-;T:metadata{	:dependencieso:Set:
-@hash}
-I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"2processors:type=text/html&file_type=text/html;TTI"efile-digest://app/assets/stylesheets/plugins/jquery-scrollTo/tests/WinMaxY-to-iframe-quirks.html;TTF:charsetI"
-utf-8;F:digest"%à&øúê#%ÈOH^ØGƒ¹µPÙWž"%þ¶TÝI:lengthi:dependencies_digest"%ÄWZÌ)ÈÙß9Ëæ@äŒ.Œ›ìç,J²n‰ÀÂ[i’:idI"E3fbc23c158219df7a30eead1eca10697803bb61fc84a0e6e2027ebc02ee4825c;F:
-mtimel+´%IY

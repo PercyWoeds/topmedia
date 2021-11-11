@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @tipo_tarifa.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @tipo_tarifa.name %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @tipo_tarifa.user_id %>
+</p>
+
+<%= link_to 'Edit', edit_tipo_tarifa_path(@tipo_tarifa) %> |
+<%= link_to 'Back', tipo_tarifas_path %>

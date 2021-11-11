@@ -1,7 +1,7 @@
 class Orden < ActiveRecord::Base  	
 
    	validates_uniqueness_of :code 
-   	validates_presence_of :marca_id, :medio_id,:producto_id, :version_id,:tiempo ,:code ,:moneda_id ,:customer_id 
+   	validates_presence_of :marca_id, :medio_id,:producto_id, :version_id,:tiempo ,:code ,:moneda_id ,:customer_id ,:tipo_orden_id 
 	
   	belongs_to :company
   	belongs_to :customer
@@ -12,6 +12,7 @@ class Orden < ActiveRecord::Base
   	belongs_to :version
   	belongs_to :producto 
   	belongs_to :ciudad 
+    belongs_to :tipo_orden 
   	
   	has_many :orden_products, :dependent => :destroy
 

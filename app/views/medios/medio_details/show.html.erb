@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @medio_detail.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @medio_detail.name %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @medio_detail.user_id %>
+</p>
+
+<p>
+  <strong>Medios:</strong>
+  <%= @medio_detail.medios %>
+</p>
+
+<%= link_to 'Edit', edit_medio_detail_path(@medio_detail) %> |
+<%= link_to 'Back', medio_details_path %>

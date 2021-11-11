@@ -1982,7 +1982,7 @@ function addItemToLgv2() {
 //marca
 
 function createMarca() {
-    alert("aa");
+
     var company_id = $("#product_company_id").val();
     
     $.get('/marcas/new/' + company_id + '?ajax=1', {
@@ -2110,6 +2110,7 @@ function createMarca() {
  function roundTo(n, decimals ) {
  		return Number(Math.round(n  +'e'+decimals)+'e-'+decimals);
 }
+
 
 
 // actualizacion ornde detalle

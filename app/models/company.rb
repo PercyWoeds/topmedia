@@ -2692,6 +2692,28 @@ def get_statamenacount_by_days(fecha1,fecha2,banco)
 
 end 
 
+def get_tipo_orden
+
+    a = TipoOrden.order(:code )
+
+    return a
+end 
+
+def get_tipo_aviso
+
+    a = TipoAviso.order(:code ).all 
+
+    return a
+end 
+
+def get_tipo_tarifa
+
+    a = TipoTarifa.order(:code ).all 
+
+    return a
+end 
+
+
 
 def get_ordenes_day(fecha1,fecha2)    
     @ordenes = Orden.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])

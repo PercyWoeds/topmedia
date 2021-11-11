@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210118172646) do
+ActiveRecord::Schema.define(version: 20211030015254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -246,6 +246,21 @@ ActiveRecord::Schema.define(version: 20210118172646) do
     t.datetime "updated_at",     null: false
     t.float    "cargos"
     t.float    "abonos"
+  end
+
+  create_table "conciliations", force: :cascade do |t|
+    t.integer  "bank_acount_id"
+    t.integer  "document_id"
+    t.string   "documento"
+    t.integer  "supplier_id"
+    t.float    "total"
+    t.datetime "fecha1"
+    t.datetime "fecha2"
+    t.string   "descrip"
+    t.string   "code"
+    t.integer  "concept_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "contrato_abonos", force: :cascade do |t|
@@ -917,6 +932,16 @@ ActiveRecord::Schema.define(version: 20210118172646) do
     t.integer  "customer_id"
   end
 
+  create_table "medio_details", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "user_id"
+    t.integer  "medio_id"
+    t.integer  "medios_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "medios", force: :cascade do |t|
     t.string   "descrip"
     t.text     "comments"
@@ -1043,8 +1068,8 @@ ActiveRecord::Schema.define(version: 20210118172646) do
     t.float    "quantity"
     t.float    "total"
     t.datetime "fecha"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.float    "tarifa"
     t.float    "i"
     t.string   "dia"
@@ -1094,7 +1119,30 @@ ActiveRecord::Schema.define(version: 20210118172646) do
     t.string   "cpm"
     t.string   "cmp2"
     t.string   "cpm2"
+    t.float    "duracion"
+    t.string   "medidax"
+    t.string   "ubicacion"
+    t.string   "ciudad"
+    t.string   "periodo"
+    t.string   "detalle"
+    t.float    "tarifa_cpm"
+    t.float    "impresion_click"
+    t.string   "website"
+    t.float    "nro_salas"
+    t.float    "nro_semanas"
+    t.string   "movie"
+    t.string   "cobertura"
+    t.string   "horario"
+    t.integer  "tipo_aviso_id"
+    t.integer  "tipo_avisos_id"
+    t.integer  "tipo_tarifa_id"
+    t.integer  "tipo_tarifas_id"
+    t.integer  "medio_detail_id"
+    t.string   "pelicula"
   end
+
+  add_index "orden_products", ["tipo_avisos_id"], name: "index_orden_products_on_tipo_avisos_id", using: :btree
+  add_index "orden_products", ["tipo_tarifas_id"], name: "index_orden_products_on_tipo_tarifas_id", using: :btree
 
   create_table "ordens", force: :cascade do |t|
     t.integer  "contrato_id"
@@ -1136,6 +1184,7 @@ ActiveRecord::Schema.define(version: 20210118172646) do
     t.float    "importe"
     t.string   "status"
     t.string   "mesanio"
+    t.integer  "tipo_orden_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -1737,9 +1786,25 @@ ActiveRecord::Schema.define(version: 20210118172646) do
   add_index "tanks", ["company_id"], name: "index_tanks_on_company_id", using: :btree
   add_index "tanks", ["product_id"], name: "index_tanks_on_product_id", using: :btree
 
+  create_table "tipo_avisos", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tipo_ordens", force: :cascade do |t|
     t.string   "code"
     t.string   "descrip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tipo_tarifas", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -1905,6 +1970,9 @@ ActiveRecord::Schema.define(version: 20210118172646) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "medio_details", "medios"
+  add_foreign_key "orden_products", "tipo_avisos"
+  add_foreign_key "orden_products", "tipo_tarifas"
   add_foreign_key "tanks", "companies"
   add_foreign_key "tanks", "products"
 end

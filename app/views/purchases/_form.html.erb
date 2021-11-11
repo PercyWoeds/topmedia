@@ -223,15 +223,10 @@
     });
     $("#purchase_payable_amount").bind("keyup", function() {
       calculoTotal();
-
-
     });
 
-
     
-
-    
-      function calculoTotal()
+  function calculoTotal()
     {
       var quantity = 1 ;
       var price     = $("#purchase_payable_amount").val();
@@ -246,9 +241,7 @@
       $("#ac_item_subtotal").html(price);
       $("#ac_item_subtotal2").html(inafecto);
       $("#ac_item_tax").html(igv);
-      $("#ac_item_total").html(total);
-
-      
+      $("#ac_item_total").html(total);      
      
     }
     

@@ -1,0 +1,618 @@
+
+
+
+<% if @orden_product.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@orden_product.errors.count, "error") %> prohibited this purchaseorder from being saved:</h2>
+
+    <ul>
+    <% @orden_product.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+<%= form_for [@orden, @orden_product] do |f| %>
+
+   <div class="form-inputs">
+
+      <% if  @orden.tipo_orden_id == 1 %> 
+
+      
+   <table>
+      <tr>
+        <th>Medio </th>
+        <th>Motivo  </th>
+        <th>Duracion </th>
+        
+        <th>Nro.Salas </th>
+        <th>Nro.Semanas  </th>
+        <th>Pelicula  </th>
+        <th>Costo x Aviso  </th>
+        
+      
+        <th>Costo Total </th>
+
+      </tr>
+    <tr>
+
+  
+
+      
+
+       <td> 
+      <div class="field">
+        
+        <%= f.collection_select :medio_detail_id, @orden_product_medio_details, :id, :name, :prompt => true %>
+      </div>
+      </td>
+
+ <td> 
+      <div class="field">
+         <%= @orden.version.descrip  %>    
+      </div>
+      </td>
+
+
+      <td>
+        <div class="field">
+          <%= f.number_field :duracion ,:style=> 'width: 40px' , onblur: "updateItemOrden()" , min: 0  %>
+        </div>
+      </td>
+
+      <td>
+        <div class="field">
+          <%= f.number_field :nro_salas ,:style=> 'width: 40px', onblur: "updateItemOrden()",min: 0%>
+        </div>
+      </td>
+
+      <td>
+          <div class="field">
+            <%= f.number_field :nro_semanas,:style=> 'width: 40px', onblur: "updateItemOrden()",min: 0%>
+          </div>
+      </td>
+      <td>
+        <div class="field">
+            <%= f.text_field :pelicula ,:style=> 'width: 150px', onblur: "updateItemOrden()",min: 0%>
+          </div>
+      </td>
+     
+
+
+      <td>
+        <div class="field">
+           
+         <%= f.number_field :tarifa ,:style=> 'width: 100px' ,min: 0,  :value => (number_with_precision(f.object.tarifa, :precision => 2) || 0) ,:step => 0.01  %>
+          </div>
+
+      </td>
+
+      <td>
+        <div>
+            <span id="product_total">0.00000</span>
+        
+        
+        </div>
+      </td>
+    </tr>
+
+      </table>
+
+
+      <% end %>
+
+
+
+      <% if  @orden.tipo_orden_id == 4 %> 
+
+      
+   <table>
+      <tr>
+        <th>Programa/elemento</th>
+        <th>01</th>
+        <th>02</th>
+        <th>03</th>
+        <th>04</th>
+        <th>05</th>
+        <th>06</th>
+        <th>07</th>
+        <th>08</th>
+        <th>09</th>
+        <th>10</th>
+        <th>11</th>
+        <th>12</th>
+        <th>13</th>
+        <th>14</th>
+        <th>15</th>
+        <th>16</th>
+        <th>17</th>
+        <th>18</th>
+        <th>19</th>
+        <th>20</th>
+        <th>21</th>
+        <th>22</th>
+        <th>23</th>
+        <th>24</th>
+        <th>25</th>
+        <th>26</th>
+        <th>27</th>
+        <th>28</th>
+        <th>29</th>
+        <th>30</th>
+        <th>31</th>
+        <th>Cantidad </th>
+        <th>R.Miles </th>
+        <th>Tarifa</th>
+        <th>Costo</th>
+        <th>Total </th>
+
+      </tr>
+    <tr>
+
+  
+
+      <td>
+        <div >
+        <input type="hidden" name="ac_item_id" id="ac_item_id" value="<% if @ac_item_id %><%= @ac_item_id %><% end %>"/>
+
+          <%= f.text_field :descrip   %>
+        </div>
+      </td>
+
+
+
+      <td>
+        <div class="field">
+          <%= f.number_field :d01,:style=> 'width: 25px' , onblur: "updateItemOrden()" , min: 0  %>
+        </div>
+      </td>
+
+      <td>
+        <div class="field">
+          <%= f.number_field :d02,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0%>
+        </div>
+      </td>
+
+      <td>
+          <div class="field">
+            <%= f.number_field :d03,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0%>
+          </div>
+      </td>
+      <td>
+        <div class="field">
+            <%= f.number_field :d04,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0%>
+          </div>
+      </td>
+      <td>
+        <div class="field">
+            <%= f.number_field :d05,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0 %>
+          </div>
+      </td>
+      <td>
+        <div class="field">
+            <%= f.number_field :d06,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0 %>
+          </div>
+      </td>
+      <td>
+        <div class="field">
+            <%= f.number_field :d07,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0%>
+          </div>
+      </td>
+      <td>
+        <div class="field">
+            <%= f.number_field :d08,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0 %>
+          </div>
+      </td>
+      <td>
+        <div class="field">
+            <%= f.number_field :d09,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0 %>
+          </div>
+      </td>
+
+      <td>
+        <div class="field">
+            <%= f.number_field :d10,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0 %>
+          </div>
+      </td>
+      <td>
+        <div class="field">
+            <%= f.number_field :d11,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0%>
+          </div>
+      </td>
+
+      <td>
+        <div class="field">
+            <%= f.number_field :d12,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0%>
+          </div>
+      </td>
+      <td>
+        <div class="field">
+            <%= f.number_field :d13,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0%>
+          </div>
+      </td>
+
+      <td>
+        <div class="field">
+            <%= f.number_field :d14,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0%>
+          </div>
+      </td>
+      <td>
+        <div class="field">
+            <%= f.number_field :d15,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0 %>
+          </div>
+      </td>
+
+      <td>
+        <div class="field">
+            <%= f.number_field :d16,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0%>
+          </div>
+      </td>
+      <td>
+        <div class="field">
+            <%= f.number_field :d17,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0 %>
+          </div>
+      </td>
+      <td>
+        <div class="field">
+            <%= f.number_field :d18,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0 %>
+          </div>
+      </td>
+      <td>
+        <div class="field">
+            <%= f.number_field :d19,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0%>
+          </div>
+      </td>
+      <td>
+        <div class="field">
+            <%= f.number_field :d20,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0%>
+          </div>
+      </td>
+      <td>
+        <div class="field">
+            <%= f.number_field :d21,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0%>
+          </div>
+      </td>
+      <td>
+        <div class="field">
+            <%= f.number_field :d22,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0 %>
+          </div>
+      </td>
+      <td>
+        <div class="field">
+            <%= f.number_field :d23,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0%>
+          </div>
+      </td>
+      <td>
+        <div class="field">
+            <%= f.number_field :d24,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0 %>
+          </div>
+      </td>
+      <td>
+        <div class="field">
+            <%= f.number_field :d25,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0 %>
+          </div>
+      </td>
+
+      <td>
+        <div class="field">
+            <%= f.number_field :d26,:style=> 'width: 25px',min: 0  , onblur: "updateItemOrden()"  %>
+          </div>
+      </td>
+      <td>
+        <div class="field">
+            <%= f.number_field :d27,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0%>
+          </div>
+      </td>
+
+      <td>
+        <div class="field">
+            <%= f.number_field :d28,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0%>
+          </div>
+      </td>
+      <td>
+        <div class="field">
+            <%= f.number_field :d29,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0%>
+          </div>
+      </td>
+
+
+      <td>
+        <div class="field">
+            <%= f.number_field :d30,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0%>
+          </div>
+      </td>
+      <td>
+        <div class="field">
+            <%= f.number_field :d31,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0 %>
+          </div>
+      </td>
+      <td>
+        <div class="small">
+
+           <p id= "product_qty"  align="right"> 0.00 </p>
+          
+        </div>
+      </td>
+
+
+    <td>
+      <div class="field">
+          <%= f.text_field :rating2,:style=> 'width: 50px',min: 0%>
+        </div>
+
+    </td>
+
+
+      <td>
+        <div class="field">
+                <%= f.number_field :tarifa,:style=> 'width: 50px' , min: 0 ,:step => 0.01  %>
+
+               
+          </div>
+
+      </td>
+
+
+      <td>
+        <div class="small">
+           <p id= "product_price"   align="right"></p>
+        
+        </div>
+
+      </td>
+      <td>
+        <div>
+          <span id="product_total">0.00</span>
+        
+        </div>
+      </td>
+    </tr>
+
+      </table>
+
+
+      <% end %>
+
+
+
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.hidden_field :avisodetail_id,:id => "131" %>
+
+   <%= f.hidden_field :price ,:id => "orden_product_tarifa"%>
+    <%= f.hidden_field :quantity ,:id => "orden_product_quantity"%>
+    <%= f.hidden_field :total ,:id => "orden_product_quantity"%>
+    
+    <%= f.submit %>
+
+  </div>
+<% end %>
+
+
+
+
+<%= render 'layouts/autocomplete' %>
+
+<script type="text/javascript">
+
+  $(document).ready(function() {
+
+    $("#ac_item").autocomplete("/ordens/ac_programs/<%= @orden.id %>", {
+			matchSubset: 1,
+			matchContains: 1,
+      selectFirst: false
+    });
+
+    $("#ac_item").result(function(event, data, formatted) {
+      $("#ac_item_id").val(data[2]);
+      updateItemOrden();
+    });
+
+
+    $('.selector').keydown(function (e) {
+      var arrow = { left: 37, up: 38, right: 39, down: 40 };
+
+      switch (e.which) {
+        case arrow.left:
+           updateItemOrden();
+          
+        case arrow.up:
+          //..
+          alert("key up") ; 
+        updateItemOrden();
+        case arrow.right:
+          //..
+        updateItemOrden();
+        case arrow.down:
+          //..
+         updateItemOrden();
+      }
+    });
+
+
+    $("#orden_product_tarifa").bind("keyup", function() {
+      updateItemOrden();      
+    });
+
+    $("#orden_product_d01").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d02").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d03").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d04").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d05").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d06").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d07").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d08").bind("keyup", function() {
+      updateItemOrden();
+    });
+
+    $("#orden_product_d09").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d10").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d11").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d12").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d13").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d14").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d15").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d16").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d17").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d18").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d19").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d20").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d21").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d22").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d23").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d24").bind("keyup", function() {
+      updateItemOrden();
+    });
+
+    $("#orden_product_d25").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d26").bind("keyup", function() {
+      updateItemOrden();
+    });
+
+    $("#orden_product_d27").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d28").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d29").bind("keyup", function() {
+      updateItemOrden();
+    });
+    $("#orden_product_d30").bind("keyup", function() {
+      updateItemOrden();
+    });
+
+    $("#orden_product_d31").bind("keyup", function() {
+      updateItemOrden();
+    });
+
+
+   
+  // Update price total for invoice
+  function updateItemOrden()
+
+   {
+
+  
+    var quantity = $("#ac_item_quantity").val();
+    var price = $("#ac_item_price").val();
+    var discount = $("#ac_item_discount").val();
+
+    var d1 = $("#orden_product_d01").val();
+    var d2 = $("#orden_product_d02").val();
+    var d3 = $("#orden_product_d03").val();
+    var d4 = $("#orden_product_d04").val();
+    var d5 = $("#orden_product_d05").val();
+    var d6 = $("#orden_product_d06").val();
+    var d7 = $("#orden_product_d07").val();
+    var d8 = $("#orden_product_d08").val();
+    var d9 = $("#orden_product_d09").val();
+    var d10 = $("#orden_product_d10").val();
+    var d11 = $("#orden_product_d11").val();
+    var d12 = $("#orden_product_d12").val();
+    var d13 = $("#orden_product_d13").val();
+    var d14 = $("#orden_product_d14").val();
+    var d15 = $("#orden_product_d15").val();
+    var d16 = $("#orden_product_d16").val();
+    var d17 = $("#orden_product_d17").val();
+    var d18 = $("#orden_product_d18").val();
+    var d19 = $("#orden_product_d19").val();
+    var d20 = $("#orden_product_d20").val();
+    var d21 = $("#orden_product_d21").val();
+    var d22 = $("#orden_product_d22").val();
+    var d23 = $("#orden_product_d23").val();
+    var d24 = $("#orden_product_d24").val();
+    var d25 = $("#orden_product_d25").val();
+    var d26 = $("#orden_product_d26").val();
+    var d27 = $("#orden_product_d27").val();
+    var d28 = $("#orden_product_d28").val();
+    var d29 = $("#orden_product_d29").val();
+    var d30 = $("#orden_product_d30").val();
+    var d31 = $("#orden_product_d31").val();
+    var tarifa = $("#orden_product_tarifa").val();
+
+    var tipo_orden = <%=  @orden.tipo_orden_id %>  ;
+
+    if (tipo_orden == 1 )
+    {
+
+    
+
+       var importe = tarifa ;
+       $("#product_total").html(importe);  
+
+
+     document.getElementById("product_total").innerHTML = Number((importe).toFixed(2));
+
+
+    }
+
+    if (tipo_orden == 4)
+     {  
+      var duracion =  <%= @orden.tiempo %>;
+      var costo  = (tarifa / 30) * duracion ;
+      var qty  = parseFloat(d1)  + parseFloat(d2)  + parseFloat(d3)  + parseFloat(d4) + parseFloat(d5)  +          parseFloat(d6)  + parseFloat(d7)  + parseFloat(d8)  + parseFloat(d9) + parseFloat(d10) +
+                parseFloat(d11) + parseFloat(d12) + parseFloat(d13) + parseFloat(d14) + parseFloat(d15) + parseFloat(d16) + parseFloat(d17) + parseFloat(d18) + parseFloat(d19) + parseFloat(d20) + parseFloat(d21) + parseFloat(d22) + parseFloat(d23) + parseFloat(d24) + parseFloat(d25) + parseFloat(d26) + parseFloat(d27) +parseFloat(d28) + parseFloat(d29) + parseFloat(d30) + parseFloat(d31)  ;
+
+
+      var importe = qty  * costo;     
+             
+       document.getElementById("product_qty").innerHTML = Number((qty).toFixed(2));
+       document.getElementById("product_total").innerHTML = Number((importe).toFixed(2));
+        document.getElementById("product_price").innerHTML = Number((costo).toFixed(2));
+       }
+    }
+
+
+  });
+</script>

@@ -12,6 +12,7 @@
 <%= hr() %>
 
 
+
 <p>
   <b>Orden:</b>
   <%= @orden.code %>
@@ -19,6 +20,9 @@
 
 <p>
   
+
+<b>Tipo de Orden:</b>
+  <%= @orden.tipo_orden.descrip %>
 
 </p>
 
@@ -92,7 +96,7 @@
 <h3>
   Detalle
 </h3>
-
+<% if @orden.tipo_orden_id == 4 %>
 <table>
   <thead>
     <tr>
@@ -385,6 +389,140 @@
     </tr>
   </tbody>
 </table>
+
+<% end %>
+
+<% if @orden.tipo_orden_id == 1 %>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+       Item 
+      </th>
+      
+      <th>
+        Medio Detalle 
+      </th>
+     <th>
+        Motivo  
+      </th>
+       <th>
+        Duracion
+      </th>
+     
+     <th>
+        Nro Salas   
+      </th>
+      <th>
+        Nro.Semanas
+      </th>
+      <th>
+        Pelicula 
+      </th>
+       <th>
+      
+      </th>
+      
+      <th>
+        Tarifa
+      </th>
+      <th>
+        Costo
+      </th>
+      <th>
+        Importe
+      </th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    
+    <%  @ordens_products.each do |product| %>
+    <tr>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.id %>    
+          </td>
+
+          <td class="small bordered_bottom bordered_right">
+            <%= product.medio_detail.name  %>    
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= @orden.version.descrip  %>    
+          </td>
+
+         <td class="small bordered_bottom bordered_right">
+          
+                 <%= money(product.duracion) %>    
+              </td>
+     
+         <td class="small bordered_bottom bordered_right">
+          
+             <%= money(product.nro_salas) %>    
+          </td>
+     <td class="small bordered_bottom bordered_right">
+             <%= money(product.nro_semanas) %>    
+      </td>
+      <td class="small bordered_bottom bordered_right">
+         <% %>    
+      </td>
+    
+        
+          
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= money(product.tarifa) %>
+          </td>
+          
+         
+          <td class="small bordered_bottom bordered_right">
+            <%= money(product.total) %> 
+          </td>
+          <% if @orden.tipo == "N" %>
+          <td><%= link_to 'Editar', edit_orden_orden_product_path(orden_id: @orden.id,id: product.id ) %></td>          
+          <td><%= link_to 'Eliminar',[@orden,product], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+          
+    </td>
+    
+    <% end %>
+    <tr>
+      <td colspan="38" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td colspan="37" class="bordered_bottom bordered_right bold">
+        Subtotal:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@orden.subtotal) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="37" class="bordered_bottom bordered_right bold">
+        IGV:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@orden.tax) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="37" class="bordered_bottom bordered_right bold">
+        Total:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@orden.total) %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<% end %>
+
+
+
 <br />
 
 <%= hr() %>

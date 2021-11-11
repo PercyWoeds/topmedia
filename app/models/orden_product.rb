@@ -4,7 +4,10 @@ class OrdenProduct < ActiveRecord::Base
 
 	belongs_to :orden 
 	belongs_to :avisodetail
-  before_save :set_quantity 
+  
+  belongs_to :medio_detail
+  
+ # before_save :set_quantity 
 
 
 
@@ -125,6 +128,14 @@ class OrdenProduct < ActiveRecord::Base
 
     puts self.quantity 
     puts self.d25 
+
+  end 
+
+  def get_medio_details(id)
+
+    @det = MedioDetail.where(medio_id: id )
+
+    return @det 
 
   end 
   

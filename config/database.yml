@@ -17,11 +17,12 @@ default: &default
 
 development:
   <<: *default
-  database: mnygo_app_development_m
+  database: mnygo_app_development_top
 
 test:
   <<: *default
-  database: mnygo_test
+  database: mnygo_test_top
+  
 
 production:
   <<: *default

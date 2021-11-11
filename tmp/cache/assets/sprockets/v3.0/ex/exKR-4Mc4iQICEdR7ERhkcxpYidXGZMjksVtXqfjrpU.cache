@@ -1,43 +1,0 @@
-{:uriI"“file://app/assets/stylesheets/plugins/lightbox/bower.json?type=application/json&id=98457bf70fe2f3cc8e27b2e7d2c8953400cf2b4415aade82a258f1efdd981d08:ET:load_pathI"app/assets/stylesheets;T:filenameI"7app/assets/stylesheets/plugins/lightbox/bower.json;T:	nameI"plugins/lightbox/bower;T:logical_pathI" plugins/lightbox/bower.json;T:content_typeI"application/json;T:sourceI"À{
-    "name": "ekko-lightbox",
-    "version": "3.3.3",
-    "main": "./dist/ekko-lightbox.min.js",
-    "ignore": [
-        "**/.*",
-        "examples",
-        "node_modules",
-        "bower_components",
-        "test",
-        "tests"
-    ],
-    "dependencies": {
-        "bootstrap": ">= 3.0.0"
-    },
-    "devDependencies": {
-        "grunt": "~0.4.1",
-        "grunt-banner": "~0.2.0",
-        "grunt-contrib-coffee": "~0.8.0",
-        "grunt-contrib-uglify": "~0.2.2",
-        "grunt-contrib-watch": "~0.5.1",
-        "grunt-recess": "~0.3.3",
-        "grunt-bump": "~0.0.14"
-    },
-    "homepage": "https://github.com/ashleydw/lightbox",
-    "authors": [
-        "ashleydw <hello@ashleyd.ws>"
-    ],
-    "description": "A lightbox gallery plugin for Bootstrap 3 based on the modal plugin",
-    "keywords": [
-        "lightbox",
-        "gallery",
-        "bootstrap",
-        "jquery",
-        "modal"
-    ],
-    "license": "GNU GENERAL PUBLIC LICENSE"
-}
-;T:metadata{	:dependencieso:Set:
-@hash}
-I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"@processors:type=application/json&file_type=application/json;TTI"Efile-digest://app/assets/stylesheets/plugins/lightbox/bower.json;TTF:charsetI"
-utf-8;F:digest"%±³ÿ §²ufĞ»ğÛ²¤Us˜° +ø©jÇff1:lengthiÀ:dependencies_digest"%’:c,qâÏiÓ]³„u:s#5/C]üı¨eoÁ[¾Z¡×:idI"E98457bf70fe2f3cc8e27b2e7d2c8953400cf2b4415aade82a258f1efdd981d08;F:
-mtimel+´%IY

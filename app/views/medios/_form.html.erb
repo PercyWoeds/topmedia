@@ -32,6 +32,43 @@
     <%= f.label :taxable, "IGV? " %>
   </div>
 
+
+
+<h3>Medios - Detalles  </h3>
+
+
+  <table>
+   <tr>
+   <th style="width: 5%">Item </th>
+   <th style="width: 10%">Cliente </th>
+   <th style="width: 30%">Contacto </th>
+  
+   
+   <% nroitem = 1 %>
+
+   </tr>
+
+    <%= f.fields_for :medio_details  do |rq_fields| %>
+    
+    <tr>
+
+    <td style="width: 5%">  <%= nroitem %> </td>
+
+    <td style="width: 10%">  <%= rq_fields.text_field :code , :size=>"5" %></td>
+
+    <td style="width: 30%">  <%= rq_fields.text_field :name , :size=>"80" %></td>
+
+    </tr>
+  
+    <% nroitem +=1 %>
+
+    
+    <% end %>
+
+  </table>
+
+
+
   <div class="form-actions">
     <%= f.button :submit %>
   </div>

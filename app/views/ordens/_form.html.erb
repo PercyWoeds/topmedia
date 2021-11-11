@@ -38,6 +38,14 @@
       </div>
       <br />
 
+
+
+    <div class="field">
+      <%= f.label :tipo_orden_id %><br />
+      <%= f.collection_select :tipo_orden_id, @tipo_ordens,:id,:descrip,{:prompt   => "Selec un tipo orden "} %>
+    </div>
+
+
       <div class="small">
         <strong>Seleccionar cliente:</strong>
         <span id="selected_customer"><% if @ac_customer %><%= @ac_customer %><% else %><!-- i --><% end %></span>

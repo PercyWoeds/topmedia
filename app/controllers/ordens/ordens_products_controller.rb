@@ -45,6 +45,22 @@ class Ordens::OrdensProductsController < ApplicationController
     @orden_product.tarifa = 0
     @orden_product.price = 0
     @orden_product.total = 0
+    @orden_product.duracion = 20
+
+   @orden_product.nro_salas = 0
+   @orden_product.nro_semanas  = 0
+
+   
+ @orden_product.avisodetail_id = 131
+
+
+    @orden_product_medio_details = @orden_product.get_medio_details(@orden.medio_id )
+    @tipo_avisos = @company.get_tipo_aviso()
+    @tipo_tarifas = @company.get_tipo_tarifa()
+
+
+
+
   end
 
   # GET /orden_products/1/edit
@@ -61,43 +77,69 @@ class Ordens::OrdensProductsController < ApplicationController
   # POST /orden_products.json
   def create
 
+    @company = Company.find(1)
 
     @orden_product = OrdenProduct.new(orden_product_params)
 
     @orden_product.orden_id  = @orden.id
+     puts "createee+++++++++++++++++++++++++++++"
 
-    @orden_product.avisodetail_id = 131
-    @orden_product.price = (@orden_product.tarifa / 30 * @orden.tiempo )
-    @company = Company.find(1)
-    sum_dias = (@orden_product.d01 + @orden_product.d02 + @orden_product.d03 + @orden_product.d04+
-                @orden_product.d05 + @orden_product.d06 + @orden_product.d07 + @orden_product.d08+
-                @orden_product.d09 + @orden_product.d10 + @orden_product.d11 + @orden_product.d12+
-                @orden_product.d13 + @orden_product.d14 + @orden_product.d15 + @orden_product.d16+
-                @orden_product.d17 + @orden_product.d18 + @orden_product.d19 + @orden_product.d20+
-                @orden_product.d21 + @orden_product.d22 + @orden_product.d23 + @orden_product.d24+
-                @orden_product.d25 + @orden_product.d26 + @orden_product.d27 + @orden_product.d28+
-                @orden_product.d29 + @orden_product.d30 + @orden_product.d31)
-    @orden_product.quantity = sum_dias
+    if @orden.tipo_orden_id == 1
+
+        @orden_product.avisodetail_id = 131
+        @orden_product.price = @orden_product.tarifa 
+        sum_dias = 1
+        @orden_product.quantity = sum_dias
+        puts "datoos----"
+      puts  @orden_product.avisodetail_id 
+      puts   @orden_product.price
+      puts  @orden_product.quantity 
+
+    end 
+
+    if @orden.tipo_orden_id == 4 
+
+        @orden_product.avisodetail_id = 131
+        @orden_product.price = (@orden_product.tarifa / 30 * @orden.tiempo )
+
+        sum_dias = (@orden_product.d01 + @orden_product.d02 + @orden_product.d03 + @orden_product.d04+
+                    @orden_product.d05 + @orden_product.d06 + @orden_product.d07 + @orden_product.d08+
+                    @orden_product.d09 + @orden_product.d10 + @orden_product.d11 + @orden_product.d12+
+                    @orden_product.d13 + @orden_product.d14 + @orden_product.d15 + @orden_product.d16+
+                    @orden_product.d17 + @orden_product.d18 + @orden_product.d19 + @orden_product.d20+
+                    @orden_product.d21 + @orden_product.d22 + @orden_product.d23 + @orden_product.d24+
+                    @orden_product.d25 + @orden_product.d26 + @orden_product.d27 + @orden_product.d28+
+                    @orden_product.d29 + @orden_product.d30 + @orden_product.d31)
+
+        @orden_product.quantity = sum_dias
+        
+
+    end 
+
+
     @orden_product.total = @orden_product.price * sum_dias
+  
+    puts @orden_product.total 
 
      respond_to do |format|
        if @orden_product.save
 
            @orden[:subtotal] = @orden.get_subtotal("subtotal")
+           puts @orden[:subtotal]
            @orden[:tax] = @orden.get_subtotal("tax")
+           puts  @orden[:tax] 
            @orden[:total] = @orden[:subtotal] + @orden[:tax]
+           puts @orden[:total]
 
            @orden.update_attributes(:subtotal=> @orden[:subtotal])
-
-
-
 
          format.html { redirect_to @orden, notice: 'Orden product was successfully created.' }
          format.json { render :show, status: :created, location: @orden }
 
        else
          format.html { render :new }
-         format.json { render json: @orden.errors, status: :unprocessable_entity }
+         format.json { render json: @orden_product.errors, status: :unprocessable_entity }
+
        end
      end
   end
@@ -199,6 +241,28 @@ class Ordens::OrdensProductsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def orden_product_params
-      params.require(:orden_product).permit(:avisodetail_id, :price, :quantity, :total, :fecha, :tarifa, :i, :dia, :d01, :d02, :d03, :d04, :d05, :d06, :d07, :d08, :d09, :d10, :d11, :d12, :d13, :d14, :d15, :d16, :d17, :d18, :d19, :d20, :d21, :d22, :d23, :d24, :d25, :d26, :d27, :d28, :d29, :d30, :d31,:canal,:descrip,:d,:h,:cantidad,:rating,:rating2,:tpp,:impactos,:miles,:impactos2,:cpp,:cpm,:cmp2 )
-    end
+      params.require(:orden_product).permit(:avisodetail_id, :price, :quantity, :total, :fecha, :tarifa, :i, :dia, :d01, :d02, :d03,
+       :d04, :d05, :d06, :d07, :d08, :d09, :d10, :d11, :d12, :d13, :d14, :d15, :d16, :d17, :d18, :d19, :d20, :d21, :d22, :d23, :d24, 
+       :d25, :d26, :d27, :d28, :d29, :d30, :d31,:canal,:descrip,:d,:h,:cantidad,:rating,:rating2,:tpp,:impactos,:miles,:impactos2,
+       :cpp,:cpm,:cmp2, :duracion ,
+     :medidax,
+    :ubicacion,
+    :ciudad,
+    :periodo,
+    :detalle,
+    :tarifa_cpm,
+    :impresion_click,
+  :website,
+    :nro_salas,
+    :nro_semanas,
+   :movie,
+   :cobertura,
+   :horario,
+    :tipo_aviso_id,
+    :tipo_avisos_id,
+    :tipo_tarifa_id,
+   :tipo_tarifas_id,
+   :medio_detail_id,
+   :pelicula)
+  end 
 end

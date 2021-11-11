@@ -1,6 +1,6 @@
 // Update price total for invoice
 
-  function updateItemOrden() {
+  function updateItemOrden0() {
 
 
     var dia_01 = $("#orden_product_d01").val();

@@ -108,6 +108,131 @@ class OrdensController < ApplicationController
 
   end
 
+
+
+  def build_pdf_body_rpt10(pdf)
+
+
+
+    pdf.font "Helvetica" , :size => 5
+
+     pdf.move_down 10
+      headers = []
+      table_content = []
+      total_general = 0
+      total_factory = 0
+
+
+      Orden::TABLE_HEADERS2.each do |header|
+
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+      #table_content << headers
+
+      nroitem = 1
+
+
+      # tabla pivoteadas
+      # hash of hashes
+        # pad columns with spaces and bars from max_lengths
+
+      @total_general = 0
+      @total_anterior = 0
+      @total_cliente = 0
+
+     
+      @total_anterior_column = 0
+      @total_linea_general = 0
+
+      @orden_detalle =  @orden.get_orden_products()
+
+      lcCli = @orden_detalle.first.avisodetail_id
+      $lcCliName = ""
+
+      mes = @orden.month
+      anio = @orden.year
+      days_mes = days_of_month(mes,anio)
+
+
+
+
+     row = []
+
+   
+
+      row << "MEDIO"
+      row << "MOTIVO "
+      row << "DURACION"
+      row << "NRO.SALAS"
+      row << "NRO.SEMANAS"
+      row << "PELICULA"
+      row << "TARIFA"
+      row << "IMPORTE"
+
+
+     table_content << row
+
+     for  order in @orden_detalle
+            row = []
+            row << order.medio_detail.name[0..14]
+            row << @orden.version.descrip 
+
+            row << formatea_number(order.duracion)
+            row << formatea_number(order.nro_salas)
+            row << formatea_number(order.nro_semanas)
+            row << order.pelicula
+
+            row << money(order.tarifa)
+            row << money(order.total)           
+
+            table_content << row
+             @total_linea_general += order.total 
+          
+             nroitem = nroitem + 1
+
+       end
+
+
+
+     
+
+        result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+
+                                        } do
+                                          columns([0]).align=:left
+                                          columns([0]).width = 120
+
+                                          columns([1]).align=:left
+                                          columns([1]).width = 120
+
+                                          columns([2]).align=:center
+                                          columns([2]).width = 40
+
+                                          columns([3]).align=:center
+                                          columns([3]).width = 40
+                                          columns([4]).align=:center
+                                          columns([4]).width = 50
+                                          columns([5]).align=:center
+
+                                          columns([6]).align=:center
+                                           columns([6]).width = 50
+
+
+                                          columns([7]).align=:center
+                                           columns([7]).width = 50
+
+
+          end
+      pdf
+
+    end
+
+
+
   def build_pdf_body_rpt2(pdf)
 
 
@@ -643,7 +768,16 @@ class OrdensController < ApplicationController
 
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt2(pdf)
-        pdf = build_pdf_body_rpt2(pdf)
+
+        if @orden.tipo_orden_id == 1
+         pdf = build_pdf_body_rpt10(pdf)
+        end 
+
+
+        if @orden.tipo_orden_id == 4
+         pdf = build_pdf_body_rpt2(pdf)
+        end 
+
         build_pdf_footer_rpt2(pdf)
 
         $lcFileName =  "app/pdf_output/rpt_orden2.pdf"
@@ -982,9 +1116,17 @@ class OrdensController < ApplicationController
 
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
+    @tipo_ordens = @company.get_tipo_orden()
+
+    @tipo_avisos = @company.get_tipo_aviso()
+    @tipo_tafifas = @company.get_tipo_tarifa()
+
+
     @ciudad = Ciudad.all
 
     @contratos2 = @company.get_customer_contratos()
+
+
     
 
     @ac_user = getUsername()
@@ -1162,6 +1304,7 @@ class OrdensController < ApplicationController
     @ciudad = Ciudad.all
     @contratos2 = @company.get_customer_contratos()
     @monedas = Moneda.all
+ @tipo_ordens = @company.get_tipo_orden()
 
 
     @products_lines = @orden.products_lines
@@ -1253,6 +1396,7 @@ class OrdensController < ApplicationController
     @ciudad = Ciudad.all
     @monedas = Moneda.all
     @contratos2 = CustomerContrato.all.order(:secu_cont)
+ @tipo_ordens = @company.get_tipo_orden()
 
 
     @orden[:month]= @month
@@ -1323,6 +1467,7 @@ class OrdensController < ApplicationController
 
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
+ @tipo_ordens = @company.get_tipo_orden()
 
      @orden.calcularTarifa(params[:orden][:tiempo])
      @orden[:month] = params[:month]
@@ -2050,7 +2195,7 @@ def foot_data_headers_1
     :fecha1, :fecha2, :tiempo, :code , :company_id , :subtotal, :tax, :total, :user_id ,
     :processed , :customer_id, :description, :rating , :month, :year, :revision, :producto_id,
     :ciudad_id,:fecha_inicio, :fecha_fin, :tarifa , :aviso_detail_id, :avisodetail_id,
-    :tipo, :secu_cont, :moneda_id, :quantity)
+    :tipo, :secu_cont, :moneda_id, :quantity,:tipo_orden_id )
 
 
     end

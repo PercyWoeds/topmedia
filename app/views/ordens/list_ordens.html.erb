@@ -35,6 +35,11 @@
 </div>
 
 
+<div class="button">
+  <%= link_to 'Orden TV/Radio/Otros', "/ordens/new/#{@company.id}" %>
+ 
+</div>
+
  
 
 <br />
@@ -43,11 +48,6 @@
 <br />
 <%= will_paginate @ordens %>
 
-
-<div class="button">
-  <%= link_to 'Orden TV/Radio/Otros', "/ordens/new/#{@company.id}" %>
- 
-</div>
 
 <h2>Importar Archivos "*.csv"</h2>
 
