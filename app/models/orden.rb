@@ -13,6 +13,7 @@ class Orden < ActiveRecord::Base
   	belongs_to :producto 
   	belongs_to :ciudad 
     belongs_to :tipo_orden 
+    belongs_to :moneda 
   	
   	has_many :orden_products, :dependent => :destroy
 
@@ -63,6 +64,50 @@ TABLE_HEADERS2 = ["Nº",
                     "TARIFA  ",
                     "IMPORTE "]
 
+TABLE_HEADERS3 = [
+        "Producto",
+        "Motivo ",
+        "Programa",        
+        "Tipo Aviso",
+        "Tipo Tarifa",
+        "Cobertura ",
+ 
+        "Horario(Hrs)",
+        "Duracion", 
+                    "01",                  
+                    "02",
+                    "03",             
+                    "04",
+                    "05",
+                    "06",
+                    "07",                  
+                    "08",
+                    "09",             
+                    "10",
+                    "11",
+                    "12",                  
+                    "13",
+                    "14",             
+                    "15",
+                    "16",
+                    "17",                  
+                    "18",
+                    "19",             
+                    "20",
+                    "21",
+                    "22",
+                    "23",                  
+                    "24",
+                    "25",             
+                    "26",
+                    "27",
+                    "28",                  
+                    "29",
+                    "30",             
+                    "31",   
+                    "TOTAL",
+                    "TARIFA  ",
+                    "IMPORTE "]
 
 
   def self.search(search)
@@ -89,7 +134,7 @@ TABLE_HEADERS2 = ["Nº",
         return @numero_contrato.contrato.code 
         end 
       else
-         return "-"
+         return "SIN CONTRATO "
       end 
 
   end 

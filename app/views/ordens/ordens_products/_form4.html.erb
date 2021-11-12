@@ -24,7 +24,16 @@
       
    <table>
       <tr>
-        <th>Programa/elemento</th>
+         <th>Producto </th>
+        <th>Motivo  </th>
+        <th>Programa </th>
+        
+        <th>Tipo Aviso</th>
+        <th>Tipo Tarifa  </th>
+        <th>Cobertura  </th>
+ 
+        <th>Horario(Hrs)</th>
+        <th>Duracion  </th>
         <th>01</th>
         <th>02</th>
         <th>03</th>
@@ -57,8 +66,7 @@
         <th>30</th>
         <th>31</th>
         <th>Cantidad </th>
-        <th>R.Miles </th>
-        <th>Tarifa</th>
+       
         <th>Costo</th>
         <th>Total </th>
 
@@ -67,13 +75,63 @@
 
   
 
-      <td>
-        <div >
-        <input type="hidden" name="ac_item_id" id="ac_item_id" value="<% if @ac_item_id %><%= @ac_item_id %><% end %>"/>
 
-          <%= f.text_field :descrip   %>
+      <td class="small bordered_bottom bordered_left", style="width: 80px" >
+             <div class="field">
+              <%= f.collection_select :medio_detail_id, @orden_product_medio_details, :id, :name , {:include_blank=> true}, :style=> 'width: 80px' %>
+            </div>
+      </td>
+
+      <td class="small bordered_bottom bordered_left"> 
+      <div class="field">
+         <%= @orden.version.descrip  %>    
+      </div>
+      </td>
+
+      <td>
+        <div class="field">
+           <%= f.text_field :descrip   %>
         </div>
       </td>
+
+       <td class="small bordered_bottom bordered_left"> 
+      <div class="field">        
+        <%= f.collection_select :tipo_aviso_id, @tipo_avisos, :id, :name, {:include_blank=> true},:style=> 'width: 80px' %>
+      </div>
+      </td>
+
+
+
+       <td class="small bordered_bottom bordered_left", style="width: 80px"> 
+      <div class="field">
+        
+        <%= f.collection_select :tipo_tarifa_id, @tipo_tarifas, :id, :name, {:include_blank=> true},:style=> 'width: 80px'%>
+      </div>
+      </td>
+
+       <td class="small bordered_bottom bordered_left", style="width: 80px">
+       <div class="field">
+
+          <%= f.text_field :cobertura  ,:style=> 'width: 40px'  %>
+        </div>
+      </td>
+
+
+        <td class="small bordered_bottom bordered_left", style="width: 80px">
+       <div class="field">       
+
+          <%= f.text_field :horario  ,:style=> 'width: 70px'  %>
+        </div>
+      </td>
+
+
+
+      <td class="small bordered_bottom bordered_left", style="width: 40px">
+        <div class="field">
+          <%= f.number_field :duracion ,:style=> 'width: 40px'  %>
+        </div>
+      </td>
+
 
 
 
@@ -251,17 +309,12 @@
       </td>
 
 
-    <td>
-      <div class="field">
-          <%= f.text_field :rating2,:style=> 'width: 50px',min: 0%>
-        </div>
-
-    </td>
-
+   
+     
 
       <td>
         <div class="field">
-                <%= f.number_field :tarifa,:style=> 'width: 50px' , min: 0 ,:step => 0.01  %>
+                <%= f.number_field :price ,:style=> 'width: 50px' , min: 0 ,:step => 0.01  %>
 
                
           </div>
@@ -269,13 +322,7 @@
       </td>
 
 
-      <td>
-        <div class="small">
-           <p id= "product_price"   align="right"></p>
-        
-        </div>
-
-      </td>
+     
       <td>
         <div>
           <span id="product_total">0.00</span>
@@ -295,11 +342,8 @@
   </div>
 
   <div class="form-actions">
-    <%= f.hidden_field :avisodetail_id,:id => "131" %>
-
-   <%= f.hidden_field :price ,:id => "orden_product_tarifa"%>
-    <%= f.hidden_field :quantity ,:id => "orden_product_quantity"%>
-    <%= f.hidden_field :total ,:id => "orden_product_quantity"%>
+    
+  
     
     <%= f.submit %>
 
@@ -458,10 +502,8 @@
    {
 
   
-    var quantity = $("#ac_item_quantity").val();
-    var price = $("#ac_item_price").val();
-    var discount = $("#ac_item_discount").val();
 
+   
     var d1 = $("#orden_product_d01").val();
     var d2 = $("#orden_product_d02").val();
     var d3 = $("#orden_product_d03").val();
@@ -493,28 +535,15 @@
     var d29 = $("#orden_product_d29").val();
     var d30 = $("#orden_product_d30").val();
     var d31 = $("#orden_product_d31").val();
-    var tarifa = $("#orden_product_tarifa").val();
-
+   
     var tipo_orden = <%=  @orden.tipo_orden_id %>  ;
 
-    if (tipo_orden == 1 )
-    {
-
-    
-
-       var importe = tarifa ;
-       $("#product_total").html(importe);  
-
-
-     document.getElementById("product_total").innerHTML = Number((importe).toFixed(2));
-
-
-    }
-
+  
     if (tipo_orden == 4)
      {  
-      var duracion =  <%= @orden.tiempo %>;
-      var costo  = (tarifa / 30) * duracion ;
+
+      
+      var costo  =  $("#orden_product_price").val();
       var qty  = parseFloat(d1)  + parseFloat(d2)  + parseFloat(d3)  + parseFloat(d4) + parseFloat(d5)  +          parseFloat(d6)  + parseFloat(d7)  + parseFloat(d8)  + parseFloat(d9) + parseFloat(d10) +
                 parseFloat(d11) + parseFloat(d12) + parseFloat(d13) + parseFloat(d14) + parseFloat(d15) + parseFloat(d16) + parseFloat(d17) + parseFloat(d18) + parseFloat(d19) + parseFloat(d20) + parseFloat(d21) + parseFloat(d22) + parseFloat(d23) + parseFloat(d24) + parseFloat(d25) + parseFloat(d26) + parseFloat(d27) +parseFloat(d28) + parseFloat(d29) + parseFloat(d30) + parseFloat(d31)  ;
 
@@ -523,7 +552,7 @@
              
        document.getElementById("product_qty").innerHTML = Number((qty).toFixed(2));
        document.getElementById("product_total").innerHTML = Number((importe).toFixed(2));
-        document.getElementById("product_price").innerHTML = Number((costo).toFixed(2));
+      
        }
     }
 

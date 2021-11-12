@@ -683,6 +683,1564 @@ class OrdensController < ApplicationController
     end
 
 
+  def build_pdf_body_rpt20(pdf)
+
+    pdf.font "Helvetica" , :size => 4
+
+     pdf.move_down 10
+      headers = []
+      table_content = []
+      total_general = 0
+      total_factory = 0
+
+
+      Orden::TABLE_HEADERS3.each do |header|
+
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+      
+      nroitem = 1
+
+
+      # tabla pivoteadas
+      # hash of hashes
+        # pad columns with spaces and bars from max_lengths
+
+      @total_general = 0
+      @total_anterior = 0
+      @total_cliente = 0
+
+      @total_dia01 = 0
+      @total_dia02 = 0
+      @total_dia03 = 0
+      @total_dia04 = 0
+      @total_dia05 = 0
+      @total_dia06 = 0
+      @total_dia07 = 0
+      @total_dia08 = 0
+      @total_dia09 = 0
+      @total_dia10 = 0
+      @total_dia11 = 0
+      @total_dia12 = 0
+      @total_dia13 = 0
+      @total_dia14 = 0
+      @total_dia15 = 0
+      @total_dia16 = 0
+      @total_dia17 = 0
+      @total_dia18 = 0
+      @total_dia19 = 0
+      @total_dia20 = 0
+      @total_dia21 = 0
+      @total_dia22 = 0
+      @total_dia23 = 0
+      @total_dia24 = 0
+      @total_dia25 = 0
+      @total_dia26 = 0
+      @total_dia27 = 0
+      @total_dia28 = 0
+      @total_dia29 = 0
+      @total_dia30 = 0
+      @total_dia31 = 0
+
+
+      @total_anterior_column = 0
+      @total_linea_general = 0
+
+      @total_dia01_column = 0
+      @total_dia02_column = 0
+      @total_dia03_column = 0
+      @total_dia04_column = 0
+      @total_dia05_column = 0
+      @total_dia06_column = 0
+      @total_dia07_column = 0
+      @total_dia08_column = 0
+      @total_dia09_column = 0
+      @total_dia10_column = 0
+      @total_dia11_column = 0
+      @total_dia12_column = 0
+      @total_dia13_column = 0
+      @total_dia14_column = 0
+      @total_dia15_column = 0
+      @total_dia16_column = 0
+      @total_dia17_column = 0
+      @total_dia18_column = 0
+      @total_dia19_column = 0
+      @total_dia20_column = 0
+      @total_dia21_column = 0
+      @total_dia22_column = 0
+      @total_dia23_column = 0
+      @total_dia24_column = 0
+      @total_dia25_column = 0
+      @total_dia26_column = 0
+      @total_dia27_column = 0
+      @total_dia28_column = 0
+      @total_dia29_column = 0
+      @total_dia30_column = 0
+      @total_dia31_column = 0
+
+      @orden_detalle =  @orden.get_orden_products()
+
+      lcCli = @orden_detalle.first.avisodetail_id
+      $lcCliName = ""
+
+      mes = @orden.month
+      anio = @orden.year
+      days_mes = days_of_month(mes,anio)
+
+
+      fechadia1 = anio.to_s << "-" << mes.to_s.rjust(2, '0') << "-" << "01"
+      fechadia2 = anio.to_s << "-" << mes.to_s << "-" << "02"
+      fechadia3 = anio.to_s << "-" << mes.to_s << "-" << "03"
+      fechadia4 = anio.to_s << "-" << mes.to_s << "-" << "04"
+      fechadia5 = anio.to_s << "-" << mes.to_s << "-" << "05"
+      fechadia6 = anio.to_s << "-" << mes.to_s << "-" << "06"
+      fechadia7 = anio.to_s << "-" << mes.to_s << "-" << "07"
+      fechadia8 = anio.to_s << "-" << mes.to_s << "-" << "08"
+      fechadia9 = anio.to_s << "-" << mes.to_s << "-" << "09"
+      fechadia10 = anio.to_s << "-" << mes.to_s << "-" << "10"
+      fechadia11 = anio.to_s << "-" << mes.to_s << "-" << "11"
+      fechadia12 = anio.to_s << "-" << mes.to_s << "-" << "12"
+      fechadia13 = anio.to_s << "-" << mes.to_s << "-" << "13"
+      fechadia14 = anio.to_s << "-" << mes.to_s << "-" << "14"
+      fechadia15 = anio.to_s << "-" << mes.to_s << "-" << "15"
+      fechadia16 = anio.to_s << "-" << mes.to_s << "-" << "16"
+      fechadia17 = anio.to_s << "-" << mes.to_s << "-" << "17"
+      fechadia18 = anio.to_s << "-" << mes.to_s << "-" << "18"
+      fechadia19 = anio.to_s << "-" << mes.to_s << "-" << "19"
+      fechadia20 = anio.to_s << "-" << mes.to_s << "-" << "20"
+      fechadia21 = anio.to_s << "-" << mes.to_s << "-" << "21"
+      fechadia22 = anio.to_s << "-" << mes.to_s << "-" << "22"
+      fechadia23 = anio.to_s << "-" << mes.to_s << "-" << "23"
+      fechadia24 = anio.to_s << "-" << mes.to_s << "-" << "24"
+      fechadia25 = anio.to_s << "-" << mes.to_s << "-" << "25"
+      fechadia26 = anio.to_s << "-" << mes.to_s << "-" << "26"
+      fechadia27 = anio.to_s << "-" << mes.to_s << "-" << "27"
+      if days_mes >=28
+        fechadia28 = anio.to_s << "-" << mes.to_s << "-" << "28"
+      else
+        fechadia28=""
+      end
+      if days_mes >=29
+        fechadia29 = anio.to_s << "-" << mes.to_s << "-" << "29"
+      else
+        fechadia29=""
+      end
+      if days_mes >=30
+        fechadia30 = anio.to_s << "-" << mes.to_s << "-" << "30"
+      else
+        fechadia30=""
+      end
+      if days_mes >=31
+        fechadia31 = anio.to_s << "-" << mes.to_s << "-" << "31"
+      else
+        fechadia31=""
+      end
+
+
+     row = []
+
+      row << "PRODUCTO"
+      row << "MOTIVO "
+      row << "PROGRAMA "
+      row << "TIPO AVISO"
+      row << "TIPO TARIFA"
+      row << "COBERTURA "
+      row << "HORARIO(Hrs)"
+      row << "DURACION"
+
+      row << "01"+"\n"+get_name_dia(fechadia1)
+      row << "02"+"\n"+get_name_dia(fechadia2)
+      row << "03"+"\n"+get_name_dia(fechadia3)
+      row << "04"+"\n"+get_name_dia(fechadia4)
+      row << "05"+"\n"+get_name_dia(fechadia5)
+      row << "06"+"\n"+get_name_dia(fechadia6)
+      row << "07"+"\n"+get_name_dia(fechadia7)
+      row << "08"+"\n"+get_name_dia(fechadia8)
+      row << "09"+"\n"+get_name_dia(fechadia9)
+      row << "10"+"\n"+get_name_dia(fechadia10)
+      row << "11"+"\n"+get_name_dia(fechadia11)
+      row << "12"+"\n"+get_name_dia(fechadia12)
+      row << "13"+"\n"+get_name_dia(fechadia13)
+      row << "14"+"\n"+get_name_dia(fechadia14)
+      row << "15"+"\n"+get_name_dia(fechadia15)
+      row << "16"+"\n"+get_name_dia(fechadia16)
+      row << "17"+"\n"+get_name_dia(fechadia17)
+      row << "18"+"\n"+get_name_dia(fechadia18)
+      row << "19"+"\n"+get_name_dia(fechadia19)
+      row << "20"+"\n"+get_name_dia(fechadia20)
+      row << "21"+"\n"+get_name_dia(fechadia21)
+      row << "22"+"\n"+get_name_dia(fechadia22)
+      row << "23"+"\n"+get_name_dia(fechadia23)
+      row << "24"+"\n"+get_name_dia(fechadia24)
+      row << "25"+"\n"+get_name_dia(fechadia25)
+      row << "26"+"\n"+get_name_dia(fechadia26)
+      row << "27"+"\n"+get_name_dia(fechadia27)
+      row << "28"+"\n"+get_name_dia(fechadia28)
+      if fechadia29 != ""
+        row << "29"+"\n"+get_name_dia(fechadia29)
+      end
+      if fechadia30 != ""
+        row << "30"+"\n"+get_name_dia(fechadia30)
+      end
+      if fechadia31 != ""
+        row << "31"+"\n"+get_name_dia(fechadia31)
+      end
+      row << "TOTAL 
+        AVISOS"
+
+      row << "COSTO"
+      row << "IMPORTE"
+
+
+     table_content << row
+
+     for  order in @orden_detalle
+            row = []
+            row << order.medio_detail.name[0..14]
+            row << @orden.version.descrip 
+            row << order.descrip
+            row << order.tipo_aviso.name
+            row << order.tipo_tarifa.name
+            row << order.cobertura
+            row << order.horario
+
+            row << formatea_number(order.duracion)
+
+            row << formatea_number(order.d01)
+            row << formatea_number(order.d02)
+            row << formatea_number(order.d03)
+            row << formatea_number(order.d04)
+            row << formatea_number(order.d05)
+            row << formatea_number(order.d06)
+            row << formatea_number(order.d07)
+            row << formatea_number(order.d08)
+            row << formatea_number(order.d09)
+            row << formatea_number(order.d10)
+            row << formatea_number(order.d11)
+            row << formatea_number(order.d12)
+            row << formatea_number(order.d13)
+            row << formatea_number(order.d14)
+            row << formatea_number(order.d15)
+            row << formatea_number(order.d16)
+            row << formatea_number(order.d17)
+            row << formatea_number(order.d18)
+            row << formatea_number(order.d19)
+            row << formatea_number(order.d20)
+            row << formatea_number(order.d21)
+            row << formatea_number(order.d22)
+            row << formatea_number(order.d23)
+            row << formatea_number(order.d24)
+            row << formatea_number(order.d25)
+            row << formatea_number(order.d26)
+            row << formatea_number(order.d27)
+            row << formatea_number(order.d28)
+            if fechadia29 != ""
+              row << formatea_number(order.d29)
+            end
+            if fechadia30 != ""
+              row << formatea_number(order.d30)
+            end
+            if fechadia31 != ""
+              row << formatea_number(order.d31)
+            end
+
+
+            @total_dia01_column += order.d01
+            @total_dia02_column += order.d02
+            @total_dia03_column += order.d03
+            @total_dia04_column += order.d04
+            @total_dia05_column += order.d05
+            @total_dia06_column += order.d06
+            @total_dia07_column += order.d07
+            @total_dia08_column += order.d08
+            @total_dia09_column += order.d09
+            @total_dia10_column += order.d10
+            @total_dia11_column += order.d11
+            @total_dia12_column += order.d12
+            @total_dia13_column += order.d13
+            @total_dia14_column += order.d14
+            @total_dia15_column += order.d15
+            @total_dia16_column += order.d16
+            @total_dia17_column += order.d17
+            @total_dia18_column += order.d18
+            @total_dia19_column += order.d19
+            @total_dia20_column += order.d20
+            @total_dia21_column += order.d21
+            @total_dia22_column += order.d22
+            @total_dia23_column += order.d23
+            @total_dia24_column += order.d24
+            @total_dia25_column += order.d25
+            @total_dia26_column += order.d26
+            @total_dia27_column += order.d27
+            @total_dia28_column += order.d28
+            @total_dia29_column += order.d29
+            @total_dia30_column += order.d30
+            @total_dia31_column += order.d31
+
+            @total_linea = order.d01+order.d02+order.d03+order.d04+order.d05+order.d06+order.d07+order.d08+order.d09+order.d10+
+                           order.d11+order.d12+order.d13+order.d14+order.d15+order.d16+order.d17+order.d18+order.d19+order.d20+
+                           order.d21+order.d22+order.d23+order.d24+order.d25+order.d26+order.d27+order.d28+order.d29+order.d30+order.d31
+            row << sprintf("%.2f",@total_linea.to_s)
+           
+            row << money(order.price)
+
+            row << money(order.total)
+
+            table_content << row
+             @total_linea_general += @total_linea
+             @total_linea = 0
+          nroitem = nroitem + 1
+
+       end
+
+
+
+        row = []
+         row << "TOTAL =>"
+         row << "  "
+         row << "  "
+         row << "  "
+         row << "  "
+         row << "  "
+         row << "  "
+         row << "  "
+         row << formatea_number(@total_dia01_column)
+         row << formatea_number(@total_dia02_column)
+         row << formatea_number(@total_dia03_column)
+         row << formatea_number(@total_dia04_column)
+         row << formatea_number(@total_dia05_column)
+         row << formatea_number(@total_dia06_column)
+         row << formatea_number(@total_dia07_column)
+         row << formatea_number(@total_dia08_column)
+         row << formatea_number(@total_dia09_column)
+         row << formatea_number(@total_dia10_column)
+         row << formatea_number(@total_dia11_column)
+         row << formatea_number(@total_dia12_column)
+         row << formatea_number(@total_dia13_column)
+         row << formatea_number(@total_dia14_column)
+         row << formatea_number(@total_dia15_column)
+         row << formatea_number(@total_dia16_column)
+         row << formatea_number(@total_dia17_column)
+         row << formatea_number(@total_dia18_column)
+         row << formatea_number(@total_dia19_column)
+         row << formatea_number(@total_dia20_column)
+         row << formatea_number(@total_dia21_column)
+         row << formatea_number(@total_dia22_column)
+         row << formatea_number(@total_dia23_column)
+         row << formatea_number(@total_dia24_column)
+         row << formatea_number(@total_dia25_column)
+         row << formatea_number(@total_dia26_column)
+         row << formatea_number(@total_dia27_column)
+         row << formatea_number(@total_dia28_column)
+          if fechadia29 != ""
+             row << formatea_number(@total_dia29_column)
+          end
+             if fechadia30 != ""
+           row << formatea_number(@total_dia30_column)
+         end
+            if fechadia31 != ""
+           row << formatea_number(@total_dia31_column)
+         end
+
+           row << sprintf("%.2f",@total_linea_general.to_s)
+           row << " "
+         row << " "
+   
+
+         table_content << row
+
+        result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+
+                                        } do
+                                          columns([0]).align=:left                                        
+                                          columns([0]).width = 40 
+                                          columns([1]).align =:left
+                                          columns([1]).width = 40 
+
+                                          columns([2]).align=:center
+                                          columns([2]).width = 30 
+
+                                          columns([3]).align=:center
+                                          columns([3]).width = 30
+
+                                          columns([4]).align=:center
+                                          columns([4]).width = 30 
+
+                                          columns([5]).align=:center
+                                          columns([5]).width = 30
+                                          columns([6]).align=:center
+                                           columns([6]).width = 30
+                                          columns([7]).align=:center
+                                        
+                                          columns([8]).align=:center
+
+                                          columns([9]).align=:center
+
+                                          columns([10]).align=:center
+
+                                          columns([11]).align=:center
+
+                                          columns([12]).align=:center
+
+                                          columns([13]).align=:center
+
+                                          columns([14]).align=:center
+
+                                          columns([15]).align=:center
+
+                                          columns([16]).align=:center
+
+                                          columns([17]).align=:center
+
+                                          columns([18]).align=:center
+
+                                          columns([19]).align=:center
+
+                                          columns([20]).align=:center
+
+                                          columns([21]).align=:center
+
+                                          columns([22]).align=:center
+
+
+                                          columns([23]).align=:center
+
+                                          columns([24]).align=:center
+
+                                          columns([25]).align=:center
+
+                                          columns([26]).align=:center
+
+                                          columns([27]).align=:center
+
+                                          columns([28]).align=:center
+
+                                          columns([29]).align=:center
+                                          columns([30]).align=:center
+
+
+                                          columns([31]).align=:center
+
+                                          columns([32]).align=:right
+
+
+                                          columns([33]).align=:right
+
+                                      
+
+                                          columns([34]).align=:right
+                                       
+
+
+                                          columns([35]).align=:right
+                                      
+
+                                          columns([36]).align=:right
+                                        
+                                          columns([37]).align=:right
+                                      
+
+                                          columns([38]).align=:right
+                                          columns([38]).width = 30 
+
+                                          columns([39]).align=:right
+                                          columns([39]).width = 30 
+
+                                          columns([40]).align=:right
+                                          columns([40]).width = 30 
+                                                                                     
+
+
+          end
+      pdf
+
+    end
+
+
+
+   def  build_pdf_body_rpt30(pdf)
+
+    pdf.font "Helvetica" , :size => 5
+
+     pdf.move_down 10
+      headers = []
+      table_content = []
+      total_general = 0
+      total_factory = 0
+
+
+      Orden::TABLE_HEADERS3.each do |header|
+
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+      
+      nroitem = 1
+
+
+      # tabla pivoteadas
+      # hash of hashes
+        # pad columns with spaces and bars from max_lengths
+
+      @total_general = 0
+      @total_anterior = 0
+      @total_cliente = 0
+
+      @total_dia01 = 0
+      @total_dia02 = 0
+      @total_dia03 = 0
+      @total_dia04 = 0
+      @total_dia05 = 0
+      @total_dia06 = 0
+      @total_dia07 = 0
+      @total_dia08 = 0
+      @total_dia09 = 0
+      @total_dia10 = 0
+      @total_dia11 = 0
+      @total_dia12 = 0
+      @total_dia13 = 0
+      @total_dia14 = 0
+      @total_dia15 = 0
+      @total_dia16 = 0
+      @total_dia17 = 0
+      @total_dia18 = 0
+      @total_dia19 = 0
+      @total_dia20 = 0
+      @total_dia21 = 0
+      @total_dia22 = 0
+      @total_dia23 = 0
+      @total_dia24 = 0
+      @total_dia25 = 0
+      @total_dia26 = 0
+      @total_dia27 = 0
+      @total_dia28 = 0
+      @total_dia29 = 0
+      @total_dia30 = 0
+      @total_dia31 = 0
+
+
+      @total_anterior_column = 0
+      @total_linea_general = 0
+
+      @total_dia01_column = 0
+      @total_dia02_column = 0
+      @total_dia03_column = 0
+      @total_dia04_column = 0
+      @total_dia05_column = 0
+      @total_dia06_column = 0
+      @total_dia07_column = 0
+      @total_dia08_column = 0
+      @total_dia09_column = 0
+      @total_dia10_column = 0
+      @total_dia11_column = 0
+      @total_dia12_column = 0
+      @total_dia13_column = 0
+      @total_dia14_column = 0
+      @total_dia15_column = 0
+      @total_dia16_column = 0
+      @total_dia17_column = 0
+      @total_dia18_column = 0
+      @total_dia19_column = 0
+      @total_dia20_column = 0
+      @total_dia21_column = 0
+      @total_dia22_column = 0
+      @total_dia23_column = 0
+      @total_dia24_column = 0
+      @total_dia25_column = 0
+      @total_dia26_column = 0
+      @total_dia27_column = 0
+      @total_dia28_column = 0
+      @total_dia29_column = 0
+      @total_dia30_column = 0
+      @total_dia31_column = 0
+
+      @orden_detalle =  @orden.get_orden_products()
+
+      lcCli = @orden_detalle.first.avisodetail_id
+      $lcCliName = ""
+
+      mes = @orden.month
+      anio = @orden.year
+      days_mes = days_of_month(mes,anio)
+
+
+      fechadia1 = anio.to_s << "-" << mes.to_s.rjust(2, '0') << "-" << "01"
+      fechadia2 = anio.to_s << "-" << mes.to_s << "-" << "02"
+      fechadia3 = anio.to_s << "-" << mes.to_s << "-" << "03"
+      fechadia4 = anio.to_s << "-" << mes.to_s << "-" << "04"
+      fechadia5 = anio.to_s << "-" << mes.to_s << "-" << "05"
+      fechadia6 = anio.to_s << "-" << mes.to_s << "-" << "06"
+      fechadia7 = anio.to_s << "-" << mes.to_s << "-" << "07"
+      fechadia8 = anio.to_s << "-" << mes.to_s << "-" << "08"
+      fechadia9 = anio.to_s << "-" << mes.to_s << "-" << "09"
+      fechadia10 = anio.to_s << "-" << mes.to_s << "-" << "10"
+      fechadia11 = anio.to_s << "-" << mes.to_s << "-" << "11"
+      fechadia12 = anio.to_s << "-" << mes.to_s << "-" << "12"
+      fechadia13 = anio.to_s << "-" << mes.to_s << "-" << "13"
+      fechadia14 = anio.to_s << "-" << mes.to_s << "-" << "14"
+      fechadia15 = anio.to_s << "-" << mes.to_s << "-" << "15"
+      fechadia16 = anio.to_s << "-" << mes.to_s << "-" << "16"
+      fechadia17 = anio.to_s << "-" << mes.to_s << "-" << "17"
+      fechadia18 = anio.to_s << "-" << mes.to_s << "-" << "18"
+      fechadia19 = anio.to_s << "-" << mes.to_s << "-" << "19"
+      fechadia20 = anio.to_s << "-" << mes.to_s << "-" << "20"
+      fechadia21 = anio.to_s << "-" << mes.to_s << "-" << "21"
+      fechadia22 = anio.to_s << "-" << mes.to_s << "-" << "22"
+      fechadia23 = anio.to_s << "-" << mes.to_s << "-" << "23"
+      fechadia24 = anio.to_s << "-" << mes.to_s << "-" << "24"
+      fechadia25 = anio.to_s << "-" << mes.to_s << "-" << "25"
+      fechadia26 = anio.to_s << "-" << mes.to_s << "-" << "26"
+      fechadia27 = anio.to_s << "-" << mes.to_s << "-" << "27"
+      if days_mes >=28
+        fechadia28 = anio.to_s << "-" << mes.to_s << "-" << "28"
+      else
+        fechadia28=""
+      end
+      if days_mes >=29
+        fechadia29 = anio.to_s << "-" << mes.to_s << "-" << "29"
+      else
+        fechadia29=""
+      end
+      if days_mes >=30
+        fechadia30 = anio.to_s << "-" << mes.to_s << "-" << "30"
+      else
+        fechadia30=""
+      end
+      if days_mes >=31
+        fechadia31 = anio.to_s << "-" << mes.to_s << "-" << "31"
+      else
+        fechadia31=""
+      end
+
+
+     row = []
+
+
+
+      row << "PRODUCTO"
+      row << "MOTIVO "
+      row << "MEDIDAS "
+      row << "UBICACION"
+      row << "COBERTURA"
+      
+      row << "01"+"\n"+get_name_dia(fechadia1)
+      row << "02"+"\n"+get_name_dia(fechadia2)
+      row << "03"+"\n"+get_name_dia(fechadia3)
+      row << "04"+"\n"+get_name_dia(fechadia4)
+      row << "05"+"\n"+get_name_dia(fechadia5)
+      row << "06"+"\n"+get_name_dia(fechadia6)
+      row << "07"+"\n"+get_name_dia(fechadia7)
+      row << "08"+"\n"+get_name_dia(fechadia8)
+      row << "09"+"\n"+get_name_dia(fechadia9)
+      row << "10"+"\n"+get_name_dia(fechadia10)
+      row << "11"+"\n"+get_name_dia(fechadia11)
+      row << "12"+"\n"+get_name_dia(fechadia12)
+      row << "13"+"\n"+get_name_dia(fechadia13)
+      row << "14"+"\n"+get_name_dia(fechadia14)
+      row << "15"+"\n"+get_name_dia(fechadia15)
+      row << "16"+"\n"+get_name_dia(fechadia16)
+      row << "17"+"\n"+get_name_dia(fechadia17)
+      row << "18"+"\n"+get_name_dia(fechadia18)
+      row << "19"+"\n"+get_name_dia(fechadia19)
+      row << "20"+"\n"+get_name_dia(fechadia20)
+      row << "21"+"\n"+get_name_dia(fechadia21)
+      row << "22"+"\n"+get_name_dia(fechadia22)
+      row << "23"+"\n"+get_name_dia(fechadia23)
+      row << "24"+"\n"+get_name_dia(fechadia24)
+      row << "25"+"\n"+get_name_dia(fechadia25)
+      row << "26"+"\n"+get_name_dia(fechadia26)
+      row << "27"+"\n"+get_name_dia(fechadia27)
+      row << "28"+"\n"+get_name_dia(fechadia28)
+      if fechadia29 != ""
+        row << "29"+"\n"+get_name_dia(fechadia29)
+      end
+      if fechadia30 != ""
+        row << "30"+"\n"+get_name_dia(fechadia30)
+      end
+      if fechadia31 != ""
+        row << "31"+"\n"+get_name_dia(fechadia31)
+      end
+      row << "TOTAL 
+        AVISOS"
+
+      row << "COSTO"
+      row << "IMPORTE"
+
+
+     table_content << row
+
+     for  order in @orden_detalle
+            row = []
+            row << order.medio_detail.name[0..14]
+            row << @orden.version.descrip 
+            row << order.medidax
+            row << order.ubicacion
+            row << order.cobertura
+            row << formatea_number(order.d01)
+            row << formatea_number(order.d02)
+            row << formatea_number(order.d03)
+            row << formatea_number(order.d04)
+            row << formatea_number(order.d05)
+            row << formatea_number(order.d06)
+            row << formatea_number(order.d07)
+            row << formatea_number(order.d08)
+            row << formatea_number(order.d09)
+            row << formatea_number(order.d10)
+            row << formatea_number(order.d11)
+            row << formatea_number(order.d12)
+            row << formatea_number(order.d13)
+            row << formatea_number(order.d14)
+            row << formatea_number(order.d15)
+            row << formatea_number(order.d16)
+            row << formatea_number(order.d17)
+            row << formatea_number(order.d18)
+            row << formatea_number(order.d19)
+            row << formatea_number(order.d20)
+            row << formatea_number(order.d21)
+            row << formatea_number(order.d22)
+            row << formatea_number(order.d23)
+            row << formatea_number(order.d24)
+            row << formatea_number(order.d25)
+            row << formatea_number(order.d26)
+            row << formatea_number(order.d27)
+            row << formatea_number(order.d28)
+            if fechadia29 != ""
+              row << formatea_number(order.d29)
+            end
+            if fechadia30 != ""
+              row << formatea_number(order.d30)
+            end
+            if fechadia31 != ""
+              row << formatea_number(order.d31)
+            end
+
+
+            @total_dia01_column += order.d01
+            @total_dia02_column += order.d02
+            @total_dia03_column += order.d03
+            @total_dia04_column += order.d04
+            @total_dia05_column += order.d05
+            @total_dia06_column += order.d06
+            @total_dia07_column += order.d07
+            @total_dia08_column += order.d08
+            @total_dia09_column += order.d09
+            @total_dia10_column += order.d10
+            @total_dia11_column += order.d11
+            @total_dia12_column += order.d12
+            @total_dia13_column += order.d13
+            @total_dia14_column += order.d14
+            @total_dia15_column += order.d15
+            @total_dia16_column += order.d16
+            @total_dia17_column += order.d17
+            @total_dia18_column += order.d18
+            @total_dia19_column += order.d19
+            @total_dia20_column += order.d20
+            @total_dia21_column += order.d21
+            @total_dia22_column += order.d22
+            @total_dia23_column += order.d23
+            @total_dia24_column += order.d24
+            @total_dia25_column += order.d25
+            @total_dia26_column += order.d26
+            @total_dia27_column += order.d27
+            @total_dia28_column += order.d28
+            @total_dia29_column += order.d29
+            @total_dia30_column += order.d30
+            @total_dia31_column += order.d31
+
+            @total_linea = order.d01+order.d02+order.d03+order.d04+order.d05+order.d06+order.d07+order.d08+order.d09+order.d10+
+                           order.d11+order.d12+order.d13+order.d14+order.d15+order.d16+order.d17+order.d18+order.d19+order.d20+
+                           order.d21+order.d22+order.d23+order.d24+order.d25+order.d26+order.d27+order.d28+order.d29+order.d30+order.d31
+            row << sprintf("%.2f",@total_linea.to_s)
+           
+            row << money(order.price)
+
+            row << money(order.total)
+
+            table_content << row
+             @total_linea_general += @total_linea
+             @total_linea = 0
+            nroitem = nroitem + 1
+
+       end
+
+
+
+        row = []
+         row << "TOTAL =>"
+         row << "  "
+         row << "  "
+         row << "  "
+         row << "  "
+
+         row << formatea_number(@total_dia01_column)
+         row << formatea_number(@total_dia02_column)
+         row << formatea_number(@total_dia03_column)
+         row << formatea_number(@total_dia04_column)
+         row << formatea_number(@total_dia05_column)
+         row << formatea_number(@total_dia06_column)
+         row << formatea_number(@total_dia07_column)
+         row << formatea_number(@total_dia08_column)
+         row << formatea_number(@total_dia09_column)
+         row << formatea_number(@total_dia10_column)
+         row << formatea_number(@total_dia11_column)
+         row << formatea_number(@total_dia12_column)
+         row << formatea_number(@total_dia13_column)
+         row << formatea_number(@total_dia14_column)
+         row << formatea_number(@total_dia15_column)
+         row << formatea_number(@total_dia16_column)
+         row << formatea_number(@total_dia17_column)
+         row << formatea_number(@total_dia18_column)
+         row << formatea_number(@total_dia19_column)
+         row << formatea_number(@total_dia20_column)
+         row << formatea_number(@total_dia21_column)
+         row << formatea_number(@total_dia22_column)
+         row << formatea_number(@total_dia23_column)
+         row << formatea_number(@total_dia24_column)
+         row << formatea_number(@total_dia25_column)
+         row << formatea_number(@total_dia26_column)
+         row << formatea_number(@total_dia27_column)
+         row << formatea_number(@total_dia28_column)
+          if fechadia29 != ""
+             row << formatea_number(@total_dia29_column)
+          end
+             if fechadia30 != ""
+           row << formatea_number(@total_dia30_column)
+         end
+            if fechadia31 != ""
+           row << formatea_number(@total_dia31_column)
+         end
+
+           row << sprintf("%.2f",@total_linea_general.to_s)
+           row << " "
+           row << " "
+   
+
+         table_content << row
+
+        result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+
+                                        } do
+                                          columns([0]).align=:left                                        
+                                          columns([0]).width = 50 
+                                          columns([1]).align =:left
+                                          columns([1]).width = 50 
+
+                                          columns([2]).align=:center
+                                          columns([2]).width = 50 
+
+                                          columns([3]).align=:center
+                                          columns([3]).width = 30
+
+                                          columns([4]).align=:center
+                                          columns([4]).width = 30 
+
+                                          columns([5]).align=:center
+                                       
+                                          columns([6]).align=:center
+                                       
+                                          columns([7]).align=:center
+
+                                          columns([8]).align=:center
+
+                                          columns([9]).align=:center
+
+                                          columns([10]).align=:center
+
+                                          columns([11]).align=:center
+
+                                          columns([12]).align=:center
+
+                                          columns([13]).align=:center
+
+                                          columns([14]).align=:center
+
+                                          columns([15]).align=:center
+
+                                          columns([16]).align=:center
+
+                                          columns([17]).align=:center
+
+                                          columns([18]).align=:center
+
+                                          columns([19]).align=:center
+
+                                          columns([20]).align=:center
+
+                                          columns([21]).align=:center
+
+                                          columns([22]).align=:center
+
+
+                                          columns([23]).align=:center
+
+                                          columns([24]).align=:center
+
+                                          columns([25]).align=:center
+
+                                          columns([26]).align=:center
+
+                                          columns([27]).align=:center
+
+                                          columns([28]).align=:center
+
+                                          columns([29]).align=:center
+                                          columns([30]).align=:center
+
+
+                                          columns([31]).align=:center
+
+                                          columns([32]).align=:right
+
+
+                                          columns([33]).align=:right
+
+                                      
+
+                                          columns([34]).align=:right
+                                       
+
+
+                                          columns([35]).align=:right
+                                      
+
+                                          columns([36]).align=:right
+                                         columns([36]).width = 30
+
+                                            columns([37]).align=:right
+                                      
+                                            columns([37]).width = 30
+                                            columns([38]).align=:right
+                                            columns([38]).width = 30
+
+
+                                            
+
+
+
+
+          end
+      pdf
+
+    end
+
+
+
+
+   def  build_pdf_body_rpt50(pdf)
+
+    pdf.font "Helvetica" , :size => 5
+
+     pdf.move_down 10
+      headers = []
+      table_content = []
+      total_general = 0
+      total_factory = 0
+
+      nroitem = 1
+
+
+      # tabla pivoteadas
+      # hash of hashes
+        # pad columns with spaces and bars from max_lengths
+
+      @total_general = 0
+      @total_anterior = 0
+      @total_cliente = 0
+
+
+
+      @total_anterior_column = 0
+      @total_linea_general = 0
+
+
+      @orden_detalle =  @orden.get_orden_products()
+
+      lcCli = @orden_detalle.first.avisodetail_id
+      $lcCliName = ""
+
+      mes = @orden.month
+      anio = @orden.year
+      days_mes = days_of_month(mes,anio)
+
+
+
+     row = []
+
+
+
+      row << "MEDIO "
+      row << "MOTIVO "
+      row << "CANTIDAD  "
+      row << "UBICACION"
+      row << "CIUDAD"
+      
+      row << "PERIODO "
+
+      row << "DETALLE "
+
+           row << "COSTO"
+      row << "IMPORTE"
+
+
+     table_content << row
+
+     for  order in @orden_detalle
+            row = []
+            row << order.medio_detail.name[0..14]
+            row << @orden.version.descrip 
+            row << order.quantity
+            row << order.ubicacion
+
+            row << order.ciudad 
+
+            row << order.periodo 
+
+            row << order.detalle 
+
+            row  << money(order.price)
+            row  << money(order.total )
+
+
+
+            table_content << row
+
+            
+             @total_linea_general = order.total 
+            nroitem = nroitem + 1
+
+       end
+
+
+
+        row = []
+         row << "  "
+         row << "TOTAL =>"
+         row << "  "
+         row << "  "
+         row << "  "
+         row << "  "
+
+        row << "  "
+         row << "  "
+
+           row << sprintf("%.2f",@total_linea_general.to_s)
+         
+   
+
+         table_content << row
+
+        result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+
+                                        } do
+                                          columns([0]).align=:left                                        
+                                        
+                                          columns([1]).align =:left
+                                        
+                                          columns([2]).align=:center
+                                        
+
+                                          columns([3]).align=:center
+                                       
+
+                                          columns([4]).align=:center
+                                         
+
+                                          columns([5]).align=:center
+                                       
+                                          columns([6]).align=:center
+                                       
+                                          columns([7]).align=:center
+                                          columns([7]).width = 50
+                                             
+                                       
+                                          columns([8]).align=:center            
+                                          columns([8]).width = 50
+
+                                            
+
+
+
+
+          end
+      pdf
+
+    end
+
+
+      def build_pdf_body_rpt70(pdf)
+
+    pdf.font "Helvetica" , :size => 4
+
+     pdf.move_down 10
+      headers = []
+      table_content = []
+      total_general = 0
+      total_factory = 0
+
+      nroitem = 1
+
+
+      # tabla pivoteadas
+      # hash of hashes
+        # pad columns with spaces and bars from max_lengths
+
+      @total_general = 0
+      @total_anterior = 0
+      @total_cliente = 0
+
+      @total_dia01 = 0
+      @total_dia02 = 0
+      @total_dia03 = 0
+      @total_dia04 = 0
+      @total_dia05 = 0
+      @total_dia06 = 0
+      @total_dia07 = 0
+      @total_dia08 = 0
+      @total_dia09 = 0
+      @total_dia10 = 0
+      @total_dia11 = 0
+      @total_dia12 = 0
+      @total_dia13 = 0
+      @total_dia14 = 0
+      @total_dia15 = 0
+      @total_dia16 = 0
+      @total_dia17 = 0
+      @total_dia18 = 0
+      @total_dia19 = 0
+      @total_dia20 = 0
+      @total_dia21 = 0
+      @total_dia22 = 0
+      @total_dia23 = 0
+      @total_dia24 = 0
+      @total_dia25 = 0
+      @total_dia26 = 0
+      @total_dia27 = 0
+      @total_dia28 = 0
+      @total_dia29 = 0
+      @total_dia30 = 0
+      @total_dia31 = 0
+
+
+      @total_anterior_column = 0
+      @total_linea_general = 0
+
+      @total_dia01_column = 0
+      @total_dia02_column = 0
+      @total_dia03_column = 0
+      @total_dia04_column = 0
+      @total_dia05_column = 0
+      @total_dia06_column = 0
+      @total_dia07_column = 0
+      @total_dia08_column = 0
+      @total_dia09_column = 0
+      @total_dia10_column = 0
+      @total_dia11_column = 0
+      @total_dia12_column = 0
+      @total_dia13_column = 0
+      @total_dia14_column = 0
+      @total_dia15_column = 0
+      @total_dia16_column = 0
+      @total_dia17_column = 0
+      @total_dia18_column = 0
+      @total_dia19_column = 0
+      @total_dia20_column = 0
+      @total_dia21_column = 0
+      @total_dia22_column = 0
+      @total_dia23_column = 0
+      @total_dia24_column = 0
+      @total_dia25_column = 0
+      @total_dia26_column = 0
+      @total_dia27_column = 0
+      @total_dia28_column = 0
+      @total_dia29_column = 0
+      @total_dia30_column = 0
+      @total_dia31_column = 0
+
+      @orden_detalle =  @orden.get_orden_products()
+
+      lcCli = @orden_detalle.first.avisodetail_id
+      $lcCliName = ""
+
+      mes = @orden.month
+      anio = @orden.year
+      days_mes = days_of_month(mes,anio)
+
+
+      fechadia1 = anio.to_s << "-" << mes.to_s.rjust(2, '0') << "-" << "01"
+      fechadia2 = anio.to_s << "-" << mes.to_s << "-" << "02"
+      fechadia3 = anio.to_s << "-" << mes.to_s << "-" << "03"
+      fechadia4 = anio.to_s << "-" << mes.to_s << "-" << "04"
+      fechadia5 = anio.to_s << "-" << mes.to_s << "-" << "05"
+      fechadia6 = anio.to_s << "-" << mes.to_s << "-" << "06"
+      fechadia7 = anio.to_s << "-" << mes.to_s << "-" << "07"
+      fechadia8 = anio.to_s << "-" << mes.to_s << "-" << "08"
+      fechadia9 = anio.to_s << "-" << mes.to_s << "-" << "09"
+      fechadia10 = anio.to_s << "-" << mes.to_s << "-" << "10"
+      fechadia11 = anio.to_s << "-" << mes.to_s << "-" << "11"
+      fechadia12 = anio.to_s << "-" << mes.to_s << "-" << "12"
+      fechadia13 = anio.to_s << "-" << mes.to_s << "-" << "13"
+      fechadia14 = anio.to_s << "-" << mes.to_s << "-" << "14"
+      fechadia15 = anio.to_s << "-" << mes.to_s << "-" << "15"
+      fechadia16 = anio.to_s << "-" << mes.to_s << "-" << "16"
+      fechadia17 = anio.to_s << "-" << mes.to_s << "-" << "17"
+      fechadia18 = anio.to_s << "-" << mes.to_s << "-" << "18"
+      fechadia19 = anio.to_s << "-" << mes.to_s << "-" << "19"
+      fechadia20 = anio.to_s << "-" << mes.to_s << "-" << "20"
+      fechadia21 = anio.to_s << "-" << mes.to_s << "-" << "21"
+      fechadia22 = anio.to_s << "-" << mes.to_s << "-" << "22"
+      fechadia23 = anio.to_s << "-" << mes.to_s << "-" << "23"
+      fechadia24 = anio.to_s << "-" << mes.to_s << "-" << "24"
+      fechadia25 = anio.to_s << "-" << mes.to_s << "-" << "25"
+      fechadia26 = anio.to_s << "-" << mes.to_s << "-" << "26"
+      fechadia27 = anio.to_s << "-" << mes.to_s << "-" << "27"
+      if days_mes >=28
+        fechadia28 = anio.to_s << "-" << mes.to_s << "-" << "28"
+      else
+        fechadia28=""
+      end
+      if days_mes >=29
+        fechadia29 = anio.to_s << "-" << mes.to_s << "-" << "29"
+      else
+        fechadia29=""
+      end
+      if days_mes >=30
+        fechadia30 = anio.to_s << "-" << mes.to_s << "-" << "30"
+      else
+        fechadia30=""
+      end
+      if days_mes >=31
+        fechadia31 = anio.to_s << "-" << mes.to_s << "-" << "31"
+      else
+        fechadia31=""
+      end
+
+
+     row = []
+
+      row << "WEBSITE"
+      row << "PRODUCTO"
+      row << "MOTIVO "
+      row << "TARIFA CPM"
+      row << "IMPRESIONES CLICKS"
+      
+      row << "01"+"\n"+get_name_dia(fechadia1)
+      row << "02"+"\n"+get_name_dia(fechadia2)
+      row << "03"+"\n"+get_name_dia(fechadia3)
+      row << "04"+"\n"+get_name_dia(fechadia4)
+      row << "05"+"\n"+get_name_dia(fechadia5)
+      row << "06"+"\n"+get_name_dia(fechadia6)
+      row << "07"+"\n"+get_name_dia(fechadia7)
+      row << "08"+"\n"+get_name_dia(fechadia8)
+      row << "09"+"\n"+get_name_dia(fechadia9)
+      row << "10"+"\n"+get_name_dia(fechadia10)
+      row << "11"+"\n"+get_name_dia(fechadia11)
+      row << "12"+"\n"+get_name_dia(fechadia12)
+      row << "13"+"\n"+get_name_dia(fechadia13)
+      row << "14"+"\n"+get_name_dia(fechadia14)
+      row << "15"+"\n"+get_name_dia(fechadia15)
+      row << "16"+"\n"+get_name_dia(fechadia16)
+      row << "17"+"\n"+get_name_dia(fechadia17)
+      row << "18"+"\n"+get_name_dia(fechadia18)
+      row << "19"+"\n"+get_name_dia(fechadia19)
+      row << "20"+"\n"+get_name_dia(fechadia20)
+      row << "21"+"\n"+get_name_dia(fechadia21)
+      row << "22"+"\n"+get_name_dia(fechadia22)
+      row << "23"+"\n"+get_name_dia(fechadia23)
+      row << "24"+"\n"+get_name_dia(fechadia24)
+      row << "25"+"\n"+get_name_dia(fechadia25)
+      row << "26"+"\n"+get_name_dia(fechadia26)
+      row << "27"+"\n"+get_name_dia(fechadia27)
+      row << "28"+"\n"+get_name_dia(fechadia28)
+      if fechadia29 != ""
+        row << "29"+"\n"+get_name_dia(fechadia29)
+      end
+      if fechadia30 != ""
+        row << "30"+"\n"+get_name_dia(fechadia30)
+      end
+      if fechadia31 != ""
+        row << "31"+"\n"+get_name_dia(fechadia31)
+      end
+      row << "NRO. 
+        DIAS"
+
+      row << "COSTO"
+      row << "IMPORTE"
+
+
+     table_content << row
+
+     for  order in @orden_detalle
+            row = []
+            row << order.website
+            row << order.medio_detail.name[0..14]
+            row << @orden.version.descrip 
+          
+            row << order.tarifa_cpm
+            row << order.impresion_click
+
+            row << formatea_number(order.d01)
+            row << formatea_number(order.d02)
+            row << formatea_number(order.d03)
+            row << formatea_number(order.d04)
+            row << formatea_number(order.d05)
+            row << formatea_number(order.d06)
+            row << formatea_number(order.d07)
+            row << formatea_number(order.d08)
+            row << formatea_number(order.d09)
+            row << formatea_number(order.d10)
+            row << formatea_number(order.d11)
+            row << formatea_number(order.d12)
+            row << formatea_number(order.d13)
+            row << formatea_number(order.d14)
+            row << formatea_number(order.d15)
+            row << formatea_number(order.d16)
+            row << formatea_number(order.d17)
+            row << formatea_number(order.d18)
+            row << formatea_number(order.d19)
+            row << formatea_number(order.d20)
+            row << formatea_number(order.d21)
+            row << formatea_number(order.d22)
+            row << formatea_number(order.d23)
+            row << formatea_number(order.d24)
+            row << formatea_number(order.d25)
+            row << formatea_number(order.d26)
+            row << formatea_number(order.d27)
+            row << formatea_number(order.d28)
+            if fechadia29 != ""
+              row << formatea_number(order.d29)
+            end
+            if fechadia30 != ""
+              row << formatea_number(order.d30)
+            end
+            if fechadia31 != ""
+              row << formatea_number(order.d31)
+            end
+
+
+            @total_dia01_column += order.d01
+            @total_dia02_column += order.d02
+            @total_dia03_column += order.d03
+            @total_dia04_column += order.d04
+            @total_dia05_column += order.d05
+            @total_dia06_column += order.d06
+            @total_dia07_column += order.d07
+            @total_dia08_column += order.d08
+            @total_dia09_column += order.d09
+            @total_dia10_column += order.d10
+            @total_dia11_column += order.d11
+            @total_dia12_column += order.d12
+            @total_dia13_column += order.d13
+            @total_dia14_column += order.d14
+            @total_dia15_column += order.d15
+            @total_dia16_column += order.d16
+            @total_dia17_column += order.d17
+            @total_dia18_column += order.d18
+            @total_dia19_column += order.d19
+            @total_dia20_column += order.d20
+            @total_dia21_column += order.d21
+            @total_dia22_column += order.d22
+            @total_dia23_column += order.d23
+            @total_dia24_column += order.d24
+            @total_dia25_column += order.d25
+            @total_dia26_column += order.d26
+            @total_dia27_column += order.d27
+            @total_dia28_column += order.d28
+            @total_dia29_column += order.d29
+            @total_dia30_column += order.d30
+            @total_dia31_column += order.d31
+
+            @total_linea = order.d01+order.d02+order.d03+order.d04+order.d05+order.d06+order.d07+order.d08+order.d09+order.d10+
+                           order.d11+order.d12+order.d13+order.d14+order.d15+order.d16+order.d17+order.d18+order.d19+order.d20+
+                           order.d21+order.d22+order.d23+order.d24+order.d25+order.d26+order.d27+order.d28+order.d29+order.d30+order.d31
+            row << sprintf("%.2f",@total_linea.to_s)
+           
+            row << money(order.price)
+
+            row << money(order.total)
+
+            table_content << row
+             @total_linea_general += @total_linea
+             @total_linea = 0
+          nroitem = nroitem + 1
+
+       end
+
+
+
+        row = []
+         row << "TOTAL =>"
+         row << "  "
+         row << "  "
+         row << "  "
+         row << "  "
+
+         row << formatea_number(@total_dia01_column)
+         row << formatea_number(@total_dia02_column)
+         row << formatea_number(@total_dia03_column)
+         row << formatea_number(@total_dia04_column)
+         row << formatea_number(@total_dia05_column)
+         row << formatea_number(@total_dia06_column)
+         row << formatea_number(@total_dia07_column)
+         row << formatea_number(@total_dia08_column)
+         row << formatea_number(@total_dia09_column)
+         row << formatea_number(@total_dia10_column)
+         row << formatea_number(@total_dia11_column)
+         row << formatea_number(@total_dia12_column)
+         row << formatea_number(@total_dia13_column)
+         row << formatea_number(@total_dia14_column)
+         row << formatea_number(@total_dia15_column)
+         row << formatea_number(@total_dia16_column)
+         row << formatea_number(@total_dia17_column)
+         row << formatea_number(@total_dia18_column)
+         row << formatea_number(@total_dia19_column)
+         row << formatea_number(@total_dia20_column)
+         row << formatea_number(@total_dia21_column)
+         row << formatea_number(@total_dia22_column)
+         row << formatea_number(@total_dia23_column)
+         row << formatea_number(@total_dia24_column)
+         row << formatea_number(@total_dia25_column)
+         row << formatea_number(@total_dia26_column)
+         row << formatea_number(@total_dia27_column)
+         row << formatea_number(@total_dia28_column)
+          if fechadia29 != ""
+             row << formatea_number(@total_dia29_column)
+          end
+             if fechadia30 != ""
+           row << formatea_number(@total_dia30_column)
+         end
+            if fechadia31 != ""
+           row << formatea_number(@total_dia31_column)
+         end
+
+           row << sprintf("%.2f",@total_linea_general.to_s)
+           row << " "
+         row << " "
+   
+
+         table_content << row
+
+        result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+
+                                        } do
+                                          columns([0]).align=:left                                        
+                                          columns([0]).width = 50 
+                                          columns([1]).align =:left
+                                          columns([1]).width = 50 
+
+                                          columns([2]).align=:center
+                                          columns([2]).width = 80
+
+                                          columns([3]).align=:center
+                                          columns([3]).width = 30
+
+                                          columns([4]).align=:center
+                                          columns([4]).width = 30 
+
+                                          columns([5]).align=:center
+                                          columns([5]).width = 30
+                                          columns([6]).align=:center
+                                          
+                                          columns([7]).align=:center
+
+                                          columns([8]).align=:center
+
+                                          columns([9]).align=:center
+
+                                          columns([10]).align=:center
+
+                                          columns([11]).align=:center
+
+                                          columns([12]).align=:center
+
+                                          columns([13]).align=:center
+
+                                          columns([14]).align=:center
+
+                                          columns([15]).align=:center
+
+                                          columns([16]).align=:center
+
+                                          columns([17]).align=:center
+
+                                          columns([18]).align=:center
+
+                                          columns([19]).align=:center
+
+                                          columns([20]).align=:center
+
+                                          columns([21]).align=:center
+
+                                          columns([22]).align=:center
+
+
+                                          columns([23]).align=:center
+
+                                          columns([24]).align=:center
+
+                                          columns([25]).align=:center
+
+                                          columns([26]).align=:center
+
+                                          columns([27]).align=:center
+
+                                          columns([28]).align=:center
+
+                                          columns([29]).align=:center
+                                          columns([30]).align=:center
+
+
+                                          columns([31]).align=:center
+
+                                          columns([32]).align=:right
+
+
+                                          columns([33]).align=:right
+
+                                      
+
+                                          columns([34]).align=:right
+                                       
+
+
+                                          columns([35]).align=:right
+                                      
+                                          columns([35]).width = 30 
+
+                                          columns([36]).align=:right
+                                          columns([36]).width = 30 
+                                          
+                                          columns([37]).align=:right                                      
+                                          columns([37]).width = 30 
+                                          
+                                          columns([38]).align=:right
+                                          columns([38]).width = 30 
+
+
+                                          columns([39]).align=:right
+                                          columns([39]).width = 30 
+
+                                          columns([40]).align=:right
+                                          columns([40]).width = 30 
+                                                                                     
+
+
+          end
+      pdf
+
+    end
+
+
     def build_pdf_footer_rpt2(pdf)
         pdf.font "Helvetica" , :size => 6
 
@@ -762,8 +2320,74 @@ class OrdensController < ApplicationController
      $lcMedio = @orden.medio.descrip
      $lcCobertura = @orden.ciudad.descrip
 
-
+      @customer = @orden.customer
     #:margin => [2,2,5,2]
+
+
+     if @orden.tipo_orden_id == 2 or @orden.tipo_orden_id == 6 or @orden.tipo_orden_id == 4
+ 
+       Prawn::Document.generate "app/pdf_output/rpt_orden2.pdf" , :page_layout => :landscape,:size=> "A3", :margin => [1,10,50,20] do |pdf|
+         pdf.font "Helvetica"
+        pdf = build_pdf_header_rpt2(pdf)
+         pdf = build_pdf_body_rpt20(pdf)
+        build_pdf_footer_rpt2(pdf)
+
+        $lcFileName =  "app/pdf_output/rpt_orden2.pdf"
+      end 
+
+
+      end 
+
+
+     if @orden.tipo_orden_id == 3
+ 
+       Prawn::Document.generate "app/pdf_output/rpt_orden2.pdf" , :page_layout => :landscape,:size=> "A3", :margin => [1,10,50,20] do |pdf|
+         pdf.font "Helvetica"
+         pdf = build_pdf_header_rpt2(pdf)
+         pdf = build_pdf_body_rpt30(pdf)
+        build_pdf_footer_rpt2(pdf)
+
+        $lcFileName =  "app/pdf_output/rpt_orden2.pdf"
+      end 
+
+
+      end 
+
+   if @orden.tipo_orden_id == 5
+ 
+       Prawn::Document.generate "app/pdf_output/rpt_orden2.pdf" , :page_layout => :landscape,:size=> "A3", :margin => [1,10,50,20] do |pdf|
+         pdf.font "Helvetica"
+         pdf = build_pdf_header_rpt2(pdf)
+         pdf = build_pdf_body_rpt50(pdf)
+        build_pdf_footer_rpt2(pdf)
+
+        $lcFileName =  "app/pdf_output/rpt_orden2.pdf"
+      end 
+
+
+      end 
+ 
+
+
+   if @orden.tipo_orden_id == 7
+ 
+       Prawn::Document.generate "app/pdf_output/rpt_orden2.pdf" , :page_layout => :landscape,:size=> "A3", :margin => [1,10,50,20] do |pdf|
+         pdf.font "Helvetica"
+         pdf = build_pdf_header_rpt2(pdf)
+         pdf = build_pdf_body_rpt70(pdf)
+        build_pdf_footer_rpt2(pdf)
+
+        $lcFileName =  "app/pdf_output/rpt_orden2.pdf"
+      end 
+
+
+      end 
+
+
+   if @orden.tipo_orden_id == 1  
+        
+
+
     Prawn::Document.generate "app/pdf_output/rpt_orden2.pdf" , :page_layout => :landscape,:size=> "A4" do |pdf|
 
         pdf.font "Helvetica"
@@ -773,7 +2397,7 @@ class OrdensController < ApplicationController
          pdf = build_pdf_body_rpt10(pdf)
         end 
 
-
+       
         if @orden.tipo_orden_id == 4
          pdf = build_pdf_body_rpt2(pdf)
         end 
@@ -783,6 +2407,9 @@ class OrdensController < ApplicationController
         $lcFileName =  "app/pdf_output/rpt_orden2.pdf"
 
     end
+
+
+   end 
 
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
@@ -983,8 +2610,7 @@ class OrdensController < ApplicationController
 
     if(@company.can_view(current_user))
 
-       
-     
+            
 #        if(params[:search] and params[:search] != "")
  #         @ordens = Orden.where(["company_id = ? and (code iLIKE ?)", @company.id ,"%" + params[:search] + "%" ]).order('fecha DESC').paginate(:page => params[:page])
         if(params[:q] and params[:q] != "")
@@ -995,9 +2621,9 @@ class OrdensController < ApplicationController
 
           query = params[:q]
 
-          @ordens = Orden.paginate(:page => params[:page]).order('fecha desc , code').where(["company_id = ? AND code ilike ?", @company.id, query])
+          @ordens = Orden.paginate(:page => params[:page]).order('fecha desc , code desc').where(["company_id = ? AND code ilike ?", @company.id, query])
         else
-          @ordens = Orden.where(["company_id = ?",@company.id ]).order('fecha desc , code').paginate(:page => params[:page])
+          @ordens = Orden.where(["company_id = ?",@company.id ]).order('fecha desc , code desc').paginate(:page => params[:page])
            @filters_display = "none"
         end
   
@@ -1009,7 +2635,7 @@ class OrdensController < ApplicationController
   # GET /ordens
   # GET /ordens.xml
   def index
-    @companies = Company.where(user_id: current_user.id).order("name")
+    @companies = Company.where(user_id: current_user.id).order("fecha, code DESC")
     @path = 'ordens'
     @pagetitle = "ordens"
 
@@ -1877,9 +3503,11 @@ def foot_data_headers_1
 
     #{@purchaseorder.description}
 
-     client_data_headers_1  = [["Cliente : ", $lcCli]]
-      client_data_headers_1 <<  ["Producto : ",$lcProducto ]
-      client_data_headers_1 <<  ["Motivo : ", $lcVersion]
+
+      client_data_headers_1  = [ ["Medio : ", @orden.medio.descrip ]]
+      client_data_headers_1 <<   ["Cliente : ",@customer.name ]
+      client_data_headers_1 <<   ["Direccion : ",@customer.address1  ]
+      client_data_headers_1 <<   ["Marca : ", @orden.marca.name  ]
      
       client_data_headers_1
 
@@ -1887,16 +3515,21 @@ def foot_data_headers_1
   end
 
   def invoice_headers_1
-      invoice_headers_1  = [["Medio : ", $lcMedio]]
-      invoice_headers_1 <<  ["Cobertura : ", $lcCobertura]
-      invoice_headers_1 <<  ["Moneda : ", $lcMoneda]
+
+    invoice_headers_1  = [["",""]]
+      invoice_headers_1 << ["Moneda : ", @orden.moneda.description ]
+     
       invoice_headers_1
   end
 
  def invoice_headers_2
       invoice_headers_2  = [["",""]]
       invoice_headers_2 << ["Estado : ",@orden.get_processed]
-      invoice_headers_2 << ["Duracion  : ",$lcDuracion]
+      invoice_headers_2 << ["Contrato Nro. : ",@orden.get_nro_contrato(@orden.secu_cont) ]
+
+      invoice_headers_2 << ["Tipo de Orden : ",@orden.tipo_orden.descrip ]
+
+  
 
       invoice_headers_2
 

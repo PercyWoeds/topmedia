@@ -1,0 +1,341 @@
+
+<table>
+  <thead>
+    <tr>
+      
+      <th>
+        Producto
+      </th>
+
+      <th>
+       Motivo
+      </th>
+     
+  
+      <th>
+        Programa
+      </th>
+  
+      <th>
+        Tipo Aviso
+      </th>
+  
+      <th>
+        Tipo Programa
+      </th>
+  
+      <th>
+        Cobertura
+      </th>
+  
+      <th>
+        Horario(Hrs)
+      </th>
+
+
+      <th>
+       Duracion 
+      </th>
+      <th>
+        1
+      </th>
+      
+      <th>
+        2
+      </th>
+      <th>
+        3
+      </th>
+      <th>
+        4
+      </th>
+      <th>
+        5
+      </th>
+      <th>
+        6
+      </th>
+      <th>
+        7
+      </th>
+      <th>
+        8
+      </th>
+      <th>
+        9
+      </th>
+      
+      <th>
+        10
+      </th>
+      <th>
+        11
+      </th>
+      <th>
+        12
+      </th>
+      <th>
+        13
+      </th>
+      <th>
+        14
+      </th>
+      
+      <th>
+        15
+      </th>
+      <th>
+        16
+      </th>
+      <th>
+        17
+      </th>
+      <th>
+        18
+      </th>
+      <th>
+        19
+      </th>
+      <th>
+        20
+      </th>
+      
+      <th>
+        21
+      </th>
+      <th>
+        22
+      </th>
+      <th>
+        23
+      </th>
+      <th>
+        24
+      </th>
+      <th>
+        25
+      </th>
+      <th>
+        26
+      </th>
+      
+      <th>
+        27
+      </th>
+      <th>
+        28
+      </th>
+      <th>
+        29
+      </th>
+      <th>
+        30
+      </th>
+      <th>
+        31
+      </th>
+      <th>
+        Cant.
+      </th>
+      <th>
+        Costo
+      </th>
+      <th>
+        Total 
+      </th>
+      <th>
+        Opciones 
+      </th>
+<th>
+         
+      </th>
+
+
+    </tr>
+  </thead>
+  
+  <tbody>
+    
+    <%  @ordens_products.each do |product| %>
+    <tr>
+         
+
+          <td class="small bordered_bottom bordered_right">
+             <%= product.medio_detail.name  %>    
+          </td>
+          <td class="small bordered_bottom bordered_right">
+           <%= @orden.version.descrip  %>    
+          </td>
+
+          <td class="small bordered_bottom bordered_right">
+           <%= product.descrip %>    
+          </td>
+
+          <td class="small bordered_bottom bordered_right">
+           <%=  product.tipo_aviso.name  %>    
+          </td>
+          
+          <td class="small bordered_bottom bordered_right">
+           <%=  product.tipo_tarifa.name %>    
+          </td>
+          <td class="small bordered_bottom bordered_right">
+          
+                 <%= product.cobertura  %>    
+          </td>
+        
+          <td class="small bordered_bottom bordered_right">
+          
+                 <%= product.horario %>    
+          </td>
+          <td class="small bordered_bottom bordered_right">
+          
+                 <%= money(product.duracion) %>    
+          </td>
+
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d01 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d02 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d03 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d04 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d05 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d06 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d07 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d08 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d09 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d10 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d11 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d12 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d13 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d14 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d15 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d16 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d17 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d18 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d19 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d20 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d21 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d22 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d23 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d24 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d25 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d26 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d27 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d28 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d29 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d30 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= product.d31 %>              
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= money(product.quantity) %>
+
+                    
+          </td>
+                   
+          
+      
+          
+          <td class="small bordered_bottom bordered_right">
+            <%= money(product.price) %>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+            <%= money(product.total) %> 
+          </td>
+          <% if @orden.tipo == "N" %>
+          <td><%= link_to 'Editar', edit_orden_orden_product_path(orden_id: @orden.id,id: product.id ) %></td>          
+          <td><%= link_to 'Eliminar',[@orden,product], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+          
+    </td>
+    
+    <% end %>
+    <tr>
+      <td colspan="41" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td colspan="41" class="bordered_bottom bordered_right bold">
+        Subtotal:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@orden.subtotal) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="41" class="bordered_bottom bordered_right bold">
+        IGV:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@orden.tax) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="41" class="bordered_bottom bordered_right bold">
+        Total:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@orden.total) %>
+      </td>
+    </tr>
+  </tbody>
+</table>

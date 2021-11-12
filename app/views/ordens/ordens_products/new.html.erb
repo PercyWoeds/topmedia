@@ -17,15 +17,13 @@
 <% if  @orden.tipo_orden_id == 3 %> 
 
 <%= render 'form3' %>
+
+
 <% end %>
 
 
 
 <% if  @orden.tipo_orden_id == 4 %> 
-
- <p>Tiempo duracion 
- <input type="text" name="ac_item_duracion" id="ac_item_duracion" value= "<%= @orden.tiempo %>" readonly class="tf_short" />
-</p>
 
 
 <%= render 'form4' %>

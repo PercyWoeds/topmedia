@@ -2,6 +2,7 @@ class Moneda < ActiveRecord::Base
 validates_presence_of :company_id, :description
 
   belongs_to :company
+
   
   
   has_many :divisions
@@ -12,6 +13,7 @@ validates_presence_of :company_id, :description
   has_many :serviceorders
   has_many :bank_acounts
   has_many :contratos 
+  has_many :ordens 
   
 
 end

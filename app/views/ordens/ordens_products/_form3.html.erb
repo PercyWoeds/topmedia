@@ -18,99 +18,20 @@
 
    <div class="form-inputs">
 
-      <% if  @orden.tipo_orden_id == 1 %> 
 
       
    <table>
       <tr>
-        <th>Medio </th>
+
+       
+        <th>Producto </th>
         <th>Motivo  </th>
-        <th>Duracion </th>
+        <th>Medidas</th>
         
-        <th>Nro.Salas </th>
-        <th>Nro.Semanas  </th>
-        <th>Pelicula  </th>
-        <th>Costo x Aviso  </th>
-        
-      
-        <th>Costo Total </th>
-
-      </tr>
-    <tr>
-
-  
-
-      
-
-       <td> 
-      <div class="field">
-        
-        <%= f.collection_select :medio_detail_id, @orden_product_medio_details, :id, :name, :prompt => true %>
-      </div>
-      </td>
-
- <td> 
-      <div class="field">
-         <%= @orden.version.descrip  %>    
-      </div>
-      </td>
-
-
-      <td>
-        <div class="field">
-          <%= f.number_field :duracion ,:style=> 'width: 40px' , onblur: "updateItemOrden()" , min: 0  %>
-        </div>
-      </td>
-
-      <td>
-        <div class="field">
-          <%= f.number_field :nro_salas ,:style=> 'width: 40px', onblur: "updateItemOrden()",min: 0%>
-        </div>
-      </td>
-
-      <td>
-          <div class="field">
-            <%= f.number_field :nro_semanas,:style=> 'width: 40px', onblur: "updateItemOrden()",min: 0%>
-          </div>
-      </td>
-      <td>
-        <div class="field">
-            <%= f.text_field :pelicula ,:style=> 'width: 150px', onblur: "updateItemOrden()",min: 0%>
-          </div>
-      </td>
-     
-
-
-      <td>
-        <div class="field">
-           
-         <%= f.number_field :tarifa ,:style=> 'width: 100px' ,min: 0,  :value => (number_with_precision(f.object.tarifa, :precision => 2) || 0) ,:step => 0.01  %>
-          </div>
-
-      </td>
-
-      <td>
-        <div>
-            <span id="product_total">0.00000</span>
-        
-        
-        </div>
-      </td>
-    </tr>
-
-      </table>
-
-
-      <% end %>
-
-
-
-      <% if  @orden.tipo_orden_id == 4 %> 
-
-      
-   <table>
-      <tr>
-        <th>Programa/elemento</th>
+        <th>Ubicacion</th>
+    
+        <th>Cobertura  </th>
+ 
         <th>01</th>
         <th>02</th>
         <th>03</th>
@@ -142,25 +63,52 @@
         <th>29</th>
         <th>30</th>
         <th>31</th>
-        <th>Cantidad </th>
-        <th>R.Miles </th>
-        <th>Tarifa</th>
-        <th>Costo</th>
-        <th>Total </th>
+
+        <th>Total  </th>
+        
+        <th>Costo x Aviso  </th>
+        
+      
+        <th>Costo Total </th>
 
       </tr>
     <tr>
 
-  
 
-      <td>
-        <div >
-        <input type="hidden" name="ac_item_id" id="ac_item_id" value="<% if @ac_item_id %><%= @ac_item_id %><% end %>"/>
+      <td class="small bordered_bottom bordered_left", style="width: 80px" >
+             <div class="field">
+              <%= f.collection_select :medio_detail_id, @orden_product_medio_details, :id, :name , {:include_blank=> true}, :style=> 'width: 80px' %>
+            </div>
+      </td>
 
-          <%= f.text_field :descrip   %>
+      <td class="small bordered_bottom bordered_left" , style="width: 80px" > 
+      <div class="field">
+         <%= @orden.version.descrip %>    
+      </div>
+      </td>
+
+
+      <td class="small bordered_bottom bordered_left">
+       <div class="field">  
+      
+          <%= f.text_field :medidax   %>
         </div>
       </td>
 
+
+       <td class="small bordered_bottom bordered_left"> 
+        <div class="field">        
+          <%= f.text_field :ubicacion    %>
+        </div>
+      </td>
+
+
+       <td class="small bordered_bottom bordered_left", style="width: 80px">
+         <div class="field">  
+
+          <%= f.text_field :cobertura  ,:style=> 'width: 40px'  %>
+        </div>
+      </td>
 
 
       <td>
@@ -328,65 +276,43 @@
             <%= f.number_field :d31,:style=> 'width: 25px', onblur: "updateItemOrden()",min: 0 %>
           </div>
       </td>
-      <td>
-        <div class="small">
 
-           <p id= "product_qty"  align="right"> 0.00 </p>
-          
+
+     <td class="small bordered_bottom bordered_left", style="width: 40px">
+        <div>
+            <span id="product_qty">0.00000</span>
+                
         </div>
       </td>
 
 
-    <td>
-      <div class="field">
-          <%= f.text_field :rating2,:style=> 'width: 50px',min: 0%>
-        </div>
-
-    </td>
-
-
-      <td>
+      <td class="small bordered_bottom bordered_left", style="width: 80px">
         <div class="field">
-                <%= f.number_field :tarifa,:style=> 'width: 50px' , min: 0 ,:step => 0.01  %>
-
-               
+           
+         <%= f.number_field :price ,:style=> 'width: 50px' ,min: 0,  :value => (number_with_precision(f.object.price, :precision => 2) || 0) ,:step => 0.01  %>
           </div>
 
       </td>
 
-
-      <td>
-        <div class="small">
-           <p id= "product_price"   align="right"></p>
-        
-        </div>
-
-      </td>
-      <td>
+      <td class="small bordered_bottom bordered_left", style="width: 40px">
         <div>
-          <span id="product_total">0.00</span>
-        
+            <span id="product_total">0.00000</span>
+                
         </div>
       </td>
+
+
+
+
     </tr>
 
       </table>
 
 
-      <% end %>
-
-
-
-
-  </div>
+     </div>
 
   <div class="form-actions">
-    <%= f.hidden_field :avisodetail_id,:id => "131" %>
-
-   <%= f.hidden_field :price ,:id => "orden_product_tarifa"%>
-    <%= f.hidden_field :quantity ,:id => "orden_product_quantity"%>
-    <%= f.hidden_field :total ,:id => "orden_product_quantity"%>
-    
+    <%= f.hidden_field :avisodetail_id,:id => "ac_item_id" %>    
     <%= f.submit %>
 
   </div>
@@ -434,7 +360,7 @@
     });
 
 
-    $("#orden_product_tarifa").bind("keyup", function() {
+    $("#orden_product_price").bind("keyup", function() {
       updateItemOrden();      
     });
 
@@ -543,10 +469,7 @@
 
    {
 
-  
-    var quantity = $("#ac_item_quantity").val();
-    var price = $("#ac_item_price").val();
-    var discount = $("#ac_item_discount").val();
+    
 
     var d1 = $("#orden_product_d01").val();
     var d2 = $("#orden_product_d02").val();
@@ -579,40 +502,30 @@
     var d29 = $("#orden_product_d29").val();
     var d30 = $("#orden_product_d30").val();
     var d31 = $("#orden_product_d31").val();
-    var tarifa = $("#orden_product_tarifa").val();
+   
 
     var tipo_orden = <%=  @orden.tipo_orden_id %>  ;
-
-    if (tipo_orden == 1 )
-    {
-
-    
-
-       var importe = tarifa ;
-       $("#product_total").html(importe);  
-
-
-     document.getElementById("product_total").innerHTML = Number((importe).toFixed(2));
-
-
-    }
-
-    if (tipo_orden == 4)
+ 
+if (tipo_orden == 3)
      {  
-      var duracion =  <%= @orden.tiempo %>;
-      var costo  = (tarifa / 30) * duracion ;
-      var qty  = parseFloat(d1)  + parseFloat(d2)  + parseFloat(d3)  + parseFloat(d4) + parseFloat(d5)  +          parseFloat(d6)  + parseFloat(d7)  + parseFloat(d8)  + parseFloat(d9) + parseFloat(d10) +
+    
+      var duracion =   $("#orden_product_duracion").val();
+      var costo  =  $("#orden_product_price").val();
+      var qty = 0 ; 
+       qty  = parseFloat(d1)  + parseFloat(d2)  + parseFloat(d3)  + parseFloat(d4) + parseFloat(d5)  +          parseFloat(d6)  + parseFloat(d7)  + parseFloat(d8)  + parseFloat(d9) + parseFloat(d10) +
                 parseFloat(d11) + parseFloat(d12) + parseFloat(d13) + parseFloat(d14) + parseFloat(d15) + parseFloat(d16) + parseFloat(d17) + parseFloat(d18) + parseFloat(d19) + parseFloat(d20) + parseFloat(d21) + parseFloat(d22) + parseFloat(d23) + parseFloat(d24) + parseFloat(d25) + parseFloat(d26) + parseFloat(d27) +parseFloat(d28) + parseFloat(d29) + parseFloat(d30) + parseFloat(d31)  ;
 
-
+     
       var importe = qty  * costo;     
              
        document.getElementById("product_qty").innerHTML = Number((qty).toFixed(2));
        document.getElementById("product_total").innerHTML = Number((importe).toFixed(2));
-        document.getElementById("product_price").innerHTML = Number((costo).toFixed(2));
+       
        }
-    }
-
+    
+   }
 
   });
+
+
 </script>

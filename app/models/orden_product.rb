@@ -5,12 +5,13 @@ class OrdenProduct < ActiveRecord::Base
 	belongs_to :orden 
 	belongs_to :avisodetail
   
-  belongs_to :medio_detail
+    belongs_to :medio_detail
+    belongs_to :tipo_aviso
+    belongs_to :tipo_tarifa 
+
+
   
  # before_save :set_quantity 
-
-
-
     
     def self.import(file)
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row| 

@@ -1,8 +1,39 @@
 <h2>Editar</h2>
- <p>Tiempo duracion 
- <input type="text" name="ac_item_duracion" id="ac_item_duracion" value= "<%= @orden.tiempo %>" readonly class="tf_short" />
-</p>
+ 
 
 
-<%= render 'form' %>
+<% if  @orden.tipo_orden_id == 1 %> 
+
+<%= render 'form1' %>
+<% end %>
+
+
+<% if  @orden.tipo_orden_id == 2 %> 
+
+<%= render 'form2' %>
+<% end %>
+
+
+<% if  @orden.tipo_orden_id == 3 %> 
+
+<%= render 'form3' %>
+<% end %>
+
+
+<% if  @orden.tipo_orden_id == 4 %> 
+
+<%= render 'form4' %>
+<% end %>
+
+
+<% if  @orden.tipo_orden_id == 5 %> 
+
+<%= render 'form5' %>
+<% end %>
+
+<% if  @orden.tipo_orden_id == 6 %> 
+
+<%= render 'form6' %>
+<% end %>
+
 
