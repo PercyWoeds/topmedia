@@ -164,6 +164,9 @@
 <div class="button">
   <%= link_to 'Export to PDF', "/ordens/pdf/#{@orden.id} " %>
 
+  <%= link_to 'Export to XLS', "/ordens/xls/#{@orden.id} " %>
+
+
 <% if @orden.processed =="0" || @orden.processed==nil %>
   <%= link_to 'Procesar orden', "/ordens/do_process/#{@orden.id}" %>
 

@@ -235,7 +235,10 @@ TABLE_HEADERS3 = [
     invoice_products = OrdenProduct.where(orden_id:  self.id).order(:id)    
     return invoice_products
   end
-  
+  def get_orden_products_items
+    invoice_products = OrdenProduct.where(orden_id:  self.id).order(:id).count     
+    return invoice_products
+  end
   def products_lines
     products = []
     invoice_products = OrdenProduct.where(orden_id:  self.id)

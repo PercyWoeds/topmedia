@@ -1,0 +1,137 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+xlsx_package.use_autowidth = true
+
+wb.styles do |s|
+
+    date = s.add_style(:format_code => "dd/mm/yyyy", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right},:sz => 9)
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+    title = s.add_style(:bg_color => "FFFF0000", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center})
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left},:sz => 9 )
+    cadena0 =s.add_style(:alignment=>{:horizontal => :left},:sz => 9 )
+     
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER,:sz => 9,)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+    merged_title_cell_style = s.add_style    :bg_color => "D8D8D8",
+                                                   :b => true,
+                                                   :sz => 9,
+                                                   :border => { :style => :thin, :color => "00" },
+                                                   :alignment => { :horizontal => :center,
+                                                                   :vertical => :center ,
+                                                                   :wrap_text => true}
+    
+   
+    
+ 
+
+   @months = monthsArr
+
+     @month_name = @months[@orden.month.to_i - 1][0] <<" - " <<@orden.year.to_s
+  
+
+    puts @month_name
+
+
+    wb.add_worksheet(name: "Orden") do |sheet|
+
+
+
+    img = File.expand_path("#{Dir.pwd}/public/images/logomas.jpg")
+        sheet.add_image(:image_src => img, :noMove => true) do |image|
+            image.width = 300
+            image.height = 100
+            image.start_at 6, 0
+        end
+
+
+   
+
+    sheet.add_row [@company.name],:style =>  [cadena0]
+    sheet.add_row [@company.address1 + " "+   @company.address2 + " "+ @company.city + " "+ @company.state],:style =>  [cadena0]
+    sheet.add_row [@company.ruc ] ,:style =>  [cadena0]
+    sheet.add_row [""]
+    sheet.add_row ["Medio: " + @orden.medio.descrip ] ,:style =>  [cadena0]
+    sheet.add_row ["Cliente: " + @orden.customer.name ," "," "," " ," ","Orden Nro.: " + @orden.code   ]  ,
+    :style =>  [cadena0,cadena0,cadena0,cadena0,cadena0,cadena0]
+    sheet.add_row ["Direccion: " + @orden.customer.address1 +  @orden.customer.address2," "," "," " ," ", "Fecha Ord.: " + @orden.fecha.strftime("%d/%m/%Y") ] ,:style =>  [cadena0,cadena0,cadena0,cadena0,cadena0,cadena0]
+    sheet.add_row ["Marca : " + @orden.marca.name ,"", "Moneda: " +  @orden.moneda.description ," ", " ","Contrato Nro.: "+ @orden.get_nro_contrato(@orden.secu_cont) ] ,:style =>  [cadena0,cadena0,cadena0,cadena0,cadena0,cadena0]
+    sheet.add_row ["Mes / Año  : " +  @month_name ," "," "," "," ","Tipo Orden: " + @orden.tipo_orden.descrip ] ,:style =>  [cadena0,cadena0,cadena0,cadena0,cadena0,cadena0]
+    sheet.add_row ["Nro.Motivo : "  + @nro_items.to_s ] ,:style =>  [cadena0,cadena0,cadena0,cadena0,cadena0,cadena0]
+     
+    sheet.add_row [""]
+    sheet.add_row ["Medio","Motivo","Duración (Seg.)", "Nro. Salas","Nro. Semanas", "Pelicula", "Costo x Avisos","Costo Total"], :style =>    merged_title_cell_style
+    
+    puts "items"
+    puts  @nro_items
+    
+    sheet.column_widths 30,30,30,10,10,30,20,20
+    
+
+
+     nroitem = 1 
+     total_1 =  0
+     total_2 =  0
+     subtotal  =  0
+     tax   =  0
+     total =  0
+
+     defaults =  { :style => :thick, :color => "000000" }
+      borders = Hash.new do |hash, key|
+        hash[key] = wb.styles.add_style :border => defaults.merge(  { :style => :thin ,:edges => key.to_s.split('_').map(&:to_sym) } ) 
+      end
+
+      top_row =  [borders[:top_left],  borders[:top], borders[:top], borders[:top], borders[:top],borders[:top], borders[:top], borders[:top_right]]
+      middle_row = [borders[:left], nil, nil, nil, nil,nil, nil,borders[:right]]
+      bottom_row = [borders[:bottom_left], borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom], borders[:bottom_right]]
+
+
+    
+   @orden_detalle.each do |order|
+      puts "orden...."
+      puts order.medio_detail.name 
+
+         sheet.add_row [
+            order.medio_detail.name,
+            @orden.version.descrip ,
+            order.duracion,
+            order.nro_salas,
+            order.nro_semanas,
+            order.pelicula,
+            order.price,
+            order.total ], 
+            :style => [cadena,cadena,currency,currency,currency,cadena,currency,currency]
+            
+   end
+     sheet.add_row [""]
+     sheet.add_row ["","","","","","","Sub Total :", @orden.subtotal] , :style => [cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena,currency]
+     sheet.add_row ["","","","","","","IGV (18%) :", @orden.tax ]     , :style => [cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena,currency]
+     sheet.add_row ["","","","","","","Total     :", @orden.total ]   , :style => [cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena,currency]
+     sheet.add_row [""]
+
+
+     sheet.add_row [""]
+
+ 
+    sheet.add_row []
+    sheet.add_row ['Observaciones:','','VoBo Cliente','','VoBo Medio','Recibido - Medio','',''], :style => top_row
+    sheet.add_row [@orden.description,' ',' ',' ',' ',' ',' ',' '], :style => middle_row
+    sheet.add_row [' ',' ',' ',' ',' ',' ',' ',' ']
+
+    #This works too!
+    sheet.rows.last.style = bottom_row
+
+
+  end
+
+   
+end 
+
+    

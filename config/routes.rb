@@ -60,6 +60,9 @@
       collection { get :exportxls }
     
       collection { post :import }
+      collection { post :xls  }
+
+
   end 
 
   resources :contrato_details do 
@@ -439,6 +442,7 @@
   
 
   match 'ordens/rpt_ordenes1/:company_id' => 'ordens#rpt_ordenes1', via: [:get, :post]  
+
   
 
   match 'companies/reports/rpt_facturas_all/:company_id' => 'reports#rpt_facturas_all', via: [:get, :post]
@@ -481,6 +485,8 @@
   match 'ordens/do_process/:id' => 'ordens#do_process', via: [:get, :post]
   match 'ordens/email/:id' => 'ordens#email', via: [:get, :post]
   match 'ordens/pdf/:id' => 'ordens#pdf', via: [:get, :post]
+  match 'ordens/xls/:id' => 'ordens#xls', via: [:get, :post]
+  
   match 'companies/ordens/:company_id' => 'ordens#list_ordens', via: [:get, :post]
   resources :ordens
 

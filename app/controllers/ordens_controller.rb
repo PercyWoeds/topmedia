@@ -2314,7 +2314,7 @@ class OrdensController < ApplicationController
      $lcFechaMes = @orden.month.to_i
      $lcDuracion = @orden.tiempo
      @months = monthsArr
-     @month_name = @months[$lcFechaMes - 1][0] <<" - " <<@orden.year.to_s
+     @month_name = @months[$lcFechaMes - 1][0] <<" - " << @orden.year.to_s
 
      $lcMoneda = @orden.get_moneda(@orden.moneda_id)
      $lcMedio = @orden.medio.descrip
@@ -2388,19 +2388,12 @@ class OrdensController < ApplicationController
         
 
 
-    Prawn::Document.generate "app/pdf_output/rpt_orden2.pdf" , :page_layout => :landscape,:size=> "A4" do |pdf|
+    Prawn::Document.generate "app/pdf_output/rpt_orden2.pdf" , :page_layout => :landscape,:size=> "A3",:margin => [1,10,50,20] do |pdf|
 
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt2(pdf)
-
-        if @orden.tipo_orden_id == 1
-         pdf = build_pdf_body_rpt10(pdf)
-        end 
-
-       
-        if @orden.tipo_orden_id == 4
-         pdf = build_pdf_body_rpt2(pdf)
-        end 
+        pdf = build_pdf_body_rpt10(pdf)
+ 
 
         build_pdf_footer_rpt2(pdf)
 
@@ -3811,7 +3804,41 @@ def foot_data_headers_1
   end
 
 
+ def xls
 
+   @company = Company.find(1)
+   @orden = Orden.find(params[:id])
+   @nro_items =  @orden.get_orden_products_items()
+   @orden_detalle =  @orden.get_orden_products()
+
+   
+
+   if @orden.tipo_orden_id == 1
+    render xlsx: 'orden_xls'
+   end 
+
+   if @orden.tipo_orden_id == 2
+    render xlsx: 'orden2_xls'
+   end 
+   if @orden.tipo_orden_id == 3
+    render xlsx: 'orden3_xls'
+   end 
+   if @orden.tipo_orden_id == 4
+    render xlsx: 'orden4_xls'
+   end 
+   if @orden.tipo_orden_id == 5
+    render xlsx: 'orden5_xls'
+   end 
+  if @orden.tipo_orden_id == 6
+    render xlsx: 'orden6_xls'
+   end 
+  if @orden.tipo_orden_id == 7
+    render xlsx: 'orden7_xls'
+   end 
+
+
+
+ end 
 
 
 
