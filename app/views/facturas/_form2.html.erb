@@ -79,66 +79,22 @@
 
 
     
+     
+      <div class="field" id="list_items">
+        <p class="bold big">Products:</p>
+      </div>
+
+      <div class="field" id="list_items2">
+        <p class="bold big">Guias:</p>
+      </div>
+
+    <%= hr() %>
+    
      <div class="field">
       <%= f.label :payment_id,"Forma de Pago " %><br />
-       <%= f.collection_select :payment_id, @payments, :id,:descrip, :prompt => true %>
-      
-    </div>
-  
-    <%= hr() %>
-        
-
-    <div class="field" id="list_items">
-      <p class="bold big">Products:</p>
+      <%= f.select :payment_id,options_from_collection_for_select(@payments,'id','descrip') %>
     </div>
 
-    <div class="field" id="list_items2">
-      <p class="bold big">Guias:</p>
-    </div>
-
-    <%= hr() %>
-  
-    <div class="field">
-      <%= f.check_box :processed %>
-      <%= f.label :processed, "Factura pagada?", :class => "bold" %>
-      <div class="small">
-        Marks wether or not this invoice has been payed and we can deduct the product quantities and count it towards the month's total.
-      </div>
-    </div>
-  
-  
-    <div class="field">
-      <%= f.check_box :return %>
-      <%= f.label :return, :class => "bold" %>
-      <div class="small">
-        Is it a return order?
-      </div>
-    </div>
-    
-    
-    <div class="field">
-      <%= f.label :description %><br />
-      <%= f.text_area :description %>
-    </div>  
-      
-    <%= hr() %>
-
-    <div class="field">
-      <label for="ac_user" class="bold">Seller*</label><br />
-      <input type="text" name="ac_user" id="ac_user" value="<% if @ac_user %><%= @ac_user %><% end %>" />
-
-      <div class="small">
-        Enter a search term to find a user.
-      </div>
-      <br />
-
-      <div class="small">
-        <strong>Selected seller:</strong>
-        <span id="selected_seller"><% if @ac_user %><%= @ac_user %><% else %><!-- i --><% end %></span>
-      </div>
-    </div>
-  
-    <%= hr() %>
   
   
     <div class="actions">

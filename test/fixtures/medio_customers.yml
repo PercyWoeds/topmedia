@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  medio_id: 1
+  customer_id: 1
+  comision1: 1.5
+  comision2: 1.5
+
+two:
+  medio_id: 1
+  customer_id: 1
+  comision1: 1.5
+  comision2: 1.5

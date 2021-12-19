@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20211030015254) do
+ActiveRecord::Schema.define(version: 20211218235930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -423,6 +423,7 @@ ActiveRecord::Schema.define(version: 20211030015254) do
     t.integer  "bank_acount_id"
     t.integer  "concept_id"
     t.float    "compen"
+    t.integer  "moneda_id"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -609,10 +610,12 @@ ActiveRecord::Schema.define(version: 20211030015254) do
     t.datetime "updated_at",         null: false
     t.integer  "contrato_detail_id"
     t.integer  "contrato_id"
-    t.string   "service_id"
-    t.string   "price"
-    t.string   "quantity"
-    t.string   "discount"
+    t.integer  "orden_id"
+    t.integer  "medio_id"
+    t.float    "price"
+    t.float    "quantity"
+    t.float    "discount"
+    t.integer  "service_id"
   end
 
   create_table "facturas", force: :cascade do |t|
@@ -630,8 +633,8 @@ ActiveRecord::Schema.define(version: 20211030015254) do
     t.string   "return"
     t.datetime "date_processed"
     t.integer  "user_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.datetime "fecha"
     t.string   "serie"
     t.string   "numero"
@@ -650,6 +653,30 @@ ActiveRecord::Schema.define(version: 20211030015254) do
     t.integer  "document_id"
     t.string   "tc"
     t.string   "nacional"
+    t.integer  "orden_id"
+    t.string   "msgerror"
+    t.float    "cuota1"
+    t.datetime "fecha_cuota1"
+    t.float    "importe_cuota1"
+    t.float    "cuota2"
+    t.datetime "fecha_cuota2"
+    t.float    "importe_cuota2"
+    t.float    "cuota3"
+    t.datetime "fecha_cuota3"
+    t.float    "importe_cuota3"
+    t.float    "cuota4"
+    t.datetime "fecha_cuota4"
+    t.float    "importe_cuota4"
+    t.float    "cuota5"
+    t.datetime "fecha_cuota5"
+    t.float    "importe_cuota5"
+    t.float    "detraccion_percent"
+    t.float    "detraccion_importe"
+    t.float    "retencion_importe"
+    t.string   "detraccion_cuenta"
+    t.float    "importe_neto"
+    t.string   "servicio"
+    t.float    "detraccion"
   end
 
   create_table "histories", force: :cascade do |t|
@@ -762,6 +789,7 @@ ActiveRecord::Schema.define(version: 20211030015254) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.float    "preciocigv"
+    t.integer  "factura_id"
   end
 
   create_table "invoiceitems", force: :cascade do |t|
@@ -932,6 +960,15 @@ ActiveRecord::Schema.define(version: 20211030015254) do
     t.integer  "customer_id"
   end
 
+  create_table "medio_customers", force: :cascade do |t|
+    t.integer  "medio_id"
+    t.integer  "customer_id"
+    t.float    "comision1"
+    t.float    "comision2"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "medio_details", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
@@ -958,6 +995,7 @@ ActiveRecord::Schema.define(version: 20211030015254) do
     t.string   "full_name"
     t.string   "taxable"
     t.string   "code"
+    t.string   "address1"
   end
 
   create_table "modelos", force: :cascade do |t|
@@ -1134,14 +1172,12 @@ ActiveRecord::Schema.define(version: 20211030015254) do
     t.string   "cobertura"
     t.string   "horario"
     t.integer  "tipo_aviso_id"
-    t.integer  "tipo_avisos_id"
     t.integer  "tipo_tarifa_id"
     t.integer  "tipo_tarifas_id"
     t.integer  "medio_detail_id"
     t.string   "pelicula"
   end
 
-  add_index "orden_products", ["tipo_avisos_id"], name: "index_orden_products_on_tipo_avisos_id", using: :btree
   add_index "orden_products", ["tipo_tarifas_id"], name: "index_orden_products_on_tipo_tarifas_id", using: :btree
 
   create_table "ordens", force: :cascade do |t|
@@ -1184,7 +1220,11 @@ ActiveRecord::Schema.define(version: 20211030015254) do
     t.float    "importe"
     t.string   "status"
     t.string   "mesanio"
+    t.string   "program"
     t.integer  "tipo_orden_id"
+    t.string   "facturado"
+    t.string   "factura_id"
+    t.string   "integer"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -1971,7 +2011,6 @@ ActiveRecord::Schema.define(version: 20211030015254) do
   end
 
   add_foreign_key "medio_details", "medios"
-  add_foreign_key "orden_products", "tipo_avisos"
   add_foreign_key "orden_products", "tipo_tarifas"
   add_foreign_key "tanks", "companies"
   add_foreign_key "tanks", "products"

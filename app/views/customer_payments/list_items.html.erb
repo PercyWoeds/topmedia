@@ -9,7 +9,7 @@
           Nro.Documento
         </th>
         <th class="small bordered_bottom bordered_right">
-          Proveedor
+          Medio
         </th>
         <th class="small bordered_bottom bordered_right">
           Contribucion
@@ -34,7 +34,7 @@
             [<a href="#" onclick="removeItemFromCustomerPayment(<%= product.tax   %>); return false;" title="Remove product from invoice">X</a>]
           </td>
           <td class="small bordered_bottom bordered_right">
-            <%= product.customer.name %>
+            <%= product.medio.descrip %>
           </td>
           <td class="small bordered_bottom bordered_right">
             <%= money(product.balance) %>

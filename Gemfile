@@ -70,7 +70,14 @@ gem 'rubyzip', '~> 1.1', '>= 1.1.7'
 gem 'axlsx', '~> 2.0'
 gem "axlsx_rails"
 
+gem 'numbers_and_words', '~> 0.11.6'
 
+
+gem 'pry'
+gem 'mechanize'
+
+
+gem 'savon', '~> 2.11', '>= 2.11.1'
 
 
 group :development, :test do
@@ -81,14 +88,13 @@ end
 group :development do
   gem 'sqlite3'
   # Access an IRB console on exception pages or by using <%= console %> in views
-  #gem 'web-console', '~> 2.0'
-
+ 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'better_errors', '~> 2.7', '>= 2.7.1'
-  gem 'binding_of_caller', '~> 0.7.2'
+ 
+  gem 'binding_of_caller', '~> 1.0'
   gem 'web-console', '~> 2.0'
-
+#
 
 end
 

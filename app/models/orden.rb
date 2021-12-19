@@ -13,7 +13,8 @@ class Orden < ActiveRecord::Base
   	belongs_to :producto 
   	belongs_to :ciudad 
     belongs_to :tipo_orden 
-    belongs_to :moneda 
+    belongs_to :moneda  
+    belongs_to :factura_details 
   	
   	has_many :orden_products, :dependent => :destroy
 
@@ -743,5 +744,94 @@ TABLE_HEADERS3 = [
         end
     end      
 
+    
+  def get_comision(medio,customer,uno ) 
+      
+      if uno == 1
+           if MedioCustomer.where(customer_id: customer,medio_id: medio ).exists?
+
+          a = MedioCustomer.find_by(medio_id: medio, customer_id: customer)
+          return a.comision1
+        else
+          return 0
+        end 
+            
+      end       
+
+      if uno == 2
+        if MedioCustomer.where(customer_id: customer,medio_id: medio ).exists?
+          a = MedioCustomer.find_by(medio_id: medio, customer_id: customer)
+          return a.comision2
+        else 
+          return 0 
+        end     
+      end   
+
+   end
+   def get_cantidad_avisos(orden)
+
+      a = OrdenProduct.where(orden_id: orden).count 
+      if a 
+      return a 
+     else 
+      return 0
+      end 
+   end 
+  def get_duracion_avisos(orden)
+
+      @avisos  = OrdenProduct.where(orden_id: orden) 
+      total = 0
+        @avisos.each do |payment|
+
+          if !payment.duracion.nil?
+          
+          total   += payment.duracion
+
+          end 
+
+        end 
+      return total 
+   end 
+
+   def get_comision1(customer,medio)
+
+    if MedioCustomer.where(customer_id: customer,medio_id: medio ).exists?
+
+       a = MedioCustomer.where(customer_id: customer,medio_id: medio )
+     return   a.first.comision1 
+    else
+     return 0.00 
+    end 
+   end 
+
+
+  def get_comision2(customer,medio)
+
+    if MedioCustomer.where(customer_id: customer,medio_id: medio ).exists?
+
+       a = MedioCustomer.where(customer_id: customer,medio_id: medio )
+     return   a.first.comision2
+    else
+     return 0.00 
+    end 
+   end 
+
+  def get_facturado(orden)
+
+    if  FacturaDetail.where(orden_id: orden).exists?
+
+        a = FacturaDetail.where(orden_id: orden)
+
+        puts "a getss"
+
+        
+        return a.first.get_factura(a.first.factura_id ) 
+
+    else 
+        return ""
+    end 
+  end 
+
 
 end
+

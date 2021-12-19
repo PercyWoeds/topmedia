@@ -30,6 +30,8 @@
     <tbody>
     
       <% for orden in @ordens %>
+
+      <%= puts orden.customer.name %>
         <tr>
           <td class="bordered_right bordered_bottom">
             <%= link_to orden.code, orden, :title => "Ir a factura" %>
@@ -39,8 +41,7 @@
           </td>
           <td class="bordered_right bordered_bottom">
             <%= orden.get_moneda(orden.moneda_id) %>
-          </td>
-          
+          </td>          
 
           <td class="bordered_right bordered_bottom right">
             <%= money(orden.total) %>

@@ -8,6 +8,7 @@ class CustomerPaymentsController < ApplicationController
 
 
   before_filter :authenticate_user!, :checkServices
+  
 
   def new1
 
@@ -75,10 +76,10 @@ class CustomerPaymentsController < ApplicationController
     
    end
 
- 
+
   def build_pdf_header(pdf)
     
-      pdf.image "#{Dir.pwd}/public/images/logo2.png", :width => 270        
+      pdf.image "#{Dir.pwd}/public/images/logo2.jpg", :width => 270        
       pdf.move_down 6        
       pdf.move_down 4
       #pdf.text customer.street, :size => 10
@@ -136,7 +137,7 @@ class CustomerPaymentsController < ApplicationController
             row << nroitem.to_s          
             row << " "            
             row << product.code
-            row << product.get_customer(product.customer_id)          
+            row << product.get_medio(product.medio_id)          
             row << sprintf("%.2f",product.factory.to_s)
             row << sprintf("%.2f",product.total.to_s)
 
@@ -351,8 +352,9 @@ class CustomerPaymentsController < ApplicationController
 
   # Autocomplete for documents
   def ac_documentos
-    @docs = Factura.where(["company_id = ? and balance>0 AND (code LIKE ? )", params[:company_id], "%" + params[:q] + "%"])   
-    render :layout => false
+    @docs = Factura.where(["company_id = ? and balance<>0 AND (code ILIKE ? )", params[:company_id], "%" + params[:q] + "%"])   
+        
+        render :layout => false
   end
   
   # Autocomplete for products
@@ -409,31 +411,22 @@ class CustomerPaymentsController < ApplicationController
     end
   
     if(@company.can_view(current_user))
-      if(params[:ac_documentos] and params[:ac_documentos] != "")
-        @customer = customer.find(:first, :conditions => {:company_id => @company.id, :name => params[:ac_customer].strip})
-        
-        if @customer
-          @customerpayments = customerpayment.paginate(:page => params[:page], :conditions => {:company_id => @company.id, :customer_id => @customer.id}, :order => "id DESC")
+      
+        if(params[:search] and params[:search] != "")
+          
+
+          @customerpayments = CustomerPayment.where([" code iLIKE ?","%#{params[:search]}%"]).order("id DESC").paginate(:page => params[:page])
         else
-          flash[:error] = "We couldn't find any customerpayments for that customer."
-          redirect_to "/companies/customerpayments/#{@company.id}"
-        end
-        
-      else
-        if(params[:q] and params[:q] != "")
-          fields = ["description", "comments", "code"]
-          q = params[:q].strip
-          @q_org = q
-          query = str_sql_search(q, fields)
-          @customerpayments = CustomerPayment.paginate(:page => params[:page], :order => 'id DESC', :conditions => ["company_id = ? AND (#{query})", @company.id])
-        else
+
           @customerpayments = CustomerPayment.where(company_id:  @company.id).order("id DESC").paginate(:page => params[:page])
          #@customerpayments = CustomerPayment.find_by_sql("Select * from Customer_Payments ")
-         
+          respond_to do |format|
+              format.html
+              format.csv { send_data @customerpayments.to_csv }
+              
+            end        
           @filters_display = "none"
         end
-      end
-    
 
       
     else
@@ -444,12 +437,17 @@ class CustomerPaymentsController < ApplicationController
   # GET /customerpayments
   # GET /customerpayments.xml
   def index
+
     @companies = Company.where(user_id: current_user.id).order("name")
     @path = 'customerpayments'
     @pagetitle = "customerpayments"
     
-     
+    respond_to do |format|
+     format.html
+     end
   end
+  
+ 
 
   # GET /customerpayments/1
   # GET /customerpayments/1.xml
@@ -471,12 +469,14 @@ class CustomerPaymentsController < ApplicationController
   def new
     @pagetitle = "Nueva Orden"
     @action_txt = "Create"
-    
+  
     @customerpayment = CustomerPayment.new
     @customerpayment[:code]="#{generate_guid8()}"  
     @customerpayment[:processed] = false
-      
+    @customerpayment[:fecha1] = Time.now 
+       
     @company = Company.find(params[:company_id])
+    
     @customerpayment.company_id = @company.id
     
     @locations = @company.get_locations()
@@ -486,9 +486,16 @@ class CustomerPaymentsController < ApplicationController
     @monedas  = @company.get_monedas()
     @documents  = @company.get_documents()
     @concepts = Concept.all 
+  
+
 
     @ac_user = getUsername()
     @customerpayment[:user_id] = getUserId()
+
+    puts "cccccccccccccc"
+    puts @company.id
+    puts @ac_user
+
   end
 
   # GET /customerpayments/1/edit
@@ -614,8 +621,8 @@ class CustomerPaymentsController < ApplicationController
           ajuste = f.ajuste        
           compen =  f.compen
           factura = Factura.find(f.factura_id)            
-          @newbalance= factura.balance + importe -ajuste +compen 
-          
+          #@newbalance= factura.balance + importe -ajuste +compen  cambiado x solicutd andrea 3-6-17
+          @newbalance= factura.balance + importe
           factura.balance = @newbalance
           factura.save
           
@@ -862,6 +869,432 @@ class CustomerPaymentsController < ApplicationController
 ## reporte completo de cobranza 
 ##-------------------------------------------------------------------------------------
   
+  def build_pdf_header_rpt7a(pdf)
+     pdf.font "Helvetica" , :size => 6    
+     $lcCli  =  @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+      end
+
+      if rows.present?
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+      end
+
+
+        pdf.move_down 10
+
+      end
+      
+      pdf 
+  end   
+
+
+  def build_pdf_body_rpt7a(pdf)
+    
+    pdf.text "Listado de Cobranza Emitidas : Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
+    pdf.text ""
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+      total_general_soles = 0
+      total_general_dolar = 0
+      total_factory = 0
+
+
+      CustomerPayment::TABLE_HEADERS3.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+      table_content << headers
+      nroitem = 1
+
+       for  productItem in @customerpayment_rpt
+          lcId      = productItem.id 
+          if $lcxCliente == "0" 
+            $lcCode   = productItem.code
+          else
+            $lcCode   = productItem.code_liq
+          end 
+
+                $lcFecha1 = productItem.fecha1.strftime("%d/%m/%Y")                  
+         
+      
+                row = []
+                row << nroitem.to_s
+                if $lcxCliente == "0" 
+                  $lcCode   = productItem.code_liq
+                else
+                  $lcCode   = productItem.code_liq
+                end 
+                
+
+                row << $lcCode
+                row << $lcFecha1 
+                row << "FT"
+                row << productItem.code 
+                row << productItem.fecha.strftime("%d/%m/%Y")  
+                
+                @cliente_obs = productItem.get_cliente(productItem.customer_id)
+                
+                row << @cliente_obs.ruc
+                row << @cliente_obs.name
+                row << productItem.get_formapago(productItem.factura_id)
+
+                if $lcxCliente == "0" 
+                  row << " "  
+                else
+                  row << productItem.factory.to_s
+                end 
+                
+                monedabanco= productItem.get_banco_moneda(productItem.bank_acount_id)
+                
+                if monedabanco == 2
+                  row << productItem.total.to_s
+                  row << " "  
+                else
+                  row << " "  
+                  row << productItem.total.to_s
+                  
+                end
+
+
+                total_factory = total_factory +  productItem.factory
+
+                if monedabanco == 2
+                  total_general_soles = total_general_soles +  productItem.total
+                else
+                  total_general_dolar = total_general_dolar +  productItem.total
+                end 
+
+                table_content << row
+
+                nroitem=nroitem + 1
+             
+            end
+       
+    @total_factory = total_factory
+
+    @total_soles = total_general_soles
+    @total_dolar = total_general_dolar
+
+      row =[]
+      row << ""
+      row << ""
+      row << ""
+      row << ""
+      row << ""
+      row << ""
+      row << ""
+       row << ""
+      row << "TOTALES => "
+      row << sprintf("%.2f",@total_factory.to_s)
+      row << sprintf("%.2f",@total_soles.to_s)                    
+      row << sprintf("%.2f",@total_dolar.to_s)                    
+      
+      table_content << row
+
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left
+                                          columns([4]).align=:left  
+                                          columns([5]).align=:left
+                                          columns([6]).align=:left
+                                          columns([7]).align=:left 
+                                          columns([8]).align=:right
+                                          columns([9]).align=:right
+                                          columns([10]).align=:right
+                                          columns([11]).align=:right
+                                        end                                          
+      pdf.move_down 10      
+      pdf
+
+    end
+
+
+    def build_pdf_footer_rpt7a(pdf)
+
+        subtotals = []
+        taxes = []
+        totals = []
+        services_subtotal = 0
+        services_tax = 0
+        services_total = 0
+
+        headers2 = []
+        table_content2 = []
+
+        CustomerPayment::TABLE_HEADERS4.each do |header|
+          cell = pdf.make_cell(:content => header)
+          cell.background_color = "FFFFCC"
+          headers2 << cell
+        end
+        table_content2 << headers2
+        nroitem = 1
+        
+
+
+
+        @banks = BankAcount.all
+        @totalgeneral_soles = 0
+        @totalgeneral_dolar = 0
+        @totalgeneral  = 0
+
+        if $lcxCliente == "0"
+
+          for banco in @banks
+
+          total1 = @company.get_customer_payments_value(@fecha1,@fecha2,banco.id)  
+
+          if total1>0
+                    
+            row =[]
+            row << nroitem.to_s
+            row << banco.number 
+
+              a = BankAcount.find(banco.id)
+
+
+              if a.moneda_id == 1
+                row << " "
+                row << sprintf("%.2f",total1.to_s)
+                @totalgeneral_dolar = @totalgeneral_dolar + total1 
+              else
+                row << sprintf("%.2f",total1.to_s)
+                row << " "
+
+                @totalgeneral_soles = @totalgeneral_soles + total1 
+              end
+
+            nroitem = nroitem + 1
+            table_content2 << row
+          end   
+
+          end
+          $lcFactory = 0
+          $lcCompen  = 0
+          $lcAjuste  = 0
+          
+          $lcFactory2 = 0
+          $lcCompen2  = 0
+          $lcAjuste2  = 0
+          
+          moneda_ajuste_soles = 2
+          moneda_ajuste_dolar = 1
+
+           $lcFactory = @company.get_customer_payments_value_otros_customer2(@fecha1,@fecha2,'factory',2)      
+           $lcCompen  = @company.get_customer_payments_value_otros_customer2(@fecha1,@fecha2,'compen',2)
+           $lcAjuste  = @company.get_customer_payments_value_otros_customer2(@fecha1,@fecha2,'ajuste',2)
+           
+           $lcFactory2 = @company.get_customer_payments_value_otros_customer2(@fecha1,@fecha2,'factory',1)      
+           $lcCompen2  = @company.get_customer_payments_value_otros_customer2(@fecha1,@fecha2,'compen',1)
+           $lcAjuste2  = @company.get_customer_payments_value_otros_customer2(@fecha1,@fecha2,'ajuste',1)
+           
+           $lcCompen = $lcCompen*-1
+           $lcCompen2 = $lcCompen2*-1
+           #02 10 quite la suma del ajuste 
+           @totalgeneral_soles = @totalgeneral_soles  + $lcFactory2 +$lcCompen2
+           @totalgeneral_dolar = @totalgeneral_dolar + $lcAjuste + $lcFactory +$lcCompen
+           
+
+           row = []
+          row << nroitem.to_s
+          row << "FACTORY"
+          
+          row << sprintf("%.2f",$lcFactory2.to_s)
+          row << sprintf("%.2f",$lcFactory.to_s)
+          table_content2 << row
+          row = []
+          row << nroitem.to_s
+          row << "COMPENSACION:"
+          row << sprintf("%.2f",$lcCompen2.to_s)
+          row << sprintf("%.2f",$lcCompen.to_s)
+          
+          table_content2 << row
+          $lcAjuste2 = 0 
+          $lcAjuste  = 0 
+          row = []
+          row << nroitem.to_s
+          row << "AJUSTE"
+          row << sprintf("%.2f",$lcAjuste2.to_s)
+          row << sprintf("%.2f",$lcAjuste.to_s)
+          
+
+          table_content2 << row
+          row = []
+          row << nroitem.to_s
+          row << "TOTAL => "
+          
+          row << sprintf("%.2f",@totalgeneral_soles.to_s)
+          row << sprintf("%.2f",@totalgeneral_dolar.to_s)
+          
+
+      else
+        
+          for banco in @banks
+          
+          total1 = @company.get_customer_payments_value_customer(@fecha1,@fecha2,banco.id,@cliente,"total")  
+
+          if total1>0 and total1 != nil
+                    
+            row =[]
+            row << nroitem.to_s
+            row << banco.number 
+
+
+            if banco.moneda_id == 1
+              row <<""
+
+            row << sprintf("%.2f",total1.to_s)
+              @totalgeneral_soles = @totalgeneral_soles + total1 
+            else
+              @totalgeneral_dolar = @totalgeneral_dolar + total1 
+
+            row << sprintf("%.2f",total1.to_s)
+            row << ""
+            end 
+
+            nroitem = nroitem + 1
+            table_content2 << row
+          else
+            total1 = 0
+            if banco.moneda_id == 2
+              @totalgeneral_soles = @totalgeneral_soles + total1 
+            else
+              @totalgeneral_dolar = @totalgeneral_dolar + total1 
+            end 
+          end   
+
+          end
+          $lcFactory = 0
+          $lcCompen  = 0
+          $lcAjuste  = 0
+          
+          moneda_ajuste_soles = 2
+          moneda_ajuste_dolar = 1
+            
+           $lcFactory = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'factory',@cliente,moneda_ajuste_soles)      
+           $lcCompen  = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'compen',@cliente,moneda_ajuste_soles)
+           $lcAjuste  = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'ajuste',@cliente,moneda_ajuste_soles)
+           
+           $lcFactory2 = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'factory',@cliente,moneda_ajuste_dolar)      
+           $lcCompen2  = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'compen',@cliente,moneda_ajuste_dolar)
+           $lcAjuste2  = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'ajuste',@cliente,moneda_ajuste_dolar)
+           
+
+           @totalgeneral_soles = @totalgeneral_soles + $lcAjuste2 + $lcFactory2 +$lcCompen2
+           @totalgeneral_dolar = @totalgeneral_dolar + $lcAjuste + $lcFactory +$lcCompen 
+           
+          row = []
+          row << nroitem.to_s
+          row << "FACTORY"
+          row << sprintf("%.2f",$lcFactory2.to_s)
+          row << sprintf("%.2f",$lcFactory.to_s)
+          
+          
+          table_content2 << row
+          row = []
+          row << nroitem.to_s
+          row << "COMPENSACION:"
+          row << sprintf("%.2f",$lcCompen2.to_s)
+          row << sprintf("%.2f",$lcCompen.to_s)
+          
+          table_content2 << row
+          
+          row = []
+          row << nroitem.to_s
+          row << "AJUSTE"
+          row << sprintf("%.2f",$lcAjuste2.to_s)
+          row << sprintf("%.2f",$lcAjuste.to_s)
+          
+
+          table_content2 << row
+          row = []
+          row << nroitem.to_s
+          row << "TOTAL => "
+
+         
+          
+          row << sprintf("%.2f",@totalgeneral_dolar.to_s)
+        
+             row << sprintf("%.2f",@totalgeneral_soles.to_s)
+
+      end 
+
+        table_content2 << row      
+
+      result = pdf.table table_content2, {:position => :center,
+                                        :header => true,
+                                        :width => 300
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:right 
+                                        end                                          
+            
+        pdf.text "" 
+
+        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+        pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+      end
+
+      pdf
+      
+  end
+
+
+  # Export cobrar  to PDF
+
+  def rpt_ccobrar4_pdf
+    $lcxCliente = "0"
+    @company=Company.find(params[:id])      
+    @fecha1 = params[:fecha1]
+    @fecha2 = params[:fecha2]
+
+
+    @customerpayment_rpt = @company.get_customer_payments(@fecha1,@fecha2)  
+      
+    Prawn::Document.generate("app/pdf_output/rpt_customerpayment.pdf") do |pdf|
+        pdf.font "Helvetica"        
+        pdf = build_pdf_header_rpt1(pdf)
+        pdf = build_pdf_body_rpt1(pdf)
+        build_pdf_footer_rpt1(pdf)
+        $lcFileName =  "app/pdf_output/rpt_customerpayment.pdf"              
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+  
+  end
+
+
+#-------------------------------------------------------------------------------------
+## reporte completo de cobranza 
+##-------------------------------------------------------------------------------------
+  
   def build_pdf_header_rpt1(pdf)
      pdf.font "Helvetica" , :size => 6    
      $lcCli  =  @company.name 
@@ -897,6 +1330,7 @@ class CustomerPaymentsController < ApplicationController
       pdf 
   end   
 
+
   def build_pdf_body_rpt1(pdf)
     
     pdf.text "Listado de Cobranza Emitidas : Fecha "+@fecha1.to_s+ " Mes : "+@fecha2.to_s , :size => 11 
@@ -917,52 +1351,44 @@ class CustomerPaymentsController < ApplicationController
       table_content << headers
       nroitem = 1
 
-       for  customerpayment_rpt in @customerpayment_rpt
-
-        #@fechacobro = customerpayment_rpt.fecha1
-
-       # row = []
-       #  row << nroitem.to_s
-       #  row << customerpayment_rpt.code
-       #  row << customerpayment_rpt.fecha1.strftime("%d/%m/%Y")         
-       #  row << customerpayment_rpt.bank_acount.number
-       #  row << customerpayment_rpt.get_banco(customerpayment_rpt.bank_acount.bank_id)   
-       #  row << customerpayment_rpt.get_moneda(customerpayment_rpt.bank_acount.moneda_id)  
-       #  row << customerpayment_rpt.get_document(customerpayment_rpt.document_id)     
-       #  row << customerpayment_rpt.documento     
-       #  row << ""          
-       #  row << customerpayment_rpt.total    
-
-         #table_content << row
-         lcId      = customerpayment_rpt.id 
-
+       for  productItem in @customerpayment_rpt
+          lcId      = productItem.id 
           if $lcxCliente == "0" 
-            $lcCode   = customerpayment_rpt.code
+            $lcCode   = productItem.code
           else
-            $lcCode   = customerpayment_rpt.code_liq
+            $lcCode   = productItem.code_liq
           end 
 
-         $lcFecha1 = customerpayment_rpt.fecha1.strftime("%d/%m/%Y")                  
+         $lcFecha1 = productItem.fecha1.strftime("%d/%m/%Y")                  
          
-        @customerdetails =  customerpayment_rpt.get_payment_dato(lcId)
-
-        if @customerdetails
-
-           for  productItem in  @customerdetails
-                
+      
                 row = []
                 row << nroitem.to_s
+                if $lcxCliente == "0" 
+                  $lcCode   = productItem.code_liq
+                else
+                  $lcCode   = productItem.code_liq
+                end 
+                
                 row << $lcCode
                 row << $lcFecha1 
                 row << "FT"
-                row << productItem.code
-                row << productItem.fecha.strftime("%d/%m/%Y")         
-                row << productItem.customer.ruc       
-                row << productItem.customer.name                 
+                row << productItem.code 
+                row << productItem.fecha1.strftime("%d/%m/%Y")  
                 
-                row << productItem.factory.to_s
-                if productItem.moneda_id == 2
-                  
+                @cliente_obs = productItem.get_medio(productItem.medio_id)
+                
+                row << @cliente_obs.ruc
+                row << @cliente_obs.descrip
+                if $lcxCliente == "0" 
+                  row << " "  
+                else
+                  row << productItem.factory.to_s
+                end 
+                
+                monedabanco= productItem.get_banco_moneda(productItem.bank_acount_id)
+                
+                if monedabanco == 2
                   row << productItem.total.to_s
                   row << " "  
                 else
@@ -972,10 +1398,9 @@ class CustomerPaymentsController < ApplicationController
                 end
 
 
-
                 total_factory = total_factory +  productItem.factory
 
-                if productItem.moneda_id == 2
+                if monedabanco == 2
                   total_general_soles = total_general_soles +  productItem.total
                 else
                   total_general_dolar = total_general_dolar +  productItem.total
@@ -986,10 +1411,7 @@ class CustomerPaymentsController < ApplicationController
                 nroitem=nroitem + 1
              
             end
-        end 
-
-       end  
-
+       
     @total_factory = total_factory
 
     @total_soles = total_general_soles
@@ -1059,6 +1481,7 @@ class CustomerPaymentsController < ApplicationController
         @banks = BankAcount.all
         @totalgeneral_soles = 0
         @totalgeneral_dolar = 0
+        @totalgeneral  = 0
 
         if $lcxCliente == "0"
 
@@ -1093,93 +1516,141 @@ class CustomerPaymentsController < ApplicationController
           $lcFactory = 0
           $lcCompen  = 0
           $lcAjuste  = 0
+          
+          $lcFactory2 = 0
+          $lcCompen2  = 0
+          $lcAjuste2  = 0
+          
+          moneda_ajuste_soles = 2
+          moneda_ajuste_dolar = 1
 
-           $lcFactory = @company.get_customer_payments_value_otros(@fecha1,@fecha2,'factory')      
-           $lcCompen= @company.get_customer_payments_value_otros(@fecha1,@fecha2,'compen')
-           $lcAjuste = @company.get_customer_payments_value_otros(@fecha1,@fecha2,'ajuste')
-
-           @totalgeneral_soles = @totalgeneral_soles + $lcAjuste + $lcFactory +$lcCompen
+           $lcFactory = @company.get_customer_payments_value_otros_customer2(@fecha1,@fecha2,'factory',2)      
+           $lcCompen  = @company.get_customer_payments_value_otros_customer2(@fecha1,@fecha2,'compen',2)
+           $lcAjuste  = @company.get_customer_payments_value_otros_customer2(@fecha1,@fecha2,'ajuste',2)
+           
+           $lcFactory2 = @company.get_customer_payments_value_otros_customer2(@fecha1,@fecha2,'factory',1)      
+           $lcCompen2  = @company.get_customer_payments_value_otros_customer2(@fecha1,@fecha2,'compen',1)
+           $lcAjuste2  = @company.get_customer_payments_value_otros_customer2(@fecha1,@fecha2,'ajuste',1)
+           
+           $lcCompen = $lcCompen*-1
+           $lcCompen2 = $lcCompen2*-1
+           
+           @totalgeneral_soles = @totalgeneral_soles + $lcAjuste2 + $lcFactory2 +$lcCompen2
+           @totalgeneral_dolar = @totalgeneral_dolar + $lcAjuste + $lcFactory +$lcCompen
            
 
-          row = []
+           row = []
           row << nroitem.to_s
           row << "FACTORY"
+          
+          row << sprintf("%.2f",$lcFactory2.to_s)
           row << sprintf("%.2f",$lcFactory.to_s)
-          row << " "
           table_content2 << row
-
           row = []
           row << nroitem.to_s
           row << "COMPENSACION:"
+          row << sprintf("%.2f",$lcCompen2.to_s)
           row << sprintf("%.2f",$lcCompen.to_s)
-          row << " "
+          
           table_content2 << row
           
           row = []
           row << nroitem.to_s
           row << "AJUSTE"
+          row << sprintf("%.2f",$lcAjuste2.to_s)
           row << sprintf("%.2f",$lcAjuste.to_s)
-          row << " "
-
+          
 
           table_content2 << row
           row = []
           row << nroitem.to_s
           row << "TOTAL => "
+          
           row << sprintf("%.2f",@totalgeneral_soles.to_s)
           row << sprintf("%.2f",@totalgeneral_dolar.to_s)
+          
 
       else
         
           for banco in @banks
+          
           total1 = @company.get_customer_payments_value_customer(@fecha1,@fecha2,banco.id,@cliente,"total")  
 
-          if total1>0
+          if total1>0 and total1 != nil
                     
             row =[]
             row << nroitem.to_s
             row << banco.number 
             row << sprintf("%.2f",total1.to_s)
-            @totalgeneral = @totalgeneral + total1 
+            if banco.moneda_id == 2
+              @totalgeneral_soles = @totalgeneral_soles + total1 
+            else
+              @totalgeneral_dolar = @totalgeneral_dolar + total1 
+            end 
             nroitem = nroitem + 1
             table_content2 << row
+          else
+            total1 = 0
+            if banco.moneda_id == 2
+              @totalgeneral_soles = @totalgeneral_soles + total1 
+            else
+              @totalgeneral_dolar = @totalgeneral_dolar + total1 
+            end 
           end   
 
           end
           $lcFactory = 0
           $lcCompen  = 0
           $lcAjuste  = 0
+          
+          moneda_ajuste_soles = 2
+          moneda_ajuste_dolar = 1
+            
+           $lcFactory = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'factory',@cliente,moneda_ajuste_soles)      
+           $lcCompen  = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'compen',@cliente,moneda_ajuste_soles)
+           $lcAjuste  = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'ajuste',@cliente,moneda_ajuste_soles)
+           
+           $lcFactory2 = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'factory',@cliente,moneda_ajuste_dolar)      
+           $lcCompen2  = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'compen',@cliente,moneda_ajuste_dolar)
+           $lcAjuste2  = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'ajuste',@cliente,moneda_ajuste_dolar)
+           
 
-           $lcFactory = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'factory',@cliente)      
-           $lcCompen= @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'compen',@cliente)
-           $lcAjuste = @company.get_customer_payments_value_otros_customer(@fecha1,@fecha2,'ajuste',@cliente)
-
-           @totalgeneral = @totalgeneral + $lcAjuste + $lcFactory +$lcCompen
-
+           @totalgeneral_soles = @totalgeneral_soles + $lcAjuste2 + $lcFactory2 +$lcCompen2
+           @totalgeneral_dolar = @totalgeneral_dolar + $lcAjuste + $lcFactory +$lcCompen 
+           
           row = []
           row << nroitem.to_s
           row << "FACTORY"
+          row << sprintf("%.2f",$lcFactory2.to_s)
           row << sprintf("%.2f",$lcFactory.to_s)
+          
+          
           table_content2 << row
           row = []
           row << nroitem.to_s
           row << "COMPENSACION:"
+          row << sprintf("%.2f",$lcCompen2.to_s)
           row << sprintf("%.2f",$lcCompen.to_s)
+          
           table_content2 << row
           
           row = []
           row << nroitem.to_s
           row << "AJUSTE"
+          row << sprintf("%.2f",$lcAjuste2.to_s)
           row << sprintf("%.2f",$lcAjuste.to_s)
-
-
+          
 
           table_content2 << row
           row = []
           row << nroitem.to_s
           row << "TOTAL => "
-          row << sprintf("%.2f",@totalgeneral.to_s)
 
+          row << sprintf("%.2f",@totalgeneral_soles.to_s)
+          
+          row << sprintf("%.2f",@totalgeneral_dolar.to_s)
+        
+            
 
       end 
 
@@ -1206,43 +1677,24 @@ class CustomerPaymentsController < ApplicationController
   end
 
 
-  # Export cobrar  to PDF
-
-  def rpt_ccobrar4_pdf
-    $lcxCliente = "0"
-    @company=Company.find(params[:id])      
-    @fecha1 = params[:fecha1]
-    @fecha2 = params[:fecha2]
-
-    @customerpayment_rpt = @company.get_customer_payments(@fecha1,@fecha2)  
-      
-    Prawn::Document.generate("app/pdf_output/rpt_customerpayment.pdf") do |pdf|
-        pdf.font "Helvetica"        
-        pdf = build_pdf_header_rpt1(pdf)
-        pdf = build_pdf_body_rpt1(pdf)
-        build_pdf_footer_rpt1(pdf)
-        $lcFileName =  "app/pdf_output/rpt_customerpayment.pdf"              
-    end     
-
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
-    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
-  
-  end
-
   def rpt_ccobrar7_pdf
     $lcxCliente = "1"
     @company=Company.find(params[:id])      
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
     @cliente = params[:customer_id]
+    
+    @ClienteDato = @company.get_cliente(@cliente)
+    $lcNameCliente =@ClienteDato.name
+    $lcRucCliente  =@ClienteDato.ruc
 
     @customerpayment_rpt = @company.get_customer_payments_cliente(@fecha1,@fecha2,@cliente)  
       
     Prawn::Document.generate("app/pdf_output/rpt_customerpayment.pdf") do |pdf|
         pdf.font "Helvetica"        
-        pdf = build_pdf_header_rpt1(pdf)
-        pdf = build_pdf_body_rpt1(pdf)
-        build_pdf_footer_rpt1(pdf)
+        pdf = build_pdf_header_rpt7a(pdf)
+        pdf = build_pdf_body_rpt7a(pdf)
+        build_pdf_footer_rpt7a(pdf)
         $lcFileName =  "app/pdf_output/rpt_customerpayment.pdf"      
         
     end     
@@ -1252,6 +1704,8 @@ class CustomerPaymentsController < ApplicationController
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
   
   end
+
+
 
 
 ##-------------------------------------------------------------------------------------
@@ -1295,7 +1749,7 @@ class CustomerPaymentsController < ApplicationController
 
   def build_pdf_body_rpt2(pdf)
     
-    if @tipomoneda == 1
+    if @tipomoneda == "1"
        @tipomoneda_name ="DOLARES"  
     else
        @tipomoneda_name ="SOLES "  
@@ -1309,7 +1763,7 @@ class CustomerPaymentsController < ApplicationController
       total_general = 0
       total_factory = 0
 
-      CustomerPayment::TABLE_HEADERS6.each do |header|
+      CustomerPayment::TABLE_HEADERS9.each do |header|
         cell = pdf.make_cell(:content => header)
         cell.background_color = "FFFFCC"
         headers << cell
@@ -1350,8 +1804,6 @@ class CustomerPaymentsController < ApplicationController
       @total_mes11_column = 0
       @total_mes12_column = 0
       
-
-
       lcCli = @customerpayment_rpt.first.customer_id
       $lcCliName = ""
     
@@ -1361,49 +1813,55 @@ class CustomerPaymentsController < ApplicationController
         if lcCli == customerpayment_rpt.customer_id 
 
           $lcCliName = customerpayment_rpt.customer.name  
+          
+          if customerpayment_rpt.balance.round(2) > 0.00
       
-          if customerpayment_rpt.year_month.to_f <= 201612
-            @total_anterior = @total_anterior + customerpayment_rpt.balance.round(2)          
+          if customerpayment_rpt.year_month.to_f <= 201712
+            @total_anterior = @total_anterior + customerpayment_rpt.balance
           end             
-
-          if customerpayment_rpt.year_month == '201701'
-            @total_mes01 = @total_mes01 + customerpayment_rpt.balance.round(2)        
+          
+          if customerpayment_rpt.year_month.to_f >= 201801 and customerpayment_rpt.year_month.to_f <= 201806
+            @total_mes01 = @total_mes01 + customerpayment_rpt.balance
           end   
 
-          if customerpayment_rpt.year_month == '201702' 
-            @total_mes02 = @total_mes02 + customerpayment_rpt.balance.round(2)        
+          if customerpayment_rpt.year_month == '201807'
+            @total_mes02 = @total_mes02 + customerpayment_rpt.balance
           end 
             
-          if customerpayment_rpt.year_month == '201703'   
-            @total_mes03 = @total_mes03 + customerpayment_rpt.balance.round(2)        
+          if customerpayment_rpt.year_month == '201808'   
+            @total_mes03 = @total_mes03 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '201704'     
-            @total_mes04 = @total_mes04 + customerpayment_rpt.balance.round(2)        
+          if customerpayment_rpt.year_month == '201809'     
+            @total_mes04 = @total_mes04 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '201705'       
-            @total_mes05 = @total_mes05 + customerpayment_rpt.balance.round(2)        
+          if customerpayment_rpt.year_month == '201810'       
+            @total_mes05 = @total_mes05 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '201706'
-            @total_mes06 = @total_mes06 + customerpayment_rpt.balance.round(2)        
+          if customerpayment_rpt.year_month == '201811'
+            @total_mes06 = @total_mes06 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '201707' 
-            @total_mes07 = @total_mes07 + customerpayment_rpt.balance.round(2)        
+          if customerpayment_rpt.year_month == '201812' 
+            @total_mes07 = @total_mes07 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '201708'   
-            @total_mes08 = @total_mes08 + customerpayment_rpt.balance.round(2)        
+          if customerpayment_rpt.year_month == '201901'   
+            @total_mes08 = @total_mes08 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '201709'     
-            @total_mes09 = @total_mes09 + customerpayment_rpt.balance.round(2)        
+          if customerpayment_rpt.year_month == '201902'     
+            @total_mes09 = @total_mes09 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '201710'       
-            @total_mes10 = @total_mes10 + customerpayment_rpt.balance.round(2)        
+          if customerpayment_rpt.year_month == '201903'       
+            @total_mes10 = @total_mes10 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '201711'   
-            @total_mes11 = @total_mes11 + customerpayment_rpt.balance.round(2)        
+          if customerpayment_rpt.year_month == '201904'   
+            @total_mes11 = @total_mes11 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '201712'     
-            @total_mes12 = @total_mes12 + customerpayment_rpt.balance.round(2)        
+          if customerpayment_rpt.year_month == '201905'     
+            @total_mes12 = @total_mes12 + customerpayment_rpt.balance
           end   
+            @total_general = @total_general + customerpayment_rpt.balance
+            
+        end 
+          
         else
           
             @total_cliente = @total_anterior+
@@ -1459,7 +1917,6 @@ class CustomerPaymentsController < ApplicationController
             $lcCliName =customerpayment_rpt.customer.name
             lcCli = customerpayment_rpt.customer_id
 
-
             @total_anterior = 0
             @total_mes01 = 0
             @total_mes02 = 0
@@ -1474,57 +1931,59 @@ class CustomerPaymentsController < ApplicationController
             @total_mes11 = 0
             @total_mes12 = 0
             @total_cliente = 0 
-
-            if customerpayment_rpt.year_month.to_f <= 201612
-            @total_anterior = @total_anterior + customerpayment_rpt.balance.round(2)          
+            
+          if customerpayment_rpt.balance.round(2) > 0.00
+          
+          if customerpayment_rpt.year_month.to_f <= 201712
+            @total_anterior = @total_anterior + customerpayment_rpt.balance
           end             
-
-          if customerpayment_rpt.year_month == '201701'
-            @total_mes01 = @total_mes01 + customerpayment_rpt.balance.round(2)        
+          
+          if customerpayment_rpt.year_month.to_f >= 201801 and customerpayment_rpt.year_month.to_f <= 201806
+            @total_mes01 = @total_mes01 + customerpayment_rpt.balance
           end   
 
-          if customerpayment_rpt.year_month == '201702' 
-            @total_mes02 = @total_mes02 + customerpayment_rpt.balance.round(2)        
+          if customerpayment_rpt.year_month == '201807'
+            @total_mes02 = @total_mes02 + customerpayment_rpt.balance
           end 
             
-          if customerpayment_rpt.year_month == '201703'   
-            @total_mes03 = @total_mes03 + customerpayment_rpt.balance.round(2)        
+          if customerpayment_rpt.year_month == '201808'   
+            @total_mes03 = @total_mes03 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '201704'     
-            @total_mes04 = @total_mes04 + customerpayment_rpt.balance.round(2)        
+          if customerpayment_rpt.year_month == '201809'     
+            @total_mes04 = @total_mes04 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '201705'       
-            @total_mes05 = @total_mes05 + customerpayment_rpt.balance.round(2)        
+          if customerpayment_rpt.year_month == '201810'       
+            @total_mes05 = @total_mes05 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '201706'
-            @total_mes06 = @total_mes06 + customerpayment_rpt.balance.round(2)        
+          if customerpayment_rpt.year_month == '201811'
+            @total_mes06 = @total_mes06 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '201707' 
-            @total_mes07 = @total_mes07 + customerpayment_rpt.balance.round(2)        
+          if customerpayment_rpt.year_month == '201812' 
+            @total_mes07 = @total_mes07 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '201708'   
-            @total_mes08 = @total_mes08 + customerpayment_rpt.balance.round(2)        
+          if customerpayment_rpt.year_month == '201901'   
+            @total_mes08 = @total_mes08 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '201709'     
-            @total_mes09 = @total_mes09 + customerpayment_rpt.balance.round(2)        
+          if customerpayment_rpt.year_month == '201902'     
+            @total_mes09 = @total_mes09 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '201710'       
-            @total_mes10 = @total_mes10 + customerpayment_rpt.balance.round(2)        
+          if customerpayment_rpt.year_month == '201903'       
+            @total_mes10 = @total_mes10 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '201711'   
-            @total_mes11 = @total_mes11 + customerpayment_rpt.balance.round(2)        
+          if customerpayment_rpt.year_month == '201904'   
+            @total_mes11 = @total_mes11 + customerpayment_rpt.balance
           end 
-          if customerpayment_rpt.year_month == '201712'     
-            @total_mes12 = @total_mes12 + customerpayment_rpt.balance.round(2)        
+          if customerpayment_rpt.year_month == '201905'     
+            @total_mes12 = @total_mes12 + customerpayment_rpt.balance
           end   
-
+          
           nroitem = nroitem + 1 
-
-
-
+      
+          @total_general = @total_general + customerpayment_rpt.balance
         end 
-         @total_general = @total_general + customerpayment_rpt.balance.round(2)
+       end 
        end   
+       
 
       #fin for
           #ultimo cliente 
@@ -1641,9 +2100,8 @@ class CustomerPaymentsController < ApplicationController
         pdf.text "" 
 
         pdf.bounding_box([0, 20], :width => 535, :height => 40) do
-        pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
-
-      end
+           pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+        end
 
       pdf
       
@@ -1651,20 +2109,19 @@ class CustomerPaymentsController < ApplicationController
 
 
   def rpt_ccobrar5_pdf
-    @company=Company.find(params[:id])  
-
+    @company=Company.find(params[:id])      
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
     @tipomoneda = params[:moneda_id]
 
+
     @company.actualizar_fecha2
     @company.actualiza_monthyear
     @customerpayment_rpt = @company.get_customer_payments2(@tipomoneda,@fecha1,@fecha2)
+  
+    if @customerpayment_rpt != nil 
       
-    Prawn::Document.generate("app/pdf_output/rpt_customerpayment2.pdf") do |pdf|        
-
-        pdf.start_new_page(:size => "A4", :layout => :landscape)
-
+    Prawn::Document.generate "app/pdf_output/rpt_customerpayment2.pdf" , :page_layout => :landscape do |pdf|        
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt2(pdf)
         pdf = build_pdf_body_rpt2(pdf)
@@ -1672,10 +2129,11 @@ class CustomerPaymentsController < ApplicationController
         $lcFileName =  "app/pdf_output/rpt_customerpayment2.pdf"      
         
     end     
-
+  
     $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
     send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
-
+  end 
+  
   end
 
 ##-------------------------------------------------------------------------------------##
@@ -1711,10 +2169,9 @@ class CustomerPaymentsController < ApplicationController
           :width => pdf.bounds.width
         }) do
           columns([0, 2]).font_style = :bold
+          end
 
-      end
-
-        pdf.move_down 10
+          pdf.move_down 10
 
       end
       
@@ -1759,6 +2216,7 @@ class CustomerPaymentsController < ApplicationController
 
               a = BankAcount.find(banco.id)
               
+
               if a.moneda_id == 1
                 row << " "
                 row << sprintf("%.2f",total1.to_s)
@@ -1770,40 +2228,48 @@ class CustomerPaymentsController < ApplicationController
                 @totalgeneral_soles = @totalgeneral_soles + total1 
               end
               table_content2 << row
-
         end   
 
         end
 
-        @total_factory = @company.get_customer_payments_value_otros(@fecha1,@fecha2,"factory") 
-        @total_ajuste  = @company.get_customer_payments_value_otros(@fecha1,@fecha2,"ajuste") 
-        @total_compen  = @company.get_customer_payments_value_otros(@fecha1,@fecha2,"compen") 
-
+        @total_factory = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"factory",1) 
+        @total_ajuste  = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"ajuste",1) 
+        @total_compen  = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"compen",1) 
+        @total_compen = @total_compen *-1 
+        
+        @total_factory2 = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"factory",2) 
+        @total_ajuste2  = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"ajuste",2) 
+        @total_compen2  = @company.get_customer_payments_value_otros_moneda(@fecha1,@fecha2,"compen",2) 
+        @total_compen2 = @total_compen2 *-1 
+        
+        
         row = []
         row << nroitem.to_s
         row << "FACTORY :"
+        row << sprintf("%.2f",@total_factory2.to_s)
         row << sprintf("%.2f",@total_factory.to_s)
-        row << " "
 
         table_content2 << row
         row = []
         row << nroitem.to_s
         row << "AJUSTE  :"
+        row << sprintf("%.2f",@total_ajuste2.to_s)
         row << sprintf("%.2f",@total_ajuste.to_s)
-        row << " "
 
         table_content2 << row
 
         row = []
         row << nroitem.to_s
         row << "COMPENSACION :"
+        
+        row << sprintf("%.2f",@total_compen2.to_s)
+        
         row << sprintf("%.2f",@total_compen.to_s)
-        row << " "
         table_content2 << row
 
 
-        @totalgeneral_soles = @totalgeneral_soles  + @total_ajuste + @total_factory + @total_compen
-
+        @totalgeneral_soles = @totalgeneral_soles  + @total_ajuste2 + @total_factory2 + @total_compen2
+        @totalgeneral_dolar = @totalgeneral_dolar  + @total_ajuste + @total_factory + @total_compen
         
           row = []
           row << nroitem.to_s
@@ -1844,18 +2310,14 @@ class CustomerPaymentsController < ApplicationController
 
 
   # Export cobrar  to PDF
-
-
-
   def rpt_ccobrar6_pdf
 
     @company=Company.find(params[:id])      
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
 
-
     @customerpayment_rpt = @company.get_customer_payments(@fecha1,@fecha2)  
-
+      
       
     Prawn::Document.generate("app/pdf_output/rpt_customerpayment.pdf") do |pdf|
         pdf.font "Helvetica"        
@@ -1876,6 +2338,353 @@ class CustomerPaymentsController < ApplicationController
 ##
 ##FIN RESUMEN INGRESO A BANCOS 
 ##
+
+#**
+
+##-------------------------------------------------------------------------------------##
+## RESUMEN DE INGRESO A BANCOS DETALLADO POR CLIENTE 
+##-------------------------------------------------------------------------------------##
+  
+  def build_pdf_header_rpt8(pdf)
+      pdf.font "Helvetica" , :size => 6
+      
+
+     $lcCli  =  @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+      end
+
+      if rows.present?
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+      end
+
+        pdf.move_down 10
+
+      end
+      
+      pdf 
+  end   
+
+  def build_pdf_body_rpt8(pdf)
+    
+    pdf.text "COBRANZAS POR BANCO : Desde "+@fecha1.to_s+ " Hasta : "+@fecha2.to_s , :size => 11 ,:align => :left 
+        
+    pdf.text ""
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+      total_general_soles = 0
+      total_general_dolar = 0
+      total_factory = 0
+        headers2 = []
+        table_content2 = []
+
+        CustomerPayment::TABLE_HEADERS7.each do |header|
+          cell = pdf.make_cell(:content => header)
+          cell.background_color = "FFFFCC"
+          headers2 << cell
+        end
+        table_content2 << headers2
+        nroitem = 1
+                
+        @totalgeneral_soles = 0
+        @totalgeneral_dolar = 0
+        @detalle_bancos = @company.get_customer_payments_value_customer2(@fecha1,@fecha2,@bank_id)  
+        row  = []
+        
+        
+        if @detalle_bancos
+                
+        for d in @detalle_bancos
+        
+              row = []                  
+              row << nroitem.to_s              
+              row << d.bank_acount.number
+              row << d.get_banco(d.bank_acount.bank_id)  
+              row << d.fecha.strftime("%d/%m/%Y") 
+              row << d.code
+              row << d.customer.name 
+              row << sprintf("%.2f",d.total.to_s)
+              
+              table_content2 << row
+
+              @totalgeneral_soles = @totalgeneral_soles + d.total          
+
+              nroitem = nroitem + 1      
+        end   
+    end 
+    
+          nroitem = nroitem + 1      
+
+          row = []
+          row << nroitem.to_s          
+          row << " "        
+          row << " "
+          row << " "        
+          row << " "          
+          row << "TOTAL => "
+          row << sprintf("%.2f",@totalgeneral_soles.to_s)
+          
+
+          table_content2 << row
+
+          result = pdf.table table_content2, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([3]).align=:right
+                                          columns([4]).align=:right
+                                          columns([5]).align=:left                                           
+                                          columns([6]).align=:right                                          
+                                        end
+          pdf.text "" 
+          pdf 
+
+
+      
+    end
+
+
+    def build_pdf_footer_rpt8(pdf)
+      
+        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+        pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+      end
+
+      pdf
+      
+  end
+  
+
+  # Export cobrar  to PDF
+  def rpt_ccobrar8_pdf
+
+    @company=Company.find(params[:id])      
+    @fecha1 = params[:fecha1]
+    @fecha2 = params[:fecha2]
+    @bank_id = params[:bank_id]
+
+    @customerpayment_rpt = @company.get_customer_payments(@fecha1,@fecha2)  
+    
+    Prawn::Document.generate("app/pdf_output/rpt_customerpayment1.pdf") do |pdf|
+        pdf.font "Helvetica"        
+        pdf = build_pdf_header_rpt8(pdf)
+        pdf = build_pdf_body_rpt8(pdf)
+        build_pdf_footer_rpt8(pdf)
+        $lcFileName =  "app/pdf_output/rpt_customerpayment1.pdf"      
+        
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+  
+  end
+
+
+##
+##FIN RESUMEN INGRESO A BANCOS 
+##
+
+##-------------------------------------------------------------------------------------##
+## RESUMEN DE INGRESO A BANCOS DETALLADO POR FACTURA 
+##-------------------------------------------------------------------------------------##
+  
+  def build_pdf_header_rpt9(pdf)
+      pdf.font "Helvetica" , :size => 6
+      
+
+     $lcCli  =  @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+      end
+
+      if rows.present?
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+         end
+
+        pdf.move_down 10
+
+      end
+      
+      pdf 
+  end   
+
+  def build_pdf_body_rpt9(pdf)
+    
+    pdf.text "Detalle por factura : " , :size => 11 ,:align => :left 
+        
+    pdf.text ""
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+      total_general_soles = 0
+      total_general_dolar = 0
+      total_factory = 0
+        headers2 = []
+        table_content2 = []
+
+        CustomerPayment::TABLE_HEADERS7.each do |header|
+          cell = pdf.make_cell(:content => header)
+          cell.background_color = "FFFFCC"
+          headers2 << cell
+        end
+        table_content2 << headers2
+        nroitem = 1
+                
+        @totalgeneral_soles = 0
+        @totalgeneral_dolar = 0
+
+
+
+        row  = []
+
+        for d in @detalle_bancos 
+        
+
+              row = []                  
+
+              row << nroitem.to_s              
+              row << d.code 
+              row << d.fecha1.strftime("%d/%m/%Y") 
+              row << d.bank_acount.number
+              row << d.get_banco(d.bank_acount.bank_id)  
+              row << d.fecha.strftime("%d/%m/%Y") 
+              row << d.nrofactura 
+              
+              row << d.customer.name 
+              
+              row << sprintf("%.2f",d.total.to_s)
+              
+            
+              table_content2 << row
+
+              @totalgeneral_soles = @totalgeneral_soles + d.total          
+
+              nroitem = nroitem + 1      
+        end   
+
+          nroitem = nroitem + 1      
+
+          row = []
+          row << nroitem.to_s          
+          row << " "        
+          row << " "        
+          row << " "
+          row << " "        
+          row << " "        
+          row << " "          
+          row << "TOTAL => "
+          row << sprintf("%.2f",@totalgeneral_soles.to_s)
+          
+
+          table_content2 << row
+
+          result = pdf.table table_content2, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left
+                                          columns([4]).align=:right
+                                          columns([5]).align=:right
+                                          columns([6]).align=:left                                           
+                                          columns([7]).align=:right                                          
+                                        end
+          pdf.text "" 
+          pdf 
+
+
+      
+    end
+
+
+    def build_pdf_footer_rpt9(pdf)
+      
+        pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+        pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+
+      end
+
+
+      pdf
+      
+  end
+
+  # Export cobrar  to PDF
+  def rpt_ccobrar9_pdf
+
+    @company =Company.find(params[:id])
+    @fecha1  = params[:fecha1]
+    @fecha2  = params[:fecha2]
+    @factura_id = params[:ac_item]
+
+    @guias = Factura.find_by(["company_id = ? AND (code LIKE ?)", @company.id, "%"+ @factura_id + "%"])
+
+    if @guias != nil 
+
+    @detalle_bancos = @company.get_customer_payments_value_customer3(@factura_id)
+    
+    Prawn::Document.generate("app/pdf_output/rpt_customerpayment1.pdf") do |pdf|
+        pdf.font "Helvetica"        
+        pdf = build_pdf_header_rpt9(pdf)
+        pdf = build_pdf_body_rpt9(pdf)
+        build_pdf_footer_rpt9(pdf)
+        $lcFileName =  "app/pdf_output/rpt_customerpayment1.pdf"              
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+    else 
+
+
+    end 
+  end
+
+
+##
+##FIN RESUMEN INGRESO A BANCOS 
+##
+
 
   def client_data_headers_rpt
       client_headers  = [["Empresa  :", $lcCli ]]
@@ -1969,20 +2778,231 @@ class CustomerPaymentsController < ApplicationController
       send_data @invoice.to_csv  , :filename => 'CB0217.csv'
     
   end
-  
   def generar1
     @company = Company.find(params[:company_id])
     
   end
- 
- 
+
+##-------------------------------------------------------------------------------------
+## reporte completo de cobranza 
+##-------------------------------------------------------------------------------------
+  
+  def build_pdf_header_rpt10(pdf)
+     pdf.font "Helvetica" , :size => 6    
+     $lcCli  =  @company.name 
+     $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
+
+     $lcFecha1= Date.today.strftime("%d/%m/%Y").to_s
+     $lcHora  = Time.now.to_s
+
+    max_rows = [client_data_headers.length, invoice_headers.length, 0].max
+      rows = []
+      (1..max_rows).each do |row|
+        rows_index = row - 1
+        rows[rows_index] = []
+        rows[rows_index] += (client_data_headers_rpt.length >= row ? client_data_headers_rpt[rows_index] : ['',''])
+        rows[rows_index] += (invoice_headers_rpt.length >= row ? invoice_headers_rpt[rows_index] : ['',''])
+      end
+
+      if rows.present?
+        pdf.table(rows, {
+          :position => :center,
+          :cell_style => {:border_width => 0},
+          :width => pdf.bounds.width
+        }) do
+          columns([0, 2]).font_style = :bold
+
+        end
+
+
+        pdf.move_down 10
+
+      end
+      
+      pdf 
+  end   
+
+
+  def build_pdf_body_rpt10(pdf)
+    
+    pdf.text "Listado de Cobranza Emitidas : Desde"+@fecha1.to_s+ " Hasta : "+@fecha2.to_s , :size => 11 
+    pdf.text ""
+    pdf.font "Helvetica" , :size => 6
+
+      headers = []
+      table_content = []
+      total_general_soles = 0
+      total_general_dolar = 0
+      total_factory = 0
+
+      CustomerPayment::TABLE_HEADERS8.each do |header|
+        cell = pdf.make_cell(:content => header)
+        cell.background_color = "FFFFCC"
+        headers << cell
+      end
+      table_content << headers
+      nroitem = 1
+
+       for  detalle in @customerpayment_rpt
+              puts detalle.total 
+               $lcFecha1 = detalle.fecha1.strftime("%d/%m/%Y")                  
+                row = []
+                row << nroitem.to_s
+                row << detalle.code 
+                row << detalle.get_banco(detalle.bank_acount.bank_id) 
+                row << detalle.get_moneda(detalle.bank_acount.moneda_id)
+                
+                row << $lcFecha1 
+               
+                if detalle.document 
+                row << detalle.document.description     
+                else
+                row << ".."
+                end 
+                row << detalle.documento   
+                row << detalle.nrooperacion
+                row << ""
+                row << detalle.total 
+                row << ""
+                table_content << row  
+                
+                tfactory = 0
+                tcompen  = 0
+                tajuste  = 0
+                ttotal = 0
+                diferencia = 0
+
+
+
+
+                for productItem in detalle.get_payments()
+                  row = []
+                  row << ""
+                  row << ""
+                  row << ""
+                  row << ""
+                  
+                  row << productItem.code  
+                  
+                  
+                  row << productItem.get_customer(productItem.customer_id)
+                  row << sprintf("%.2f",productItem.factory.to_s)
+                  row << sprintf("%.2f",productItem.compen.to_s)
+                  row << sprintf("%.2f",productItem.ajuste.to_s)  
+                  row << sprintf("%.2f",productItem.total.to_s)
+                  row << 0
+                  table_content << row
+                  
+                  tfactory+= productItem.factory 
+                  tcompen += productItem.compen 
+                  tajuste += productItem.ajuste 
+                  ttotal +=  productItem.total
+               end
+                
+                   row = []
+                  row << ""
+                  row << ""
+                  row << ""
+                  row << ""
+                  row << ""
+                  diferencia = detalle.total -  ttotal + tfactory -tcompen+tajuste 
+                  
+                  row << "TOTALES=>"
+                  row << sprintf("%.2f",tfactory.to_s)
+                  row << sprintf("%.2f",tcompen.to_s)
+                  row << sprintf("%.2f",tajuste.to_s)
+                  row << sprintf("%.2f",ttotal.to_s)
+                  row << sprintf("%.2f",diferencia.to_s )
+                  
+                  table_content << row
+                
+              
+
+                nroitem=nroitem + 1
+             
+            end
+       
+   
+
+      result = pdf.table table_content, {:position => :center,
+                                        :header => true,
+                                        :width => pdf.bounds.width
+                                        } do 
+                                          columns([0]).align=:center
+                                          columns([1]).align=:left
+                                          columns([2]).align=:left
+                                          columns([3]).align=:left
+                                          columns([4]).align=:left  
+                                          columns([5]).align=:left
+                                          columns([6]).align=:left
+                                          columns([7]).align=:left 
+                                          columns([8]).align=:right
+                                          columns([9]).align=:right
+                                          columns([10]).align=:right
+                                          columns([11]).align=:right
+                                          columns([12]).align=:right
+                                        end                                          
+      pdf.move_down 10      
+      pdf
+
+  
+
+  
+  end
+
+  def build_pdf_footer_rpt10(pdf)
+      pdf.bounding_box([0, 20], :width => 535, :height => 40) do
+      pdf.draw_text "Company: #{@company.name} - Created with: #{getAppName()} - #{getAppUrl()}", :at => [pdf.bounds.left, pdf.bounds.bottom - 20]
+      end
+      pdf
+    
+  end 
+  # Export cobrar  to PDF
+
+  def rpt_ccobrar10_pdf
+    @company=Company.find(params[:id])      
+    @fecha1 = params[:fecha1]
+    @fecha2 = params[:fecha2]
+    
+    @customerpayment_rpt = @company.get_customer_payments_cabecera(@fecha1,@fecha2)  
+      
+    Prawn::Document.generate("app/pdf_output/rpt_customerpayment.pdf") do |pdf|
+        pdf.font "Helvetica"        
+        pdf = build_pdf_header_rpt10(pdf)
+        pdf = build_pdf_body_rpt10(pdf)
+        build_pdf_footer_rpt10(pdf)
+        $lcFileName =  "app/pdf_output/rpt_customerpayment.pdf"              
+    end     
+
+    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName                
+    send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+  
+  end
+
+
+
+  #####
+  
+  
+
+   def  update_monedas
+
+    @monedabanco = BankAcount.find(params[:bank_acount_id])
+
+    @monedas = Moneda.find(@monedabanco)
+
+   end 
+
+
+  #####
   private
+  
   def customerpayment_params
     params.require(:customer_payment).permit(:company_id,:location_id,:division_id,:bank_acount_id,
       :document_id,:documento,:customer_id,:tm,:total,:fecha1,:fecha2,:nrooperacion,:operacion,
       :descrip,:comments,:user_id,:processed,:code,:concept_id)
 
   end
+  
 
-end
-
+end 

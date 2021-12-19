@@ -1,279 +1,514 @@
 <div class="breadcrumbs">
   <%= link_to "My companies", "/companies" %> &raquo;
-  <%= link_to @factura.company.name, @factura.company %> &raquo;
-  <%= link_to "Facturas", "/companies/facturas/#{@factura.company.id}" %>
+  <%= link_to @invoice.company.name, @invoice.company %> &raquo;
+  <%= link_to "Facturas", "/companies/facturas/#{@invoice.company.id}" %>
 </div>
 
 <h1>
-  <%= image_tag("factura_48.png", :class => "vmiddle") %>
-  <%= @factura.identifier %>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+  <%= @invoice.identifier %>
 </h1>
 
 <%= hr() %>
 
-<% if @factura.location %>
+<% if @invoice.location %>
   <p>
     <b>Location:</b>
-    <%= link_to @factura.location.name, @factura.location %>
+    <%= link_to @invoice.location.name, @invoice.location %>
   </p>
 <% end %>
 
-<% if @factura.division %>
+<% if @invoice.division %>
   <p>
     <b>Division:</b>
-    <%= link_to @factura.division.name, @factura.division %>
+    <%= link_to @invoice.division.name, @invoice.division %>
   </p>
 <% end %>
 
-<% if @factura.payment %>
+<% if @invoice.payment %>
   <p>
     <b>Payment:</b>
-    <%= link_to @factura.payment.descrip, @factura.payment %>
+    <%= link_to @invoice.payment.descrip, @invoice.payment %>
   </p>
 <% end %>
 
 
+<% if @invoice.document %>
+  <p>
+    <b>Documento:</b>
+    <%= link_to @invoice.document.description, @invoice.description %>
+  </p>
+<% end %>
+
+  
 <p>
   <b>Code:</b>
-  <%= @factura.code %>
+  <%= @invoice.code %>
 </p>
+
+<% if @invoice.fecha  %>
 
 <p>
-  <b>Fecha :</b>
-  <%= @factura.fecha %>
+  <b>Fecha Emision :</b>
+  <%= @invoice.fecha.strftime("%d/%m/%Y")  %>
 </p>
 
+<% end %>
+
+<% if @invoice.fecha2 %>
+
+<p>
+  <b>Fecha Vencimiento :</b>
+
+  <%= @invoice.fecha2.strftime("%d/%m/%Y") %>
+</p>
+
+<% end %>
 
 <p>
   <b>Moneda :</b>
-  <%= @factura.moneda.description  %>
+  <%= @invoice.moneda.description  %>
 </p>
 
-<%= hr() %>
-
-<h3>
-  Informacion Cliente 
-</h3>
-
+<% if !@invoice.msgerror.nil? %> 
 <p>
-  <b>Name:</b>
-  <%= link_to @factura.code, @factura %>
+  <b> Estado Nubefact:</b>
+  <%= @invoice.msgerror %>
 </p>
-
-  <% if @factura.tc  ==  "1"  %>
-
-      <%= render 'contratos/show' %>
-
-  <% else %>
-
-        <p>
-          <b>Cliente :</b>
-          <%= link_to @factura.customer.name , @factura.customer.ruc %>
-        </p>
-           <p>
-        <strong>Medio :</strong>
-        <%= @factura.medio.descrip  %>
-        </p>
-
-  <% end %>
-
-
+<% end %>
 
 <%= hr() %>
 
 <h3>
-  Detalle servicios
+  Informacion Medio 
 </h3>
+<p>
 
-<table>
-  <thead>
-    <% if @factura.tc == '1' %>
+  <b>Name:</b>
+  <%= link_to @medio.descrip, @medio  %>
+</p>
 
-    <tr>
-      <th>
-        Cuota 
-      </th>
-      <th>
-        Monto Original
-      </th>
-      <th>
-        Moneda
-      </th>
-      <th>
-        Tipo Cambio
-      </th>
-      <th>
-        Total
-      </th>
-    </tr>
-    <% else %>
-      <tr>
-        <th>
-          Item 
-        </th>
-        <th>
-          Qty
-        </th>
-        <th>
-          Descrip
-        </th>
-        <th>
-          Precio S/Igv
-        </th>
-        <th>
-          Total
-        </th>
-       </tr> 
-
-    <% end %>
-  </thead>
-  
-  <% if @factura.tc  == '1' %>
-  <div class="button">
- 
-  
-  <%= link_to "Agregar Item","/facturas/newfactura2/#{@factura.id}" %>
-  
-  </div> 
-
-  <% end %>
-  
-  <tbody>
-    <%  @factura_details.each do |quote| %>
-
-    <% if @factura.tc == '1' %>
-
-          <tr>
-            <td class="bordered_bottom bordered_right">
-              <%= link_to quote.id    %>
-            </td>
-            <td class="bordered_bottom bordered_right">
-              <%= money(quote.total) %>
-            </td>
-            <td class="bordered_bottom bordered_right">
-              <%= quote.moneda_id %>
-            </td>
-            <td class="bordered_bottom bordered_right">
-              <%= money(quote.tipocambio) %>%
-            </td>
-            <td class="bordered_bottom bordered_right">
-              <%= money(quote.total) %>
-            </td>
-              
-              <td><%= link_to 'Eliminar',[@factura,quote], method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          </tr>
-
-      <% else %>
-          <tr>
-            <td class="bordered_bottom bordered_right">
-              <%= link_to quote.id    %>
-            </td>
-            <td class="bordered_bottom bordered_right">
-              <%= money(quote.quantity) %>
-            </td>
-            <td class="bordered_bottom bordered_right">
-              <%= quote.service.name  %>
-            </td>
-            <td class="bordered_bottom bordered_right">
-              <%= money(quote.price) %>
-            </td>
-            <td class="bordered_bottom bordered_right">
-              <%= money(quote.total) %>
-            </td>
-              
-          </tr>
-      <% end %>
-
-
-    <% end %>
-    <tr>
-      <td colspan="5" class="bordered_bottom bordered_right">
-        &nbsp;
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bordered_bottom bordered_right bold">
-        Subtotal:
-      </td>
-      <td class="bordered_bottom bordered_right bold right">
-        <%= money(@factura.subtotal) %>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bordered_bottom bordered_right bold">
-        Tax:
-      </td>
-      <td class="bordered_bottom bordered_right bold right">
-        <%= money(@factura.tax) %>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bordered_bottom bordered_right bold">
-        Total:
-      </td>
-      <td class="bordered_bottom bordered_right bold right">
-        <%= money(@factura.total) %>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<br />
-
-
+<%= render "medios/show" %>
 
 <%= hr() %>
 
-<% if @factura.description != "" %>
+
+<% if @invoice.description != "" %>
   <div>
     <b>Description:</b>
     <br />
     <br />
-    <%= format_text(@factura.description) %>
+    <%= format_text(@invoice.description) %>
   </div>
   <%= hr() %>
 <% end %>
 
-<% if @factura.comments != "" %>
+
+
+<% if @invoice.processed  != "3" %>
+
+
+
+    <%= form_tag(newfactura2_facturas_path, method: "get") do %>
+
+     <div class="field">
+          <input type="date" name="fecha1" value= <%= Date.today - 15 %> style = "width: 150px" >
+        </div>
+
+      <div class="field">
+        <input type="date" name="fecha2" value = <%= Date.today %> style = "width: 150px" >
+      </div>
+
+
+       <div class="field">  
+        <%= check_box_tag("cbox1", value = "1", checked = true , options = {})  %> Todos los clientes     
+       </div>
+     
+     
+      <div class="field">
+        <%= select_tag(:customer_id,options_from_collection_for_select(@customers,'id','name') ) %>
+      </div>
+      
+    <br>
+
+
+      <%= hidden_field_tag "factura_id" , @invoice.id %>
+      <%= submit_tag("Agregar Orden") %>
+
+    <% end %>
+
+
+<% end %>
+
+
+<tbody>
+
+
+<table>
+<thead>
+        
+      <tr>
+        <th> Id</th>
+        <th> Codigo</th>
+        <th> Descripcion</th>
+        <th> Precio 
+             Cliente  </th>
+    
+        <th> Cantidad</th>
+        <th> Total </th>
+      </tr>
+  </thead>
+
+    <%  @invoice_details.each do |quote| %>
+      <tr>
+        <td class="bordered_bottom bordered_right">
+          <%=  quote.id   %>
+        </td>
+        
+        <td class="bordered_bottom bordered_right">
+          <%= quote.orden.code   %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= quote.medio.descrip %>
+        </td>
+       
+        
+        <td class="bordered_bottom bordered_right">
+          <%= quote.price.round(3) %>
+        </td>
+    
+
+        <td class="bordered_bottom bordered_right">
+          <%= money(quote.quantity) %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+          <%= money(quote.total) %>
+        </td>
+        
+          <% if @invoice.processed  != "1" %>
+          <td><%= link_to 'Eliminar',[@invoice,quote], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          
+          <% end %>
+          
+      </tr>
+    <% end %>
+    
+    <tr>
+      <td colspan="6" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Subtotal:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@invoice.subtotal) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Tax:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@invoice.tax) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="bordered_bottom bordered_right bold">
+        Total:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@invoice.total) %>
+      </td>
+    </tr>
+    
+</table>
+</tbody>
+
+<table>
+<tbody>
+
+  <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        % Detraccion :
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@invoice.detraccion_percent) %>
+      </td>
+    </tr>
+
+
+  <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Monto de Detraccion :
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@invoice.detraccion_importe ) %>
+      </td>
+    </tr>
+
+   <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Detraccion cuenta :
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= @invoice.detraccion_cuenta %>
+      </td>
+    </tr>
+
+
+  <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Retencion cuenta :
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@invoice.retencion_importe) %>
+      </td>
+    </tr>
+
+
+
+  <tr>
+      <td colspan="4" class="bordered_bottom bordered_right bold">
+        Importe Total a Cobrar  :
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@invoice.importe_neto) %>
+      </td>
+    </tr>
+
+
+
+  </tbody>
+</table>
+
+
+<% if @invoice.document_id ==  2 %>
+
+<br>
+
+
+<table> 
+
+  <td  class="bordered_bottom bordered_right bold">
+    
+   Nro.Cuota
+  </td>
+<td  class="bordered_bottom bordered_right bold">
+  
+   Fecha 
+  </td>
+
+<td  class="bordered_bottom bordered_right bold">
+  
+   Importe 
+  </td>
+<tr>
+
+
+  <tr>
+
+    <td class="bordered_bottom bordered_right bold">
+        01 
+      </td>
+      <%  if !@invoice.fecha_cuota1.nil?%>
+      <td  class="bordered_bottom bordered_right">
+        <%= @invoice.fecha_cuota1.strftime("%d/%m/%Y") %>
+      </td>
+      <% else %>
+
+      <% end %>  
+
+      <td class="bordered_bottom bordered_rightright">
+        <%= money(@invoice.importe_cuota1 ) %>
+      </td>
+    </tr>
+
+
+  <tr>
+
+    <td class="bordered_bottom bordered_right bold">
+        02
+      </td>
+
+      <%  if !@invoice.fecha_cuota2.nil? %>
+      <td  class="bordered_bottom bordered_right ">
+
+       <% puts "ss" %>
+          <%= @invoice.fecha_cuota2.strftime("%d/%m/%Y") %>
+      </td>
+      <% else %>
+
+        <td  class="bordered_bottom bordered_right">
+          <%=  "NN" %>
+         </td>
+      <% end %>  
+      <td class="bordered_bottom bordered_rightright">
+        <%= money(@invoice.importe_cuota2) %>
+      </td>
+    </tr>
+
+ <% puts "ss33" %>
+
+  <tr>
+
+    <td class="bordered_bottom bordered_right bold">
+        03
+      </td>
+      <%  if !@invoice.fecha_cuota3.nil? %>
+
+
+
+      <td class="bordered_bottom bordered_right ">
+         <%= @invoice.fecha_cuota3.strftime("%d/%m/%Y") %>
+      </td>
+      <% else %>
+        <td  class="bordered_bottom bordered_right ">
+          <%=  "NN" %>
+         </td>
+      <% end %>  
+      <td class="bordered_bottom bordered_rightright">
+        <%= money(@invoice.importe_cuota3 ) %>
+      </td>
+    </tr>
+
+</table>
+<br />
+<% end %>
+
+<% if @invoice.comments != "" %>
   <div>
     <b>Comments:</b>
     <br />
     <br />
-    <%= format_text(@factura.comments) %>
+    <%= format_text(@invoice.comments) %>
   </div>
   <%= hr() %>
 <% end %>
 
 <br />
 
+</td>
+</table>
+
+
+
+
 <div>
-  <strong><%= @factura.get_processed %></strong>
-  <% if @factura.processed == "1" and @factura.date_processed %>
-    <%= doDate(@factura.date_processed) %>
+  <strong><%= @invoice.get_processed %></strong>
+  <% if @invoice.processed == "1" and @invoice.date_processed %>
+    <%= doDate(@invoice.date_processed) %>
   <% end %>
 </div>
 
 <p>
   <b>Return:</b>
-  <%= @factura.get_return %>
+  <%= @invoice.get_return %>
 </p>
 
 <p>
   <strong>Seller:</strong>
-  <%= link_to @factura.user.username, @factura.user %>
+  <%= link_to @invoice.user.username, @invoice.user %>
 </p>
 
 <%= hr() %>
 
-<div class="button">
-  
-  <%= link_to 'Exportar to PDF', "/facturas/pdf/#{@factura.id}.pdf" %>
-  
-<% if @factura.processed =="0" || @factura.processed==nil %>
-  <%= link_to 'Procesar factura', "/facturas/do_process/#{@factura.id}" %>
 
 
-<% elsif @factura.processed =="1" %>  
-  <%= link_to 'Anular', "/facturas/do_anular/#{@factura.id}" %>
+<img src=<%="https://chart.googleapis.com/chart?chs=120x120&cht=qr&chl=#{@invoice.code}&choe=UTF-8"%> alt="QR code">
+
+<%= hr() %>
+<div class="button" >
+
+
+
+
+    
+<% if @invoice.processed =="0" || @invoice.processed==nil %> 
+ <%= link_to 'Cuotas / Detraccion', "/facturas/do_closed/#{@invoice.id}" %> 
+
 <% end %>
-<%= link_to 'Regresar', "/companies/facturas/#{@factura.company.id}" %>
+    
+ <% if current_user.level=='admin' || current_user.level=='parte'  %>
+       <%= link_to 'Anular', "/facturas/do_anular/#{@invoice.id}" %> 
+
+    <% end %>
+  
+<% if @invoice.processed =="0" || @invoice.processed==nil %>-->
+  <%= link_to 'Procesar factura', "/facturas/do_process/#{@invoice.id}" %> 
+
+
+<% end %>
+
+
+ <%= link_to 'Reenviar nubefact', "/facturas/do_process2/#{@invoice.id}" %> 
+
+
+<%= link_to 'Regresar', "/companies/facturas/#{@invoice.company.id}" %>
 </div>
+
+<%= render 'layouts/autocomplete' %>
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#ac_customer").autocomplete("/facturas/ac_customers/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_customer").result(function(event, data, formatted) {
+      $("#ac_customer_id").html(data[2]);
+      $("#selected_customer").html(data[0]);
+    });        
+    
+    $("#ac_user").autocomplete("/facturas/ac_user/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_user").result(function(event, data, formatted) {
+      $("#ac_user_id").val(data[2]);
+      $("#selected_seller").html(data[0]);
+    });
+    
+
+    $("#ac_item3").autocomplete("/facturas/ac_guias/<%= @company.id %>", {
+      matchSubset: 1,
+      matchContains: 1,
+      selectFirst: false
+    });
+    
+    $("#ac_item3").result(function(event, data, formatted) {
+      $("#ac_item_guia").val(data[2]);    
+      $("#selected_guia").html(data[0]);      
+    });
+    
+
+    $("#ac_item_quantity").bind("keyup", function() {
+      updateItemTotal();
+    });
+    
+    $("#ac_item_price").bind("keyup", function() {
+      updateItemTotal();
+    });
+    
+    $("#ac_item_discount").bind("keyup", function() {
+      updateItemTotal();
+    });
+    
+    <% if @products_lines %>
+    alert 'holas products_lines';
+      listItemsInvoice2();
+    <% end %>
+
+   <% if @guias_lines %>
+    alert 'holas guias_lines';
+      listItemsdelivery2();
+    <% end %>
+
+  });
+</script>

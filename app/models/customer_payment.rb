@@ -1,7 +1,8 @@
 class CustomerPayment < ActiveRecord::Base
 self.per_page = 20
    
-  validates_presence_of :company_id, :total,:user_id,:fecha1 
+  validates_presence_of :company_id, :total,:user_id,:fecha1 ,:bank_acount_id 
+  validates_uniqueness_of :code
   
   belongs_to :company
   belongs_to :location
@@ -10,6 +11,7 @@ self.per_page = 20
   belongs_to :user
   belongs_to :payment
   belongs_to :bank_acount
+  belongs_to :document 
 
   has_many :customer_payment_details
   
@@ -53,7 +55,8 @@ self.per_page = 20
                      "DOC.",
                      "FEC.DOC.",
                      "RUC",
-                     "CLIENTE",                    
+                     "CLIENTE",    
+                     "F.PAGO.",                
                      "FACTORY  ",
                      "IMPORTE S/. ",                     
                      "IMPORTE USD "]                      
@@ -74,21 +77,103 @@ self.per_page = 20
 
   TABLE_HEADERS6 = ["ITEM",
                      "CLIENTE",   
-                     "=<2016",                  
-                    "Ene-2017",
-                    "Feb-2017",             
-                    "Mar-2017",
-                    "Abr-2017",
-                    "May-2017",
-                    "Jun-2017",
-                    "Jul-201",             
-                    "Ago-2017",
-                    "Sep-2017",
-                    "Oct-2017",
-                    "Nov-2017",              
-                    "Dic-2017",
+                    "=<2017",                  
+                    "Ene-18",
+                    "Feb-2018",             
+                    "Mar-2018",
+                    "Abr-2018",
+                    "May-2018",
+                    "Jun-2018",
+                    "Jul-2018",             
+                    "Ago-2018",
+                    "Set-2018",
+                    "Oct-2018",
+                    "Nov-2018",              
+                    "Dic-2018",
                     "TOTAL   "]
 
+ TABLE_HEADERS7 = [  "ITEM ",
+                     "COMPRO",
+                     "FEC.COM.",
+                     "CUENTA",
+                     "BANCO ",
+                     "FECHA",        
+                     "FACTURA ",             
+                    "CLIENTE ",   
+                    "IMPORTE",
+                  ]                      
+
+ TABLE_HEADERS8 = ["ITEM",
+                     "NRO.",
+                     "FECHA",
+                     "TD",
+                     "FEC.DOC.",
+                     "CLIENTE",                    
+                     "FACTORY  ",
+                     "COMPENS. ",  
+                     "AJUSTE",
+                     "IMPORTE",  
+                     "DIFER."]                      
+
+
+TABLE_HEADERS9 = ["ITEM",
+                     "CLIENTE",   
+                    "=< 2020",
+                     "Ene-Jun 21" ,
+                    "Jul-21",
+                    "Ago-21",
+                    "Set-21",
+                    "Oct-21",
+                    "Nov-21",             
+                    "Dic-21",
+                    "Ene-22",
+                    "Feb-22",
+                    "Mar-22",              
+                    "Abr-22",
+                    "May-22",                    
+                    "TOTAL   ", " % "]
+                   
+                   
+def get_banco_moneda(banco)
+  
+  banco= BankAcount.find(banco)
+  
+  return banco.moneda_id 
+  
+end 
+
+ def get_cliente(customer_id)
+   
+     cliente = Customer.find(customer_id)
+    if cliente  
+     return cliente
+    else
+      return "."
+    end 
+   
+ end 
+ def get_medio(medio_id)
+   
+     cliente = Medio.find(medio_id)
+    if cliente  
+     return cliente
+    else
+      return "."
+    end 
+   
+ end 
+
+  def get_formapago(id)
+   
+     factura = Factura.find(id)
+    if factura  
+     return factura.payment.descrip 
+    else
+      return "."
+    end 
+   
+ end 
+ 
  def get_cliente_customer_payment(id)
 
     @itemproducts = CustomerPaymentDetail.find_by_sql(['Select customer_payment_details.total,
@@ -102,6 +187,25 @@ self.per_page = 20
     if uno != nil  
      cliente = Customer.find(uno.customer_id)
      return cliente.name 
+    else
+      return "."
+    end 
+ end 
+
+
+ def get_medio_customer_payment(id)
+
+    @itemproducts = CustomerPaymentDetail.find_by_sql(['Select customer_payment_details.total,facturas.medio_id,
+      facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory,customer_payment_details.ajuste,
+      customer_payment_details.compen,facturas.tipo  from customer_payment_details   
+      INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
+      WHERE  customer_payment_details.customer_payment_id = ?', id ])
+
+      uno =@itemproducts.first 
+  
+    if uno != nil  
+     medio = Medio.find(uno.medio_id)
+     return medio.descrip  
     else
       return "."
     end 
@@ -233,10 +337,16 @@ self.per_page = 20
           if factura.pago == nil
              factura.pago = 0 
           end 
-         
+          if factura.document_id != 2   
           @last_payment = factura.pago + factura.balance.to_f.round(2) 
           @last_balance = factura.balance 
-          @newbalance = @last_balance - balance.to_f.round(2) + ajuste.to_f.round(2)
+          @newbalance = @last_balance - balance.to_f.round(2)
+          else
+          @last_payment = factura.pago + factura.balance.to_f.round(2) 
+          @last_balance = factura.balance 
+          @newbalance = @last_balance - balance.to_f.round(2)
+            
+          end 
 
           factura.update_attributes(pago: @last_payment,balance: @newbalance )  
           
@@ -274,8 +384,8 @@ self.per_page = 20
   end
 
   def get_payments    
- @itemproducts = CustomerPaymentDetail.find_by_sql(['Select customer_payment_details.total,
-      facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory,customer_payment_details.ajuste from customer_payment_details   
+ @itemproducts = CustomerPaymentDetail.find_by_sql(['Select customer_payment_details.total,facturas.medio_id,
+      facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory,customer_payment_details.ajuste,customer_payment_details.compen from customer_payment_details   
       INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
       WHERE  customer_payment_details.customer_payment_id = ?', self.id ])
 
@@ -285,9 +395,10 @@ self.per_page = 20
 
   def get_payment_dato(id)    
 
- @itemproducts = CustomerPaymentDetail.find_by_sql(['Select customer_payment_details.total,
+ @itemproducts = CustomerPaymentDetail.find_by_sql(['Select customer_payment_details.total,facturas.id as factura_id,
       facturas.code,facturas.customer_id,facturas.fecha,customer_payment_details.factory,customer_payment_details.ajuste,
-      customer_payment_details.compen,facturas.tipo,facturas.moneda_id  from customer_payment_details   
+      customer_payment_details.compen,facturas.tipo,facturas.moneda_id
+      from customer_payment_details   
       INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
       WHERE  customer_payment_details.customer_payment_id = ?', id ])
 
@@ -334,6 +445,7 @@ self.per_page = 20
     end
   end
   
+
   # Process the invoice
   def process
 

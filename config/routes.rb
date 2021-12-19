@@ -1,6 +1,7 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :medio_customers
   resources :medio_details
   resources :tipo_tarifas
   resources :tipo_avisos
@@ -46,19 +47,19 @@
 
       collection { get :crear}
       collection { get :reportes}
-     collection { get :rpt_ccobrar10}
-    collection { get :rpt_ccobrar20}
-    collection { get :rpt_ccobrar30}
-    collection { get :rpt_ccobrar40}
+      collection { get :rpt_ccobrar10}
+      collection { get :rpt_ccobrar20}
+      collection { get :rpt_ccobrar30}
+      collection { get :rpt_ccobrar40}
 
-      
-      
+
+
       collection { get :update_marcas}
       collection { get :update_productos}
       collection { get :update_versions}
-      
+
       collection { get :exportxls }
-    
+
       collection { post :import }
       collection { post :xls  }
 
@@ -129,7 +130,10 @@
   end 
   resources :facturas do
     resources :factura_details, except: [:index,:show], controller: "facturas/facturas_details"
-    
+     
+     collection { get :newfactura2}
+     collection { post :discontinue }
+      collection { get :do_cerrar}
     
   end 
   resources :supplier_payments do
@@ -143,7 +147,12 @@
       collection { get :rpt_cpagar6_pdf }
       collection { get :rpt_contrato1_pdf }
       collection { get :contratos_ec01 }
-  
+
+
+      collection { get :rpt_cadmin_01 }
+      collection { get :rpt_cadmin_02 }
+      collection { get :rpt_cadmin_03 }
+      collection { get :rpt_cadmin_04 }
       
   end 
 
@@ -185,7 +194,7 @@
   resources :pumps
 
   resources :supplier_payments
-
+  resources :customer_payments
   resources :inventory_details
   resources :inventories
   resources :payment_methods
@@ -267,11 +276,13 @@
 
 
     collection { get :rpt_compras_01 }
-
     collection { post :discontinue }
 
+    collection { get :rpt_ccobrar2 }
+
+    collection { get :rpt_ccobrar2_pdf }
     
-  
+
     collection do 
       put :discontinue 
     end 
@@ -336,6 +347,17 @@
   
     
   end 
+
+
+  resources :customer_payments do
+
+     collection { get :rpt_ccobrar11_pdf }
+
+    collection do
+      get 'update_monedas', to: "customer_payments#update_monedas "
+    end 
+  end 
+  
   
   resources :purchases do
 
@@ -443,11 +465,19 @@
 
   match 'ordens/rpt_ordenes1/:company_id' => 'ordens#rpt_ordenes1', via: [:get, :post]  
 
+  match 'companies/reports/rpt_cadmin1_all/:company_id' => 'reports#rpt_cadmin1', via: [:get, :post]
+  match 'companies/reports/rpt_cadmin2_all/:company_id' => 'reports#rpt_cadmin2', via: [:get, :post]
+  match 'companies/reports/rpt_cadmin3_all/:company_id' => 'reports#rpt_cadmin3', via: [:get, :post]
+  match 'companies/reports/rpt_cadmin4_all/:company_id' => 'reports#rpt_cadmin4', via: [:get, :post]
   
 
+
   match 'companies/reports/rpt_facturas_all/:company_id' => 'reports#rpt_facturas_all', via: [:get, :post]
+
   match 'companies/reports/rpt_facturas_all2/:company_id' => 'reports#rpt_facturas_all2', via: [:get, :post]
 
+  match 'companies/reports/rpt_ccobrar2_pdf/:company_id' => 'reports#rpt_ccobrar3_pdf', via: [:get, :post]
+  
   match 'companies/reports/rpt_purchase_all/:company_id' => 'reports#rpt_purchase_all', via: [:get, :post]
   match 'companies/reports/rpt_product_all/:company_id' => 'reports#rpt_product_all', via: [:get, :post]
 
@@ -568,8 +598,8 @@
 
   match 'facturas/rpt_facturas_all/:company_id' => 'facturas#rpt_facturas_all_pdf', via: [:get, :post]
   match 'facturas/rpt_facturas_all2/:company_id' => 'facturas#rpt_facturas_all2_pdf', via: [:get, :post]
-  
   match 'facturas/rpt_ccobrar2_pdf/:company_id' => 'facturas#rpt_ccobrar2_pdf', via: [:get, :post]
+  
   match 'facturas/rpt_ccobrar3_pdf/:company_id' => 'facturas#rpt_ccobrar3_pdf', via: [:get, :post]
   match 'facturas/contratos_ec_01/:id' => 'facturas#contratos_ec_01', via: [:get, :post]
 
@@ -584,9 +614,15 @@
   match 'facturas/do_anular/:id' => 'facturas#do_anular', via: [:get, :post]
   match 'facturas/do_email/:id' => 'facturas#do_email', via: [:get, :post]
   match 'facturas/do_process/:id' => 'facturas#do_process', via: [:get, :post]
+  match 'facturas/do_closed/:id' => 'facturas#do_closed', via: [:get, :post]
+  match 'facturas/do_cerrar/:id' => 'facturas#do_cerrar', via: [:get, :post]
+  match 'facturas/print/:id' => 'facturas#print', via: [:get, :post]
+  
   match 'facturas/email/:id' => 'facturas#email', via: [:get, :post]
   match 'facturas/pdf/:id' => 'facturas#pdf', via: [:get, :post]
+
   match 'companies/facturas/:company_id' => 'facturas#list_invoices', via: [:get, :post]
+
   resources :facturas
 
 
@@ -771,7 +807,7 @@
 
 # supplier payments
   
-  match 'customer_payments/list_items/:company_id' => 'customer_payments#list_items', via: [:get, :post]  
+ match 'customer_payments/list_items/:company_id' => 'customer_payments#list_items', via: [:get, :post]  
   match 'customer_payments/ac_products/:company_id' => 'customer_payments#ac_products', via: [:get, :post]
   match 'customer_payments/ac_documentos/:company_id' => 'customer_payments#ac_documentos', via: [:get, :post]
   match 'customer_payments/ac_user/:company_id' => 'customer_payments#ac_user', via: [:get, :post]
@@ -793,9 +829,13 @@
   match 'customer_payments/rpt_ccobrar5_pdf/:id' => 'customer_payments#rpt_ccobrar5_pdf', via: [:get, :post]
   match 'customer_payments/rpt_ccobrar6_pdf/:id' => 'customer_payments#rpt_ccobrar6_pdf', via: [:get, :post]
   match 'customer_payments/rpt_ccobrar7_pdf/:id' => 'customer_payments#rpt_ccobrar7_pdf', via: [:get, :post]
-
+  match 'customer_payments/rpt_ccobrar8_pdf/:id' => 'customer_payments#rpt_ccobrar8_pdf', via: [:get, :post]
+  match 'customer_payments/rpt_ccobrar9_pdf/:id' => 'customer_payments#rpt_ccobrar9_pdf', via: [:get, :post]
+  match 'customer_payments/rpt_ccobrar10_pdf/:id' => 'customer_payments#rpt_ccobrar10_pdf', via: [:get, :post]
+  match 'customer_payments/rpt_ccobrar11_pdf/:id' => 'customer_payments#rpt_ccobrar11_pdf', via: [:get, :post]
+  
   match 'companies/customer_payments/:company_id' => 'customer_payments#list_customerpayments', via: [:get, :post]  
-
+  
   resources :customer_payments
 
   match 'inventories_detaisl/additems/:company_id' => 'additems#list', via: [:get, :post]  
@@ -913,6 +953,9 @@
   match 'companies/components/:id' => 'companies#components', via: [:get, :post]
   match 'companies/cpagar/:id' => 'companies#cpagar', via: [:get, :post]
   match 'companies/ccobrar/:id' => 'companies#ccobrar', via: [:get, :post]
+  match 'companies/cadmin/:id' => 'companies#cadmin', via: [:get, :post]
+
+
   resources :companies
 
   # Users packages

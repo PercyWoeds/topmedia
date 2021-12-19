@@ -2024,6 +2024,117 @@ def list_receive_supplierpayments
   
 
 
+   def rpt_cadmin_01
+
+      @company = Company.find(1)
+      @fecha1 = params[:fecha1]
+      @fecha2 = params[:fecha2]
+  
+      @medio_check = params[:check_medio]
+      @customer_id = params[:customer_id]
+      @customer_name =  @company.get_cliente_name(@customer_id)
+   
+    if @medio_check == "true"
+        @medio_id=""
+    else
+        @medio_id =params[:medio_id]
+
+    end
+
+    puts "detaellll"
+    puts @customer
+    puts @medio 
+
+    @ordenes = @company.get_ordenes_cliente2(@fecha1,@fecha2,@customer_id ,@medio_id)
+
+        case params[:print]
+      
+          when "Generar" then 
+
+            begin 
+              puts "reporeeeeeee ..."
+              render xlsx: 'rpt_cadmin_01'
+
+            end
+
+          else render action: "index"
+        end
+
+
+
+  end
+
+ def rpt_cadmin_02
+
+    @company=Company.find(1)
+    @fecha1 = params[:fecha1]
+    @fecha2 = params[:fecha2]
+  
+    @customer_check = params[:check_cliente]    
+
+    @medio_id = params[:medio_id]
+    @medio_name =  @company.get_medio_name(@medio_id)
+  
+   
+    if @customer_check == "true"
+        @customer_id = ""
+    else
+        @customer_id = params[:customer_id]
+    end
+    puts "medio...."
+    puts @medio_name 
+    puts "cliente..."
+    puts @customer_id 
+    puts @fecha1
+
+
+
+    @ordenes = @company.get_ordenes_cliente2(@fecha1,@fecha2,@customer_id ,@medio_id)
+
+        case params[:print]
+      
+          when "Generar" then 
+
+            begin 
+              puts "reporeeeeeee ..."
+              render xlsx: 'rpt_cadmin_02'
+
+            end
+
+          else render action: "index"
+        end
+
+
+
+  end
+
+
+
+ def rpt_cadmin_03
+
+    @company=Company.find(1)
+    @fecha1 = params[:fecha1]
+    @fecha2 = params[:fecha2]
+  
+          
+    @ordenes = @company.get_ordenes_cliente3(@fecha1,@fecha2)
+
+        case params[:print]
+      
+          when "Generar" then 
+
+            begin 
+              puts "reporeeeeeee ..."
+              render xlsx: 'rpt_cadmin_03'
+
+            end
+
+          else render action: "index"
+        end
+
+
+
+  end
 
   
   private

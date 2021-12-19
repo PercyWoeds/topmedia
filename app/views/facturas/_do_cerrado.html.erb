@@ -1,0 +1,97 @@
+
+    <table>
+
+      <td colspan="3" class="bordered_bottom bordered_right bold">
+        Total a rendir        </td>
+
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@viaticolgv.total_ing)%>
+      </td>
+
+
+            <tr>
+             <td colspan="3" class="bordered_bottom bordered_right bold">
+               Gastos realizados   </td>
+
+              
+               <td class="bordered_bottom bordered_right bold right">
+                  <%= money(@viaticolgv.total_egreso)%>       </td>
+
+            </tr>         
+
+
+   <tr>
+      <td colspan="3" class="bordered_bottom bordered_right bold">
+        Saldo
+      </td>
+       <td class="bordered_bottom bordered_right bold right">
+        <%= money(@viaticolgv.saldo) %>
+      </td>
+    </tr>
+
+
+   
+             <tr> 
+
+             <td  class="bordered_bottom bordered_right bold">
+               Vuelto   </td>
+
+              <td class="small bordered_bottom bold bordered_right">
+              <%= @viaticolgv.fecha_devuelto.to_date  %> </td>
+
+
+              <td class="bordered_bottom bordered_right bold">
+                   <%= @viaticolgv.compro_vuelto %> </td> 
+
+                
+              <td class="bordered_bottom bordered_right bold">
+                 
+                  <%= @viaticolgv.cdevuelto_importe.round(2) %> </td>
+                    
+ 
+             </tr>
+
+
+
+             <td  class="bordered_bottom bordered_right bold">
+               Descuento del Chofer    </td>
+
+
+                 <td class="small bordered_bottom bold bordered_right">
+              <%= @viaticolgv.fecha_descuento.to_date  %> </td>
+
+
+              <td class="bordered_bottom bordered_right bold">
+                   <%= @viaticolgv.dscto_vuelto %> </td> 
+
+                
+              <td class="bordered_bottom bordered_right bold">
+                 
+                  <%= @viaticolgv.cdescuento_importe.round(2) %> </td>
+
+
+             </tr>
+
+
+              <td  class="bordered_bottom bordered_right bold">
+               Reembolso  del Chofer    </td>
+
+
+              
+                 <td class="small bordered_bottom bold bordered_right">
+              <%= @viaticolgv.fecha_reembolso.to_date  %> </td>
+
+
+              <td class="bordered_bottom bordered_right bold">
+                    </td> 
+
+                
+              <td class="bordered_bottom bordered_right bold">
+                 
+                  <%= @viaticolgv.creembolso_importe.round(2) %> </td>
+             </tr>
+
+
+
+
+          </table>

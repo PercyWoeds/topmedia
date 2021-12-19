@@ -212,6 +212,7 @@ end
       return @contrato_cuotas
   end 
 
+ 
   def get_contrato_cuotas_cobrar(id)
       @factura1=""
       @contrato_cuotas = ContratoDetail.where(["contrato_id = ? and factura1 <> ? and fecha_pago is null ",id, "" ]).order(:fecha,:nro)

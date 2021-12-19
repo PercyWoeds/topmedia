@@ -6,6 +6,8 @@ class Medio < ActiveRecord::Base
 	belongs_to :contrato 
 	belongs_to :orden
   belongs_to :factura 
+  
+
 
   has_many :medio_details , dependent: :destroy
 

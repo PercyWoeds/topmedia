@@ -2,7 +2,7 @@ class Factura < ActiveRecord::Base
   self.per_page = 20
 
 
-  validates_presence_of :company_id, :contrato_id, :code, :user_id, :customer_id 
+  validates_presence_of :company_id, :code, :user_id, :medio_id 
   validates_uniqueness_of :code
   
   belongs_to :company
@@ -15,7 +15,10 @@ class Factura < ActiveRecord::Base
   belongs_to :medio  
 
   belongs_to :customer 
-    
+  belongs_to :document 
+  belongs_to :tipoventa  
+  
+      
 
   has_many   :deliveryship
   has_many   :delivery 
@@ -45,14 +48,18 @@ class Factura < ActiveRecord::Base
                      "IGV.",
                      "TOTAL"
                      ]
+
   TABLE_HEADERS3 = ["TD",
                       "Documento",
                      "Fecha",
                      "Fec.Vmto",
+                     "Dias ",
                      "Cliente",
+                     "Contrato",                    
                      "Moneda",                                         
                      "SOLES",
                      "DOLARES ",
+                     "DETRACCION",
                      "OBSERV"]
   
 
@@ -61,6 +68,16 @@ class Factura < ActiveRecord::Base
         
   end
   
+  def get_dias(id)
+
+       a  =  Payment.find(id)
+
+       return a.day 
+
+  end 
+
+
+ 
   
   def get_subtotal_items(items)
     subtotal = 0
@@ -249,10 +266,11 @@ class Factura < ActiveRecord::Base
   
 
  def delete_guias()
-    invoice_guias = Deliveryship.where(factura_id: self.id)
+    invoice_guias = Orden.where(factura_id: self.id)
     
     for ip in invoice_guias
-      ip.destroy
+      ip.processed = "1"
+      ip.save
     end
   end
 
@@ -427,7 +445,7 @@ class Factura < ActiveRecord::Base
     end
   end
   def cerrar
-    if(self.processed == "3" )         
+    if(self.processed == "0" )         
       
       self.processed="3"
       self.date_processed = Time.now
@@ -457,7 +475,52 @@ class Factura < ActiveRecord::Base
     end
   end
   
+ def get_orden_detalle(fecha1,fecha2,moneda )
+      @ordens = Orden.where(["fecha >= ? and fecha<=? and   processed = ? and moneda_id = ? ",
+        "#{fecha1} 00:00:00", "#{fecha2} 23:59:59","1", moneda ]).order(:fecha)
+      return @ordens
 
+  end 
+
+  
+  def get_importe_balance_soles
+       valor = 0
+       if self.moneda_id ==2
+          if self.document_id   == 9
+                  valor = self.balance.round(2)
+                    
+          else  
+                  valor = self.balance.round(2)
+          
+           end   
+          end 
+        return valor         
+  end
+  def get_importe_balance_dolares
+       valor = 0
+       if self.moneda_id ==1
+          if self.document_id   == 9
+                  valor = self.balance.round(2)
+                    
+          else  
+                  valor = self.balance.round(2)
+          
+           end   
+          end 
+        return valor         
+  end
+
+
+  def get_detraccion
+  
+    if InvoiceService.where(factura_id: self.id ).exists?
+
+       a = InvoiceService.where(factura_id: self.id )
+     return   a.first.service.tax2 
+    else
+     return 0.00 
+    end 
+  end   
 
   
 end

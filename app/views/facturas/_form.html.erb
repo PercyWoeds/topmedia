@@ -10,6 +10,8 @@
   </div>
 <% end %>
 
+
+
 <%= hr() %>
 
 <div class="mid_box bordered_right">
@@ -22,19 +24,18 @@
 
       
       <div class="field">
-      <%= f.label :fecha , "Fecha *", :class => "bold" %><br />
+       <%= f.label :fecha , "Fecha *", :class => "bold" %><br />
 
-      <% if @current_user.level = "admin" %>
-        <%= f.date_field :fecha %>
-      <% else %>
-        <%= f.date_field :fecha , :readonly => true %>
-      <% end %>
+     
+        <%= f.date_field :fecha , :readonly => true  %>
+      
+      </div>
+     <div class="field">
+        <%= f.label :document_id,"Documento :" %><br />
+        <%= f.collection_select :document_id, @tipodocumento, :id, :description, :prompt => true %>
+      
       </div>
 
-      <div class="field">
-        <%= f.label :tipo , "Factura", :class => "bold" %><br />
-        <%= f.select :tipo, options_from_collection_for_select(@tipofacturas,'id','descrip') %>
-      </div>
 
     <div class="field">
       <%= f.label :code, "Code*", :class => "bold" %><br />
@@ -52,27 +53,6 @@
       <%= f.label :medio_id %><br />
       <%= f.select :medio_id,options_from_collection_for_select(@medios,'id','descrip') %>
     </div>
-    
-
-      <label for="ac_contrato" class="bold">Contrato *</label><br />
-      <input type="text" name="ac_contrato" id="ac_contrato" value="<% if @ac_contrato %><%= @ac_contrato %><% end %>" />
-      
-      
-      <div class="small">
-        Ingrese una termino de busqueda para encontrar un cliente.
-      </div>
-      <br />
-
-      <div class="small">
-        <strong>Seleccionar Contrato :</strong>
-        <span id="selected_contrato"><% if @ac_contrato %><%= @ac_contrato %><% else %><!-- i --><% end %></span>
-        <br>
-        <span id="selected_contrato_name"><% if @ac_contrato %><%= @ac_contrato %><% else %><!-- i --><% end %></span>
-        <br>
-        <strong>Seleccionar Medio :</strong>
-        <span id="selected_contrato_descrip"><% if @ac_contrato %><%= @ac_contrato %><% else %><!-- i --><% end %></span>
-      </div>
-     </div>
 
      <div class="field">
       <%= f.label :payment_id,"Forma de Pago " %><br />
@@ -115,6 +95,12 @@
       <%= f.label :description %><br />
       <%= f.text_area :description %>
     </div>  
+    <div class="field">
+      <%= f.label :comments , "Observaciones: "%><br />
+      <%= f.text_area :comments %>
+    </div>  
+
+
       
     <%= hr() %>
 
@@ -143,6 +129,7 @@
       
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
       <%= f.hidden_field :contrato_id, :id => "ac_contrato_id" %>
+      <%= f.hidden_field :customer_id, :id => "ac_customer_id" %>
      
       
       <%= f.hidden_field :company_id %>      

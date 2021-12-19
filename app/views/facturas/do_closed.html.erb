@@ -1,0 +1,282 @@
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Autorizacion", facturas_path %> &raquo;
+  <%= link_to @invoice.code, @invoices %>
+</div>
+
+<h1>
+  <%= image_tag("invoice_48.png", :class => "vmiddle") %>
+   Factura - Cuotas 
+</h1>
+
+<%= hr() %>
+
+<h3>
+  <%= link_to @invoice.code, @invoice %>
+
+
+  <%=  @invoice.total  %>
+  
+</h3>
+
+
+<p>
+  <b>Fecha Emision :</b>
+  <%= @invoice.fecha.strftime("%d/%m/%Y")  %>
+</p>
+
+<% if @invoice.fecha2 %>
+
+<p>
+  <b>Fecha Vencimiento :</b>
+
+  <%= @invoice.fecha2.strftime("%d/%m/%Y") %>
+</p>
+
+<% end %>
+
+<p>
+  <b>Moneda :</b>
+  <%= @invoice.moneda.description  %>
+</p>
+
+<% if !@invoice.msgerror.nil? %> 
+<p>
+  <b> Estado Nubefact:</b>
+  <%= @invoice.msgerror %>
+</p>
+<% end %>
+
+<%= hr() %>
+
+<h3>
+  Informacion Cliente 
+</h3>
+<p>
+
+  <b>Name:</b>
+  <%=  @invoice.medio.descrip %>
+</p>
+
+
+
+<%= hr() %>
+
+                                      
+<form method="get" action="/facturas/do_cerrar/<%= @invoice.id %>">
+
+                                      
+
+    <div class="field">
+      <%= label :detraccion_percent, "Detraccion %   ", :class => "bold" %><br />
+     <input type="text" name="ac_detraccion_percent" id="ac_detraccion_percent" value = <%= @invoice.detraccion_percent %>  />
+   
+    </div>
+
+     <div class="field">
+     <span id="ac_detraccion_importe">0.00</span>
+      
+    </div>
+
+   <div class="field">
+      <%= label :detraccion_cuenta, "Detraccion Cuenta :", :class => "bold" %><br />
+      <input type="text" name="ac_detraccion_cuenta" id="ac_detraccion_cuenta" value = <%= @invoice.detraccion_cuenta %> readonly  />
+    </div>
+
+    <div class="field">
+      <%= label :retencion_importe, "Retencion  Importe: ", :class => "bold" %><br />
+    <input type="text" name="ac_retencion_importe" id="ac_retencion_importe" value = <%= @invoice.retencion_importe %>   />
+      </div>
+<div class="field">
+
+      <%= label :retencion_importe, "TOTAL NETO : ", :class => "bold" %><br />
+     <span id="ac_importe_neto">0.00</span>
+      
+    </div>
+<h5>Cuotas </h5>
+    <table>
+
+      <tr>
+        <td>
+           01
+
+        </td>
+        <td>
+
+         <input type="date" name="ac_fecha_cuota1" id="ac_fecha_cuota1" value = <%= @invoice.fecha_cuota1 %>   />
+    
+        </td>
+
+        <td>
+    
+          <input type="number" name="importe_cuota1" id="importe_cuota1" step="0.01" min="0.0"  />
+
+        </td>
+
+
+      </tr>
+
+      <tr>
+        <td>
+           02
+
+        </td>
+        <td>
+
+           <input type="date" name="ac_fecha_cuota2" id="ac_fecha_cuota2" value = <%= @invoice.fecha_cuota2 %>   />
+    
+        </td>
+
+        <td>
+
+          <input type="number" name="importe_cuota2" id="importe_cuota2" step="0.01" min="0.0"  />
+
+        
+        </td>
+
+
+      </tr>
+
+      <tr>
+        <td>
+           03
+
+        </td>
+        <td>
+
+         <input type="date" name="ac_fecha_cuota3" id="ac_fecha_cuota3" value = <%= @invoice.fecha_cuota3 %>   />
+    
+        </td>
+
+        <td>
+
+          <input type="number" name="importe_cuota3" id="importe_cuota3" step="0.01" min="0.0"  />
+
+        </td>
+
+
+      </tr>
+
+    </table>
+  
+    <%= hr() %>
+        
+
+    <div class="field" id="list_items">
+      <p class="bold big">Products:</p>
+    </div>
+
+    <div class="field" id="list_items2">
+      <p class="bold big">Guias:</p>
+    </div>
+
+    <%= hr() %>
+  
+
+
+      <%= hidden_field_tag :detraccion_percent, :id => "ac_detraccion_percent" %>
+      <%= hidden_field_tag :detraccion_importe, :id => "ac_detraccion_importe" %>
+      <%= hidden_field_tag :retencion_importe , :id => "ac_retencion_importe" %>
+
+
+     
+
+   <%=  submit_tag "Grabar  "%>
+
+
+
+
+</form>
+
+
+
+
+<%= hr() %>
+
+<div class="button">
+
+  <%= link_to 'Regresar', "/companies/facturas/#{@company.id}" %>
+</div>
+
+
+
+
+
+
+<%= render 'layouts/autocomplete' %>
+
+
+<script type="text/javascript">
+
+   $(document).ready(function() {
+
+  
+
+    $("#ac_detraccion_percent").bind("keyup", function() {
+      updateItemDetraccion();
+    });
+$("#ac_retencion_importe").bind("keyup", function() {
+      updateItemDetraccion();
+    });
+     });
+
+function updateItemDetraccion() {
+
+
+    
+
+    var percent_detraccion  = parseFloat($("#ac_detraccion_percent").val());
+    var importe_retencion  = parseFloat($("#ac_retencion_importe").val());
+
+    var importe_factura = <%= @invoice.total %> ;
+  
+    var moneda = <%= @invoice.moneda_id  %> ;
+   
+    if( percent_detraccion > 0) {
+
+      var nuevo_detraccion = parseFloat(importe_factura) * parseFloat(percent_detraccion) / 100  ;
+      var nuevo_detraccion_r = 0 ; 
+
+      
+      var balance =  0 ;
+      
+        if (moneda == 1) {
+           balance = parseFloat(importe_factura) - parseFloat(importe_retencion) -  parseFloat(nuevo_detraccion).toFixed(2) ; 
+
+           nuevo_detraccion_r =  importe_factura - balance ; 
+          $("#ac_detraccion_importe").html(nuevo_detraccion_r.toFixed(2));
+
+        }
+        else
+        {
+           balance = parseFloat(importe_factura) - parseFloat(importe_retencion) -  parseFloat(nuevo_detraccion).toFixed(0) ; 
+          nuevo_detraccion_r =  importe_factura -  balance ; 
+           $("#ac_detraccion_importe").html(nuevo_detraccion_r.toFixed(0));
+
+        }
+       
+        $("#ac_importe_neto").html(balance.toFixed(2));
+        $("#ac_importe_cuota1").html(balance.toFixed(2));
+          
+      
+       
+     }
+
+     else  {
+      
+        $("#ac_detraccion_importe").html("0.00");
+       $("#ac_importe_neto").html("0.00");
+          
+     }
+
+
+  }
+
+
+
+  
+
+
+
+</script>

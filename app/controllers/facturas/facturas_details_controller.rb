@@ -67,9 +67,27 @@ class Facturas::FacturasDetailsController < ApplicationController
   # DELETE /factura_details/1
   # DELETE /factura_details/1.json
   def destroy
-    @factura_detail.destroy
+
+  
+    if @factura_detail.destroy
+
+       a =Orden.find(@factura_detail.orden_id)
+       a.processed = "1"
+       a.save 
+
+
+    end 
+
+    @factura[:subtotal] =  @factura.get_subtotal
+
+    @factura[:total] = @factura[:subtotal] * 1.18 
+    
+    @factura[:tax]   = @factura[:total]  - @factura[:subtotal] 
+
     
    if @factura_detail.destroy
+      @factura.update_attributes(subtotal: @factura[:subtotal].round(2) ,total: @factura[:total].round(2), tax: @factura[:tax].round(2)) 
+
       flash[:notice]= "Item fue eliminado satisfactoriamente "
       redirect_to @factura
     else

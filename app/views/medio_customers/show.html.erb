@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Medio:</strong>
+  <%= @medio_customer.medio_id %>
+</p>
+
+<p>
+  <strong>Customer:</strong>
+  <%= @medio_customer.customer_id %>
+</p>
+
+<p>
+  <strong>Comision1:</strong>
+  <%= @medio_customer.comision1 %>
+</p>
+
+<p>
+  <strong>Comision2:</strong>
+  <%= @medio_customer.comision2 %>
+</p>
+
+<%= link_to 'Edit', edit_medio_customer_path(@medio_customer) %> |
+<%= link_to 'Back', medio_customers_path %>

@@ -21,17 +21,17 @@ totals = []
 </h4>
 
 <form method="get" action="/customer_payments/rpt_ccobrar6_pdf/<%= @company.id %>">
- 	<div class="field">
-      <input type="date" name="fecha1" value="2007-01-10" style = "width: 150px" >
+   <div class="field">
+      <input type="date" name="fecha1" value=  <%= Date.today - 30 %> style = "width: 150px" >
 
     </div>
-	<div class="field">
-		<input type="date" name="fecha2" value="2017-01-17" style = "width: 150px" >
+  <div class="field">
+    <input type="date" name="fecha2" value= <%= Date.today %> style = "width: 150px" >
     </div>
 
     
   <input type="submit" value="Ver" class="small_btn" />
-  <a href="/customer_payments/rpt_ccobrar6_pdf/<%= @company.id %>" class="small_btn">Hoy</a>
+  <a href="/customer_payments/rpt_ccobrar6_pdf/<%= @company.id %>"> Generar Reporte </a>
 </form>
 
 <br />

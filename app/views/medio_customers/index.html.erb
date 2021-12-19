@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Medio Customers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Medio</th>
+      <th>Customer</th>
+      <th>Comision1</th>
+      <th>Comision2</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @medio_customers.each do |medio_customer| %>
+      <tr>
+        <td><%= medio_customer.medio.descrip %></td>
+        <td><%= medio_customer.customer.name  %></td>
+        <td><%= medio_customer.comision1 %></td>
+        <td><%= medio_customer.comision2 %></td>
+        <td><%= link_to 'Show', medio_customer %></td>
+        <td><%= link_to 'Edit', edit_medio_customer_path(medio_customer) %></td>
+        <td><%= link_to 'Destroy', medio_customer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Medio customer', new_medio_customer_path %>

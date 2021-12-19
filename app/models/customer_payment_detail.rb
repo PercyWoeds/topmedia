@@ -14,10 +14,13 @@ class CustomerPaymentDetail < ActiveRecord::Base
     return a.name 
   end 
 
-
   def get_customer_ruc(id)    
     a = Customer.find(id)
     return a.ruc  
+  end 
+  def get_medio(id)    
+    a = Medio.find(id)
+    return a.descrip   
   end 
   
   def get_document(id)
@@ -25,6 +28,35 @@ class CustomerPaymentDetail < ActiveRecord::Base
     return a.description
 
   end 
+  
+  def get_fecha_cobranza(id)
+    begin 
+    a = CustomerPayment.find(id)
+    if a 
+    return a 
+    else
+    return "" 
+    end 
+    rescue 
+  end 
+    
+  end   
+    
+    
+def get_fecha_pago(id)
+    
+
+       @dato = CustomerPayment.where(id: id )
+
+     if @dato 
+         return @dato.first.fecha1
+     else 
+         return  ""
+     end 
+
+
+end 
+
   
 end
 

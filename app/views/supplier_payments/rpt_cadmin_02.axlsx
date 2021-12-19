@@ -1,0 +1,125 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'axlsx'
+
+p = Axlsx::Package.new
+wb = xlsx_package.workbook
+wb.styles do |s|
+    date = s.add_style(:format_code => "yyyy-mm-dd", :border => Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :right},:sz => 8)
+    padded = s.add_style(:format_code => "00#", :border => Axlsx::STYLE_THIN_BORDER)
+    percent = s.add_style(:format_code => '#.##0.00', :border => Axlsx::STYLE_THIN_BORDER)
+     title = s.add_style(:bg_color => "D8D8D8", :fg_color=>"#FF000000",:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :center},:sz => 8 )
+    cadena =s.add_style(:border=>Axlsx::STYLE_THIN_BORDER,:alignment=>{:horizontal => :left},:sz => 8)
+    cadena0 =s.add_style(:alignment=>{:horizontal => :left},:sz => 8 )   
+    currency = wb.styles.add_style(:format_code=>"#,##0.#0;[Red]-#,##0.#0",
+                              :border=>Axlsx::STYLE_THIN_BORDER,:sz => 8)
+    red_negative = wb.styles.add_style :num_fmt => 8
+    comma = wb.styles.add_style :num_fmt => 3
+    super_funk = wb.styles.add_style :format_code => '[Green]#'
+    total_soles = 0
+    total_dolares = 0
+    total_cliente_soles = 0
+    total_cliente_dolares = 0
+    total_cliente_detraccion = 0 
+    lcmonedasoles   = 2
+    lcmonedadolares = 1
+  
+    
+    wb.add_worksheet(name: "Basic work sheet") do |sheet|
+
+    
+            img = File.expand_path("#{Dir.pwd}/public/images/logomas.jpg")
+                sheet.add_image(:image_src => img, :noMove => true) do |image|
+                    image.width = 300
+                    image.height = 100
+                    image.start_at 10, 0
+                end
+
+
+            sheet.add_row [@company.name],:style =>  [cadena0]
+            sheet.add_row [@company.address1 + " "+   @company.address2 + " "+ @company.city + " "+ @company.state],:style =>  [cadena0]
+            sheet.add_row [@company.ruc ] ,:style =>  [cadena0]
+            sheet.add_row [""]
+            sheet.add_row [""]
+            sheet.add_row [""]
+
+            lcTexto = "Sirva la presente para detallar el estado de consumo para los periodos comprendidos entre el " 
+
+
+            sheet.add_row ["Lima, " ,Time.now ] , :style =>[cadena0,date ]
+            sheet.add_row [lcTexto] , :style =>[cadena0 ]
+            sheet.add_row [""]
+            sheet.merge_cells('A8:C8')
+    
+            sheet.add_row ["MEDIO : ", @medio_name  ], :style =>[cadena0,cadena0]  
+            sheet.add_row [""]
+            sheet.add_row [""]
+
+
+         sheet.add_row ["Fecha", "Medio", "Producto", "Nro.Orden","Periodo Mes","Año", "Marca ","Motivo","Cobertura", "Avisos/Cantidad","Dur(Seg)","Seg","Monto(USD$)" ,"Monto(S/.)","Orden"], :style => title 
+
+
+
+            sheet.column_widths 10
+            
+
+            if  @ordenes.count> 0
+
+               @ordenes.each do |payment|
+               
+                          puts "sssssssssssss"
+                          puts payment.fecha
+                          puts payment.customer.name 
+                          puts payment.producto.name 
+                          puts payment.code 
+                          puts payment.month 
+                          puts payment.year 
+                          puts payment.marca.name 
+                          puts payment.version.descrip
+                          puts payment.ciudad.descrip                                           
+                          puts payment.get_cantidad_avisos(payment.id)
+                          puts payment.get_duracion_avisos(payment.id)
+
+                          if payment.moneda_id == 1
+                           lcDolar = payment.total
+                          else
+                           lcSoles =  payment.total   
+                          end 
+                       
+                            lcDuracion = 0
+                          lcDuracion = payment.get_cantidad_avisos(payment.id) * payment.get_duracion_avisos(payment.id)
+
+                          sheet.add_row [payment.fecha,
+                           payment.customer.name ,
+                           payment.producto.name,
+                           payment.code ,
+                           payment.month ,
+                           payment.year ,
+                           payment.marca.name ,
+                           payment.version.descrip ,
+                           payment.ciudad.descrip ,
+                           payment.get_cantidad_avisos(payment.id),
+                            payment.get_duracion_avisos(payment.id),
+                            lcDuracion,
+                            lcDolar,
+                            lcSoles ], 
+                            :style => [date,cadena,cadena,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency,currency,currency,cadena] 
+
+                         
+                           puts "+++++++++++"
+                    
+               end 
+
+               else
+
+                puts "no hay nada..."
+               end 
+                      
+   
+    end
+end 
+
+
+    
+
+

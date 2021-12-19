@@ -81,7 +81,12 @@ class CompaniesController < ApplicationController
     @pagetitle = @company[:name]
     @locations = Location.where(company_id: @company.id)
   end 
-  
+  def cadmin
+    @company = Company.find(params[:id])
+    set_company(@company)    
+    @pagetitle = @company[:name]
+    @locations = Location.where(company_id: @company.id)
+  end 
   def contratos
     @company = Company.find(params[:id])
     set_company(@company)

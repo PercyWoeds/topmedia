@@ -6,7 +6,6 @@ require "open-uri"
 class FacturasController < ApplicationController
 
 
-  
     $: << Dir.pwd  + '/lib'
     before_action :authenticate_user!
     
@@ -14,21 +13,53 @@ class FacturasController < ApplicationController
 
 
   def discontinue
-    
-    @facturasselect = ContratoDetail.find(params[:products_ids])
+    puts "discontinue"
+    @factura_id = params[:factura_id]
+        puts @factura_id
 
+    @facturasselect = Orden.find(params[:products_ids])
+
+
+ 
+   
     for item in @facturasselect
         begin
-          a = item.id
-          b = item.contrato_id             
 
-          new_invoice_detail = FacturaDetail.new(:factura_id=>$lcFacturaId ,:contrato_detail_id => a, :total =>item.total,:contrato_id => b )          
-          new_invoice_detail.save
-           
+      
+          a = item.id
+          b = item.medio_id
+          c = item.customer_id 
+
+
+              comision1  =  item.get_comision(item.medio_id,item.customer_id,1)
+              comision2  =  item.get_comision(item.medio_id,item.customer_id,2)
+                
+             
+              comision1_importe   =  item.total * comision1 / 100
+
+              comision2_importe   =  ((item.total - comision1_importe) * comision2 / 100)
+
+              total_importe  = comision1_importe  + comision1_importe
+                                
+              new_invoice_detail = FacturaDetail.new(:factura_id => @factura_id  ,quantity: 1, :orden_id => a, :medio_id => b, :price=> total_importe,:total => total_importe  )          
+      
+          if new_invoice_detail.save
+              
+            a = Orden.find(item.id)
+
+            a.processed ='2'
+            a.save
+            
+          end 
+
         end              
     end
-    
-    @invoice = Factura.find($lcFacturaId)
+
+    @invoice = Factura.find(params[:factura_id])
+    puts "factura ++++++++++++++++++"
+
+    puts @invoice.get_subtotal
+
     @invoice[:subtotal] = @invoice.get_subtotal.round(2)
     lcTotal = @invoice[:subtotal] * 1.18
     @invoice[:total] = lcTotal.round(2)
@@ -39,14 +70,14 @@ class FacturasController < ApplicationController
     @invoice[:balance] = @invoice[:total]
     @invoice[:pago] = 0
     @invoice[:charge] = 0
+
+
     
     respond_to do |format|
       if @invoice.save
-        # Create products for kit
-        
+        # Create products for kit        
         @invoice.correlativo
-        
-        
+                
         # Check if we gotta process the invoice
         
         format.html { redirect_to(@invoice, :notice => 'Invoice was successfully created.') }
@@ -60,6 +91,57 @@ class FacturasController < ApplicationController
     
   end
 
+
+# Process an viaticolgv
+  def do_closed
+    
+     @company  = Company.find(1)
+     @invoice =  Factura.find(params[:id])
+
+
+  end
+def   do_cerrar
+
+      @invoice = Factura.find(params[:id])
+  
+  
+      puts "do cerrar"
+      importe_retencion = params[:retencion_importe].to_f
+      nuevo_detraccion = params[:ac_detraccion_percent].to_f / 100 * @invoice.total 
+      balance_r = 0 
+       
+      if @invoice.moneda == 1
+           nuevo_detraccion_r = nuevo_detraccion.round(2)
+          
+               
+      else
+          nuevo_detraccion_r = nuevo_detraccion.round(0)
+       
+        
+      end 
+
+       balance_r = @invoice.total  - importe_retencion -  nuevo_detraccion_r
+
+      if  @invoice.update_attributes(
+      :detraccion_percent => params[:ac_detraccion_percent],
+      :detraccion_importe => nuevo_detraccion_r ,
+      :retencion_importe => params[:ac_retencion_importe],
+      :importe_neto => balance_r, 
+      :fecha_cuota1 => params[:ac_fecha_cuota1],  
+      :importe_cuota1 => params[:importe_cuota1], 
+      :fecha_cuota2 => params[:ac_fecha_cuota2],  
+      :importe_cuota2 => params[:importe_cuota2], 
+      :fecha_cuota3 => params[:ac_fecha_cuota3],  
+      :importe_cuota3 => params[:importe_cuota3]       
+      )
+
+       @invoice.cerrar 
+     
+      
+    end 
+
+
+end 
 
   def new2
     @pagetitle = "Nueva factura"
@@ -106,7 +188,7 @@ class FacturasController < ApplicationController
   end
 
 
-  def excel
+  def rpt_facturas_xls
 
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
@@ -173,6 +255,8 @@ class FacturasController < ApplicationController
     redirect_to @invoice 
   end
   
+  
+   
   
 
   
@@ -365,20 +449,48 @@ class FacturasController < ApplicationController
     @facturas  = Factura.all
   end
   
+
   def newfactura2
     
+
     @company = Company.find(1)
     @factura = Factura.find(params[:factura_id])
+    @medio = @factura.medio
+
+    @check_product = params[:cbox1]
+    @customer = Customer.find(params[:customer_id]) 
+
+    @fecha1 = params[:fecha1]
+    @fecha2 = params[:fecha2]
     
-    @contrato_cuotas= ContratoDetail.where(:contrato_id => params[:factura_id]) 
-    @contrato = Contrato.find(@factura.contrato_id)
-    
-    $lcContratoId = @contrato.id
-    $lcCode  = @contrato.code
-    $lcFacturaId= @factura.id 
-    
-    @detalleitems =  @contrato.get_contrato_cuotas(@contrato.id)
+    @medio_name = @medio.descrip
+    @customers =  @company.get_customers()     
+
     @factura_detail = Factura.new
+
+    puts "mmedio"
+    puts @medio.id
+
+
+     puts @check_product
+
+     puts @factura.moneda_id 
+
+
+   if @check_product == "1"
+
+      @detalleitems =  Orden.where("fecha>=? and fecha<=? and processed=? and medio_id =?  and moneda_id = ? and facturado is null",
+          "#{@fecha1} 00:00:00","#{@fecha2} 23:59:59","1",@medio.id,@factura.moneda_id ).order(:fecha) 
+     
+   else
+        @detalleitems =  Orden.where("fecha>=? and fecha<=? and processed=? and medio_id = ? and moneda_id = ?  and customer_id  = ? and facturado is null 
+       ","#{@fecha1} 00:00:00","#{@fecha2} 23:59:59","1",@medio.id, @factura.moneda_id , @customer.id ).order(:fecha)
+
+   end 
+
+    puts "aaaa"
+
+
 
   
   end 
@@ -633,23 +745,27 @@ new_invoice_item.save
         end 
     out_file.close
     end 
-    
-    
-  end
-    
+        
+  end    
 
   # GET /invoices/1
   # GET /invoices/1.xml
   def show
-    @factura = Factura.find(params[:id])
-    @contrato = @factura.contrato 
-    @factura_details = @factura.factura_details 
-   
-    
-    
+    @company = Company.find(1)
+
+    @invoice = Factura.find(params[:id])
+    @contrato = @invoice.contrato 
+    @invoice_details = @invoice.factura_details 
+    @medio  = @invoice.medio 
+
+    @medios = @company.get_medios()
+    @customers = @company.get_customers()
+
+    @productos = @company.get_products()
+
      respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @factura   }
+      format.xml  { render :xml => @invoice  }
     end
     
     
@@ -666,7 +782,7 @@ new_invoice_item.save
     @invoice = Factura.new
     @invoice[:code] = "#{generate_guid3()}"
     @invoice[:processed] = false
-    
+     @invoice[:fecha]  = Date.today 
     @company = Company.find(params[:company_id])
     @invoice.company_id = @company.id
     
@@ -678,12 +794,14 @@ new_invoice_item.save
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
     @medios = @company.get_medios()
+    @tipodocumento = @company.get_documents()
 
     @ac_user = getUsername()
     @invoice[:user_id] = getUserId()
 
     @lcTipoFactura = "1"
 
+    @invoice[:description]  = "SERVICIO DE GESTION PUBLICITARIA"
   end
 
 
@@ -693,18 +811,26 @@ new_invoice_item.save
     @action_txt = "Update"
     
     @invoice = Factura.find(params[:id])
-    @company = @invoice.company
-    @ac_customer = @invoice.customer.name
-    @ac_user = @invoice.user.username
-    @payments = @company.get_payments()    
-    @services = @company.get_services()
-    @deliveryships = @invoice.my_deliverys 
 
-    @products_lines = @invoice.products_lines
-    @medios = @company.get_medios()
+
+  @company = Company.find(1)
+    @invoice.company_id = @company.id
     
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
+    @payments = @company.get_payments()
+    @services = @company.get_services()
+    @deliveryships = @invoice.my_deliverys 
+    @tipofacturas = @company.get_tipofacturas() 
+    @monedas = @company.get_monedas()
+    @medios = @company.get_medios()
+    @tipodocumento = @company.get_documents()
+
+    @ac_user = getUsername()
+    @invoice[:user_id] = getUserId()
+
+    @lcTipoFactura = "1"
+
   end
 
   # POST /invoices
@@ -729,6 +855,7 @@ new_invoice_item.save
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
     @medios = @company.get_medios()
+    @tipodocumento = @company.get_documents()
 
     @invoice[:subtotal] = 0
     
@@ -774,9 +901,40 @@ new_invoice_item.save
       curr_seller = User.find(params[:factura][:user_id])
       @ac_user = curr_seller.username
     end
+  
+   days = @invoice.get_dias(params[:factura][:payment_id])
+    @invoice[:fecha2] = @invoice[:fecha] + days.days   
+
+    @invoice[:cuota1] = 1
+    @invoice[:cuota2] = 2
+    @invoice[:cuota3] = 3
+    @invoice[:cuota2] = 4
+    @invoice[:cuota3] = 5
+
+    @invoice[:detraccion_cuenta]  =   "00-000-5353302" 
+    @invoice[:detraccion_percent] = 0
+    @invoice[:detraccion_importe] = 0
+    @invoice[:retencion_importe]  = 0
+
+    @invoice[:fecha_cuota1] = @invoice[:fecha2]
+    @invoice[:importe_cuota1] = @invoice[:total] - @invoice[:detraccion_importe]
+
+    @invoice[:fecha_cuota2] = @invoice[:fecha_cuota1] - days.days 
+    @invoice[:fecha_cuota3] = @invoice[:fecha_cuota2] - days.days  
+
+    @invoice[:fecha_cuota4] = @invoice[:fecha_cuota3] - days.days 
+    @invoice[:fecha_cuota5] = @invoice[:fecha_cuota4] - days.days  
+
+    @invoice[:importe_cuota1] = 0
+    @invoice[:importe_cuota2] = 0
+    @invoice[:importe_cuota3] = 0
+    @invoice[:importe_cuota4] = 0
+    @invoice[:importe_cuota5] = 0
 
     respond_to do |format|
+
       if @invoice.save
+
         # Create products for kit
         if items !=  nil or items != ""
          @invoice.add_products(items)
@@ -785,6 +943,9 @@ new_invoice_item.save
         @invoice.correlativo
         # Check if we gotta process the invoice
         @invoice.process()
+
+    
+
 
         format.html { redirect_to(@invoice, :notice => 'Invoice was successfully created.') }
         format.xml  { render :xml => @invoice, :status => :created, :location => @invoice }
@@ -808,7 +969,7 @@ new_invoice_item.save
     @company = @invoice.company
     @payments = @company.get_payments()    
      @medios = @company.get_medios()
-
+   @tipofacturas = @company.get_tipofacturas() 
     if(params[:ac_customer] and params[:ac_customer] != "")
       @ac_customer = params[:ac_customer]
     else
@@ -832,7 +993,9 @@ new_invoice_item.save
         @invoice.correlativo
         # Check if we gotta process the invoice
         @invoice.process()
-        
+         
+
+
         format.html { redirect_to(@invoice, :notice => 'Invoice was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -846,6 +1009,8 @@ new_invoice_item.save
   # DELETE /invoices/1.xml
   def destroy
     @invoice = Factura.find(params[:id])
+
+
     company_id = @invoice[:company_id]
     if @invoice.destroy
       @invoice.delete_guias()
@@ -862,6 +1027,8 @@ new_invoice_item.save
 # reporte completo
   def build_pdf_header_rpt(pdf)
       pdf.font "Helvetica" , :size => 8
+
+
      $lcCli  =  @company.name 
      $lcdir1 = @company.address1+@company.address2+@company.city+@company.state
 
@@ -918,18 +1085,20 @@ new_invoice_item.save
 
       lcDoc='FT'
       @moneda = "1"
+     
 
+     puts 
        for  product in @facturas_rpt_1
 
             row = []          
-            row << lcDoc
+            row << product.document.descripshort
             row << product.fecha.strftime("%d/%m/%Y")            
             row << product.code
             row << product.medio.descrip 
             if product.tc == "1"
-              row << product.contrato.customer.name  
+              row << product.contrato.medio.descrip  
             else 
-              row << product.customer.name
+              row << ""
             end 
 
             if product.moneda_id == 1
@@ -937,7 +1106,6 @@ new_invoice_item.save
             else
               row << "S/."
             end 
-
 
             row << money(product.subtotal)
             row << money(product.tax)
@@ -1026,7 +1194,7 @@ new_invoice_item.save
             if product.tc == "1"
               row << product.contrato.customer.name  
             else 
-              row << product.customer.name
+              row << ""
             end 
 
             if product.moneda_id == 1
@@ -1182,10 +1350,62 @@ new_invoice_item.save
       pdf 
   end   
 
+
+  def build_pdf_header_rpt2(pdf)
+    
+       pdf.font "Helvetica"  , :size => 8
+
+     image_path = "#{Dir.pwd}/public/images/logo3.jpg"
+      
+       table_content = ([ [{:image => image_path, :rowspan => 3 , position: :center, vposition: :center}, 
+        {:content =>"SISTEMA DE GESTIÓN INTEGRADO",:rowspan => 2, :valign => :center },"CODIGO ","TP-FZ-F-035"], 
+          ["VERSION: ","1"], 
+          ["ESTADO DE CUENTAS POR COBRAR - CLIENTES ","Pagina: ","1 de 1 "] 
+         
+          ])
+    
+
+
+       pdf.table(table_content  ,{
+           :position => :center,
+           :width => pdf.bounds.width
+         })do
+           columns([1,2]).font_style = :bold
+            columns([0]).width = 118.55
+            columns([1]).width = 261.45
+            columns([1]).align = :center
+            columns([3]).align = :center
+            
+            columns([2]).width = 80
+          
+            columns([3]).width = 80
+      
+         end
+        
+      
+          table_content2 = ([["Fecha : ",Date.today.strftime("%d/%m/%Y")]])
+
+         pdf.table(table_content2,{:position=>:right }) do
+
+            columns([0, 1]).font_style = :bold
+            columns([0, 1]).width = 80
+            
+         end 
+
+     
+        pdf.text "Cuentas por cobrar  : Desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
+    pdf.text ""
+         
+         pdf.move_down 2
+      
+    
+      
+      pdf 
+  end   
+
   def build_pdf_body_rpt2(pdf)
     
-    pdf.text "Cuentas por cobrar  : desde "+@fecha1.to_s+ " Hasta: "+@fecha2.to_s , :size => 8 
-    pdf.text ""
+    
     pdf.font "Helvetica" , :size => 6
 
       headers = []
@@ -1199,125 +1419,123 @@ new_invoice_item.save
 
       table_content << headers
 
-      nroitem=1
+      nroitem = 1
       lcmonedasoles   = 2
       lcmonedadolares = 1
-    
-
-      lcDoc='FT'
-
+  
+     
+      @totalvencido_soles = 0
+      @totalvencido_dolar = 0
+      total_soles = 0
+      total_dolares = 0 
+      lcDoc = "FT"
       
+       for  detalle in @facturas_rpt
 
-       lcCliente = @facturas_rpt.first.customer_id 
 
-       for  product in @facturas_rpt
-        
-          if lcCliente == product.customer_id
 
-             #if product.payment_id == nil 
-              fechas2 = product.fecha2 
-             #else 
-             # days = product.payment.day 
-             # fechas2 = product.fechas2 + days.days              
-             #end 
+             @cliente_detalle =   @company.get_pendientes_day_cliente2(@fecha1,@fecha2,detalle.medio_id) 
 
-            row = []          
-            row << lcDoc
-            row << product.code
-            row << product.fecha.strftime("%d/%m/%Y")
-            row << product.fecha2.strftime("%d/%m/%Y")
-            row << product.customer.name
-            row << product.moneda.symbol  
+              total_cliente_soles = 0
 
-            if product.moneda_id == 1 
-                row << "0.00 "
-                row << sprintf("%.2f",product.balance.to_s)
-            else
-                row << sprintf("%.2f",product.balance.to_s)
-                row << "0.00 "
-            end 
-            row << product.get_vencido 
+              total_cliente_dolares = 0
 
+
+
+
+          for product in @cliente_detalle 
+
+              if product.document_id == 9
+                  balance_importe = product.balance.round(2) * -1
+              else
+                  balance_importe = product.balance.round(2) 
+              end 
+           
+         
+             if balance_importe != 0.00
             
-            table_content << row
+                fechas2 = product.fecha2 
 
-            nroitem = nroitem + 1
+                row = []          
+                if product.document 
+                  row << product.document.descripshort 
+                else
+                  row <<  lcDoc 
+                end 
+                row << product.code
+                row << product.fecha.strftime("%d/%m/%Y")
+                row << product.fecha2.strftime("%d/%m/%Y")
+                dias = (product.fecha2.to_date - product.fecha.to_date).to_i 
+                row << dias 
+                row << product.medio.descrip 
+                row << ""             
+                row << product.moneda.symbol  
 
-          else
-            totals = []            
-            total_cliente_soles = 0
-            total_cliente_soles = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedadolares)
-            total_cliente_dolares = 0
-            total_cliente_dolares = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedasoles)
-            
+                if product.moneda_id == 1 
+                      row << "0.00 "
+                      row << sprintf("%.2f",product.balance.to_s)
+                      if(product.fecha2 < Date.today)   
+                          @totalvencido_dolar += product.balance.round(2)
+                      end  
+                      total_cliente_dolares += balance_importe
+                else
+                      row << sprintf("%.2f",product.balance.to_s)
+                      row << "0.00 "
+                      if(product.fecha2 < Date.today)   
+                          @totalvencido_soles += product.balance.round(2)
+                      end  
+                      total_cliente_soles   += balance_importe
+                    
+                end
+                
+                
+                if product.detraccion == nil
+                  row <<  "0.00"
+                else  
+                  row << sprintf("%.2f",product.detraccion.to_s)
+                end
+                row << product.get_vencido 
+
+                table_content << row
+
+                nroitem = nroitem + 1
+                
+              end 
+
+
+        end 
+
+          if (total_cliente_soles != 0 || total_cliente_dolares != 0 )    
+
             row =[]
             row << ""
             row << ""
             row << ""
-            row << ""          
-            row << "TOTALES POR CLIENTE=> "            
+            row << ""  
+            row << "" 
+           
+            row << "TOTALES POR MEDIO  => "            
             row << ""
-            row << sprintf("%.2f",total_cliente_dolares.to_s)
+            row << "" 
             row << sprintf("%.2f",total_cliente_soles.to_s)
+            row << sprintf("%.2f",total_cliente_dolares.to_s)
+           
+            row << " "
             row << " "
             
             table_content << row
 
-            lcCliente = product.customer_id
-
-            row = []          
-            row << lcDoc
-            row << product.code
-            row << product.fecha.strftime("%d/%m/%Y")
-            row << product.fecha2.strftime("%d/%m/%Y")
-            row << product.customer.name
-            row << product.moneda.symbol  
-
-            if product.moneda_id == 1 
-                row << "0.00 "
-                row << sprintf("%.2f",product.balance.to_s)
-            else
-                row << sprintf("%.2f",product.balance.to_s)
-                row << "0.00 "
-            end 
-            row << product.observ
-
-            
-            table_content << row
 
 
+            total_soles += total_cliente_soles.round(2)
+            total_dolares += total_cliente_dolares.round(2)
 
           end 
-          
-       
+
         end
 
-        lcCliente = @facturas_rpt.last.customer_id 
-
-            totals = []            
-            total_cliente = 0
-
-            total_cliente_soles = 0
-            total_cliente_soles = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedadolares)
-            total_cliente_dolares = 0
-            total_cliente_dolares = @company.get_pendientes_day_customer(@fecha1,@fecha2, lcCliente, lcmonedasoles)
-    
-            
-            row =[]
-            row << ""
-            row << ""
-            row << ""
-            row << ""          
-            row << "TOTALES POR CLIENTE=> "            
-            row << ""
-            row << sprintf("%.2f",total_cliente_dolares.to_s)
-            row << sprintf("%.2f",total_cliente_soles.to_s)                      
-            row << " "
-            table_content << row
-              
-          total_soles = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedasoles)
-          total_dolares = @company.get_pendientes_day_value(@fecha1,@fecha2, "total",lcmonedadolares)
-      
+                
+        
            if $lcxCliente == "0" 
 
           row =[]
@@ -1325,13 +1543,20 @@ new_invoice_item.save
           row << ""
           row << ""
           row << ""
+          row << ""  
           row << "TOTALES => "
           row << ""
+            row << ""
           row << sprintf("%.2f",total_soles.to_s)
           row << sprintf("%.2f",total_dolares.to_s)                    
           row << " "
+          row << " "
+          
           table_content << row
           end 
+          
+
+
 
           result = pdf.table table_content, {:position => :center,
                                         :header => true,
@@ -1342,16 +1567,33 @@ new_invoice_item.save
                                           columns([2]).align=:left
                                           columns([3]).align=:left
                                           columns([4]).align=:left
-                                          columns([5]).align=:right  
+                                          columns([5]).align=:left   
+                                          columns([5]).width = 100 
                                           columns([6]).align=:right
+                                           columns([6]).width = 50
                                           columns([7]).align=:right
                                           columns([8]).align=:right
+                                          columns([9]).align=:right
+                                          columns([10]).align=:right
                                         end                                          
                                         
-      pdf.move_down 10      
-
+      pdf.move_down 10    
+      
+      
+      
+      if $lcxCliente == "1" 
+      
+      totalxvencer_soles  = total_cliente_soles   - @totalvencido_soles
+      totalxvencer_dolar  = total_cliente_dolares - @totalvencido_dolar
+      
+      pdf.table([  ["Resumen    "," Soles  ", "Dólares "],
+              ["Total Vencido    ",sprintf("%.2f",@totalvencido_soles.to_s), sprintf("%.2f",@totalvencido_dolar.to_s)],
+              ["Total por Vencer ",sprintf("%.2f",totalxvencer_soles.to_s),sprintf("%.2f",totalxvencer_dolar.to_s)],
+              ["Totales          ",sprintf("%.2f",total_cliente_soles.to_s),sprintf("%.2f",total_cliente_dolares.to_s)]])
+              
+      end 
       #totales 
-
+      
       pdf 
 
     end
@@ -1370,35 +1612,61 @@ new_invoice_item.save
 
 
   # Export serviceorder to PDF
-  def rpt_facturas_all_pdf
+  def rpt_facturas_all_pdf 
 
     $lcFacturasall = '1'
+  puts params[:company_id]
 
-    @company=Company.find(params[:company_id])          
+    @company=Company.find(params[:company_id]) 
+
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
   
 
     @facturas_rpt_1 = @company.get_facturas_day(@fecha1,@fecha2,"1")      
     @facturas_rpt_2 = @company.get_facturas_day(@fecha1,@fecha2,"2")      
-#    respond_to do |format|
-#      format.html    
-#      format.xls # { send_data @products.to_csv(col_sep: "\t") }
-#    end 
 
-    Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
-        pdf.font "Helvetica"
-        pdf = build_pdf_header_rpt(pdf)
-        pdf = build_pdf_body_rpt(pdf)
-        build_pdf_footer_rpt(pdf)
+ case params[:print]
 
 
-        $lcFileName =  "app/pdf_output/rpt_factura_all.pdf"              
-    end     
+      when "To PDF" then 
+            $lcxCliente ="0"
+            @company=Company.find(1)      
+            @fecha1 = params[:fecha1]    
+            @fecha2 = params[:fecha2]
+
+            lcmonedadolares ="1"
+            lcmonedasoles ="2"
+          
+            @company.actualizar_fecha2
+            @facturas_rpt = @company.get_pendientes_day_cliente1(@fecha1,@fecha2)  
+
+              
+            Prawn::Document.generate("app/pdf_output/rpt_factura.pdf") do |pdf|
+              pdf.font "Helvetica"
+              pdf = build_pdf_header_rpt(pdf)
+              pdf = build_pdf_body_rpt(pdf)
+              build_pdf_footer_rpt(pdf)
 
 
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
-    send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
+              $lcFileName =  "app/pdf_output/rpt_factura_all.pdf"              
+          end     
+
+
+          $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+          send_file("app/pdf_output/rpt_factura.pdf", :type => 'application/pdf', :disposition => 'inline')
+
+
+          
+
+      when "To Excel" then render xlsx: 'rpt_facturas_xls'
+        
+      else render action: "index"
+    end
+
+
+
+
 
   end
 # Export serviceorder to PDF
@@ -1425,31 +1693,66 @@ new_invoice_item.save
   end
 
   ###pendientes de pago 
+
+
+
+
   def rpt_ccobrar2_pdf
-    $lcxCliente ="0"
-    @company=Company.find(params[:company_id])      
-    
-      @fecha1 = params[:fecha1]
-    
-      @fecha2 = params[:fecha2]
-    
-    @company.actualizar_fecha2
-    @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
-      
-    Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf") do |pdf|
-        pdf.font "Helvetica"
-        pdf = build_pdf_header_rpt2(pdf)
-        pdf = build_pdf_body_rpt2(pdf)
-        build_pdf_footer_rpt2(pdf)
-
-        $lcFileName =  "app/pdf_output/rpt_pendientes.pdf"              
-    end     
-
-    $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
-    send_file("app/pdf_output/rpt_pendientes.pdf", :type => 'application/pdf', :disposition => 'inline')
   
+    $lcxCliente ="1"
+    @company=Company.find(1)      
+    
+    lcmonedadolares ="1"
+    lcmonedasoles ="2"
+    
+    @fecha1 = params[:fecha1]  
+    @fecha2 = params[:fecha2]
 
+   @company.actualizar_fecha2
+#   @company.actualizar_detraccion 
+
+
+    @facturas_rpt = @company.get_pendientes_day(@fecha1,@fecha2)  
+
+    case params[:print]
+
+
+      when "To PDF" then 
+            $lcxCliente ="0"
+            @company=Company.find(1)      
+            @fecha1 = params[:fecha1]    
+            @fecha2 = params[:fecha2]
+
+            lcmonedadolares ="1"
+            lcmonedasoles ="2"
+          
+            @company.actualizar_fecha2
+            @facturas_rpt = @company.get_pendientes_day_cliente1(@fecha1,@fecha2)  
+
+              
+            Prawn::Document.generate("app/pdf_output/rpt_pendientes.pdf")  do |pdf|
+                pdf.font "Helvetica"
+                pdf = build_pdf_header_rpt2(pdf)
+                pdf = build_pdf_body_rpt2(pdf)
+                build_pdf_footer_rpt2(pdf)
+
+                $lcFileName =  "app/pdf_output/rpt_pendientes.pdf"     
+
+                       
+            end     
+
+            $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName 
+
+            send_file("app/pdf_output/rpt_pendientes.pdf", :type => 'application/pdf', :disposition => 'inline')
+          
+
+      when "To Excel" then render xlsx: 'rpt_ccobrar2_xls'
+        
+      else render action: "index"
+    end
   end
+  
+ 
   
   ###pendientes de pago 
   def rpt_ccobrar3_pdf
@@ -1518,9 +1821,232 @@ new_invoice_item.save
 
 
 
+ ## imprimir pdf facturas
+
+    def print
+        @invoice = Factura.find(params[:id])
+        
+        lib = File.expand_path('../../../lib', __FILE__)
+        $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+
+       
+        require 'sunat'
+        require './config/config'
+        require './app/generators/invoice_generator'
+        require './app/generators/credit_note_generator'
+        require './app/generators/debit_note_generator'
+        require './app/generators/receipt_generator'
+        require './app/generators/daily_receipt_summary_generator'
+        require './app/generators/voided_documents_generator'
+
+        SUNAT.environment = :production 
+
+        files_to_clean = Dir.glob("*.xml") + Dir.glob("./app/pdf_output/*.pdf") + Dir.glob("*.zip")
+        files_to_clean.each do |file|
+          File.delete(file)
+        end         
+       ################################### FF01-0
+
+       $lcDocumentId = @invoice.document_id 
+
+       if @invoice.document_id == 2 ||  @invoice.document_id == 9
+        @serie_factura = @invoice.code[0..3].rjust(4,"0")
+        puts "serie factura : "
+        puts @serie_factura
+
+        else 
+           @serie_factura =  @invoice.code[0..3]
+               puts "serie factura : "
+             puts @serie_factura
+      end 
+      
+       if @invoice.document_id == 5
+           if @invoice.moneda_id == 1
+                case_96 = ReceiptGenerator.new(12, 96, 1,@serie_factura,@invoice.id).with_different_currency2(true)
+            else        
+                case_52 = ReceiptGenerator.new(8, 52, 1,@serie_factura,@invoice.id).with_igv2(true)
+            end 
+
+       end     
+
+        if @invoice.document_id == 2
+           if @invoice.moneda_id == 1  
+                $lcFileName=""
+                 $lcMonedaValor ="USD"
+
+                case_49 = InvoiceGenerator.new(1,3,1,@serie_factura,@invoice.id).with_different_currency2(true)
+              #  puts $lcFileName 
+
+           else
+                   $lcMonedaValor ="PEN"
+                case_3  = InvoiceGenerator.new(1,3,1,@serie_factura,@invoice.id).with_igv2(true)
+
+
+           end        
+        end 
+        
+
+
+   if @invoice.document_id == 9
+
+      parts = @invoice.fecha.to_s.split("-")
+          $aa = parts[0].to_i
+          $mm = parts[1].to_i        
+          $dd = parts[2].to_i      
+
+          $lcVVenta1      =  @invoice.subtotal * 100 * -1      
+          $lcVVenta       =  $lcVVenta1.round(0)
+
+          $lcIgv1         =  @invoice.tax * 100 * -1
+          $lcIgv          =  $lcIgv1.round(0)
+
+          $lcTotal1       =  @invoice.total * 100 * -1
+          $lcTotal        =  $lcTotal1.round(0)
+     
+          @invoice_detail = InvoiceService.where(factura_id: @invoice.id).first 
+
+
+          $lcPrecioCigv1  =  @invoice_detail.price * 100
+          $lcPrecioCigv2   = $lcPrecioCigv1.round(0).to_f
+          $lcPrecioCigv   =  $lcPrecioCigv2.to_i 
+
+          $lcPrecioSigv1  =  (@invoice_detail.price / 1.18) * 100
+          $lcPrecioSigv2   = $lcPrecioSigv1.round(0).to_f
+          $lcPrecioSIgv   =  $lcPrecioSigv2.to_i 
+
+           $lcDescrip = "ANULACION DE FACTURA"   
+        
+          if @invoice.moneda_id == 1
+                  $lcMonedaValor ="USD"
+          else
+                  $lcMonedaValor ="PEN"
+          end
+
+    
+        
+        credit_note_data = { issue_date: Date.new($aa,$mm,$dd), id: @invoice.code , customer: {legal_name:@invoice.customer.name , ruc:@invoice.customer.ruc  },
+                             billing_reference: {id: @invoice.documento2, document_type_code: "01"},
+                             discrepancy_response: {reference_id:@invoice.documento2, response_code: "09", description: $lcDescrip},
+                            
+                            lines: [{id: "1", item: {id: "05", description: @invoice_detail.service.name }, quantity: @invoice_detail.quantity, unit: 'ZZ', 
+                                  price: {value: @lcPrecioSIgv },
+                                   pricing_reference: $lcPrecioCigv, tax_totals: [{amount: $lcIgv, type: :igv, code: "10"}], 
+                                   line_extension_amount:$lcVVenta }],
+                             additional_monetary_totals: [{id: "1001", payable_amount: $lcVVenta}], tax_totals: [{amount: $lcIgv, type: :igv}], legal_monetary_total: {value: $lcTotal, currency: $lcMonedaValor }}
+         
+
+     
+        if @invoice.moneda_id == 2
+              puts "dolares "
+          
+             credit_note = SUNAT::CreditNote.new(credit_note_data)
+  
+            $aviso = 'Nota enviada con exito...$$'
+        else            
+       
+             credit_note = SUNAT::CreditNote.new(credit_note_data)
+            $aviso = 'Nota enviada con exito...'
+        end 
+
+        if credit_note.valid?                       
+           credit_note.to_pdf    
+           document_type_code = "07"
+           file_name =   "20424092941-#{document_type_code}-#{@invoice.code}"+".pdf"
+            $lcFileName1=File.expand_path('../../../', __FILE__)+ "/app/pdf_output/"+file_name  
+
+            send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')      
+          
+
+        else
+          
+          $aviso = "Invalid document, ignoring output: #{credit_note.errors.messages}"
+
+        end
+
+      end 
+
+      if @invoice.document_id == 10
+
+
+        parts = @invoice.fecha.to_s.split("-")
+          $aa = parts[0].to_i
+          $mm = parts[1].to_i        
+          $dd = parts[2].to_i      
+
+          $lcVVenta1      =  @invoice.subtotal * 100        
+          $lcVVenta       =  $lcVVenta1.round(0)
+
+          $lcIgv1         =  @invoice.tax * 100
+          $lcIgv          =  $lcIgv1.round(0)
+
+          $lcTotal1       =  @invoice.total * 100
+          $lcTotal        =  $lcTotal1.round(0)
+     
+          @invoice_detail = InvoiceService.where(factura_id: @invoice.id).first 
+
+
+          $lcPrecioCigv1  =  @invoice_detail.price * 100
+          $lcPrecioCigv2   = $lcPrecioCigv1.round(0).to_f
+          $lcPrecioCigv   =  $lcPrecioCigv2.to_i 
+
+          $lcPrecioSigv1  =  (@invoice_detail.price / 1.18) * 100
+          $lcPrecioSigv2   = $lcPrecioSigv1.round(0).to_f
+          $lcPrecioSIgv   =  $lcPrecioSigv2.to_i 
+
+           $lcDescrip = "AUMENTO EN EL VALOR "  
+
+           if @invoice.moneda_id == 1
+                  $lcMonedaValor ="USD"
+          else
+                  $lcMonedaValor ="PEN"
+          end 
+
+          debit_note_data = { issue_date: Date.new($aa,$mm,$dd), id: @invoice.code, customer: {legal_name: @invoice.customer.name , ruc: @invoice.customer.ruc },
+                     billing_reference: {id: @invoice.documento2, document_type_code: "01"},
+                     discrepancy_response: {reference_id: @invoice.documento2, response_code: "02", description: $lcDescrip},
+                     lines: [{id: "1", item: {id: "05", description: @invoice_detail.service.name }, quantity: @invoice_detail.quantity, unit: 'ZZ', 
+                          price: {value: $lcPrecioCigv}, pricing_reference: $lcPrecioCigv, tax_totals: [{amount: $lcIgv, type: :igv, code: "10"}], line_extension_amount:$lcVVenta }],
+                     additional_monetary_totals: [{id: "1001", payable_amount: $lcVVenta}], tax_totals: [{amount: $lcIgv, type: :igv}], legal_monetary_total: $lcTotal}
+
+          debit_note = SUNAT::DebitNote.new(debit_note_data)
+          
+
+        if debit_note.valid?
+            debit_note.to_pdf
+           document_type_code = "08"
+           file_name =   "20424092941-#{document_type_code}-#{@invoice.code}"+".pdf"
+            $lcFileName1=File.expand_path('../../../', __FILE__)+ "/app/pdf_output/"+file_name  
+
+            send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+        else          
+          $aviso = "Invalid document, ignoring output: #{debit_note.errors.messages}"  
+          puts $aviso         
+        end
+
+
+      end 
+        
+    
+
+        $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+        send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+        @@document_serial_id =""
+        $aviso=""
+  
+    
+  
+    end 
+
+
   private
   def factura_params
-    params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:payment_id,:fecha,:preciocigv,:tipo,:observ,:moneda_id,:contrato_id,:medio_id,:document_id, :price,:quantity,:discount,:service_id,:tc )
+    params.require(:factura).permit(:company_id,:location_id, :division_id, :customer_id, :description , :comments , :code , 
+      :subtotal, :tax , :total , :processed, :return , :date_processed, :user_id ,:fecha, :serie , :numero , :payment_id , :tipo,
+       :pago, :charge, :balance, :moneda_id, :observ, :fecha2, :year_mounth , :contrato_id, :anio ,:medio_id, :document_id ,
+        :tc, :nacional , :orden_id , :msgerror, :cuota1, :fecha_cuota1, :importe_cuota1 , :cuota2 ,:fecha_cuota2, :importe_cuota2,
+         :cuota3 , :fecha_cuota3 , :importe_cuota3 , :cuota4, :fecha_cuota4, :importe_cuota4 , :cuota5 ,:fecha_cuota5 ,
+        :importe_cuota5 , :detraccion_percent ,:detraccion_importe , :detraccion_cuenta, :retencion_importe )
   end
 
 end

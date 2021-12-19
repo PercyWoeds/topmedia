@@ -115,7 +115,20 @@
                         </div><!--//item-inner-->
                     </div><!--//item-->
                     <% end %>
+  
+                    <%if @current_user.level == "finanzas" || @current_user.level == "admin"%> 
 
+                    <div class="item item-pink item-2 col-md-4 col-sm-6 col-xs-6">
+                        <div class="item-inner">
+                            <div class="icon-holder">
+                                <span aria-hidden="true" class="icon icon_puzzle_alt"></span>
+                            </div><!--//icon-holder-->
+                            <h3 class="title">Administracion </h3>
+                                <p class="intro">Administracion  del sistema</p>
+                                <a><%= link_to "", "/companies/cadmin/#{@company.id}", class: "link" %><span></span></a>
+                        </div><!--//item-inner-->
+                     </div><!--//item-->
+                    <% end %>
                     
                     <%if @current_user.level == "finanzas" || @current_user.level == "admin"%> 
 

@@ -1488,7 +1488,7 @@ class ReportsController < ApplicationController
     @monedas=@company.get_monedas    
   end
 
-def rpt_ccobrar20 
+ def rpt_ccobrar20 
     @company = Company.find(params[:company_id])    
     @pagetitle = "Reportes de Contratos "    
     @customers = @company.get_customers()
@@ -1496,4 +1496,38 @@ def rpt_ccobrar20
      @medios    = Medio.order(:descrip)
      
   end
+def rpt_cadmin1
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Reportes de Contratos "    
+    @customers = @company.get_customers()
+    @monedas=@company.get_monedas    
+     @medios    = Medio.order(:descrip)
+     
+end
+def rpt_cadmin2
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Reportes de Contratos "    
+    @customers = @company.get_customers()
+    @monedas=@company.get_monedas    
+     @medios    = Medio.order(:descrip)
+     
+end
+def rpt_cadmin3
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Reportes de Contratos "    
+    @customers = @company.get_customers()
+    @monedas=@company.get_monedas    
+     @medios    = Medio.order(:descrip)
+     
+end
+def rpt_cadmin4
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Reportes de Contratos "    
+    @customers = @company.get_customers()
+    @monedas=@company.get_monedas    
+     @medios    = Medio.order(:descrip)
+     
+end
+
+
 end

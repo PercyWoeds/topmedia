@@ -2,15 +2,16 @@ class Customer < ActiveRecord::Base
   validates_presence_of :company_id, :name
   
   belongs_to :company
-  
+
   has_many :marcas 
   has_many :invoices
   has_many :manifests
   has_many :facturas
   has_many :addresses
   has_many :quotes 
-
+  has_many :ordens 
   has_many :customer_contratos
+
   
   
   

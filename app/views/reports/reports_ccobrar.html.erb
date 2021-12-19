@@ -9,6 +9,7 @@
 </h1>
 
 <div class="mid_box bordered_right">
+
   <h3>
     Facturas 
   </h3>
@@ -26,6 +27,29 @@
   </p>
 
   <p class="big">
+    <%= link_to "Factura : detalle de cobranza ", "/companies/reports/rpt_ccobrar9_pdf/#{@company.id}" %>
+  </p>
+
+  <p class="big">
+    <%= link_to "Cuentas x cobrar x vencimiento  ", "/companies/reports/rpt_ccobrar5_pdf/#{@company.id}" %>
+  </p>
+<p class="big">
+    <%= link_to "Facturas Emitidas - monitoreo", "/companies/reports/rpt_facturas_monitoreo/#{@company.id}" %>
+  </p>
+
+
+  <p class="big">
+    <%= link_to "Facturas y Notas - Detracciones  ", "/companies/reports/rpt_facturas_dt/#{@company.id}" %>
+  </p>
+
+
+
+
+  <h3>
+    Liquidaciones
+  </h3>
+
+  <p class="big">
     <%= link_to "Liquidacion de Cobranzas  ", "/companies/reports/rpt_ccobrar4_pdf/#{@company.id}" %>
   </p>
 
@@ -34,12 +58,25 @@
   </p>
   
   <p class="big">
-    <%= link_to "Cuentas x cobrar por vencimiento  ", "/companies/reports/rpt_ccobrar5_pdf/#{@company.id}" %>
+    <%= link_to "Liquidacion de Cobranzas- Detalle general ", "/companies/reports/rpt_ccobrar10_pdf/#{@company.id}" %>
   </p>
+  <p class="big">
+    <%= link_to "Liquidacion de Cobranzas-  Resumen x vencimiento  ", "/companies/reports/rpt_ccobrar11_pdf/#{@company.id}" %>
+  </p>
+
+  <h3>
+    Bancos 
+  </h3>
+
+
   <p class="big">
     <%= link_to "Resumen de Cuentas por cobrar acumulado por banco ", "/companies/reports/rpt_ccobrar6_pdf/#{@company.id}" %>
   </p>
-  
+  <p class="big">
+    <%= link_to "Resumen de Cuentas por cobrar Detallado por banco ", "/companies/reports/rpt_ccobrar8_pdf/#{@company.id}" %>
+  </p>
+
+
 </div>
 
 <div class="mid_box">

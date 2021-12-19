@@ -9,9 +9,7 @@
           Facturado 
         </th>
         
-        <th class="bordered_right bordered_bottom" style="width: 350px;">
-          Cliente
-        </th>
+       
        
         <th class="bordered_right bordered_bottom">
           Moneda
@@ -46,19 +44,7 @@
             <%end %>
 
           </td>   
-          <td class="bordered_right bordered_bottom">
-
-          <% if invoice.tc == "1"%> 
-          <%if invoice.contrato != nil %>
-              <%= invoice.contrato.customer.name %>
-          <% end %>
-          <% else %>
-
-              <%= invoice.customer.name %>
-
-          <%end %>
-
-          </td>
+         
           
           
           <td class="bordered_right bordered_bottom">
@@ -88,7 +74,10 @@
           <% elsif invoice.processed =="2"%>  
           <%= "** Anulado **" %>
           <%= link_to 'Eliminar', invoice,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            
-          <% elsif invoice.processed =="3"%>  
+          <% elsif invoice.processed =="3"%> 
+           <%= link_to "Print", "/facturas/print/#{invoice.id}" %>
+         
+
           <%= "** Cerrado **" %>                      
           <% end %> 
           </td>

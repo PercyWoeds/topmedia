@@ -228,8 +228,8 @@ class Company < ActiveRecord::Base
      return cliente.name 
   end 
 def get_medio_name(id)
-     cliente = Medio.find(id) 
-     return cliente.descrip 
+     medio = Medio.find(id) 
+     return medio.descrip 
   end 
 
   def get_categoria_name(id)
@@ -517,7 +517,7 @@ def get_facturas_day_value_cliente(fecha1,fecha2,cliente,value = "total",moneda)
 
 ## REPORTES DE LIQUIDACION  DE COBRANZA
 
- def get_customer_payments(fecha1,fecha2)
+ def get_customer_payments0(fecha1,fecha2)
 
     @facturas = CustomerPayment.where([" company_id = ? AND fecha1 >= ? and fecha1<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:id)
     return @facturas
@@ -798,14 +798,36 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
 
  def get_pendientes_day(fecha1,fecha2)
 
-    @facturas = Factura.where(["balance > 0  and  company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:customer_id,:moneda_id,:fecha)
+    @facturas = Factura.where(["balance > 0  and  company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:medio_id,:moneda_id,:fecha)
     return @facturas
     
  end 
  
+ def get_pendientes_day_cliente1(fecha1,fecha2)
+
+    @facturas = Factura.select("medio_id").where([" balance <> 0  and  company_id = ? AND fecha >= ? and fecha<= ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).group(:medio_id)
+    #@notas = Factura.where([" balance < 0 and document_id = ?  and  company_id = ? AND fecha >= ? and fecha<= ?", "2",self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:customer_id,:moneda_id,:fecha)
+    return @facturas  
+    
+ end 
+
+ def get_pendientes_day_cliente2(fecha1,fecha2,customer)
+
+    @facturas = Factura.where([" balance <> 0  and  company_id = ? AND fecha >= ? and fecha<= ? and medio_id =? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",customer]).order(:medio_id,:moneda_id,:fecha)
+    #@notas = Factura.where([" balance < 0 and document_id = ?  and  company_id = ? AND fecha >= ? and fecha<= ?", "2",self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:customer_id,:moneda_id,:fecha)
+    return @facturas  
+    
+ end 
+def get_pendientes_day_cliente3(fecha1,fecha2,customer )
+
+    @facturas = Factura.select("medio_id").where([" balance <> 0  and  company_id = ? AND fecha >= ? and fecha<= ? and medio_id = ?", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59",customer ]).group(:medio_id)
+    #@notas = Factura.where([" balance < 0 and document_id = ?  and  company_id = ? AND fecha >= ? and fecha<= ?", "2",self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59"]).order(:customer_id,:moneda_id,:fecha)
+    return @facturas  
+    
+ end 
  def get_pendientes_day_value(fecha1,fecha2,value = "balance",moneda)
 
-    facturas = Factura.where(["balance>0  and  company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda ]).order(:customer_id,:moneda_id)
+    facturas = Factura.where(["balance>0  and  company_id = ? AND fecha >= ? and fecha<= ? and moneda_id = ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda ]).order(:medio_id,:moneda_id)
     if facturas
     ret=0  
     for factura in facturas
@@ -861,7 +883,7 @@ def get_payments_detail_value(fecha1,fecha2,value = "total",moneda)
  
  def get_pendientes_day_customer(fecha1,fecha2,value,moneda)
 
-    facturas = Factura.where(["balance>0  and  company_id = ? AND fecha >= ? and fecha<= ? AND customer_id = ? and moneda_id =  ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", value , moneda ]).order(:customer_id,:moneda_id)
+    facturas = Factura.where(["balance>0  and  company_id = ? AND fecha >= ? and fecha<= ? AND medio_id = ? and moneda_id =  ? ", self.id, "#{fecha1} 00:00:00","#{fecha2} 23:59:59", value , moneda ]).order(:medio_id,:moneda_id)
 
     if facturas
     ret=0  
@@ -2825,6 +2847,192 @@ def get_ordenes_cliente(fecha1,fecha2,cliente)
  
   return @ordenes
     
+ end 
+
+
+
+ def get_ordenes_cliente2(fecha1,fecha2,cliente,medio)    
+   
+   sql_dato =""
+   sql_dato1 =""
+   sql_dato2 =""
+   sql_dato3 =""
+   sql_dato4 =""
+   sql_dato5 =""
+   sql_dato6 =""
+   
+  if cliente != ""
+    sql_dato <<  " customer_id = " << cliente 
+  end 
+  
+  
+  if medio != ""
+    
+    if sql_dato != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+    puts sql_dato 
+    
+    sql_dato << txt_and << " medio_id = " << medio
+  end 
+  puts "sql 11" 
+  puts sql_dato
+  puts fecha1
+  puts fecha2
+
+  
+  if sql_dato ==  ""
+   @ordenes = Orden.where(["fecha >= ? and fecha <= ?  and processed = ? ", "#{fecha1}","#{fecha2}" ,"1"]).
+   order(:customer_id,:medio_id)
+   puts "2222"
+  else
+   @ordenes = Orden.where(["fecha >= ? and fecha <= ?  and processed = ? and #{sql_dato} ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"1" ]).
+   order(:customer_id,:medio_id)
+   puts "sql 333 " 
+  puts sql_dato
+
+  end 
+  
+  
+ 
+  return @ordenes
+    
+ end 
+
+
+ def get_ordenes_cliente3(fecha1,fecha2)    
+   
+       
+       @ordenes = Orden.where(["fecha >= ? and fecha <= ?  and processed = ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ,"1" ]).
+       order(:customer_id,:medio_id)
+  
+        return @ordenes
+    
+ end 
+
+ def get_customer_payments_cabecera(fecha1,fecha2)
+  
+      @payments = CustomerPayment.where(["company_id= ? and fecha1 >= ? and fecha1 <=?",self.id, "#{fecha1} 00:00:00" ,"#{fecha2} 23:59:59"])
+      return @payments 
+end 
+
+ def get_customer_payments(fecha1,fecha2)
+    @facturas =   CustomerPayment.find_by_sql(['Select customer_payments.id,customer_payment_details.total,
+customer_payments.code  as code_liq,facturas.code,facturas.customer_id,facturas.fecha,
+facturas.moneda_id,customer_payments.bank_acount_id,
+customer_payment_details.factory,
+customer_payments.fecha1,facturas.medio_id
+from customer_payment_details   
+INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
+INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id  
+WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? order by customer_payments.code', "#{fecha1} 00:00:00",
+"#{fecha2} 23:59:59" ])  
+    
+    return @facturas   
+    
+ end
+
+
+ def get_customer_payments_value_otros_customer2(fecha1,fecha2,value,moneda_pago)
+
+  facturas = CustomerPayment.find_by_sql(['Select  DISTINCT ON (1)  customer_payments.id,
+  customer_payment_details.total,facturas.code,facturas.customer_id,facturas.medio_id,
+  facturas.fecha,customer_payment_details.factory, 
+  customer_payments.bank_acount_id
+  from customer_payment_details   
+  INNER JOIN facturas ON   customer_payment_details.factura_id = facturas.id
+  INNER JOIN customer_payments ON customer_payments.id = customer_payment_details.customer_payment_id    
+  WHERE customer_payments.fecha1 >= ? and customer_payments.fecha1 <= ? ', "#{fecha1} 00:00:00",
+"#{fecha2} 23:59:59" ])
+
+    ret = 0 
+    ret1=0  
+    ret2=0  
+    
+
+    if facturas 
+      for factura in facturas  
+      
+          @banco = BankAcount.find(factura.bank_acount_id)
+          moneda = @banco.moneda_id
+          
+          @detail = CustomerPaymentDetail.where(:customer_payment_id => factura.id)
+
+          for d in @detail 
+          
+            if(value == "ajuste")
+              if moneda == 2 
+                ret2 += d.ajuste*-1
+              else
+                ret1 += d.ajuste*-1
+              end 
+            elsif (value == "compen")
+              if moneda == 2 
+                ret2 += d.compen 
+              else 
+                ret1 += d.compen 
+              end 
+            elsif (value == "total")
+              if moneda == 2
+                ret2 += d.compen   
+              else
+                ret1 += d.compen   
+              end
+            else         
+              if moneda == 2
+                ret2 += d.factory
+              else
+                ret1 += d.factory
+              end
+            end
+          end 
+
+      end
+    end 
+    puts moneda_pago 
+    if moneda_pago == 1
+      return ret2    
+    else
+      return ret1
+    end 
+ end 
+ 
+ 
+
+
+def get_customer_payments_value_otros_moneda(fecha1,fecha2,value='factory',moneda )
+
+    facturas = CustomerPayment.where(["fecha1 >= ? and fecha1 <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ])        
+        ret=0  
+        for factura in facturas
+        
+          if factura.bank_acount.moneda.id == moneda   
+
+          @detail = CustomerPaymentDetail.where(:customer_payment_id => factura.id)
+
+          for d in @detail 
+            
+          
+              if(value == "ajuste")
+
+
+                   ret += 0
+                
+
+              elsif (value == "compen")
+                ret += d.compen 
+              else         
+                ret += d.factory
+              end
+              
+          end 
+        end 
+
+        end    
+
+    return ret
  end 
 
 end
