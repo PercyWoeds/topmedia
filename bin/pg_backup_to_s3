@@ -8,9 +8,11 @@ set -o pipefail
 
 # Download the latest backup from
 # Heroku and gzip it
+heroku pg:backups:capture --app  $APP_NAME
 
-heroku pg:backups:download --output=/tmp/pg_backup.dump --app $APP_NAME
+curl -o appname.dump 'heroku pg:backups:url --app $APP_NAME'
 gzip /tmp/pg_backup.dump
+
 
 # Encrypt the gzipped backup file
 # using GPG passphrase
