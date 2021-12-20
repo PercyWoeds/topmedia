@@ -8,9 +8,9 @@ set -o pipefail
 
 # Download the latest backup from
 # Heroku and gzip it
-heroku pg:backups:capture --app   ENV['APP_NAME']
+heroku pg:backups:capture --app   madueno-demo
 
-heroku pg:backups:download --output=/tmp/pg_backup.dump --app  ENV['APP_NAME']
+heroku pg:backups:download --output=/tmp/pg_backup.dump --app  madueno-demo
 gzip /tmp/pg_backup.dump
 
 
