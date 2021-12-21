@@ -42,14 +42,12 @@ class FacturasController < ApplicationController
               total_importe  = comision1_importe  + comision1_importe
                                 
               new_invoice_detail = FacturaDetail.new(:factura_id => @factura_id  ,quantity: 1, :orden_id => a, :medio_id => b, :price=> total_importe,:total => total_importe  )          
-      
+          puts "ordennn.-++++++++++++++"
           if new_invoice_detail.save
-              
-            a = Orden.find(item.id)
+              puts item.id 
+            orden_dato = Orden.where(id: item.id).update_all(processed: "2")
 
-            a.processed ='2'
-            a.save
-            
+          
           end 
 
         end              
@@ -939,7 +937,6 @@ new_invoice_item.save
         if items !=  nil or items != ""
          @invoice.add_products(items)
         end 
-
         @invoice.correlativo
         # Check if we gotta process the invoice
         @invoice.process()
