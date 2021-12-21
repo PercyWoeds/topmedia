@@ -138,7 +138,7 @@ class Factura < ActiveRecord::Base
 
   def get_cancelado
 
-      if CustomerPaymentDetail.where(factura_id: self.id).exists   
+      if CustomerPaymentDetail.where(factura_id: self.id).exists? 
 
         return "**Cancelado ** "
       else
