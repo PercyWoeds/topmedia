@@ -134,6 +134,35 @@ class Factura < ActiveRecord::Base
 
   end 
 
+
+
+  def get_cancelado
+
+      if CustomerPaymentDetail.where(factura_id: self.id).exists   
+
+        return "**Cancelado ** "
+      else
+        return ""
+      end 
+
+  end 
+
+  def get_cancelado_datos
+
+      if CustomerPaymentDetail.where(factura_id: self.id).exists?   
+
+          a = CustomerPaymentDetail.where(factura_id: self.id).last 
+
+          b = CustomerPayment.find(a.customer_payment_id)
+
+        return b
+      else
+        return nil 
+      end 
+
+  end 
+  
+
   def my_deliverys
         @deliveryships = Delivery.all 
         return @deliveryships
@@ -521,6 +550,6 @@ class Factura < ActiveRecord::Base
      return 0.00 
     end 
   end   
-
+  
   
 end

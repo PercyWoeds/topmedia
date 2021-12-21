@@ -6,6 +6,17 @@ class OrdensController < ApplicationController
   before_filter :authenticate_user!,:checkProducts
 
 
+  def do_cerrar
+    @orden = Orden.find(params[:id])
+    @orden[:processed] = "3"
+
+    @orden.cerrar 
+
+    flash[:notice] = "Documento a sido cerrado."
+    redirect_to @orden
+  end
+
+
 
   def do_anular
     @orden = Orden.find(params[:id])

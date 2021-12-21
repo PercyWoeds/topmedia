@@ -1525,7 +1525,8 @@ def rpt_cadmin4
     @pagetitle = "Reportes de Contratos "    
     @customers = @company.get_customers()
     @monedas=@company.get_monedas    
-     @medios    = Medio.order(:descrip)
+    @medios    = Medio.order(:descrip)
+    @star_date = Date.today
      
 end
 

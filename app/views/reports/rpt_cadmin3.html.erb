@@ -1,12 +1,3 @@
-<%= render 'layouts/charts' %>
-<%
-invoices_subtotal = 0
-invoices_tax = 0
-invoices_total = 0
-subtotals = []
-taxes = []
-totals = []
-%>
 
 
 <div class="breadcrumbs">
@@ -18,8 +9,7 @@ totals = []
 <h3>
   <%= image_tag("reports_48.png", :class => "vmiddle") %>
     Reporte de comisiones
-
-</h3	>
+</h3>
 
 
   <%= form_tag(rpt_cadmin_03_supplier_payments_path, :method => "get") do %>

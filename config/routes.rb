@@ -513,6 +513,8 @@
    
   match 'ordens/do_email/:id' => 'ordens#do_email', via: [:get, :post]
   match 'ordens/do_process/:id' => 'ordens#do_process', via: [:get, :post]
+  match 'ordens/do_cerrar/:id' => 'ordens#do_cerrar', via: [:get, :post]
+  
   match 'ordens/email/:id' => 'ordens#email', via: [:get, :post]
   match 'ordens/pdf/:id' => 'ordens#pdf', via: [:get, :post]
   match 'ordens/xls/:id' => 'ordens#xls', via: [:get, :post]

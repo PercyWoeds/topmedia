@@ -171,9 +171,13 @@
   <%= link_to 'Procesar orden', "/ordens/do_process/#{@orden.id}" %>
 
 
-<% elsif @orden.processed =="1" %>  
+<% elsif @orden.processed =="1" and current_user.level = "admin" %>  
+
+  <%= link_to 'Cerrar', "/ordens/do_cerrar/#{@orden.id}" %>
+
   <%= link_to 'Anular', "/ordens/do_anular/#{@orden.id}" %>
 <% end %>
+
   
   <%= link_to 'Editar', edit_orden_path(@orden) %>
   <%= link_to 'Regresar', "/companies/ordens/#{@orden.company.id}" %>

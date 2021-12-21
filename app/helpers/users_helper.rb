@@ -68,15 +68,13 @@ module UsersHelper
   end
   
   def isAdmin()
-    if(@is_admin)
-      return @is_admin
-    else
+  
       session = getSession()
     
       if session and session.user.level == 'admin'
         return true
       end
-    end
+  
   end
   
   def current_user

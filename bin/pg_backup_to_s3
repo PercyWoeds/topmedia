@@ -17,6 +17,7 @@ gzip /tmp/pg_backup.dump
 # Encrypt the gzipped backup file
 # using GPG passphrase
 
+
 gpg --yes --batch --passphrase=$PG_BACKUP_PASSWORD -c /tmp/pg_backup.dump.gz
 
 # Remove the plaintext backup file

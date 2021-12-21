@@ -2912,6 +2912,18 @@ def get_ordenes_cliente(fecha1,fecha2,cliente)
     
  end 
 
+
+
+ def get_facturas_medios(fecha1,fecha2)    
+   
+       
+       @facturas = Factura.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).
+       order(:customer_id,:medio_id)
+  
+        return @facturas
+    
+ end 
+ 
  def get_customer_payments_cabecera(fecha1,fecha2)
   
       @payments = CustomerPayment.where(["company_id= ? and fecha1 >= ? and fecha1 <=?",self.id, "#{fecha1} 00:00:00" ,"#{fecha2} 23:59:59"])

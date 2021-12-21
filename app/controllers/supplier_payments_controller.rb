@@ -2137,6 +2137,39 @@ def list_receive_supplierpayments
   end
 
   
+
+ def rpt_cadmin_04
+
+    @company=Company.find(1)
+    @fecha1 = params[:fecha1]
+    @fecha2 = params[:fecha2]
+
+    puts "to _date"
+    puts @fecha1.to_date
+   puts "to _datetime"
+    puts @fecha1.to_datetime 
+      
+  
+          
+    @ordenes = @company.get_facturas_medios(@fecha1,@fecha2)
+
+        case params[:print]
+      
+          when "Generar" then 
+
+            begin 
+              puts "reporeeeeeee ..."
+              render xlsx: 'rpt_cadmin_04'
+
+            end
+
+          else render action: "index"
+        end
+
+
+
+  end
+
   private
   def supplierpayment_params
     params.require(:supplier_payment).permit(:company_id,:location_id,:division_id,:bank_acount_id,
