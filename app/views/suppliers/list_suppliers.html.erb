@@ -24,14 +24,10 @@
 <div class="button">
   <%= link_to 'Nuevo proveedor', "/suppliers/new/#{@company.id}" %>
 </div>
+Download:
+ 
+<%= link_to "Excel", customers_path(format: "xls") %>
 
-
-<h2>Importar Archivo proveedores "*.csv"</h2>
-
-<%= form_tag import_suppliers_path, multipart: true do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "Importar " %>
-<% end %>
 
 
 <%= will_paginate @suppliers %>

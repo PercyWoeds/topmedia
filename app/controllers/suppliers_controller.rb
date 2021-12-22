@@ -24,18 +24,34 @@ class SuppliersController < ApplicationController
       else
         @suppliers = Supplier.where(company_id: @company.id).order('name').paginate(:page => params[:page])
       end
+
+         respond_to do |format|
+            format.html
+            format.csv { send_data @suppliers.to_csv, filename: "suppliers-#{Date.today}.csv" }
+            format.xls 
+          end       
+
     else
       errPerms()
     end
   end
+
+
   
   # GET /suppliers
   # GET /suppliers.xml
   def index
-    @pagetitle = "Suppliers"
+  @pagetitle = "Suppliers"
     
-    @companies = Company.find(:all, :conditions => {:user_id => getUserId()}, :order => "name")
+    @companies = Company.all
+
     @path = 'suppliers'
+
+    @customercsv = Supplier.order(:ruc).all 
+
+
+
+
   end
 
   # GET /suppliers/1
