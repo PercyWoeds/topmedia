@@ -18,7 +18,10 @@
       </th>
   
       <th>
-         Tarifa CPM
+         Tipo de Tarifa
+      </th>
+      <th>
+         Tarifa
       </th>
   
       <th>
@@ -160,6 +163,9 @@
            <%= @orden.version.descrip  %>    
           </td>
 
+          <td class="small bordered_bottom bordered_right">
+           <%= product.tipo_tarifa %>    
+          </td>
           <td class="small bordered_bottom bordered_right">
            <%= product.tarifa_cpm %>    
           </td>

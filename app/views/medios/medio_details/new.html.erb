@@ -1,5 +1,32 @@
-<h1>New Medio Detail</h1>
+
+
+<% if not @ajax %>
+  <div class="breadcrumbs">
+    <%= link_to "My companies", "/companies" %> &raquo;
+    <%= link_to @company.name, @company %> &raquo;
+    
+  </div>
+
+  <h1>
+    <%= image_tag("clients_48.png", :class => "vmiddle") %>
+   <h1>New Medio Detail</h1>
+
+  </h1>
+  
+  
+  <p>
+    To create a nueva producto por medio , please fill out the following form.  Fields marked with <strong>*</strong> are required.
+  </p>
+<% else %>
+  <h4>
+    Nuevo Producto por Medio 
+  </h4>
+<% end %>
 
 <%= render 'form' %>
 
-<%= link_to 'Back', medio_details_path %>
+<% if not @ajax %>
+  <div class="button">
+    <%= link_to 'Regresar', medio_details_path  %>
+  </div>
+<% end %>

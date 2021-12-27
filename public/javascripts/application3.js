@@ -705,6 +705,232 @@
       alert("Please enter a customer name.");
     }
   }
+  ///
+
+ // Shortcut to create new customer form
+  function createMarcaOrden() {
+    var company_id = 1 ;
+    
+    $.get('/marcas/new/' + company_id + '?ajax=1', {
+    },
+    function(data) {
+      displayRemote(data);
+      showRemote();
+      
+      $("#new_marca").bind("submit", function() {
+        event.preventDefault();
+        doCreateMarcaOrden();
+      });
+    });
+  }
+
+
+  // Create new customer in the invoice via ajax
+  function doCreateMarcaOrden() {
+    alert("Creando marca "); 
+    var marca_name = $("#marca_name").val();
+    var marca_customer_id  = $("#marca_customer_id").val();
+    var company_id = 1;    
+     
+      
+    if(marca_name != "") {
+      $.post('/marcas/create_ajax/'+ company_id, {
+        name: marca_name,
+        customer_id: marca_customer_id        
+      },
+      function(data) {
+        if(data == "error_empty") {
+          alert("Please enter a marca name");
+        } else if(data == "error") {
+          alert("Something went wrong when saving the marca , please try again");
+        } else {
+          var data_arr = data.split("|BRK|");
+          
+          $("#ac_marca").val(data_arr[1]);
+          $("#ac_marca_id").val(data_arr[0]);
+          $("#selected_marca").html(data_arr[1]);
+          
+          hideRemote();
+          alert("The marca  has been created");
+        }
+      });
+    } else {
+      
+      alert("Please enter a marca  name.");
+    }
+  }
+
+
+//############
+
+ // Shortcut to create new customer form
+  function createProductoOrden() {
+    var company_id = 1 ;
+    
+    $.get('/productos/new/' + company_id + '?ajax=1', {
+    },
+    function(data) {
+      displayRemote(data);
+      showRemote();
+      
+      $("#new_producto").bind("submit", function() {
+        event.preventDefault();
+        doCreateProductoOrden();
+      });
+    });
+  }
+
+
+  // Create new customer in the invoice via ajax
+  function doCreateProductoOrden() {
+    alert("Creando Producto  "); 
+    var producto_name = $("#producto_name").val();
+    var producto_marca_id  = $("#producto_marca_id").val();
+    var company_id = 1;    
+     
+
+    if(producto_name != "") {
+      $.post('/productos/create_ajax/'+ company_id, {
+        name: producto_name,
+        marca_id: producto_marca_id        
+      },
+      function(data) {
+        if(data == "error_empty") {
+          alert("Please enter a marca name");
+        } else if(data == "error") {
+          alert("Something went wrong when saving the marca , please try again");
+        } else {
+          var data_arr = data.split("|BRK|");
+          
+          $("#ac_producto").val(data_arr[1]);
+          $("#ac_producto_id").val(data_arr[0]);
+          $("#selected_producto").html(data_arr[1]);
+          
+          hideRemote();
+          alert("The producto  has been created");
+        }
+      });
+    } else {
+      
+      alert("Please enter a producto  name.");
+    }
+  }
+
+//############
+
+
+ // Shortcut to create new customer form
+  function createVersionOrden() {
+    var company_id = 1 ;
+    
+    $.get('/versions/new/' + company_id + '?ajax=1', {
+    },
+    function(data) {
+      displayRemote(data);
+      showRemote();
+      
+      $("#new_version").bind("submit", function() {
+        event.preventDefault();
+        doCreateVersionOrden();
+      });
+    });
+  }
+
+
+  // Create new customer in the invoice via ajax
+  function doCreateVersionOrden() {
+    alert("Creando Version   "); 
+    var version_name = $("#version_descrip").val();
+    var version_producto_id  = $("#version_producto_id").val();
+    var company_id = 1;    
+     
+
+    if(version_name != "") {
+      $.post('/versions/create_ajax/'+ company_id, {
+        name: version_name,
+        producto_id: version_producto_id        
+      },
+      function(data) {
+        if(data == "error_empty") {
+          alert("Please enter a version name");
+        } else if(data == "error") {
+          alert("Something went wrong when saving the marca , please try again");
+        } else {
+          var data_arr = data.split("|BRK|");
+          
+          $("#ac_version").val(data_arr[1]);
+          $("#ac_version_id").val(data_arr[0]);
+          $("#selected_version").html(data_arr[1]);
+          
+          hideRemote();
+          alert("The version has been created");
+        }
+      });
+    } else {
+      
+      alert("Please enter a version name.");
+    }
+  }
+
+//############
+
+//############
+
+
+ // Shortcut to create new customer form
+  function createMedioOrden() {
+    var company_id = 1 ;
+    var medio_id =  $("#medio_id").val();
+            
+    $.get('/medios/medio_details/new/' + company_id + '/' + medio_id + '?ajax=1', {
+    },
+    function(data) {
+      displayRemote(data);
+      showRemote();
+      
+      $("#new_medio_detail").bind("submit", function() {
+        event.preventDefault();
+        doCreateMedioOrden(medio_id);
+      });
+    });
+  }
+
+
+  // Create new customer in the invoice via ajax
+  function doCreateMedioOrden(medio_id) {
+    alert("Creando Producto x Medio "); 
+    var medio_detail_name = $("#medio_detail_name").val();
+    var medio_id_det =  medio_id ;
+    var company_id = 1;    
+
+      
+    if(medio_detail_name != "") {
+      $.post('/medios/medio_details/create_ajax/'+ company_id, {
+        name: medio_detail_name,
+        medio_id: medio_id    
+      },
+      function(data) {
+        if(data == "error_empty") {
+          alert("Please enter a product for medio  name");
+        } else if(data == "error") {
+          alert("Something went wrong when saving product for medio  , please try again");
+        } else {
+          var data_arr = data.split("|BRK|");          
+          
+          hideRemote();
+          alert("The producto  for medio has been created");
+        }
+      });
+    } else {
+      
+      alert("Please enter a producto for medio name .");
+    }
+  }
+
+//############
+
+
+
 
   // Shortcut to create new customer form
   function createCheque() {

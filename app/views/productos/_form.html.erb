@@ -9,7 +9,7 @@
     
 <div class="field">
       <%= f.label :marca_id , "Marca*", :class => "bold" %><br />
-      <%= f.collection_select :marca_id, @marcas, :id, :name,{:prompt   => "Seleccione un cliente "} %>
+      <%= f.collection_select :marca_id, @marcas, :id, :name,{:prompt   => "Seleccione un cliente "}  ,:style=> 'width: 350px' %>
       </div>
 
 

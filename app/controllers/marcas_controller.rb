@@ -17,18 +17,45 @@ class MarcasController < ApplicationController
   def new
     @marca = Marca.new
     @customers = Customer.order(:name)
+    @company = Company.find(1)
+
+     if(params[:ajax])
+      @ajax = true
+      render :layout => false
+    end
   end
 
   # GET /marcas/1/edit
   def edit
     @customers = Customer.order(:name)
   end
+# Create via ajax
+  def create_ajax
+
+   if( params[:name] and params[:name] != "")
+      @marca = Marca.new(:name => params[:name], :customer_id => params[:customer_id])
+      
+      if @marca.save
+
+
+        render :text => "#{@marca.id}|BRK|#{@marca.name}"
+      else
+        render :text => "error"
+      end
+    else
+      render :text => "error_empty"
+      puts "eeeeeeeeeee"
+      puts params[:name] 
+    end
+  end
+
 
   # POST /marcas
   # POST /marcas.json
   def create
     @marca = Marca.new(marca_params)
     @customers = Customer.order(:name)
+    
     respond_to do |format|
       if @marca.save
         format.html { redirect_to @marca, notice: 'Marca was successfully created.' }

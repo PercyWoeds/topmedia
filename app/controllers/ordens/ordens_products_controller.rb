@@ -54,14 +54,13 @@ class Ordens::OrdensProductsController < ApplicationController
    @orden_product.nro_semanas  = 0
 
    
- @orden_product.avisodetail_id = 131
+    @orden_product.avisodetail_id = 131
 
 
     @orden_product_medio_details = @orden_product.get_medio_details(@orden.medio_id )
 
     @tipo_avisos = @company.get_tipo_aviso()
     @tipo_tarifas = @company.get_tipo_tarifa()
-
 
 
 
@@ -329,6 +328,7 @@ class Ordens::OrdensProductsController < ApplicationController
     :tipo_tarifa_id,
    :tipo_tarifas_id,
    :medio_detail_id,
-   :pelicula)
+   :pelicula,
+   :tipo_tarifa)
   end 
 end

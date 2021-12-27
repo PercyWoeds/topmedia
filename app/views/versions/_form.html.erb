@@ -8,8 +8,8 @@
     </div>
     
     <div class="field">
-      <%= f.label :producto_id , "Marca*", :class => "bold" %><br />
-      <%= f.collection_select :producto_id, @productos, :id, :name,{:prompt   => "Seleccione un producto "} %>
+      <%= f.label :producto_id , "Producto*", :class => "bold" %><br />
+      <%= f.collection_select :producto_id, @productos, :id, :name,{:prompt   => "Seleccione un producto "}  ,:style=> 'width: 350px'%>
       </div>
 
 

@@ -88,16 +88,16 @@ class Company < ActiveRecord::Base
     return bank_acounts
   end
   def get_productos()
-     productos = Producto.all      
+     productos = Producto.all.order(:name)      
     return productos
   end
   
   def get_marcas()
-     marcas = Marca.all      
+     marcas = Marca.all.order(:name)  
     return marcas
   end
   def get_versions()
-     versions = Version.all      
+     versions = Version.all.order(:descrip) 
     return versions
   end
   def get_ciudads()

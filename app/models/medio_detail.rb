@@ -3,7 +3,7 @@ class MedioDetail < ActiveRecord::Base
 
     has_many :orden_products
 
-  attr_accessible :code, :name , :medio_details_attributes
+  attr_accessible :code, :name ,:medio_id,:user_id, :medio_details_attributes
 
  
 end

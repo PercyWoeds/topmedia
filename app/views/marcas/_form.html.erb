@@ -17,7 +17,7 @@
     
 <div class="field">
       <%= f.label :customer_id , "Cliente", :class => "bold" %><br />
-      <%= f.collection_select :customer_id, @customers, :id, :name,{:prompt   => "Seleccione un cliente "} %>
+      <%= f.collection_select :customer_id, @customers, :id, :name,{:prompt   => "Seleccione un cliente "},:style=> 'width: 350px'   %>
       </div>
 
 

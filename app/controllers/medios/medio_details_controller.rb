@@ -10,7 +10,14 @@ class Medios::MedioDetailsController < ApplicationController
 
   # GET /medio_details/new
   def new
-    @medio_detail = MedioDetail.new
+    @medio_detail = MedioDetail.new    
+
+    @company = Company.find(1)
+
+     if(params[:ajax])
+      @ajax = true
+      render :layout => false
+    end
 
   end
 
@@ -54,6 +61,29 @@ class Medios::MedioDetailsController < ApplicationController
       end
     end
   end
+
+   def create_ajax
+
+   if( params[:name] and params[:name] != "")
+      @medio_detail  = MedioDetail.new(code:"00" ,:name => params[:name],user_id: current_user.id  , :medio_id => params[:medio_id])
+      puts "medioo"
+      puts params[:medio_id]
+      puts current_user.id 
+      
+
+      if @medio_detail.save
+
+        render :text => "#{@medio_detail.id}|BRK|#{@medio_detail.medio_id}"
+      else
+        render :text => "error"
+      end
+    else
+      render :text => "error_empty"
+     
+    end
+  end
+
+
 
   # DELETE /medio_details/1
   # DELETE /medio_details/1.json

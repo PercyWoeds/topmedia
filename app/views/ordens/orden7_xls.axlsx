@@ -78,7 +78,7 @@ wb.styles do |s|
 
 @days =  []
 
-@days =  ["WEBSITE","PRODUCTO ","MOTIVO ","TARIFA CPM","IMPRESIONES CLICKS"]
+@days =  ["WEBSITE","PRODUCTO ","MOTIVO ","TIPO TARIFA","TARIFA","IMPRESIONES CLICKS"]
 
 
      
@@ -153,6 +153,7 @@ sum_qty = 0
             order.website,
             order.medio_detail.name,
             @orden.version.descrip ,
+            order.tipo_tarifa,                
             order.tarifa_cpm,    
             order.impresion_click ]
 
@@ -190,9 +191,9 @@ sum_qty = 0
          
     end
     
-    obs  += ["","","","","","","Sub Total :", @orden.subtotal] 
-    obs1 += ["","","","","","","IGV (18%) :", @orden.tax ]  
-    obs2 += ["","","","","","","Total     :", @orden.total ] 
+    obs  += ["","","","","","","","","Sub Total :", @orden.subtotal] 
+    obs1 += ["","","","","","","","","IGV (18%) :", @orden.tax ]  
+    obs2 += ["","","","","","","","","Total     :", @orden.total ] 
 
      sheet.add_row obs.map{|col| col  } , :style =>    cadena0
 

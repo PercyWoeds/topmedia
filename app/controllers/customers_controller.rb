@@ -96,7 +96,11 @@ class CustomersController < ApplicationController
   # Create via ajax
   def create_ajax
     if(params[:company_id] and params[:company_id] != "" and params[:name] and params[:name] != "")
-      @customer = Customer.new(:company_id => params[:company_id].to_i, :name => params[:name], :email => params[:email], :phone1 => params[:phone1], :phone2 => params[:phone2], :address1 => params[:address1], :address2 => params[:address2], :city => params[:city], :state => params[:state], :zip => params[:zip], :country => params[:country], :comments => params[:comments], :account => params[:account], :taxable => params[:taxable])
+      @customer = Customer.new(:company_id => params[:company_id].to_i, :name => params[:name], 
+        :email => params[:email], :phone1 => params[:phone1], :phone2 => params[:phone2], 
+        :address1 => params[:address1], :address2 => params[:address2], :city => params[:city],
+         :state => params[:state], :zip => params[:zip], :country => params[:country], 
+         :comments => params[:comments], :account => params[:account], :taxable => params[:taxable])
       
       if @customer.save
         render :text => "#{@customer.id}|BRK|#{@customer.name}"

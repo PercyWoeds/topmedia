@@ -30,12 +30,37 @@ class VersionsController < ApplicationController
   def new
     @version = Version.new
     @productos = Producto.order(:name)
+    @company = Company.find(1)
+
+     if(params[:ajax])
+      @ajax = true
+      render :layout => false
+    end
+
   end
 
   # GET /versions/1/edit
   def edit
     @productos = Producto.order(:name)
   end
+
+
+# Create via ajax
+  def create_ajax
+
+   if( params[:name] and params[:name] != "")
+      @version = Version.new(:descrip  => params[:name], :producto_id => params[:producto_id])
+      
+      if @version.save
+        render :text => "#{@version.id}|BRK|#{@version.descrip}"
+      else
+        render :text => "error"
+      end
+    else
+      render :text => "error_empty"     
+    end
+  end
+
 
   # POST /versions
   # POST /versions.json

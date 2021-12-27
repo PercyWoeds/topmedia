@@ -72,20 +72,29 @@
     <div class="field">
       <%= f.label :marca_id %><br />
 
-      <%= f.collection_select :marca_id, Marca.order(:id), :id, :name,{:prompt   => "Selec una marca"} %>
+      <%= f.collection_select :marca_id, Marca.order(:name), :id, :name,{:prompt   => "Selec una marca"} %>
     </div>
-   
+      <div class="small">
+        <a href="#" onclick="createMarcaOrden(); return false;">+ Crear nueva marca</a>
+      </div>
+
    
     <div class="field">
       <%= f.label :producto_id %><br />
       <%= f.collection_select :producto_id, @productos, :id, :name,{:prompt   => "Selec un producto"} %>
     </div>
-     
+     <div class="small">
+        <a href="#" onclick="createProductoOrden(); return false;">+ Crear nuevo producto </a>
+      </div>
+
     <div class="field">
       <%= f.label :version_id %><br />
       <%= f.collection_select :version_id, @versions, :id, :descrip,{:prompt   => "Selec una version"} %>
     </div>
-    
+    <div class="small">
+        <a href="#" onclick="createVersionOrden(); return false;">+ Crear nuevo version</a>
+      </div>
+
     <div class="field">
       <%= f.label :moneda_id %><br />
       <%= f.collection_select :moneda_id, @monedas, :id, :description ,{:prompt   => "Selec una moneda"} %>
@@ -158,6 +167,7 @@
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
       <%= f.hidden_field :customer_id, :id => "ac_customer_id" %>
       <%= f.hidden_field :company_id %>
+
       <%= f.submit   %>
     </div>
     

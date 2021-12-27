@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20211218235930) do
+ActiveRecord::Schema.define(version: 20211225143727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1176,6 +1176,7 @@ ActiveRecord::Schema.define(version: 20211218235930) do
     t.integer  "tipo_tarifas_id"
     t.integer  "medio_detail_id"
     t.string   "pelicula"
+    t.string   "tipo_tarifa"
   end
 
   add_index "orden_products", ["tipo_tarifas_id"], name: "index_orden_products_on_tipo_tarifas_id", using: :btree

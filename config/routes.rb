@@ -910,8 +910,29 @@
   resources :services
 
   match 'companies/marcas/:company_id' => 'marcas#index', via: [:get, :post]
+  match 'marcas/new/:company_id' => 'marcas#new', via: [:get, :post]
+  match 'marcas/create_ajax/:company_id' => 'marcas#create_ajax', via: [:get, :post]
+  
   resources :marcas
+  match 'companies/productos/:company_id' => 'productos#index', via: [:get, :post]
+  match 'productos/new/:company_id' => 'productos#new', via: [:get, :post]
+  match 'productos/create_ajax/:company_id' => 'productos#create_ajax', via: [:get, :post]
+  
+  resources :productos
 
+  match 'companies/versions/:company_id' => 'versions#index', via: [:get, :post]
+  match 'versions/new/:company_id' => 'versions#new', via: [:get, :post]
+  
+  match 'versions/create_ajax/:company_id' => 'versions#create_ajax', via: [:get, :post]
+  match 'versions/new/:company_id' => 'versions#new', via: [:get, :post]
+  
+
+  resources :versions
+
+
+  match 'medios/medio_details/new/:company_id/:medio_id' => 'medios/medio_details#new', via: [:get, :post]
+  match 'medios/medio_details/create_ajax/:company_id' => 'medios/medio_details#create_ajax', via: [:get, :post]
+  
   match 'companies/modelos/:company_id' => 'modelos#index', via: [:get, :post]
   resources :modelos
 

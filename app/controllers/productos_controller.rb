@@ -27,12 +27,42 @@ class ProductosController < ApplicationController
   def new
     @producto = Producto.new
     @marcas = Marca.order(:name)
+
+    @company = Company.find(1)
+
+     if(params[:ajax])
+      @ajax = true
+      render :layout => false
+    end
+
+
   end
 
   # GET /productos/1/edit
   def edit
     @marcas = Marca.order(:name)
   end
+
+
+# Create via ajax
+  def create_ajax
+
+   if( params[:name] and params[:name] != "")
+    
+      @producto = Producto.new(:name => params[:name], :marca_id => params[:marca_id])
+      
+      if @producto.save
+        render :text => "#{@producto.id}|BRK|#{@producto.name}"
+      else
+        render :text => "error"
+      end
+    else
+      render :text => "error_empty"
+      puts "eeeeeeeeeee"
+      puts params[:name] 
+    end
+  end
+
 
   # POST /productos
   # POST /productos.json
