@@ -151,7 +151,7 @@ end
     
     @invoice = Factura.new
     
-    @invoice[:code] = @invoice.ultimo_numero
+     @invoice[:code] = "#{generate_guid3()}"
     
     @invoice[:processed] = false
     

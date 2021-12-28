@@ -2669,11 +2669,12 @@ class OrdensController < ApplicationController
   def new
     @pagetitle = "New orden"
     @action_txt = "Create"
+    
 
-    if(params[:year] and params[:year].numeric?)
+     if(params[:year] and params[:year].numeric?)
       @year = params[:year].to_i
     else
-      @year = Time.now.year
+      @year = 2022
     end
 
     if(params[:month] and params[:month].numeric?)
@@ -2688,7 +2689,7 @@ class OrdensController < ApplicationController
       month_s = @month.to_s
     end
 
-    curr_year = Time.now.year
+    curr_year = Time.now.year + 1 
     c_year = curr_year
     c_month = 1
 
@@ -2698,7 +2699,7 @@ class OrdensController < ApplicationController
 
 
 
-    while(c_year > Time.now.year - 5)
+    while(c_year > 2022  - 5)
       @years.push(c_year)
       c_year -= 1
     end

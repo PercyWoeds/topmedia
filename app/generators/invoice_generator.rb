@@ -154,7 +154,7 @@ class InvoiceGenerator < DocumentGenerator
          @invoiceitems = FacturaDetail.where(factura_id: @numero )
        else 
         $lcServicioFactura = "0"
-        @invoiceitems = FacturaDetail.select(:orden_id,"price as price" ,"SUM(quantity) as cantidad","SUM(total) as total").where(factura_id: @numero).group(:orden_id,:price)
+        @invoiceitems = FacturaDetail.select(:service_id,"price as price" ,"SUM(quantity) as cantidad","SUM(total) as total").where(factura_id: @numero).group(:service_id,:price)
         
        end 
         $lg_fecha   = @invoice.fecha.to_date
@@ -260,9 +260,16 @@ class InvoiceGenerator < DocumentGenerator
          $lcFecha1codigo      = $lg_fecha.to_s
 
          $lcLocal = ""
-         $lcServiciotxt  = @invoice.description
-         $lcObserva   = @invoice.comments 
+         
 
+         $lcServiciotxt  = @invoice.description
+
+         if !@invoice.comments.nil?
+          $lcObserva   = @invoice.comments 
+         else
+          $lcObserva   = ""
+         
+         end 
           parts = $lcFecha1codigo.split("-")
           $aa = parts[0]
           $mm = parts[1]        
@@ -294,9 +301,16 @@ class InvoiceGenerator < DocumentGenerator
         $lcGlobalNumero =  @numero
 
         for detalle_item in @invoiceitems
-        
-        
+          puts "id service_id+++++++++++++++++++++++++"
+          puts detalle_item.service_id
+
+          if !detalle_item.service_id.nil? 
+              lcDes1 = detalle_item.service.name 
+          else 
+              lcDes1 = "POR SERVICIO DE GESTION PUBLICITARIA"    
+          end 
           
+
 
           if @invoice.servicio == "true"
               lcCantidad = detalle_item.quantity

@@ -329,6 +329,6 @@ class Ordens::OrdensProductsController < ApplicationController
    :tipo_tarifas_id,
    :medio_detail_id,
    :pelicula,
-   :tipo_tarifa)
+   :tipo_cpm)
   end 
 end

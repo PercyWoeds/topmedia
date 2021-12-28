@@ -473,8 +473,17 @@ class Factura < ActiveRecord::Base
       self.save
     end
   end
+
   def cerrar
-    if(self.processed == "0" )         
+    if(self.processed == "1" )         
+      
+      self.processed="3"
+      self.date_processed = Time.now
+      self.save
+    end
+  end
+  def do_closed
+    if(self.processed == "1" )         
       
       self.processed="3"
       self.date_processed = Time.now

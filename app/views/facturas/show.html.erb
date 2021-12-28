@@ -166,10 +166,20 @@
         </td>
         
         <td class="bordered_bottom bordered_right">
-          <%= quote.orden.code   %>
+          <% if !quote.orden.nil?%>
+            <%= quote.orden.code   %>
+          <% else %>
+            <%= quote.service.code %>
+          <% end %>
         </td>
         <td class="bordered_bottom bordered_right">
+        <% if !quote.medio.nil?%>
           <%= quote.medio.descrip %>
+         <% else %>
+         <%= quote.service.name %>
+         <% end %>
+
+
         </td>
        
         
@@ -423,9 +433,8 @@
 
 
 
-
     
-<% if @invoice.processed =="0" || @invoice.processed==nil %> 
+<% if @invoice.processed =="1"  %> 
  <%= link_to 'Cuotas / Detraccion', "/facturas/do_closed/#{@invoice.id}" %> 
 
 <% end %>
