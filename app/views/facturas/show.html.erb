@@ -434,7 +434,7 @@
 
 
     
-<% if @invoice.processed =="1"  %> 
+<% if @invoice.processed =="1"|| @invoice.processed==nil   %> 
  <%= link_to 'Cuotas / Detraccion', "/facturas/do_closed/#{@invoice.id}" %> 
 
 <% end %>

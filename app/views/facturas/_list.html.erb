@@ -70,7 +70,8 @@
           <% elsif invoice.processed =="1"%>    
         
           <%= link_to "Ver", invoice %>                      
-          <%= link_to 'Eliminar', invoice,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            
+          <%= link_to 'Eliminar', invoice,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %> 
+                     
           <% elsif invoice.processed =="2"%>  
           <%= "** Anulado **" %>
           <%= link_to 'Eliminar', invoice,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            

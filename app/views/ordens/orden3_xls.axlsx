@@ -155,12 +155,26 @@ sum_qty = 0
   
 
 
-     sheet.add_row [""]
-     sheet.add_row ["","","","","","","Sub Total :", @orden.subtotal] , :style => [cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena,currency]
-     sheet.add_row ["","","","","","","IGV (18%) :", @orden.tax ]     , :style => [cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena,currency]
-     sheet.add_row ["","","","","","","Total     :", @orden.total ]   , :style => [cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena,currency]
-     sheet.add_row [""]
+  obs =  []
+     obs1 =  [] 
+     obs2 =  []
 
+    (1..31).each do |row1|
+        obs  += [""]
+        obs1 += [""]
+        obs2 += [""]
+         
+    end
+    
+    obs  += ["","","","","","","Sub Total :", @orden.subtotal] 
+    obs1 += ["","","","","","","IGV (18%) :", @orden.tax ]  
+    obs2 += ["","","","","","","Total     :", @orden.total ] 
+
+     sheet.add_row obs.map{|col| col  } , :style =>    cadena0
+
+     sheet.add_row obs1.map{|col| col  } , :style =>    cadena0
+     sheet.add_row obs2.map{|col| col  } , :style =>    cadena0
+     
 
      sheet.add_row [""]
 

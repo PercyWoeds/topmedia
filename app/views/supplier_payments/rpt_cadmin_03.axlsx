@@ -66,7 +66,11 @@ sheet.merge_cells('A8:C8')
                           puts payment.code 
                           puts payment.month 
                           puts payment.year 
-                          puts payment.marca.name 
+                            if payment.marca.nil?
+                            nombre_marca = ""
+                          else 
+                            nombre_marca = payment.marca.name 
+                          end 
                           puts payment.description 
                                                      
                           puts "sxxx"                                                                        

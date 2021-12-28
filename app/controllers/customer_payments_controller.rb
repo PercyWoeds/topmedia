@@ -1380,6 +1380,7 @@ class CustomerPaymentsController < ApplicationController
                 
                 row << @cliente_obs.ruc
                 row << @cliente_obs.descrip
+                row << ""
                 if $lcxCliente == "0" 
                   row << " "  
                 else
@@ -1418,6 +1419,7 @@ class CustomerPaymentsController < ApplicationController
     @total_dolar = total_general_dolar
 
       row =[]
+      row << ""
       row << ""
       row << ""
       row << ""

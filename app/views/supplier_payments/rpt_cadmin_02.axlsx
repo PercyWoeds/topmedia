@@ -74,7 +74,11 @@ wb.styles do |s|
                           puts payment.code 
                           puts payment.month 
                           puts payment.year 
-                          puts payment.marca.name 
+                            if payment.marca.nil?
+                            nombre_marca = ""
+                          else 
+                            nombre_marca = payment.marca.name 
+                          end 
                           puts payment.version.descrip
                           puts payment.ciudad.descrip                                           
                           puts payment.get_cantidad_avisos(payment.id)
@@ -95,7 +99,7 @@ wb.styles do |s|
                            payment.code ,
                            payment.month ,
                            payment.year ,
-                           payment.marca.name ,
+                           nombre_marca ,
                            payment.version.descrip ,
                            payment.ciudad.descrip ,
                            payment.get_cantidad_avisos(payment.id),

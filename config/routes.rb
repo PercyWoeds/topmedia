@@ -267,6 +267,9 @@
     collection { post :create }        
   end  
 
+
+
+
   resources :facturas do
     collection { get :search  }
     
@@ -281,6 +284,8 @@
     collection { get :rpt_ccobrar2 }
 
     collection { get :rpt_ccobrar2_pdf }
+
+    collection { get :reportes4 }
     
 
     collection do 
