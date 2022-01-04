@@ -62,6 +62,8 @@ class Ordens::OrdensProductsController < ApplicationController
     @tipo_avisos = @company.get_tipo_aviso()
     @tipo_tarifas = @company.get_tipo_tarifa()
 
+    @tipo_cpms = TipoCpm.all 
+    @tipo_formatos = TipoFormato.all 
 
 
   end
@@ -329,6 +331,7 @@ class Ordens::OrdensProductsController < ApplicationController
    :tipo_tarifas_id,
    :medio_detail_id,
    :pelicula,
-   :tipo_cpm)
+   :tipo_cpm_id,
+   :tipo_formato_id)
   end 
 end

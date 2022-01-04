@@ -1,4 +1,4 @@
-
+xd
 // Document ready (on load)
   function documentReady() {
     fixPngs();
@@ -2345,7 +2345,7 @@ function createMarca() {
 
 
 
-// actualizacion ornde detalle
+
 
 
   

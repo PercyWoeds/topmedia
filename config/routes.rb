@@ -1,6 +1,8 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :tipo_formatos
+  resources :tipo_cpms
   resources :medio_customers
   resources :medio_details
   resources :tipo_tarifas

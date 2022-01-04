@@ -70,9 +70,10 @@ def reportes4
           c = item.customer_id 
 
 
-              comision1  =  item.get_comision(item.medio_id,item.customer_id,1)
-              comision2  =  item.get_comision(item.medio_id,item.customer_id,2)
-                
+              # comision1  =  item.get_comision(item.medio_id,item.customer_id,1)
+              # comision2  =  item.get_comision(item.medio_id,item.customer_id,2)
+                comision1  = 5 
+                comision2  = 0 
              
               comision1_importe   =  item.total * comision1 / 100
 

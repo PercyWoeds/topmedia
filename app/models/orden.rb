@@ -15,6 +15,7 @@ class Orden < ActiveRecord::Base
     belongs_to :tipo_orden 
     belongs_to :moneda  
     belongs_to :factura_details 
+   
   	
   	has_many :orden_products, :dependent => :destroy
 

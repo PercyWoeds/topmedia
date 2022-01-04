@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20211228011954) do
+ActiveRecord::Schema.define(version: 20220104133133) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1176,7 +1176,8 @@ ActiveRecord::Schema.define(version: 20211228011954) do
     t.integer  "tipo_tarifas_id"
     t.integer  "medio_detail_id"
     t.string   "pelicula"
-    t.string   "tipo_cpm"
+    t.integer  "tipo_cpm_id"
+    t.integer  "tipo_formato_id"
   end
 
   add_index "orden_products", ["tipo_tarifas_id"], name: "index_orden_products_on_tipo_tarifas_id", using: :btree
@@ -1831,6 +1832,20 @@ ActiveRecord::Schema.define(version: 20211228011954) do
     t.string   "code"
     t.string   "name"
     t.string   "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tipo_cpms", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tipo_formatos", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

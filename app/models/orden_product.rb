@@ -8,6 +8,8 @@ class OrdenProduct < ActiveRecord::Base
     belongs_to :medio_detail
     belongs_to :tipo_aviso
     belongs_to :tipo_tarifa 
+     belongs_to :tipo_cpm 
+    belongs_to :tipo_formato 
 
 
   

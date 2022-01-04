@@ -78,7 +78,7 @@ wb.styles do |s|
 
 @days =  []
 
-@days =  ["WEBSITE","PRODUCTO ","MOTIVO ","TIPO TARIFA","TARIFA","IMPRESIONES CLICKS"]
+@days =  ["WEBSITE","PRODUCTO ","MOTIVO ","TIPO TARIFA","TARIFA","TIPO IMPRESIONES/CLICKS","IMPRESIONES CLICKS"]
 
 
      
@@ -153,8 +153,9 @@ sum_qty = 0
             order.website,
             order.medio_detail.name,
             @orden.version.descrip ,
-            order.tipo_cpm,                
-            order.tarifa_cpm,    
+            order.tipo_cpm.name,         
+            order.tarifa_cpm, 
+            order.tipo_formato.name ,
             order.impresion_click ]
 
             (1..days_mes).each do |row|

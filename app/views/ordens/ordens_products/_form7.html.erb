@@ -65,8 +65,11 @@
         <th>Producto  </th>
         <th> + </th>        
         <th>Motivo </th>
+
         <th>Tipo de Tarifa</th>
         <th>Tarifa</th>
+        <th>Tipo Impresion/Clicks</th>
+        
         <th>Impresiones/Clicks </th>
         
 
@@ -143,10 +146,11 @@
 
 
        <td class="small bordered_bottom bordered_left">
-         <div class="field">
-      
-          <%= f.text_field :tipo_cpm ,:style=> 'width: 40px'    %>
-        </div>
+        
+          <div class="field">
+              <%= f.collection_select :tipo_cpm_id, @tipo_cpms, :id, :name , {:include_blank=> true}, :style=> 'width: 100px' %>
+               
+            </div>
       </td>
 
       <td class="small bordered_bottom bordered_left", style="width: 80px">
@@ -155,14 +159,25 @@
          <%= f.number_field :tarifa_cpm ,:style=> 'width: 50px' ,min: 0,  :value => (number_with_precision(f.object.tarifa_cpm , :precision => 4) || 0) ,:step => 0.0001  %>
   
         </div>
+
       </td>
 
+
+      <td class="small bordered_bottom bordered_left", style="width: 80px">
+     
+          <div class="field"> 
+              <%= f.collection_select :tipo_formato_id, @tipo_formatos, :id, :name , {:include_blank=> true}, :style=> 'width: 100px' %>
+               
+            </div>
+ </td>
 
        <td class="small bordered_bottom bordered_left"> 
      
         <div class="field">           
          <%= f.number_field :impresion_click ,:style=> 'width: 80px' ,min: 0,  :value => (number_with_precision(f.object.impresion_click , :precision => 2) || 0) ,:step => 0.01  %>
-  
+
+
+        
         </div>
       </td>
 

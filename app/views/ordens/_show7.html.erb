@@ -150,6 +150,7 @@
   
   <tbody>
     
+
     <%  @ordens_products.each do |product| %>
     <tr>
           <td class="small bordered_bottom bordered_right">
@@ -164,12 +165,14 @@
           </td>
 
           <td class="small bordered_bottom bordered_right">
-           <%= product.tipo_cpm %>    
+           <%= product.tipo_cpm.name  %>    
           </td>
           <td class="small bordered_bottom bordered_right">
            <%= product.tarifa_cpm %>    
           </td>
-
+          <td class="small bordered_bottom bordered_right">
+           <%=  product.tipo_formato.name  %>    
+          </td>
           <td class="small bordered_bottom bordered_right">
            <%=  product.impresion_click  %>    
           </td>
