@@ -23,13 +23,13 @@ class MediosController < ApplicationController
   # GET /medios/new
   def new
     @medio = Medio.new
-    30.times {@medio.medio_details.build }
+    40.times {@medio.medio_details.build }
 
   end
 
   # GET /medios/1/edit
   def edit
-     30.times {@medio.medio_details.build }
+     40.times {@medio.medio_details.build }
   end
 
   # POST /medios
