@@ -34,7 +34,7 @@ a = User.new(username:"Daniel Herrera",level:"admin2",first_name:"Daniel", last_
   email:"danielh@massmedia.pe",password:"danielherrera2022",password_confirmation:"danielherrera2022")
 a.save
 
-a = User.new(username:"Leyla Ocmin",level:"admin2",first_name:"Leyla", last_name:"Ocmin",
+a = User.new(username:"Leyla Ocmin",level:"admin1",first_name:"Leyla", last_name:"Ocmin",
   email:"leylao@massmedia.pe",password:"Leylaocmin2022",password_confirmation:"Leylaocmin2022")
 a.save
 
@@ -63,10 +63,6 @@ a.save
 
 a = User.new(username:"Blanca Reyes",level:"planner",first_name:"Blanca", last_name:"Reyes",
   email:"blancar@massmedia.pe",password:"blanca2022",password_confirmation:"blanca2022")
-a.save
-
-a = User.new(username:"Leyla Ocmin",level:"planner",first_name:"Leyla", last_name:"Ocmin",
-  email:"leylao@massmedia.pe",password:"leylao2022",password_confirmation:"leylao2022")
 a.save
 
 
