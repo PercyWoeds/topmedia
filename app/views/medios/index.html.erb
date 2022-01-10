@@ -2,9 +2,12 @@
 
 <h1>Medios </h1>
 
+
 <table>
   <thead>
     <tr>
+      <th>RUC</th>
+      
       <th>Razon Social</th>
       <th>Tipo Medio</th>
       <th>Estacion</th>
@@ -12,10 +15,22 @@
     </tr>
   </thead>
 
+<div class="button">
+<%= link_to 'Nuevo Medio', new_medio_path %>
+
+
+
+
+<%= link_to "Excel", medios_path(format: "xls") %>
+</div>
+
   <tbody>
     <% @medios.each do |medio| %>
       <tr>
+        <td><%= medio.ruc %></td>
+        
         <td><%= medio.descrip %></td>
+
         <td><%= medio.grupo %></td>
         <td><%= medio.estacion %></td>
         <td><%= link_to 'Ver', medio %></td>
@@ -29,14 +44,6 @@
 </table>
 
 <br>
-
-<%= link_to 'Nuevo Medio', new_medio_path %>
-
-
-<%= link_to "CSV", medios_path(format: "csv") %> |
-
-<%= link_to "Excel", medios_path(format: "xls") %>
-
 
 <br>
 

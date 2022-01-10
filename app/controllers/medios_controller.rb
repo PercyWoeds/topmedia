@@ -6,6 +6,7 @@ class MediosController < ApplicationController
   def index
     @medios = Medio.order(:descrip)
     
+    
      respond_to do |format|
       format.html
       format.csv { send_data @medios.to_csv, filename: "medios-#{Date.today}.csv" }
@@ -24,12 +25,18 @@ class MediosController < ApplicationController
   def new
     @medio = Medio.new
     40.times {@medio.medio_details.build }
+    40.times {@medio.medio_contacts.build }
+
 
   end
 
   # GET /medios/1/edit
   def edit
+        @filters_display = "none"
+
      40.times {@medio.medio_details.build }
+     40.times {@medio.medio_contacts.build }
+
   end
 
   # POST /medios
@@ -96,7 +103,9 @@ class MediosController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def medio_params
       params.require(:medio).permit(:ruc,:descrip, :comments,:grupo,:estacion,:full_name,:taxable,:code  ,
-         :medio_details_attributes => [:id,:code, :name  ,:user_id,:medio_id, :destroy]  )
+         :medio_details_attributes => [:id,:code, :name  ,:user_id,:medio_id, :destroy] ,
+         :medio_contacts_attributes => [:id,:code , :name , :cargo , :telefono1 , :telefono2, :telefono3, :anexo1,
+         :anexo2, :anexo3, :celular1, :celular2, :celular3, :correo1, :correo2, :medio_id,:user_id, :destroy]  )
 
 
     end

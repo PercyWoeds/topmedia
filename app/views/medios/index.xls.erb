@@ -8,11 +8,29 @@
     <Table>
       <Row>
         <Cell><Data ss:Type="String">ID</Data></Cell>
-        <Cell><Data ss:Type="String">Descripo</Data></Cell>
+        <Cell><Data ss:Type="String" >Descrip</Data></Cell>
         <Cell><Data ss:Type="String">Ruc</Data></Cell>
-        <Cell><Data ss:Type="String">Cuenta</Data></Cell>
-        <Cell><Data ss:Type="String">RUC</Data></Cell>
-      </Row>
+        <Cell><Data ss:Type="String">Grupo</Data></Cell>
+        <Cell><Data ss:Type="String">Estacion</Data></Cell>
+        <Cell><Data ss:Type="String">Codigo</Data></Cell>
+        <Cell><Data ss:Type="String">Formato</Data></Cell>
+        <Cell><Data ss:Type="String">Codigo</Data></Cell>
+        <Cell><Data ss:Type="String">Nombre</Data></Cell>
+
+        <Cell><Data ss:Type="String">Cargo</Data></Cell>
+        <Cell><Data ss:Type="String">Telefono1</Data></Cell>
+        <Cell><Data ss:Type="String">Telefono2</Data></Cell>
+        <Cell><Data ss:Type="String">Telefono3</Data></Cell>
+        <Cell><Data ss:Type="String">Anexo 1</Data></Cell>
+        <Cell><Data ss:Type="String">Anexo 2</Data></Cell>
+        <Cell><Data ss:Type="String">Anexo 3</Data></Cell>
+        <Cell><Data ss:Type="String">Celular 1</Data></Cell>
+        <Cell><Data ss:Type="String">Celular 2</Data></Cell>
+        <Cell><Data ss:Type="String">Celular 3</Data></Cell>
+        <Cell><Data ss:Type="String">Correo 1</Data></Cell>
+        <Cell><Data ss:Type="String">Correo 2</Data></Cell>
+        
+              </Row>
     <% @medios.each do |product| %>
       <Row>
         <Cell><Data ss:Type="Number"><%= product.id %></Data></Cell>
@@ -21,7 +39,61 @@
         <Cell><Data ss:Type="String"><%= product.grupo %></Data></Cell>
         <Cell><Data ss:Type="String"><%= product.estacion %></Data></Cell>
       </Row>
+
+        <% product.medio_details.each  do |formato| %>
+
+      <Row>
+        <Cell><Data ss:Type="Number"><%= product.id %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.descrip %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.ruc %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.grupo %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.estacion %></Data></Cell>
+
+        <Cell><Data ss:Type="String"><%= formato.code %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= formato.name %></Data></Cell>
+        
+      </Row>
+
+
+
+         <% end  %> 
+    <% product.medio_contacts.each  do |formato2| %>
+
+      <Row>
+       <Cell><Data ss:Type="Number"><%= product.id %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.descrip %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.ruc %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.grupo %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.estacion %></Data></Cell>
+        <Cell><Data ss:Type="String"></Data></Cell>
+        <Cell><Data ss:Type="String"></Data></Cell>
+
+        <Cell><Data ss:Type="Number"><%= formato2.code %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= formato2.name %></Data></Cell> 
+        <Cell><Data ss:Type="String"><%= formato2.cargo %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= formato2.telefono1%></Data></Cell>
+        <Cell><Data ss:Type="String"><%= formato2.telefono2%></Data></Cell>
+        <Cell><Data ss:Type="String"><%= formato2.telefono3%></Data></Cell>
+        <Cell><Data ss:Type="String"><%= formato2.anexo1%></Data></Cell>
+        <Cell><Data ss:Type="String"><%= formato2.anexo2%></Data></Cell>
+        <Cell><Data ss:Type="String"><%= formato2.anexo3%></Data></Cell>
+        <Cell><Data ss:Type="String"><%= formato2.celular1%></Data></Cell>
+        <Cell><Data ss:Type="String"><%= formato2.celular2%></Data></Cell>
+        <Cell><Data ss:Type="String"><%= formato2.celular3%></Data></Cell>
+        <Cell><Data ss:Type="String"><%= formato2.correo1%></Data></Cell>
+        <Cell><Data ss:Type="String"><%= formato2.correo2%></Data></Cell>
+        
+        
+      </Row>
+
+
+
+         <% end  %> 
+
+
+    
     <% end %>
+
     </Table>
   </Worksheet>
 </Workbook>

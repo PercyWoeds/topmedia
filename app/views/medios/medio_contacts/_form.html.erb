@@ -1,0 +1,26 @@
+
+<%= simple_form_for [@medio, @medio_contact ] do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :code %>
+    <%= f.input :name %>
+    <%= f.input :cargo %>
+    <%= f.input :telefono1 %>
+    <%= f.input :telefono2 %>
+    <%= f.input :telefono3 %>
+    <%= f.input :anexo1 %>
+    <%= f.input :anexo2 %>
+    <%= f.input :anexo3 %>
+    <%= f.input :celular1 %>
+    <%= f.input :celular2 %>
+    <%= f.input :celular3 %>
+    <%= f.input :correo1 %>
+    <%= f.input :correo2 %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
+

@@ -1,6 +1,5 @@
 class Medios::MedioDetailsController < ApplicationController
-  before_action :set_medio 
-  
+  before_action :set_medio   
   before_action :set_medio_detail, only: [:show, :edit, :update, :destroy ]
 
   # GET /medio_details/1

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220105001439) do
+ActiveRecord::Schema.define(version: 20220108134047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -246,21 +246,6 @@ ActiveRecord::Schema.define(version: 20220105001439) do
     t.datetime "updated_at",     null: false
     t.float    "cargos"
     t.float    "abonos"
-  end
-
-  create_table "conciliations", force: :cascade do |t|
-    t.integer  "bank_acount_id"
-    t.integer  "document_id"
-    t.string   "documento"
-    t.integer  "supplier_id"
-    t.float    "total"
-    t.datetime "fecha1"
-    t.datetime "fecha2"
-    t.string   "descrip"
-    t.string   "code"
-    t.integer  "concept_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
   end
 
   create_table "contrato_abonos", force: :cascade do |t|
@@ -960,6 +945,29 @@ ActiveRecord::Schema.define(version: 20220105001439) do
     t.integer  "customer_id"
   end
 
+  create_table "medio_contacts", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "cargo"
+    t.string   "telefono1"
+    t.string   "telefono2"
+    t.string   "telefono3"
+    t.string   "anexo1"
+    t.string   "anexo2"
+    t.string   "anexo3"
+    t.string   "celular1"
+    t.string   "celular2"
+    t.string   "celular3"
+    t.string   "correo1"
+    t.string   "correo2"
+    t.integer  "medio_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "user_id"
+  end
+
+  add_index "medio_contacts", ["medio_id"], name: "index_medio_contacts_on_medio_id", using: :btree
+
   create_table "medio_customers", force: :cascade do |t|
     t.integer  "medio_id"
     t.integer  "customer_id"
@@ -972,12 +980,13 @@ ActiveRecord::Schema.define(version: 20220105001439) do
   create_table "medio_details", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
-    t.string   "user_id"
+    t.integer  "user_id"
     t.integer  "medio_id"
-    t.integer  "medios_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "medio_details", ["medio_id"], name: "index_medio_details_on_medio_id", using: :btree
 
   create_table "medios", force: :cascade do |t|
     t.string   "descrip"
@@ -1222,7 +1231,6 @@ ActiveRecord::Schema.define(version: 20220105001439) do
     t.float    "importe"
     t.string   "status"
     t.string   "mesanio"
-    t.string   "program"
     t.integer  "tipo_orden_id"
     t.string   "facturado"
     t.string   "factura_id"
@@ -1831,7 +1839,6 @@ ActiveRecord::Schema.define(version: 20220105001439) do
   create_table "tipo_avisos", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
-    t.string   "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -1860,7 +1867,6 @@ ActiveRecord::Schema.define(version: 20220105001439) do
   create_table "tipo_tarifas", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
-    t.string   "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -2026,6 +2032,7 @@ ActiveRecord::Schema.define(version: 20220105001439) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "medio_contacts", "medios"
   add_foreign_key "medio_details", "medios"
   add_foreign_key "orden_products", "tipo_tarifas"
   add_foreign_key "tanks", "companies"

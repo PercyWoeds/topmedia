@@ -1,0 +1,57 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Medio Contacts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Cargo</th>
+      <th>Telefon1</th>
+      <th>Telefono2</th>
+      <th>Telefono3</th>
+      <th>Anexo1</th>
+      <th>Anexo2</th>
+      <th>Anexo3</th>
+      <th>Celular1</th>
+      <th>Celular2</th>
+      <th>Celular3</th>
+      <th>Correo1</th>
+      <th>Correo2</th>
+      <th>References</th>
+      <th>Medios</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @medio_contacts.each do |medio_contact| %>
+      <tr>
+        <td><%= medio_contact.code %></td>
+        <td><%= medio_contact.name %></td>
+        <td><%= medio_contact.cargo %></td>
+        <td><%= medio_contact.telefon1 %></td>
+        <td><%= medio_contact.telefono2 %></td>
+        <td><%= medio_contact.telefono3 %></td>
+        <td><%= medio_contact.anexo1 %></td>
+        <td><%= medio_contact.anexo2 %></td>
+        <td><%= medio_contact.anexo3 %></td>
+        <td><%= medio_contact.celular1 %></td>
+        <td><%= medio_contact.celular2 %></td>
+        <td><%= medio_contact.celular3 %></td>
+        <td><%= medio_contact.correo1 %></td>
+        <td><%= medio_contact.correo2 %></td>
+        <td><%= medio_contact.references %></td>
+        <td><%= medio_contact.medios %></td>
+        <td><%= link_to 'Show', medio_contact %></td>
+        <td><%= link_to 'Edit', edit_medio_contact_path(medio_contact) %></td>
+        <td><%= link_to 'Destroy', medio_contact, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Medio contact', new_medio_contact_path %>

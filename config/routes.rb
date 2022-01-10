@@ -1,6 +1,7 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :medio_contacts
   resources :medio_details
   resources :medio_details
   resources :medio_details
@@ -129,7 +130,8 @@
  
   end 
    resources :medios do
-    resources :medio_details, except: [:index,:show], controller: "medios/medio_details"
+    resources :medio_details,  except: [:index,:show], controller: "medios/medio_details"
+    resources :medio_contacts, except: [:index,:show], controller: "medios/medio_contacts"
 
  
   end 
