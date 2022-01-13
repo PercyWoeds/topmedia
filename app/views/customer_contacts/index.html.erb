@@ -1,0 +1,57 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Customer Contacts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Cargo</th>
+      <th>Telefono1</th>
+      <th>Telefono2</th>
+      <th>Telefono3</th>
+      <th>Anexo1</th>
+      <th>Anexo2</th>
+      <th>Anexo3</th>
+      <th>Celular1</th>
+      <th>Celular2</th>
+      <th>Celular3</th>
+      <th>Correo1</th>
+      <th>Correo2</th>
+      <th>Contacto</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @customer_contacts.each do |customer_contact| %>
+      <tr>
+        <td><%= customer_contact.code %></td>
+        <td><%= customer_contact.name %></td>
+        <td><%= customer_contact.cargo %></td>
+        <td><%= customer_contact.telefono1 %></td>
+        <td><%= customer_contact.telefono2 %></td>
+        <td><%= customer_contact.telefono3 %></td>
+        <td><%= customer_contact.anexo1 %></td>
+        <td><%= customer_contact.anexo2 %></td>
+        <td><%= customer_contact.anexo3 %></td>
+        <td><%= customer_contact.celular1 %></td>
+        <td><%= customer_contact.celular2 %></td>
+        <td><%= customer_contact.celular3 %></td>
+        <td><%= customer_contact.correo1 %></td>
+        <td><%= customer_contact.correo2 %></td>
+        <td><%= customer_contact.contacto_id %></td>
+        <td><%= customer_contact.user_id %></td>
+        <td><%= link_to 'Show', customer_contact %></td>
+        <td><%= link_to 'Edit', edit_customer_contact_path(customer_contact) %></td>
+        <td><%= link_to 'Destroy', customer_contact, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Customer contact', new_customer_contact_path %>

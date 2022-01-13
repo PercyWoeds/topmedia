@@ -1,6 +1,7 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :customer_contacts
   resources :medio_contacts
   resources :medio_details
   resources :medio_details

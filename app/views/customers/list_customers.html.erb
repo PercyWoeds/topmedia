@@ -23,19 +23,13 @@
 
 <div class="button">
   <%= link_to 'Nuevo Cliente', "/customers/new/#{@company.id}" %>
-</div>
-
 
 
 <%= link_to "Excel", customers_path(format: "xls") %>
 
+</div>
 
-<h2>Importar Archivo clientes "*.csv"</h2>
 
-<%= form_tag import_customers_path, multipart: true do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "Importar " %>
-<% end %>
 
 
 <%= will_paginate @customers %>

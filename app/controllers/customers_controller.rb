@@ -77,6 +77,8 @@ class CustomersController < ApplicationController
     @company = Company.find(params[:company_id])
     @customer.company_id = @company.id
     
+     40.times {@customer.customer_contacts.build }
+
     if(params[:ajax])
       @ajax = true
       render :layout => false
@@ -89,7 +91,8 @@ class CustomersController < ApplicationController
     
     @customer = Customer.find(params[:id])
     @edit = true
-    
+     40.times {@customer.customer_contacts.build }
+
     @company = Company.find(@customer[:company_id])
   end
   
@@ -187,7 +190,10 @@ class CustomersController < ApplicationController
     private
 
     def customer_params
-      params.require(:customer).permit(:company_id,:email,:phone1,:phone2,:address1,:address2,:city,:state,:zip,:country,:comments,:account,:taxable,:name,:ruc)
+      params.require(:customer).permit(:company_id,:email,:phone1,:phone2,:address1,:address2,:city,:state,:zip,:country,
+        :comments,:account,:taxable,:name,:ruc,
+         :customer_contacts_attributes => [:id,:code , :name , :cargo , :telefono1 , :telefono2, :telefono3, :anexo1,
+         :anexo2, :anexo3, :celular1, :celular2, :celular3, :correo1, :correo2, :medio_id,:user_id, :destroy]  )
     end
 
 end

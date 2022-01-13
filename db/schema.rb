@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220108134047) do
+ActiveRecord::Schema.define(version: 20220113190751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -354,6 +354,28 @@ ActiveRecord::Schema.define(version: 20220108134047) do
     t.float    "total1"
   end
 
+  create_table "customer_contacts", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "cargo"
+    t.string   "telefono1"
+    t.string   "telefono2"
+    t.string   "telefono3"
+    t.string   "anexo1"
+    t.string   "anexo2"
+    t.string   "anexo3"
+    t.string   "celular1"
+    t.string   "celular2"
+    t.string   "celular3"
+    t.string   "correo1"
+    t.string   "correo2"
+    t.integer  "contacto_id"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "customer_id"
+  end
+
   create_table "customer_contratos", force: :cascade do |t|
     t.integer  "customer_id"
     t.string   "secu_org"
@@ -430,6 +452,7 @@ ActiveRecord::Schema.define(version: 20220108134047) do
     t.string   "name"
     t.string   "ruc"
     t.string   "active"
+    t.integer  "{:index=>true, :foreign_key=>true}_id"
   end
 
   create_table "declaration_deliveries", force: :cascade do |t|

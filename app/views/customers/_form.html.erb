@@ -75,8 +75,83 @@
     <%= f.check_box :taxable %>
     <%= f.label :taxable %>
   </div>
-  <div class="actions">
+  
+
+<% nroitem =  1 %>
+
+<h3>Clientes - Contactos  </h3>
+
+<table>
+
+
+   <tr>
+   <th style="width: 5%">Item </th>
+   <th style="width: 5%">Code </th>
+   <th style="width: 15%">Nombre </th>
+   <th style="width: 15%">Cargo </th>
+   <th style="width: 15%">Telefono 1 </th>
+   <th style="width: 15%">Telefono 2 </th>
+   <th style="width: 15%">Telefono 3 </th>
+   <th style="width: 10%">Anexo 1</th>
+   <th style="width: 10%">Anexo 2</th>
+   <th style="width: 10%">Anexo 3</th>
+   
+   <th style="width: 10%">Celular 1</th>
+   <th style="width: 10%">Celular 2</th>
+   <th style="width: 10%">Celular 3</th>
+   
+   <th style="width: 10%">Correo 1</th>
+   <th style="width: 10%">Correo 2</th>
+   
+   
+   <% nroitem = 1 %>
+
+   </tr>
+
+    <%= f.fields_for :customer_contacts  do |rq_fields2| %>
+    
+    <tr>
+
+    <td style="width: 5%">  <%= nroitem %> </td>
+
+    <td style="width: 10%">  <%= rq_fields2.text_field :code , :size=>"5" %></td>
+
+    <td style="width: 15%">  <%= rq_fields2.text_field :name , :size=>"15" %></td>
+
+    <td style="width: 15%">  <%= rq_fields2.text_field :cargo , :size=>"15" %></td>    
+    <td style="width: 15%">  <%= rq_fields2.text_field :telefono1 , :size=>"15" %></td>
+    <td style="width: 15%">  <%= rq_fields2.text_field :telefono2 , :size=>"15" %></td>    
+    <td style="width: 30%">  <%= rq_fields2.text_field :telefono3 , :size=>"15" %></td>
+    <td style="width: 30%">  <%= rq_fields2.text_field :anexo1 , :size=>"15" %></td>    
+    <td style="width: 30%">  <%= rq_fields2.text_field :anexo2 , :size=>"15" %></td>
+    <td style="width: 30%">  <%= rq_fields2.text_field :anexo3 , :size=>"15" %></td>    
+    <td style="width: 30%">  <%= rq_fields2.text_field :celular1 , :size=>"15" %></td>
+    <td style="width: 30%">  <%= rq_fields2.text_field :celular2 , :size=>"15" %></td>
+    <td style="width: 30%">  <%= rq_fields2.text_field :celular3 , :size=>"15" %></td>
+    <td style="width: 30%">  <%= rq_fields2.text_field :correo1 , :size=>"15" %></td>
+    <td style="width: 30%">  <%= rq_fields2.text_field :correo2 , :size=>"15" %></td>
+    
+             
+
+    </tr>
+
+   
+  
+    <% nroitem +=1 %>
+
+    
+    <% end %>
+   </table>
+    <div class="actions">
     <%= f.hidden_field :company_id %>
     <%= f.submit %>
   </div>
+
+
 <% end %>
+
+
+
+
+
+</div>

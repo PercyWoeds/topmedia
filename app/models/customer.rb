@@ -11,11 +11,11 @@ class Customer < ActiveRecord::Base
   has_many :quotes 
   has_many :ordens 
   has_many :customer_contratos
+  
+  
+  has_many :customer_contacts , dependent: :destroy
 
-  
-  
-  
-  #accepts_nested_attributes_for :quotes, :reject_if => lambda { |a| a[:importe].blank? }, :allow_destroy => true
+ accepts_nested_attributes_for :customer_contacts , reject_if: proc { |att| att['name'].blank?} , :allow_destroy => true
 
 
     def self.import(file)
