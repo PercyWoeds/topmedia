@@ -43,6 +43,7 @@ class MediosController < ApplicationController
   # POST /medios.json
   def create
     @medio = Medio.new(medio_params)
+    
 
     nroitem = 1
 
@@ -65,6 +66,7 @@ class MediosController < ApplicationController
   # PATCH/PUT /medios/1.json
   def update
     respond_to do |format|
+
       if @medio.update(medio_params)
         format.html { redirect_to @medio, notice: 'Medio was successfully updated.' }
         format.json { render :show, status: :ok, location: @medio }
