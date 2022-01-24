@@ -9,6 +9,7 @@ class SessionsController < ApplicationController
     @pagetitle = "Sessions"
     
     @sessions = Session.paginate :page => params[:page], :order => 'id DESC'
+
   end
 
   # GET /sessions/1
@@ -23,6 +24,7 @@ class SessionsController < ApplicationController
   def new
     @pagetitle = "New Session"
     @session = Session.new
+      @company = Company.find(1)
   end
 
   # GET /sessions/1/edit

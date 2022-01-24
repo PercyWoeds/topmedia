@@ -80,6 +80,8 @@ class PagesController < ApplicationController
   
   # Frontpage
   def frontpage
+      @company = Company.find(1)
+      
   end
   
   # GET /pages
@@ -87,6 +89,8 @@ class PagesController < ApplicationController
   def index
     @pagetitle = "Pages"
     @pages = Page.all
+      @company = Company.find(1)
+
   end
 
   # GET /pages/1
