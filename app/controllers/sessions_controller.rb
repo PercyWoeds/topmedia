@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
   def new
     @pagetitle = "New Session"
     @session = Session.new
-      @company = Company.find(1)
+      @company = Company.find(1)  
   end
 
   # GET /sessions/1/edit
