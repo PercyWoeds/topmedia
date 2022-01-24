@@ -149,12 +149,38 @@ borders[:bottom_right]]
 sum_qty = 0 
 
    @orden_detalle.each do |order|
+
+
+           if !order.medio_detail_id.nil? 
+             @medio_detail_name =  order.medio_detail.name     
+             else
+             @medio_detail_name =  ""
+            end 
+
+        
+            if !order.tipo_aviso_id.nil?
+            
+            @tipo_aviso_name =  product.tipo_aviso.name  
+           else
+            @tipo_aviso_name =  ""
+           end
+
+             if !order.tipo_tarifa_id.nil?
+            
+            @tipo_tarifa_name =  product.tipo_tarifa.name 
+            else
+             @tipo_tarifa_name =  ""
+            end
+
+
+
+
          @days0 = [
-            order.medio_detail.name,
+            @medio_detail_name ,
             @orden.version.descrip ,
             order.descrip,
-            order.tipo_aviso.name,
-            order.tipo_tarifa.name,
+            @tipo_aviso_name,
+            @tipo_tarifa_name,
             order.cobertura,
             order.horario,
             order.duracion ]

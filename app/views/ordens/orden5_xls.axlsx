@@ -100,8 +100,17 @@ wb.styles do |s|
       puts "orden...."
       puts order.medio_detail.name 
 
+
+
+           if !order.medio_detail_id.nil? 
+             @medio_detail_name =  order.medio_detail.name     
+             else
+             @medio_detail_name =  ""
+            end 
+
+
          sheet.add_row [
-            order.medio_detail.name,
+            @medio_detail_name,
             @orden.version.descrip ,
             order.quantity,
             order.ubicacion,

@@ -149,9 +149,20 @@ borders[:bottom_right]]
 sum_qty = 0 
 
    @orden_detalle.each do |order|
+
+          if !order.medio_detail_id.nil? 
+             @medio_detail_name =  order.medio_detail.name     
+             else
+             @medio_detail_name =  ""
+            end 
+
+        
+
+
+
          @days0 = [
             order.website,
-            order.medio_detail.name,
+            @medio_detail_name,
             @orden.version.descrip ,
             order.tipo_cpm.name,         
             order.tarifa_cpm, 

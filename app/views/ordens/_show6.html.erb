@@ -161,7 +161,11 @@
          
 
           <td class="small bordered_bottom bordered_right">
+               <% if !product.medio_detail_id.nil?%>
              <%= product.medio_detail.name  %>    
+            <% else %>
+             - 
+            <% end %>
           </td>
           <td class="small bordered_bottom bordered_right">
            <%= @orden.version.descrip  %>    
@@ -171,12 +175,24 @@
            <%= product.descrip %>    
           </td>
 
-          <td class="small bordered_bottom bordered_right">
+            <td class="small bordered_bottom bordered_right">
+
+        <% if !product.tipo_aviso_id.nil?%>
+            
            <%=  product.tipo_aviso.name  %>    
+          <% else %>
+             - 
+            <% end %>
           </td>
           
           <td class="small bordered_bottom bordered_right">
+           <% if !product.tipo_tarifa_id.nil?%>
+            
            <%=  product.tipo_tarifa.name %>    
+            <% else %>
+             - 
+            <% end %>
+         
           </td>
           <td class="small bordered_bottom bordered_right">
           

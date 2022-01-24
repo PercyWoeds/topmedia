@@ -50,7 +50,13 @@
           </td>
 
           <td class="small bordered_bottom bordered_right">
-            <%= product.medio_detail.name  %>    
+            <% if !product.medio_detail_id.nil?%>
+             <%= product.medio_detail.name  %>    
+            <% else %>
+             - 
+            <% end %>
+
+              
           </td>
           <td class="small bordered_bottom bordered_right">
             <%= @orden.version.descrip  %>    
