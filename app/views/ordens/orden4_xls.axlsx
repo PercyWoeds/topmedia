@@ -215,7 +215,7 @@ sum_qty = 0
                         
     
     
-         sheet.add_row  @days0.map{|col| col  } , :style =>    cadena0
+         sheet.add_row  @days0.map{|col| col  } , :style =>    cadena0  
             
    end
 

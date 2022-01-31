@@ -272,7 +272,7 @@ sum_qty = 0
  
   
     sheet.add_row [""]   
-    sheet.add_row [""]
+    sheet.add_row [""]  
   @fila_obs =  []
   @fila_des =  []
   @fila_3 =  []
