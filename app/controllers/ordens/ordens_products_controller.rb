@@ -54,7 +54,7 @@ class Ordens::OrdensProductsController < ApplicationController
    @orden_product.nro_semanas  = 0
 
    
-    @orden_product.avisodetail_id = 131
+    @orden_product.avisodetail_id = 3517
 
 
     @orden_product_medio_details = @orden_product.get_medio_details(@orden.medio_id )
@@ -78,6 +78,10 @@ class Ordens::OrdensProductsController < ApplicationController
     @tipo_avisos = @company.get_tipo_aviso()
     @tipo_tarifas = @company.get_tipo_tarifa()
 
+    @tipo_cpms = TipoCpm.all 
+    @tipo_formatos = TipoFormato.all 
+
+
     @orden_product_medio_details = @orden_product.get_medio_details(@orden.medio_id )
   
 
@@ -93,6 +97,138 @@ class Ordens::OrdensProductsController < ApplicationController
 
     @orden_product.orden_id  = @orden.id
      puts "createee+++++++++++++++++++++++++++++"
+
+    if @orden.tipo_orden_id == 1
+
+        @orden_product.avisodetail_id = 3517
+        @orden_product.price = @orden_product.tarifa 
+        sum_dias = 1
+        @orden_product.quantity = sum_dias
+       
+
+    end 
+
+ 
+    if @orden.tipo_orden_id == 2 or @orden.tipo_orden_id == 6  or @orden.tipo_orden_id == 7
+
+        @orden_product.avisodetail_id = 3517
+
+        sum_dias = (@orden_product.d01 + @orden_product.d02 + @orden_product.d03 + @orden_product.d04+
+                    @orden_product.d05 + @orden_product.d06 + @orden_product.d07 + @orden_product.d08+
+                    @orden_product.d09 + @orden_product.d10 + @orden_product.d11 + @orden_product.d12+
+                    @orden_product.d13 + @orden_product.d14 + @orden_product.d15 + @orden_product.d16+
+                    @orden_product.d17 + @orden_product.d18 + @orden_product.d19 + @orden_product.d20+
+                    @orden_product.d21 + @orden_product.d22 + @orden_product.d23 + @orden_product.d24+
+                    @orden_product.d25 + @orden_product.d26 + @orden_product.d27 + @orden_product.d28+
+                    @orden_product.d29 + @orden_product.d30 + @orden_product.d31)
+
+        @orden_product.quantity = sum_dias
+        @orden_product.tarifa   = 0 
+         puts "datoos----2 "
+         puts  @orden_product.avisodetail_id 
+         puts   @orden_product.price
+         puts  @orden_product.quantity 
+
+    end 
+
+    if @orden.tipo_orden_id == 3
+
+        @orden_product.avisodetail_id = 3517
+
+        sum_dias = (@orden_product.d01 + @orden_product.d02 + @orden_product.d03 + @orden_product.d04+
+                    @orden_product.d05 + @orden_product.d06 + @orden_product.d07 + @orden_product.d08+
+                    @orden_product.d09 + @orden_product.d10 + @orden_product.d11 + @orden_product.d12+
+                    @orden_product.d13 + @orden_product.d14 + @orden_product.d15 + @orden_product.d16+
+                    @orden_product.d17 + @orden_product.d18 + @orden_product.d19 + @orden_product.d20+
+                    @orden_product.d21 + @orden_product.d22 + @orden_product.d23 + @orden_product.d24+
+                    @orden_product.d25 + @orden_product.d26 + @orden_product.d27 + @orden_product.d28+
+                    @orden_product.d29 + @orden_product.d30 + @orden_product.d31)
+
+        @orden_product.quantity = sum_dias
+        @orden_product.tarifa   = 0 
+         puts "datoos----2 "
+         puts  @orden_product.avisodetail_id 
+         puts   @orden_product.price
+         puts  @orden_product.quantity 
+
+    end 
+
+    if @orden.tipo_orden_id == 4 
+
+        @orden_product.avisodetail_id = 3517
+         @orden_product.tarifa   = 0 
+        sum_dias = (@orden_product.d01 + @orden_product.d02 + @orden_product.d03 + @orden_product.d04+
+                    @orden_product.d05 + @orden_product.d06 + @orden_product.d07 + @orden_product.d08+
+                    @orden_product.d09 + @orden_product.d10 + @orden_product.d11 + @orden_product.d12+
+                    @orden_product.d13 + @orden_product.d14 + @orden_product.d15 + @orden_product.d16+
+                    @orden_product.d17 + @orden_product.d18 + @orden_product.d19 + @orden_product.d20+
+                    @orden_product.d21 + @orden_product.d22 + @orden_product.d23 + @orden_product.d24+
+                    @orden_product.d25 + @orden_product.d26 + @orden_product.d27 + @orden_product.d28+
+                    @orden_product.d29 + @orden_product.d30 + @orden_product.d31)
+
+        @orden_product.quantity = sum_dias
+        
+
+    end 
+
+    if @orden.tipo_orden_id == 5
+
+        @orden_product.avisodetail_id = 3517
+
+        sum_dias =  @orden_product.quantity 
+
+   
+        @orden_product.tarifa   = 0 
+         puts "datoos----2 "
+         puts  @orden_product.avisodetail_id 
+         puts   @orden_product.price
+         puts  @orden_product.quantity 
+
+    end 
+
+
+    @orden_product.total = @orden_product.price * sum_dias
+  
+    puts @orden_product.total 
+
+     respond_to do |format|
+       if @orden_product.save
+
+           @orden[:subtotal] = @orden.get_subtotal("subtotal")
+           puts @orden[:subtotal]
+           @orden[:tax] = @orden.get_subtotal("tax")
+           puts  @orden[:tax] 
+           @orden[:total] = @orden[:subtotal] + @orden[:tax]
+           puts @orden[:total]
+
+           @orden.update_attributes(:subtotal=> @orden[:subtotal])
+
+         format.html { redirect_to @orden, notice: 'Orden product was successfully created.' }
+         format.json { render :show, status: :created, location: @orden }
+
+       else
+         format.html { render :new }
+         format.json { render json: @orden_product.errors, status: :unprocessable_entity }
+
+       end
+     end
+  end
+
+  # PATCH/PUT /orden_products/1
+  # PATCH/PUT /orden_products/1.json
+  def update
+    @orden = Orden.find(params[:orden_id])
+
+    @orden_product = OrdenProduct.find(params[:id])
+
+  
+    puts @orden_product.tarifa 
+    puts @orden.tiempo
+
+
+  
+    @company = Company.find(1)
+
 
     if @orden.tipo_orden_id == 1
 
@@ -185,67 +321,7 @@ class Ordens::OrdensProductsController < ApplicationController
 
     @orden_product.total = @orden_product.price * sum_dias
   
-    puts @orden_product.total 
 
-     respond_to do |format|
-       if @orden_product.save
-
-           @orden[:subtotal] = @orden.get_subtotal("subtotal")
-           puts @orden[:subtotal]
-           @orden[:tax] = @orden.get_subtotal("tax")
-           puts  @orden[:tax] 
-           @orden[:total] = @orden[:subtotal] + @orden[:tax]
-           puts @orden[:total]
-
-           @orden.update_attributes(:subtotal=> @orden[:subtotal])
-
-         format.html { redirect_to @orden, notice: 'Orden product was successfully created.' }
-         format.json { render :show, status: :created, location: @orden }
-
-       else
-         format.html { render :new }
-         format.json { render json: @orden_product.errors, status: :unprocessable_entity }
-
-       end
-     end
-  end
-
-  # PATCH/PUT /orden_products/1
-  # PATCH/PUT /orden_products/1.json
-  def update
-    @orden = Orden.find(params[:orden_id])
-
-    @orden_product = OrdenProduct.find(params[:id])
-
-  
-    puts @orden_product.tarifa 
-    puts @orden.tiempo
-
-
-  
-    @company = Company.find(1)
-
-
-
-   sum_dias = (@orden_product.d01 + @orden_product.d02 + @orden_product.d03 + @orden_product.d04+
-                @orden_product.d05 + @orden_product.d06 + @orden_product.d07 + @orden_product.d08+
-                @orden_product.d09 + @orden_product.d10 + @orden_product.d11 + @orden_product.d12+
-                @orden_product.d13 + @orden_product.d14 + @orden_product.d15 + @orden_product.d16+
-                @orden_product.d17 + @orden_product.d18 + @orden_product.d19 + @orden_product.d20+
-                @orden_product.d21 + @orden_product.d22 + @orden_product.d23 + @orden_product.d24+
-                @orden_product.d25 + @orden_product.d26 + @orden_product.d27 + @orden_product.d28+
-                @orden_product.d29 + @orden_product.d30 + @orden_product.d31)
-    @orden_product.quantity = sum_dias
-
-
-    @orden_product.total = @orden_product[:price] * sum_dias
-
-
-    puts "cantidadess...."
-    puts sum_dias
-
-    puts   @orden_product.total
-    
     respond_to do |format|
       if @orden_product.update(orden_product_params)
 

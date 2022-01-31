@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220113190751) do
+ActiveRecord::Schema.define(version: 20220104133133) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -248,6 +248,21 @@ ActiveRecord::Schema.define(version: 20220113190751) do
     t.float    "abonos"
   end
 
+  create_table "conciliations", force: :cascade do |t|
+    t.integer  "bank_acount_id"
+    t.integer  "document_id"
+    t.string   "documento"
+    t.integer  "supplier_id"
+    t.float    "total"
+    t.datetime "fecha1"
+    t.datetime "fecha2"
+    t.string   "descrip"
+    t.string   "code"
+    t.integer  "concept_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "contrato_abonos", force: :cascade do |t|
     t.datetime "fecha"
     t.integer  "customer_id"
@@ -452,7 +467,6 @@ ActiveRecord::Schema.define(version: 20220113190751) do
     t.string   "name"
     t.string   "ruc"
     t.string   "active"
-    t.integer  "{:index=>true, :foreign_key=>true}_id"
   end
 
   create_table "declaration_deliveries", force: :cascade do |t|
@@ -618,12 +632,12 @@ ActiveRecord::Schema.define(version: 20220113190751) do
     t.datetime "updated_at",         null: false
     t.integer  "contrato_detail_id"
     t.integer  "contrato_id"
+    t.string   "service_id"
+    t.string   "price"
+    t.string   "quantity"
+    t.string   "discount"
     t.integer  "orden_id"
     t.integer  "medio_id"
-    t.float    "price"
-    t.float    "quantity"
-    t.float    "discount"
-    t.integer  "service_id"
   end
 
   create_table "facturas", force: :cascade do |t|
@@ -1204,15 +1218,11 @@ ActiveRecord::Schema.define(version: 20220113190751) do
     t.string   "cobertura"
     t.string   "horario"
     t.integer  "tipo_aviso_id"
-    t.integer  "tipo_tarifa_id"
-    t.integer  "tipo_tarifas_id"
     t.integer  "medio_detail_id"
     t.string   "pelicula"
     t.integer  "tipo_cpm_id"
     t.integer  "tipo_formato_id"
   end
-
-  add_index "orden_products", ["tipo_tarifas_id"], name: "index_orden_products_on_tipo_tarifas_id", using: :btree
 
   create_table "ordens", force: :cascade do |t|
     t.integer  "contrato_id"
@@ -1254,6 +1264,7 @@ ActiveRecord::Schema.define(version: 20220113190751) do
     t.float    "importe"
     t.string   "status"
     t.string   "mesanio"
+    t.string   "program"
     t.integer  "tipo_orden_id"
     t.string   "facturado"
     t.string   "factura_id"
@@ -2057,7 +2068,6 @@ ActiveRecord::Schema.define(version: 20220113190751) do
 
   add_foreign_key "medio_contacts", "medios"
   add_foreign_key "medio_details", "medios"
-  add_foreign_key "orden_products", "tipo_tarifas"
   add_foreign_key "tanks", "companies"
   add_foreign_key "tanks", "products"
 end

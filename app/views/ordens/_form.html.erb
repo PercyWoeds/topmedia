@@ -42,7 +42,9 @@
 
     <div class="field">
       <%= f.label :tipo_orden_id %><br />
-      <%= f.collection_select :tipo_orden_id, @tipo_ordens,:id,:descrip,{:prompt   => "Selec un tipo orden "} %>
+
+    <%=  f.collection_select(:tipo_orden_id, @tipo_ordens, :id,:descrip , size: @tipo_ordens.size) %>
+   
     </div>
 
 

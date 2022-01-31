@@ -162,8 +162,7 @@
 <%= hr() %>
 
 <div class="button">
-  <%= link_to 'Export to PDF', "/ordens/pdf/#{@orden.id} " %>
-
+  
   <%= link_to 'Export to XLS', "/ordens/xls/#{@orden.id} " %>
 
 
@@ -171,7 +170,7 @@
   <%= link_to 'Procesar orden', "/ordens/do_process/#{@orden.id}" %>
 
 
-<% elsif @orden.processed =="1" and current_user.level = "admin" %>  
+<% elsif @orden.processed =="1" and current_user.level == "admin" %>  
 
   <%= link_to 'Cerrar', "/ordens/do_cerrar/#{@orden.id}" %>
 

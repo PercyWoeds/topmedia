@@ -38,7 +38,10 @@ wb.styles do |s|
   
 
     puts @month_name
-
+     mes = @orden.month
+      anio = @orden.year
+      days_mes = days_of_month(mes,anio)
+  
 
   
     logo = @company.logo
@@ -50,7 +53,7 @@ wb.styles do |s|
         sheet.add_image(:image_src => img, :noMove => true) do |image|
             image.width = 300
             image.height = 100
-            image.start_at 35, 0
+            image.start_at days_mes + 9 , 0
         end
 
 
@@ -61,9 +64,25 @@ wb.styles do |s|
     sheet.add_row [@company.ruc ] ,:style =>  [cadena0]
     sheet.add_row [""]
     sheet.add_row ["Medio: " + @orden.medio.descrip ] ,:style =>  [cadena0]
-    sheet.add_row ["Cliente: " + @orden.customer.name ," "," "," " ," "," "," "," " ," "," "," "," "," "," "," "," " ," "," "," "," " ," "," "," "," "," "," " ," ","Orden Nro.: " + @orden.code   ]  ,
-    :style =>  [cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0]
-   
+
+
+
+   @fila_cliente = ["Cliente: " + @orden.customer.name ]
+
+     (1..days_mes + 9 ).each do |row|
+            rows_index = 3        
+            @fila_cliente += [""]
+
+            rows_index += 1 
+        
+
+      end
+
+@fila_cliente += [ "Fecha Ord.: " + @orden.fecha.strftime("%d/%m/%Y") ]
+
+ sheet.add_row @fila_cliente.map{ |col| col.upcase  } , :style =>  cadena0
+
+
     sheet.add_row ["Direccion: " + @orden.customer.address1 +  @orden.customer.address2," "," "," " ," "," "," "," " ," "," "," "," " ," "," "," "," " ," "," "," "," " ," "," "," "," "," "," "," " ,"Fecha Ord.: " + @orden.fecha.strftime("%d/%m/%Y") ] ,
     :style =>  [cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0]
   
@@ -84,17 +103,12 @@ wb.styles do |s|
 
 
      
-      mes = @orden.month
-      anio = @orden.year
-      days_mes = days_of_month(mes,anio)
-  
+   
      (1..days_mes).each do |row|
-        rows_index = 8
-         
+            rows_index = 8         
+            @days += [row.to_s.rjust(2, '0') +"\n"+get_name_dia(anio.to_s << "-" << mes.to_s.rjust(2, '0') << "-" << row.to_s.rjust(2, '0'))]
 
-    @days += [row.to_s.rjust(2, '0') +"\n"+get_name_dia(anio.to_s << "-" << mes.to_s.rjust(2, '0') << "-" << row.to_s.rjust(2, '0'))]
-
-        rows_index += 1 
+            rows_index += 1 
         
 
       end
@@ -161,19 +175,17 @@ sum_qty = 0
             end 
 
         
-            if !order.tipo_aviso_id.nil?
-            
-            @tipo_aviso_name =  product.tipo_aviso.name  
+           if !order.tipo_aviso_id.nil?        
+            @tipo_aviso_name =  order.tipo_aviso.name  
            else
             @tipo_aviso_name =  ""
            end
 
-             if !order.tipo_tarifa_id.nil?
-            
-            @tipo_tarifa_name =  product.tipo_tarifa.name 
-            else
+           if !order.tipo_tarifa_id.nil?            
+            @tipo_tarifa_name =  order.tipo_tarifa.name 
+           else
              @tipo_tarifa_name =  ""
-            end
+           end
 
 
 
@@ -203,16 +215,18 @@ sum_qty = 0
                         
     
     
-         sheet.add_row  @days0.map{|col| col  } , :style =>    cadena0
+         sheet.add_row  @days0.map{|col| col  } , :style =>    currency
             
    end
 
    sheet.add_row 
   
 
-  obs =  []
+     obs =  []
      obs1 =  [] 
      obs2 =  []
+
+    
 
     (1..33).each do |row1|
         obs  += [""]
@@ -230,6 +244,7 @@ sum_qty = 0
      sheet.add_row obs1.map{|col| col  } , :style =>    cadena0
      sheet.add_row obs2.map{|col| col  } , :style =>    cadena0
      
+
 
 
 
