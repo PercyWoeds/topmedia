@@ -1,4 +1,6 @@
 class Avisodetail < ActiveRecord::Base
+
+    validates_presence_of :category_program_id,:descrip 
     
     belongs_to :category_program
 

@@ -267,7 +267,7 @@ sum_qty = 0
             @fila_des += [""]
             @fila_3 += [""]
 
-            rows_index += 1         
+                 
       end
 
     @fila_obs += [ "V.B.Cliente ","","","","","","","V.B.Medio","","","","","Recibido - Medio","","","","" ]
