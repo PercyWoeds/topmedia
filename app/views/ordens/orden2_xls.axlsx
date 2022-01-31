@@ -37,7 +37,7 @@ wb.styles do |s|
     
  
 
-   @months = monthsArr
+     @months = monthsArr
 
      @month_name = @months[@orden.month.to_i - 1][0] <<" - " <<@orden.year.to_s
   
@@ -48,7 +48,6 @@ wb.styles do |s|
       days_mes = days_of_month(mes,anio)
 
     logo = @company.logo
-
 
     wb.add_worksheet(name: "Orden") do |sheet|
 
@@ -94,7 +93,8 @@ wb.styles do |s|
             @fila_marca += [""]
             rows_index += 1         
       end
-
+    
+    @fila_cliente += [ "Orden: " + @orden.code ]
     @fila_direccion += [ "Fecha Ord.: " + @orden.fecha.strftime("%d/%m/%Y") ]
     @fila_marca += ["Contrato Nro.: "+ @orden.get_nro_contrato(@orden.secu_cont) ]
     @fila_mes_anio += ["Tipo Orden: " + @orden.tipo_orden.descrip ]
@@ -260,7 +260,6 @@ sum_qty = 0
     obs2 += ["Total     :", @orden.total ] 
 
      sheet.add_row obs.map{|col| col  } , :style =>    currency0
-
      sheet.add_row obs1.map{|col| col  } , :style =>    currency0
      sheet.add_row obs2.map{|col| col  } , :style =>    currency0
      

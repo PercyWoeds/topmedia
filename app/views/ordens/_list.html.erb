@@ -17,8 +17,16 @@
           Total
         </th>
         <th class="bordered_right bordered_bottom">
-          Date
+          Periodo 
         </th>
+        
+        <th class="bordered_right bordered_bottom">
+          Fec.Registro
+        </th>
+        <th class="bordered_right bordered_bottom">
+          Tipo de orden
+        </th>
+        
         <th class="bordered_right bordered_bottom">
           Processed
         </th>
@@ -46,8 +54,15 @@
           <td class="bordered_right bordered_bottom right">
             <%= money(orden.total) %>
           </td>
+          <td class="bordered_right bordered_bottom right">
+            <%= orden.month.to_s  + "-" +  orden.year.to_s  %> 
+          </td>
+          
           <td class="bordered_right bordered_bottom">
             <%= orden.fecha.strftime("%d/%m/%Y") %>
+          </td>
+      <td class="bordered_right bordered_bottom">
+            <%= orden.tipo_orden.descrip %>
           </td>
 
           

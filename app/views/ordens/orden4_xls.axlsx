@@ -33,19 +33,14 @@ wb.styles do |s|
  
 
    @months = monthsArr
-
      @month_name = @months[@orden.month.to_i - 1][0] <<" - " <<@orden.year.to_s
-  
+    
 
-    puts @month_name
      mes = @orden.month
       anio = @orden.year
       days_mes = days_of_month(mes,anio)
-  
 
-  
     logo = @company.logo
-
 
     wb.add_worksheet(name: "Orden") do |sheet|
 
@@ -53,7 +48,7 @@ wb.styles do |s|
         sheet.add_image(:image_src => img, :noMove => true) do |image|
             image.width = 300
             image.height = 100
-            image.start_at days_mes + 9 , 0
+            image.start_at 35, 0
         end
 
 
@@ -63,34 +58,46 @@ wb.styles do |s|
     sheet.add_row [@company.address1 + " "+   @company.address2 + " "+ @company.city + " "+ @company.state],:style =>  [cadena0]
     sheet.add_row [@company.ruc ] ,:style =>  [cadena0]
     sheet.add_row [""]
-    sheet.add_row ["Medio: " + @orden.medio.descrip ] ,:style =>  [cadena0]
 
 
 
    @fila_cliente = ["Cliente: " + @orden.customer.name ]
+   @fila_direccion =["Direccion: " + @orden.customer.address1  +  @orden.customer.address2 ]
+   @fila_marca =["Marca: " + @orden.marca.name ]
+   @fila_mes_anio =["Mes / Año : " + @month_name ]
+
 
      (1..days_mes + 9 ).each do |row|
             rows_index = 3        
             @fila_cliente += [""]
-
+            @fila_direccion += [""]
+           @fila_mes_anio += [""]
+            
             rows_index += 1 
         
 
       end
 
-@fila_cliente += [ "Fecha Ord.: " + @orden.fecha.strftime("%d/%m/%Y") ]
-
- sheet.add_row @fila_cliente.map{ |col| col.upcase  } , :style =>  cadena0
+      @fila_marca += [" ", "Moneda: " +  @orden.moneda.description ]
 
 
-    sheet.add_row ["Direccion: " + @orden.customer.address1 +  @orden.customer.address2," "," "," " ," "," "," "," " ," "," "," "," " ," "," "," "," " ," "," "," "," " ," "," "," "," "," "," "," " ,"Fecha Ord.: " + @orden.fecha.strftime("%d/%m/%Y") ] ,
-    :style =>  [cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0]
-  
-    sheet.add_row ["Marca : " + @orden.marca.name ," ", "Moneda: " +  @orden.moneda.description ," "," "," "," " ," "," "," "," " ," "," "," "," " ," "," "," "," " ," "," "," "," " ," "," "," "," ","Contrato Nro.: "+ @orden.get_nro_contrato(@orden.secu_cont) ] ,:style =>  [cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0]
-  
-    sheet.add_row ["Mes / Año  : " +  @month_name ," "," "," " ," "," "," "," " ," "," "," "," " ," "," "," "," " ," "," "," "," " ," "," "," "," "," "," " ," ","Tipo Orden: " + @orden.tipo_orden.descrip ] ,:style =>  [cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0,cadena0]
+    (1..days_mes + 7 ).each do |row|
+            rows_index = 6        
+            @fila_marca += [""]
+            rows_index += 1         
+      end
+    
+    @fila_cliente += [ "Orden: " + @orden.code ]
+    @fila_direccion += [ "Fecha Ord.: " + @orden.fecha.strftime("%d/%m/%Y") ]
+    @fila_marca += ["Contrato Nro.: "+ @orden.get_nro_contrato(@orden.secu_cont) ]
+    @fila_mes_anio += ["Tipo Orden: " + @orden.tipo_orden.descrip ]
+    
+    sheet.add_row @fila_cliente.map{ |col| col.upcase  } , :style =>  cadena0
+    sheet.add_row @fila_direccion.map{ |col| col.upcase  } , :style =>  cadena0
+    sheet.add_row @fila_marca.map{ |col| col.upcase  } , :style =>  cadena0
+    sheet.add_row @fila_mes_anio.map{ |col| col.upcase  } , :style =>  cadena0
 
-
+   
     sheet.add_row [""]
 
    
@@ -118,7 +125,7 @@ wb.styles do |s|
      sheet.add_row @days.map{ |col| col.upcase  } , :style =>    merged_title_cell_style
 
   
-     sheet.column_widths 30,30,30,10,10,30,20,20
+     sheet.column_widths 30,20,20,10,10,30,20,20
     
 
 
@@ -222,29 +229,26 @@ sum_qty = 0
    sheet.add_row 
   
 
+
      obs =  []
      obs1 =  [] 
      obs2 =  []
 
-    
-
-    (1..33).each do |row1|
+    (1..days_mes + 9).each do |row1|
         obs  += [""]
         obs1 += [""]
         obs2 += [""]
          
     end
     
-    obs  += ["","","","","","","Sub Total :", @orden.subtotal] 
-    obs1 += ["","","","","","","IGV (18%) :", @orden.tax ]  
-    obs2 += ["","","","","","","Total     :", @orden.total ] 
+    obs  += ["Sub Total :", @orden.subtotal ] 
+    obs1 += ["IGV (18%) :", @orden.tax ]  
+    obs2 += ["Total     :", @orden.total ] 
 
-     sheet.add_row obs.map{|col| col  } , :style =>    cadena0
-
+     sheet.add_row obs.map{|col| col  } ,  :style =>    cadena0
      sheet.add_row obs1.map{|col| col  } , :style =>    cadena0
      sheet.add_row obs2.map{|col| col  } , :style =>    cadena0
      
-
 
 
 
@@ -252,35 +256,33 @@ sum_qty = 0
 
  
   
-    sheet.add_row []
-   
-    sheet.add_row []
-    sheet.add_row ['Observaciones:',
-                    ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
-                    ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
-                    ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
-                    ' ',
-                    'VoBo Cliente',
-                    ' ',
-                    'VoBo Medio',
-                    'Recibido - Medio',
-                    ' ',
-                    ' '], :style => top_row
-    sheet.add_row [@orden.description,
-                    ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
-                    ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
-                    ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
-                    ' ',' ',' ',' ',' ',' ',' '
-                   ], :style => middle_row
-    sheet.add_row [
-    ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
-    ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
-    ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
-    ' ',' ',' ',' ',' ',' ',' ',' ' ]
+    sheet.add_row [""]   
+    sheet.add_row [""]  
+  @fila_obs =  []
+  @fila_des =  []
+  @fila_3 =  []
 
+  @fila_obs += ["Observaciones : "  ]
+  @fila_des += [@orden.description ]    
+  @fila_3   += ["" ]
 
-    #This works too!
-    sheet.rows.last.style = bottom_row
+    (1..24 ).each do |row|
+            rows_index = 2        
+            @fila_obs += [""]
+            @fila_des += [""]
+            @fila_3 += [""]
+
+            rows_index += 1         
+      end
+
+    @fila_obs += [ "V.B.Cliente ","","","","","","","V.B.Medio","","","","","Recibido - Medio","" ]
+    @fila_des += [ "","","","","","","","","","","","","","" ]
+    @fila_3   += [ "","","","","","","","","","","","","","" ]
+
+    sheet.add_row @fila_obs.map{ |col| col.upcase  } , :style =>  top_row
+
+    sheet.add_row @fila_des.map{ |col| col.upcase  } , :style =>  middle_row
+    sheet.add_row @fila_3.map{ |col| col.upcase  } , :style =>  bottom_row
 
 
 
