@@ -3668,22 +3668,32 @@ def foot_data_headers_1
     else
       @tipoorden = params[:tipo]
     end
+    
 
-    @ordenes_rpt = @company.get_ordenes_cliente_all(@mes.to_i ,@anio.to_i,@mes1.to_i,@anio1.to_i,@customer,@medio,@marca,@producto,@version,@ciudad,@tipoorden)
+   
 
-    if  @ordenes_rpt.count > 0
 
         case params[:print]
           when "To PDF" then
             begin
+
+               @ordenes_rpt = @company.get_ordenes_cliente_all(@mes.to_i ,@anio.to_i,@mes1.to_i,@anio1.to_i,@customer,@medio,@marca,@producto,@version,@ciudad,@tipoorden)
+
              render  pdf: "Ordenes ",template: "ordens/orden_rpt2.pdf.erb",locals: {:orden => @ordenes_rpt}
 
             end
-          when "To Excel" then render xlsx: 'exportxls'
+          when "To Excel" then 
+
+            begin
+
+            @ordenes = @company.get_ordenes_cliente_all0(@mes.to_i ,@anio.to_i,@mes1.to_i,@anio1.to_i,@customer,@medio,@marca,@producto,@version,@ciudad,@tipoorden)
+
+            render xlsx: 'rpt_corden_01'
+            end 
+
           else render action: "index"
         end
 
-    end
 
 
   end

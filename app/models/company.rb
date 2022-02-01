@@ -2749,6 +2749,109 @@ def get_ordenes_cliente(fecha1,fecha2,cliente)
     
  end 
 
+  def get_ordenes_cliente_all0(mes,anio,mes1,anio1,cliente,medio,marca,producto,version,ciudad,tipoorden)    
+   
+   sql_dato =""
+   sql_dato1 =""
+   sql_dato2 =""
+   sql_dato3 =""
+   sql_dato4 =""
+   sql_dato5 =""
+   sql_dato6 =""
+   
+  if cliente != ""
+    sql_dato <<  "customer_id = " << cliente 
+  end 
+  
+  
+  if medio != ""
+    
+    if sql_dato != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+    puts sql_dato 
+    
+    sql_dato << txt_and << "medio_id = " << medio
+  end 
+  
+  
+  if marca != ""
+    if sql_dato != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+    
+    sql_dato << txt_and << "marca_id =" << marca
+  end 
+  
+  if producto != ""
+    
+     if sql_dato != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+   
+    sql_dato << txt_and << "producto_id =" << producto
+  end 
+  
+  if version != ""
+     if sql_dato != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+   
+    sql_dato << txt_and << "version_id =" << version 
+  end 
+  
+  if ciudad != ""
+     if sql_dato != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+   
+    sql_dato << txt_and << "ciudad_id =" << ciudad 
+  end 
+  
+  if tipoorden != "3"
+    if tipoorden == "2"
+       tipo= "D"
+      sql_dato << "tipo = 'D' "  
+    end 
+    if tipoorden == "1"
+       tipo= "N"
+      sql_dato << "tipo = 'N'  "  
+      
+    end 
+  end 
+  
+  if sql_dato ==  ""
+   @ordenes = Orden.where(["month >= ? and year >= ? and month <= ? and year <= ? and 
+    processed = ? ", "#{mes}","#{anio}", "#{mes1}","#{anio1}" ,"1"]).order(:customer_id,:medio_id)
+  else
+   @ordenes = Orden.where(["month >= ? and year >= ? and month <= ? and year <= ? and
+    processed = ? and #{sql_dato}", "#{mes} ","#{anio} ", "#{mes1}","#{anio1}" ,"1" ]).order(:customer_id,:medio_id)
+  end 
+  puts "sql " 
+  puts sql_dato
+
+  puts "**"
+ puts "#{mes}"
+ puts "#{anio}"
+ puts  "#{mes1}"
+ puts "#{anio1}"
+
+ 
+  return @ordenes
+    
+ end 
+
+
  def get_ordenes_cliente_all(mes,anio,mes1,anio1,cliente,medio,marca,producto,version,ciudad,tipoorden)    
    
    sql_dato =""
@@ -2831,9 +2934,11 @@ def get_ordenes_cliente(fecha1,fecha2,cliente)
   end 
   
   if sql_dato ==  ""
-   @ordenes = Orden.where(["month >= ? and year >= ? and month <= ? and year <= ? and processed = ? ", "#{mes}","#{anio}", "#{mes1}","#{anio1}" ,"1"]).order(:customer_id,:medio_id,:contrato_id)
+   @ordenes = Orden.select(:customer_id ).where(["month >= ? and year >= ? and month <= ? and year <= ? and 
+    processed = ? ", "#{mes}","#{anio}", "#{mes1}","#{anio1}" ,"1"]).group(:customer_id).order(:customer_id)
   else
-   @ordenes = Orden.where(["month >= ? and year >= ? and month <= ? and year <= ? and processed = ? and #{sql_dato}", "#{mes} ","#{anio} ", "#{mes1}","#{anio1}" ,"1" ]).order(:customer_id,:medio_id,:contrato_id)
+   @ordenes = Orden.select(:customer_id).where(["month >= ? and year >= ? and month <= ? and year <= ? and
+    processed = ? and #{sql_dato}", "#{mes} ","#{anio} ", "#{mes1}","#{anio1}" ,"1" ]).group(:customer_id).order(:customer_id)
   end 
   puts "sql " 
   puts sql_dato
@@ -2850,6 +2955,209 @@ def get_ordenes_cliente(fecha1,fecha2,cliente)
  end 
 
 
+ def get_ordenes_cliente_all2(mes,anio,mes1,anio1,cliente,medio,marca,producto,version,ciudad,tipoorden)    
+   
+   sql_dato =""
+   sql_dato1 =""
+   sql_dato2 =""
+   sql_dato3 =""
+   sql_dato4 =""
+   sql_dato5 =""
+   sql_dato6 =""
+   
+  if cliente != ""
+    sql_dato <<  "customer_id = " << cliente 
+  end 
+  
+  
+  if medio != ""
+    
+    if sql_dato != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+    puts sql_dato 
+    
+    sql_dato << txt_and << "medio_id = " << medio
+  end 
+  
+  
+  if marca != ""
+    if sql_dato != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+    
+    sql_dato << txt_and << "marca_id =" << marca
+  end 
+  
+  if producto != ""
+    
+     if sql_dato != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+   
+    sql_dato << txt_and << "producto_id =" << producto
+  end 
+  
+  if version != ""
+     if sql_dato != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+   
+    sql_dato << txt_and << "version_id =" << version 
+  end 
+  
+  if ciudad != ""
+     if sql_dato != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+   
+    sql_dato << txt_and << "ciudad_id =" << ciudad 
+  end 
+  
+  if tipoorden != "3"
+    if tipoorden == "2"
+       tipo= "D"
+      sql_dato << "tipo = 'D' "  
+    end 
+    if tipoorden == "1"
+       tipo= "N"
+      sql_dato << "tipo = 'N'  "  
+      
+    end 
+  end 
+  
+  if sql_dato ==  ""
+   @ordenes = Orden.select(:medio_id).where(["month >= ? and year >= ? and month <= ? and year <= ? and 
+    processed = ? ", "#{mes}","#{anio}", "#{mes1}","#{anio1}" ,"1"]).group(:medio_id).order(:medio_id)
+  else
+   @ordenes = Orden.select(:medio_id).where(["month >= ? and year >= ? and month <= ? and year <= ? and
+    processed = ? and #{sql_dato}", "#{mes} ","#{anio} ", "#{mes1}","#{anio1}" ,"1" ]).group(:medio_id).order(:medio_id)
+  end 
+  puts "sql " 
+  puts sql_dato
+
+  puts "**"
+ puts "#{mes}"
+ puts "#{anio}"
+ puts  "#{mes1}"
+ puts "#{anio1}"
+
+ 
+  return @ordenes
+    
+ end 
+
+def get_ordenes_cliente_all3(mes,anio,mes1,anio1,cliente,medio,marca,producto,version,ciudad,tipoorden)    
+   
+   sql_dato =""
+   sql_dato1 =""
+   sql_dato2 =""
+   sql_dato3 =""
+   sql_dato4 =""
+   sql_dato5 =""
+   sql_dato6 =""
+   
+  if cliente != ""
+    sql_dato <<  "customer_id = " << cliente 
+  end 
+  
+  
+  if medio != ""
+    
+    if sql_dato != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+    puts sql_dato 
+    
+    sql_dato << txt_and << "medio_id = " << medio
+  end 
+  
+  
+  if marca != ""
+    if sql_dato != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+    
+    sql_dato << txt_and << "marca_id =" << marca
+  end 
+  
+  if producto != ""
+    
+     if sql_dato != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+   
+    sql_dato << txt_and << "producto_id =" << producto
+  end 
+  
+  if version != ""
+     if sql_dato != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+   
+    sql_dato << txt_and << "version_id =" << version 
+  end 
+  
+  if ciudad != ""
+     if sql_dato != ""
+    txt_and = " and "
+    else 
+      txt_and = ""
+    end 
+   
+    sql_dato << txt_and << "ciudad_id =" << ciudad 
+  end 
+  
+  if tipoorden != "3"
+    if tipoorden == "2"
+       tipo= "D"
+      sql_dato << "tipo = 'D' "  
+    end 
+    if tipoorden == "1"
+       tipo= "N"
+      sql_dato << "tipo = 'N'  "  
+      
+    end 
+  end 
+  
+  if sql_dato ==  ""
+   @ordenes = Orden.where(["month >= ? and year >= ? and month <= ? and year <= ? and 
+    processed = ? ", "#{mes}","#{anio}", "#{mes1}","#{anio1}" ,"1"]).order(:code)
+  else
+   @ordenes = Orden.where(["month >= ? and year >= ? and month <= ? and year <= ? and
+    processed = ? and #{sql_dato}", "#{mes} ","#{anio} ", "#{mes1}","#{anio1}" ,"1" ]).order(:code)
+  end 
+  puts "sql " 
+  puts sql_dato
+
+  puts "**"
+ puts "#{mes}"
+ puts "#{anio}"
+ puts  "#{mes1}"
+ puts "#{anio1}"
+
+ 
+  return @ordenes
+    
+ end 
 
  def get_ordenes_cliente2(fecha1,fecha2,cliente,medio)    
    

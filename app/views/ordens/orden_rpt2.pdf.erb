@@ -1,4 +1,10 @@
-<html>
+<html >
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta charset="utf-8"/>
+    <%= wicked_pdf_stylesheet_link_tag "pdf" %>
+  </head>
+
 <body>
     
   
@@ -9,341 +15,250 @@
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
   <tr bgcolor="#B4D7F7">
     <th width= "5%">Item</th>
-    <th width= "40%">Aviso/Elemento </th>
+    <th width= "40%" >Aviso/Elemento </th>
     <th width= "10%">Cantidad </th>
     <th width= "10%">Tarifa </th>
     <th width= "10%">Precio </th>
-    <th width= "10%">Total </th>
+    <th width= "10%">Total Soles </th>
+    <th width= "10%">Total Dolares </th>
     
   </tr>
   </table>
   
-     <% a = @ordenes_rpt.first %>
+    <% @total_medio = 0 %>
+    <% @total_medio_d = 0 %>
+    
+    <% @total_cliente  = 0 %>
+    <% @total_cliente_d  = 0 %>
+    
+   <% @total_qty = 0 %>
+    <% @total_money  = 0 %>
+    <% @total_money_d  = 0 %>
 
-
-     
-    <table style=  'font-size:80% ;width:100%'>
       
-    <tr style="font-weight:bold">
-    <td>CLIENTE</td>
-    <td><%= a.customer.ruc %> </td>
-    <td align ="center"><%= a.customer.name %> </td>
-    <td> </td>
-    <td> </td>
-    <td> </td>
-    <td> </td>
-    <td> </td>
-    </tr>
-    
-    <tr style="font-weight:bold">
-    <td>MEDIO</td>
-    <td> <%= a.medio.full_name %></td>
-    <td> </td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    </tr>
-  
-   
-  </table>
   
   <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
-  <tr bgcolor="#B4D7F7">
-    
-    <td> Orden </td>
-    <td> <%= a.code %> </td>
+      
 
-  <% if !a.contrato.nil?%>
-    <td>  <%= a.contrato.code  %> </td>
-    <td>Mon: <%= a.contrato.get_moneda %></td>
-    
-   <% else %>
-   <td> - </td>
-  
-   <% end %> 
-    <td>Tiempo: '<%= a.tiempo %> </td>
-    <td><%= a.marca.name %></td>
-    <td><%= a.producto.name %></td>
-    <td><%= a.version.descrip %></td>
-    
-  </tr>
-  </table>
-  
-  
-  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
-      <% lcCanal = a.medio_id %>
-      <% lcCliente = a.customer_id %>
       
        <% for  product in @ordenes_rpt %>
            
-            <% @orden= Orden.find(product.id)%>
-            <% @orden_details = OrdenProduct.where(orden_id: @orden.id)%>
-            
-        <%if lcCliente == product.customer_id %>  
-        
-          <%if lcCanal == product.medio_id%>
           
-              <% nroitem = 1 %>
-               <table style=  'font-size:80% ;width:100%'>
-                <% for product_detail  in @orden_details %>
-                
-                    <tr>
-                    <td width="5%"> <%= nroitem %> </td>
-                    <td width= "40%" ><%=  product_detail.descrip %></td>
-                    <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.quantity.to_s)   %></td>
-                    <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.tarifa.to_s)   %> </td>
-                    <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.price.to_s)   %></td>
-                    <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.total.to_s)   %></td>
-                    </tr>
-                    <% nroitem = nroitem+1 %>
-               <%end %>
-               
-             </table>
-               
-               <% @total_qty = product.get_sumas("quantity") %>
-               <% @total_money = product.get_sumas("total") %>
-           
-          <% else %>
-          
-                    <table style=  'font-size:80% ;width:100%'>
-                    <tr>
-                    <td></td>
-                    <td>Cantidad :</td>
-                    <td> <%= @total_qty %> </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    </tr>
-                    <tr>
-                    <td></td>
-                    <td>p.Total : </td>
-                    <td> <%= @total_money %> </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    </tr>
-                    </table>
-                    <hr>
-              
-                  <% lcCanal = product.medio_id %>
-              
-                  <table style ='font-size:80% ;width:100%'>
-                  <tr style="font-weight:bold">
-                  <td>MEDIO</td>
-                  <% if product.medio.nil? %>  
-                       <td><%= product.medio_id %></td>   
-                   <% else %>
-                      <td> <%= product.medio.full_name %></td>
-                   <% end %> 
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  </tr>
-                  </table>
-              
-                  <hr> 
-                  <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
-                  <tr bgcolor="#B4D7F7">
-                    
-                    <td> Orden </td>
-                    <td> <%= product.code %> </td>
 
-                     <% if !product.contrato.nil? %>  
-                    <td><%= product.contrato.code  %> </td>
-                    <td>Mon: <%= product.contrato.get_moneda %></td>
-                    <% else %>
-                    <td> -  </td>
-                    
-                    <% end %>
-
-                    <td>Tiempo: '<%= a.tiempo %> </td>
-                    <td><%= product.marca.name %></td>
-                    <td><%= product.producto.name %></td>
-                    <td><%= product.version.descrip %></td>
-                   
-                  </tr>
-                  </table>
-                  
-      
-                  <table style=  'font-size:80% ;width:100%'>
-                    
-                    
-                   <% nroitem = 1 %>
-                  <% for product_detail  in @orden_details %>
-                  
-                      <tr>
-                        
-                      <td width="5%"> <%= nroitem %> </td>
-                      <td width= "40%" ><%=  product_detail.descrip %></td>
-                      <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.quantity.to_s)   %></td>
-                      <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.tarifa.to_s)   %> </td>
-                      <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.price.to_s)   %></td>
-                      <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.total.to_s)   %></td>
-                      </tr>
-                      <% nroitem = nroitem+1 %>
-                 <%end %>
-                    
-               <% @total_qty = product.get_sumas("quantity") %>
-               <% @total_money = product.get_sumas("total") %>
-                 </table>        
-              <%end %>
-                
-                    
-                            
-          <%else%>
-          
-            <table style=  'font-size:80% ;width:100%'>
-
-                    <tr>
-                    <td></td>
-                    <td>Cantidad :</td>
-                    <td><%= @total_qty %> </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    </tr>
-                    <tr>
-                    <td></td>
-                    <td>p.Total : </td>
-                    <td><%= @total_money %> </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    </tr>
-                
-                  </table>          
-                  <hr>
-          
-                <table style=  'font-size:80% ;width:100%'>
-                <tr style="font-weight:bold">
+             <tr style="font-weight:bold">
                 <td>CLIENTE</td>
                 <td><%= product.customer.ruc %> </td>
-                <td><%= product.customer.name %> </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                </tr>
-                
-                <tr style="font-weight:bold">
-                <td>MEDIO</td>
-                <td> <%= product.medio.full_name %></td>
+                <td align ="left" colspan="5"><%= product.customer.name %> </td>
                 <td> </td>
                 <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                </tr>
-              
-                
-              
-              </table>
-  
-              <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
-              <tr bgcolor="#B4D7F7">
-                
-                <td> Orden </td>
-                <td> <%= product.code %> </td>
-                <% if !product.contrato.nil? %>
-
-                <td><%= product.contrato.code  %> </td>
-
-                <td>Mon: <%= product.contrato.get_moneda %></td>
-                <% else %>
-                <td> - </td>
-
-                  <% end %>
-
-                <td>Tiempo: '<%= a.tiempo %> </td>
-                <td><%= product.marca.name %></td>
-                <td><%= product.producto.name %></td>
-                <td><%= product.version.descrip %></td>
-                
-       
-              </tr>
-              </table>
-          
                             
-            <table style='font-family:"Courier New", Courier, monospace; font-size:80% ;width:100%'>
-            <% nroitem = 1 %>
-            <% for product_detail  in @orden_details %>
-                <tr>
-                <td width="5%"> <%= nroitem %> </td>
-                <td width= "40%" ><%=  product_detail.descrip %></td>
-                <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.quantity.to_s)   %></td>
-                <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.tarifa.to_s)   %> </td>
-                <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.price.to_s)   %></td>
-                <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.total.to_s)   %></td>
                 </tr>
-                <% nroitem = nroitem+1 %>
-           <%end %>
-           
-              
-           <% @total_qty = product.get_sumas("quantity") %>
-           <% @total_money = product.get_sumas("total") %>
-           
-                     </table>                              
-                   <%   lcCanal= product.medio_id %>
-                    <%   lcCliente = product.customer_id %>
-    
-        <%end %>
-        
-        
-        
-        </table>
-       
-        
-        <%end%>
-        
-       <table style=  'font-size:80% ;width:100%'>
 
-                    <tr>
+                <% puts product.customer_id %>
+                 <%   @ordenes_rpt2 = @company.get_ordenes_cliente_all2(@mes.to_i ,@anio.to_i,@mes1.to_i,@anio1.to_i,"#{product.customer_id}" ,@medio,@marca,@producto,@version,@ciudad,@tipoorden) %>
+
+
+                      <% for  product2 in @ordenes_rpt2 %>
+                        
+                            <tr style="font-weight:bold">
+
+                            <td>MEDIO</td>
+                            <% if product2.medio.nil? %>  
+                                 <td colspan="2"><%= product2.medio_id %></td>   
+                                 
+                             <% else %>
+                                <td colspan="2" > <%= product2.medio.descrip %></td>
+
+                             <% end %> 
+                           
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            </tr>
+
+                            <%   @ordenes_rpt3 = @company.get_ordenes_cliente_all3(@mes.to_i ,@anio.to_i,@mes1.to_i,@anio1.to_i,"#{product.customer_id}" ,"#{product2.medio_id}",@marca,@producto,@version,@ciudad,@tipoorden) %>
+
+
+                          <% for  product3 in @ordenes_rpt3 %>
+
+                          <tr bgcolor="#B4D7F7">
+                            
+                            <td> Orden </td>
+                            <td> <%= product3.code %> </td>
+
+                             <% if !product3.contrato.nil? %>  
+                            <td><%= product3.contrato.code  %> </td>
+                            <td>Mon: <%= product3.contrato.get_moneda %></td>
+                            <% else %>
+                            <td> -  </td>
+                            
+                            <% end %>
+
+                            <td>Tiempo: '<%= product3.tiempo %> </td>
+                            <td><%= product3.marca.name %></td>
+                            <td><%= product3.producto.name %></td>
+                            <td colspan="2"><%= product3.version.descrip %></td>
+                            <td></td>
+                          
+                          </tr>
+
+
+                                  <% nroitem = 1 %>
+                                   <% @orden= Orden.find(product3.id)%>
+
+                                    <% @orden_details = OrdenProduct.where(orden_id: @orden.id)%>
+
+                                  <% for product_detail  in @orden_details %>
+                                  
+                                      <tr>                      
+                                      <td width="5%"> <%= nroitem %> </td>
+                                      
+                                     <%   if !product_detail.medio_detail_id.nil? 
+                                       @medio_detail_name =  product_detail.medio_detail.name     
+                                       else
+                                       @medio_detail_name =  ""
+                                      end 
+
+                                    if !product_detail.tipo_aviso_id.nil?
+                                      
+                                      @tipo_aviso_name =  product_detail.tipo_aviso.name  
+                                     else
+                                      @tipo_aviso_name =  ""
+                                     end
+
+                                       if !product_detail.tipo_tarifa_id.nil?
+                                      
+                                      @tipo_tarifa_name =  product_detail.tipo_tarifa.name 
+                                      else
+                                       @tipo_tarifa_name =  ""
+                                      end %>
+
+                                      <td width= "15%" ><%=   @medio_detail_name  %></td>
+                                      <td width= "15%" ><%=   @tipo_aviso_name  %></td>
+                                      <td width= "10%" ><%=   @tipo_tarifa_name  %></td>
+
+
+
+                                      <td width = "15%" align ="right"><%= sprintf("%.2f",product_detail.quantity.to_s)   %></td>
+                                      <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.tarifa.to_s)   %> </td>
+                                      <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.price.to_s)   %></td>
+
+                                      <% if product3.moneda_id == 2%>
+
+                                      <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.total.to_s)   %></td>
+                                      <td width = "10%" align ="right"> 0.00<td>
+
+                                        <% @total_money +=  product_detail.total %>
+
+                                      <% else %>
+                                      <td width = "10%" align ="right"> 0.00</td>
+                                      <td width = "10%" align ="right"><%= sprintf("%.2f",product_detail.total.to_s)   %></td>
+                                      <% @total_money_d +=  product_detail.total %>
+
+                                      <% end %>  
+                                      </tr>
+                                      <% nroitem = nroitem+1 %>
+                                      <% @total_qty +=  product_detail.quantity %>
+                                      
+
+                                 <%end %>
+                                    
+                               
+
+
+                          <% end %>
+                               
+                           <tr>
                     <td></td>
                     <td>Cantidad :</td>
-                    <td><%= @total_qty %> </td>
+                    <td> <%= @total_qty.round(2) %> </td>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
+                   
+                    
                     </tr>
                     <tr>
                     <td></td>
-                    <td>p.Total : </td>
-                    <td><%= @total_money %> </td>
+                    <td>p.Total MEDIO S/. : </td>
+                    <td> <%= @total_money.round(2) %> </td>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
+                  
                     </tr>
+
+
+                     </tr>
+                    <tr>
+                    <td></td>
+                    <td>p.Total MEDIO USD: </td>
+                    <td> <%= @total_money_d.round(2) %> </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  
+                    </tr>
+
+
+                   <% @total_medio += @total_money.round(2) %>
+                   <% @total_medio_d += @total_money_d.round(2) %>
+
+                   <% @total_qty = 0 %>
+                   <% @total_money =  0 %>    
+                   <% @total_money_d =  0 %>    
+              
+                      <% end%>
+
+
+
+
+                    <tr>
+                    <td></td>
+                    <td>p.Total CLIENTE S/. :</td>
+                    <td> <%= @total_medio.round(2) %> </td>
+                    <td> </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                   
                     
+                    </tr>
+                    <tr>
+                    <td></td>
+                    <td>p.Total CLIENTE USD :</td>
+                    <td> <%= @total_medio_d.round(2) %> </td>
+                    <td> </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                   
                     
-                    
-                    </table>
-        <hr>  
-     
+                    </tr>
+
+
+                    <% @total_medio = 0  %>
+
+
+          <% end %>      
+
+
+
+
+  </table>
+
       </body>
       
       </html>
