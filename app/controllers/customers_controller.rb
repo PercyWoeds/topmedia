@@ -59,6 +59,8 @@ class CustomersController < ApplicationController
   def show
     @customer = Customer.find(params[:id])
 
+    @customer_contacts = @customer.customer_contacts
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @customer }

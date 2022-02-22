@@ -11,8 +11,8 @@ SUNAT.configure do |config|
   config.signature do |s|
     s.party_id    = "20546833594"
     s.party_name  = "TOP MEDIA S.A.C."
-    s.cert_file   = File.join(Dir.pwd, './app/keys', 'certificategee.crt')
-    s.pk_file     = File.join(Dir.pwd, './app/keys', 'CERTIFICADOGEE.key') 
+     s.cert_file   = File.join(Dir.pwd, './app/keys', 'certificate2019.crt')
+    s.pk_file     = File.join(Dir.pwd, './app/keys', 'CERTIFICADO2019.key') 
   end
 
   config.supplier do |s|
@@ -26,7 +26,7 @@ SUNAT.configure do |config|
     #PASCO - PASCO - PAUCARTAMBO"
     s.city       = ""
     s.country    = "PE"
-    s.logo_path  = "#{Dir.pwd}/app/assets/images/logo-topmedia.png"
+    s.logo_path  = "#{Dir.pwd}/app/assets/images/logo.png"
 
                           
                           

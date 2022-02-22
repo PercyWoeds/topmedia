@@ -3221,6 +3221,16 @@ def get_ordenes_cliente_all3(mes,anio,mes1,anio1,cliente,medio,marca,producto,ve
  end 
 
 
+ def get_ordenes_cliente4(mes,anio,mes1,anio1)    
+   
+       
+       @ordenes = Orden.where(["month >= ? and year >= ? and month <= ? and year <= ? and 
+    processed = ? ", "#{mes}","#{anio}", "#{mes1}","#{anio1}" ,"1"]).order(:code)
+  
+        return @ordenes
+    
+ end 
+
 
  def get_facturas_medios(fecha1,fecha2)    
    

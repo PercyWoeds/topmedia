@@ -2617,15 +2617,22 @@ class OrdensController < ApplicationController
             
 #        if(params[:search] and params[:search] != "")
  #         @ordens = Orden.where(["company_id = ? and (code iLIKE ?)", @company.id ,"%" + params[:search] + "%" ]).order('fecha DESC').paginate(:page => params[:page])
+       
         if(params[:q] and params[:q] != "")
-          fields = ["code", "description"]
-
+       
           q = params[:q].strip
           @q_org = q
 
           query = params[:q]
 
-          @ordens = Orden.paginate(:page => params[:page]).order('fecha desc , code desc').where(["company_id = ? AND code ilike ?", @company.id, query])
+      
+
+          @ordens = Orden.find_by_sql(['Select ordens.*, customers.name 
+                      from ordens 
+                      INNER JOIN customers ON ordens.customer_id = customers.id
+                      where customers.name iLIKE ? or ordens.code ilike ?',"%" + query + "%" , "%" + query + "%"   ] ).paginate(:page => params[:page])
+
+
         else
           @ordens = Orden.where(["company_id = ?",@company.id ]).order('fecha desc , code desc').paginate(:page => params[:page])
            @filters_display = "none"
@@ -2656,6 +2663,61 @@ class OrdensController < ApplicationController
     @versions = Version.all
     @productos = Producto.all
     @ciudad = Ciudad.all
+
+    anio = @orden.year
+    mes = @orden.month 
+ days_mes = days_of_month(mes,anio)
+
+@fechadia1 = anio.to_s << "-" << mes.to_s.rjust(2, '0') << "-" << "01"
+@fechadia2 = anio.to_s << "-" << mes.to_s << "-" << "02"
+@fechadia3 = anio.to_s << "-" << mes.to_s << "-" << "03"
+@fechadia4 = anio.to_s << "-" << mes.to_s << "-" << "04"
+@fechadia5 = anio.to_s << "-" << mes.to_s << "-" << "05"
+@fechadia6 = anio.to_s << "-" << mes.to_s << "-" << "06"
+@fechadia7 = anio.to_s << "-" << mes.to_s << "-" << "07"
+@fechadia8 = anio.to_s << "-" << mes.to_s << "-" << "08"
+@fechadia9 = anio.to_s << "-" << mes.to_s << "-" << "09"
+@fechadia10 = anio.to_s << "-" << mes.to_s << "-" << "10"
+@fechadia11 = anio.to_s << "-" << mes.to_s << "-" << "11"
+@fechadia12 = anio.to_s << "-" << mes.to_s << "-" << "12"
+@fechadia13 = anio.to_s << "-" << mes.to_s << "-" << "13"
+@fechadia14 = anio.to_s << "-" << mes.to_s << "-" << "14"
+@fechadia15 = anio.to_s << "-" << mes.to_s << "-" << "15"
+@fechadia16 = anio.to_s << "-" << mes.to_s << "-" << "16"
+@fechadia17 = anio.to_s << "-" << mes.to_s << "-" << "17"
+@fechadia18 = anio.to_s << "-" << mes.to_s << "-" << "18"
+@fechadia19 = anio.to_s << "-" << mes.to_s << "-" << "19"
+@fechadia20 = anio.to_s << "-" << mes.to_s << "-" << "20"
+@fechadia21 = anio.to_s << "-" << mes.to_s << "-" << "21"
+@fechadia22 = anio.to_s << "-" << mes.to_s << "-" << "22"
+@fechadia23 = anio.to_s << "-" << mes.to_s << "-" << "23"
+@fechadia24 = anio.to_s << "-" << mes.to_s << "-" << "24"
+@fechadia25 = anio.to_s << "-" << mes.to_s << "-" << "25"
+@fechadia26 = anio.to_s << "-" << mes.to_s << "-" << "26"
+@fechadia27 = anio.to_s << "-" << mes.to_s << "-" << "27"
+
+if days_mes >=28
+        @fechadia28 = anio.to_s << "-" << mes.to_s << "-" << "28"
+      else
+        @fechadia28=""
+      end
+      if days_mes >=29
+        @fechadia29 = anio.to_s << "-" << mes.to_s << "-" << "29"
+      else
+        @fechadia29=""
+      end
+      if days_mes >=30
+        @fechadia30 = anio.to_s << "-" << mes.to_s << "-" << "30"
+      else
+        @fechadia30=""
+      end
+      if days_mes >=31
+        @fechadia31 = anio.to_s << "-" << mes.to_s << "-" << "31"
+      else
+        @fechadia31=""
+      end
+
+
 
     @ordens_products = @orden.orden_products.order(:id)
   end
@@ -2740,6 +2802,9 @@ class OrdensController < ApplicationController
     @orden[:processed] = false
     @orden[:tiempo] = 30
     @orden[:fecha] = Date.today
+
+    @orden[:ciudad_id]  = 1
+    
     @company = Company.find(params[:company_id])
     @orden.company_id = @company.id
 
@@ -3401,6 +3466,7 @@ def crear
 
   end
 
+
   def rpt_ordenes1_pdf
 
     @company=Company.find(1)
@@ -3860,6 +3926,7 @@ def foot_data_headers_1
 
 
  end 
+
 
 
 

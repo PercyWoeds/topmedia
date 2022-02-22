@@ -62,6 +62,7 @@ wb.styles do |s|
     sheet.add_row [@company.ruc ] ,:style =>  [cadena0]
     sheet.add_row [""]
     sheet.add_row ["Medio: " + @orden.medio.descrip ] ,:style =>  [cadena0]
+    
     sheet.add_row ["Cliente: " + @orden.customer.name ," "," "," " ," ","Orden Nro.: " + @orden.code   ]  ,
     :style =>  [cadena0,cadena0,cadena0,cadena0,cadena0,cadena0]
     sheet.add_row ["Direccion: " + @orden.customer.address1 +  @orden.customer.address2," "," "," " ," ", "Fecha Ord.: " + @orden.fecha.strftime("%d/%m/%Y") ] ,:style =>  [cadena0,cadena0,cadena0,cadena0,cadena0,cadena0]

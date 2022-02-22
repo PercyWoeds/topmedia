@@ -102,9 +102,7 @@
       <%= f.collection_select :moneda_id, @monedas, :id, :description ,{:prompt   => "Selec una moneda"} %>
     </div>
     
-    <%= f.label :tiempo, "Duracion*", :class => "bold"   %><br />
-    <%= f.number_field :tiempo   %>
-    
+   
     </div>
 
     <div class="field">
@@ -116,10 +114,7 @@
       <%= select_tag(:month, options_for_select(@months, @month)) %>
     </div>
     
-     <div class="field">
-      <%= f.label :ciudad_id, "Ciudad*", :class => "bold"   %><br />
-      <%= f.select :ciudad_id,options_from_collection_for_select(@ciudad,'id','descrip') %>
-    </div>
+   
     
     <%= hr() %>
 

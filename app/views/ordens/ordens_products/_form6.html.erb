@@ -1,4 +1,4 @@
-
+<%  last_day = @orden.days_in_month(@orden.month,@orden.year )   %>
 
 
 <% if @orden_product.errors.any? %>
@@ -34,37 +34,115 @@
         <th>Duracion  </th>
 
 
-        <th>01</th>
-        <th>02</th>
-        <th>03</th>
-        <th>04</th>
-        <th>05</th>
-        <th>06</th>
-        <th>07</th>
-        <th>08</th>
-        <th>09</th>
-        <th>10</th>
-        <th>11</th>
-        <th>12</th>
-        <th>13</th>
-        <th>14</th>
-        <th>15</th>
-        <th>16</th>
-        <th>17</th>
-        <th>18</th>
-        <th>19</th>
-        <th>20</th>
-        <th>21</th>
-        <th>22</th>
-        <th>23</th>
-        <th>24</th>
-        <th>25</th>
-        <th>26</th>
-        <th>27</th>
-        <th>28</th>
-        <th>29</th>
-        <th>30</th>
-        <th>31</th>
+         <th>
+        1 <%="\n"+get_name_dia(@fechadia1) %>
+      </th>
+      
+      <th>
+        2 <%="\n"+get_name_dia(@fechadia2) %>
+      </th>
+      <th>
+        3<%="\n"+get_name_dia(@fechadia3) %>
+      </th>
+      <th>
+        4<%="\n"+get_name_dia(@fechadia4) %>
+      </th>
+      <th>
+        5<%="\n"+get_name_dia(@fechadia5) %>
+      </th>
+      <th>
+        6<%="\n"+get_name_dia(@fechadia6) %>
+      </th>
+      <th>
+        7<%="\n"+get_name_dia(@fechadia7) %>
+      </th>
+      <th>
+        8<%="\n"+get_name_dia(@fechadia8) %>
+      </th>
+      <th>
+        9<%="\n"+get_name_dia(@fechadia9) %>
+      </th>
+      
+      <th>
+        10<%="\n"+get_name_dia(@fechadia10) %>
+      </th>
+      <th>
+        11<%="\n"+get_name_dia(@fechadia11) %>
+      </th>
+      <th>
+        12<%="\n"+get_name_dia(@fechadia12) %>
+      </th>
+      <th>
+        13<%="\n"+get_name_dia(@fechadia13) %>
+      </th>
+      <th>
+        14<%="\n"+get_name_dia(@fechadia14) %>
+      </th>
+      
+      <th>
+        15<%="\n"+get_name_dia(@fechadia15) %>
+      </th>
+      <th>
+        16<%="\n"+get_name_dia(@fechadia16) %>
+      </th>
+      <th>
+        17<%="\n"+get_name_dia(@fechadia17) %>
+      </th>
+      <th>
+        18<%="\n"+get_name_dia(@fechadia18) %>
+      </th>
+      <th>
+        19<%="\n"+get_name_dia(@fechadia19) %>
+      </th>
+      <th>
+        20<%="\n"+get_name_dia(@fechadia20) %>
+      </th>
+      
+      <th>
+        21<%="\n"+get_name_dia(@fechadia21) %>
+      </th>
+      <th>
+        22<%="\n"+get_name_dia(@fechadia22) %>
+      </th>
+      <th>
+        23<%="\n"+get_name_dia(@fechadia23) %>
+      </th>
+      <th>
+        24<%="\n"+get_name_dia(@fechadia24) %>
+      </th>
+      <th>
+        25<%="\n"+get_name_dia(@fechadia25) %>
+      </th>
+      <th>
+        26<%="\n"+get_name_dia(@fechadia26) %>
+      </th>
+      
+      <th>
+        27<%="\n"+get_name_dia(@fechadia27) %>
+      </th>
+
+      
+      <th>
+        28<%="\n"+get_name_dia(@fechadia28) %>
+      </th>
+
+      <% if last_day >= 29 %> 
+      <th>
+        29<%="\n"+get_name_dia(@fechadia29) %>
+      </th>
+      <% end %>
+       <% if last_day >= 30 %> 
+      <th>
+        30<%="\n"+get_name_dia(@fechadia30) %>
+      </th>
+      <% end %>
+
+      <% if last_day == 31 %> 
+
+          <th>
+            31<%="\n"+get_name_dia(@fechadia31) %>
+          </th>
+     <% end %>
 
         <th>Total  </th>
         

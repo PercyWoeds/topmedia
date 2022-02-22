@@ -11,6 +11,76 @@
 
 <%= render "customers/show" %>
 
+
+
+<% nroitem =  1 %>
+
+<h3>Clientes - Contactos  </h3>
+
+<table>
+
+
+   <tr>
+   <th style="width: 5%">Item </th>
+   <th style="width: 5%">Code </th>
+   <th style="width: 15%">Nombre </th>
+   <th style="width: 15%">Cargo </th>
+   <th style="width: 15%">Telefono 1 </th>
+   <th style="width: 15%">Telefono 2 </th>
+   <th style="width: 15%">Telefono 3 </th>
+   <th style="width: 10%">Anexo 1</th>
+   <th style="width: 10%">Anexo 2</th>
+   <th style="width: 10%">Anexo 3</th>
+   
+   <th style="width: 10%">Celular 1</th>
+   <th style="width: 10%">Celular 2</th>
+   <th style="width: 10%">Celular 3</th>
+   
+   <th style="width: 10%">Correo 1</th>
+   <th style="width: 10%">Correo 2</th>
+   
+   
+   <% nroitem = 1 %>
+
+   </tr>
+
+    <% for  customer_contact in  @customer_contacts  %>
+    
+    <tr>
+
+    <td style="width: 5%">  <%= nroitem %> </td>
+
+    <td style="width: 10%">  <%= customer_contact.code  %></td>
+
+    <td style="width: 15%">  <%= customer_contact.name %></td>
+
+    <td style="width: 15%">  <%= customer_contact.cargo  %></td>    
+    <td style="width: 15%">  <%= customer_contact.telefono1  %></td>
+    <td style="width: 15%">  <%= customer_contact.telefono2 %></td>    
+    <td style="width: 30%">  <%= customer_contact.telefono3 %></td>
+    <td style="width: 30%">  <%= customer_contact.anexo1  %></td>    
+    <td style="width: 30%">  <%= customer_contact.anexo2  %></td>
+    <td style="width: 30%">  <%= customer_contact.anexo3  %></td>    
+    <td style="width: 30%">  <%= customer_contact.celular1 %></td>
+    <td style="width: 30%">  <%= customer_contact.celular2 %></td>
+    <td style="width: 30%">  <%= customer_contact.celular3 %></td>
+    <td style="width: 30%">  <%= customer_contact.correo1  %></td>
+    <td style="width: 30%">  <%= customer_contact.correo2  %></td>
+    
+             
+
+    </tr>
+
+   
+  
+    <% nroitem +=1 %>
+
+    
+    <% end %>
+
+  </table>
+  
+
 <div class="button">
   <%= link_to "Invoices for customer", "/companies/invoices/#{@customer.company.id}?customer=#{@customer.id}" %>
   <%= link_to 'Edit', edit_customer_path(@customer) %>

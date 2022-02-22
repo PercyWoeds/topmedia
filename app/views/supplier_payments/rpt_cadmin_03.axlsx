@@ -87,7 +87,7 @@ sheet.merge_cells('A8:C8')
                           total_comision_soles_1 = 0
                           total_comision_dolar_1 = 0
                           
-                          if payment.moneda_id == 1
+                          if payment.moneda_id == 2
                              lcDolar = payment.total
                              total_comision_soles_1 = payment.total * comision1 / 100
                           else

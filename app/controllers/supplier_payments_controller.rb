@@ -2113,11 +2113,14 @@ def list_receive_supplierpayments
  def rpt_cadmin_03
 
     @company=Company.find(1)
-    @fecha1 = params[:fecha1]
-    @fecha2 = params[:fecha2]
-  
+      @mes = params[:month]
+    @anio = params[:year]
+    @mes1 = params[:month1]
+    @anio1 = params[:year1]
+
+
           
-    @ordenes = @company.get_ordenes_cliente3(@fecha1,@fecha2)
+    @ordenes = @company.get_ordenes_cliente4(@mes,@anio,@mes1,@anio1)
 
         case params[:print]
       

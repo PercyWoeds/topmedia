@@ -92,6 +92,9 @@ wb.styles do |s|
     @fila_marca += ["Contrato Nro.: "+ @orden.get_nro_contrato(@orden.secu_cont) ]
     @fila_mes_anio += ["Tipo Orden: " + @orden.tipo_orden.descrip ]
     
+
+sheet.add_row ["Medio: " + @orden.medio.descrip ] ,:style =>  [cadena0]
+
     sheet.add_row @fila_cliente.map{ |col| col.upcase  } , :style =>  cadena0
     sheet.add_row @fila_direccion.map{ |col| col.upcase  } , :style =>  cadena0
     sheet.add_row @fila_marca.map{ |col| col.upcase  } , :style =>  cadena0
