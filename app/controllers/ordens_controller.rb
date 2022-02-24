@@ -3116,7 +3116,9 @@ if days_mes >=28
     @orden[:processed] = "1"
     @orden[:tipo] = "N"
     @orden[:contrato_id] = 1449
-
+    @orden[:tiempo] = 30
+    @orden[:ciudad] = 1
+    
     respond_to do |format|
       if @orden.save
         # Create products for kit
