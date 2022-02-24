@@ -1,5 +1,6 @@
 <% last_day = @orden.days_in_month(@orden.month,@orden.year )  %>
 <table>
+
   <thead>
     <tr>
       
@@ -294,6 +295,8 @@
           <td class="small bordered_bottom bordered_right">
             <%= product.d31 %>              
           </td>
+            <%end %>
+          
           <td class="small bordered_bottom bordered_right">
             <%= money(product.quantity) %>                    
           </td>
