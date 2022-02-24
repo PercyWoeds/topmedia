@@ -296,15 +296,19 @@
           <td class="small bordered_bottom bordered_right">
             <%= product.d27 %>              
           </td>
-          <td class="small bordered_bottom bordered_right">
-            <%= product.d28 %>              
-          </td>
+             <% if last_day >= 29 %> 
           <td class="small bordered_bottom bordered_right">
             <%= product.d29 %>              
           </td>
+
+            <%end %>
+
+              <% if last_day >= 30 %> 
           <td class="small bordered_bottom bordered_right">
             <%= product.d30 %>              
           </td>
+            <%end %>
+              <% if last_day >= 31 %> 
           <td class="small bordered_bottom bordered_right">
             <%= product.d31 %>              
           </td>
