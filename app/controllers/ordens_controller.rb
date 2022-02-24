@@ -3090,7 +3090,8 @@ if days_mes >=28
     @productos = Producto.all
     @ciudad = Ciudad.all
     @monedas = Moneda.all
-    @contratos2 = CustomerContrato.all.order(:secu_cont)
+        @contratos2 = @company.get_customer_contratos()
+
  @tipo_ordens = @company.get_tipo_orden()
 
 
@@ -3146,7 +3147,8 @@ if days_mes >=28
     @marcas= Marca.all
     @versions = Version.all
     @contratos = Contrato.all
-    @contratos2 = CustomerContrato.all.order(:secu_cont)
+        @contratos2 = @company.get_customer_contratos()
+
 
     items = params[:items].split(",")
 
