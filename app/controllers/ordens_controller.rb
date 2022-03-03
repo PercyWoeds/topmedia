@@ -3141,6 +3141,9 @@ if days_mes >=28
   # PUT /ordens/1
   # PUT /ordens/1.xml
   def update
+
+    @company = Company.find(1)
+    
     @pagetitle = "Edit orden"
     @action_txt = "Update"
     @customers = Customer.all
