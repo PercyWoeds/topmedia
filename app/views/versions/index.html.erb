@@ -30,12 +30,7 @@
               <td>---</td>
 
               <%else %>
-
-              <td><%= version.producto.marca.name %></td>
-
-              <%end%>
-
-              <% if version.producto.marca.customer.nil?%>
+<% if version.producto.marca.customer.nil?%>
                <td>---</td>
 
               <%else%>
@@ -44,6 +39,13 @@
 
               <%end%>
 
+              
+
+              <td><%= version.producto.marca.name %></td>
+
+              <%end%>
+
+              
         <% end %>
 
         <td><%= link_to 'Ver', version %></td>
