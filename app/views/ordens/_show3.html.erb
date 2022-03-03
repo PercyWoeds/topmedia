@@ -128,7 +128,7 @@
       </th>
       <% end %>
 
-      <% if last_day == 31 %> 
+      <% if last_day >= 31 %> 
 
           <th>
             31<%="\n"+get_name_dia(@fechadia31) %>
@@ -268,6 +268,11 @@
           <td class="small bordered_bottom bordered_right">
             <%= product.d27 %>              
           </td>
+                  <td class="small bordered_bottom bordered_right">
+            <%= product.d28 %>              
+          </td>
+
+
             <% if last_day >= 29 %> 
           <td class="small bordered_bottom bordered_right">
             <%= product.d29 %>              
