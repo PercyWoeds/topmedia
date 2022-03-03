@@ -339,7 +339,7 @@ if days_mes >=28
 
     if @orden.tipo_orden_id == 1
 
-        @orden_product.avisodetail_id = 131
+        @orden_product.avisodetail_id = 3517
         @orden_product.price = @orden_product.tarifa 
         sum_dias = 1
         @orden_product.quantity = sum_dias
@@ -350,7 +350,7 @@ if days_mes >=28
  
     if @orden.tipo_orden_id == 2 or @orden.tipo_orden_id == 6  or @orden.tipo_orden_id == 7
 
-        @orden_product.avisodetail_id = 131
+        @orden_product.avisodetail_id = 3517
 
         sum_dias = (@orden_product.d01 + @orden_product.d02 + @orden_product.d03 + @orden_product.d04+
                     @orden_product.d05 + @orden_product.d06 + @orden_product.d07 + @orden_product.d08+
@@ -372,7 +372,7 @@ if days_mes >=28
 
     if @orden.tipo_orden_id == 3
 
-        @orden_product.avisodetail_id = 131
+        @orden_product.avisodetail_id = 3517
 
         sum_dias = (@orden_product.d01 + @orden_product.d02 + @orden_product.d03 + @orden_product.d04+
                     @orden_product.d05 + @orden_product.d06 + @orden_product.d07 + @orden_product.d08+
@@ -394,7 +394,7 @@ if days_mes >=28
 
     if @orden.tipo_orden_id == 4 
 
-        @orden_product.avisodetail_id = 131
+    @orden_product.avisodetail_id = 3517
          @orden_product.tarifa   = 0 
         sum_dias = (@orden_product.d01 + @orden_product.d02 + @orden_product.d03 + @orden_product.d04+
                     @orden_product.d05 + @orden_product.d06 + @orden_product.d07 + @orden_product.d08+
@@ -412,7 +412,7 @@ if days_mes >=28
 
     if @orden.tipo_orden_id == 5
 
-        @orden_product.avisodetail_id = 131
+        @orden_product.avisodetail_id = 3517
 
         sum_dias =  @orden_product.quantity 
 
