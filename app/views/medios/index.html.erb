@@ -35,7 +35,7 @@
         <td><%= medio.estacion %></td>
         <td><%= link_to 'Ver', medio %></td>
         <td><%= link_to 'Editar', edit_medio_path(medio) %></td>
-         <%     if current_user.level != "admin"  %>
+         <%     if current_user.level == "admin"  %>
         <td><%= link_to 'Eliminar', medio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
       </tr>

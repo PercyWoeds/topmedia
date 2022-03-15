@@ -16,11 +16,33 @@
     <% @productos.each do |producto| %>
       <tr>
         <td><%= producto.name %></td>
-        <td><%= producto.marca.name %></td>
-        <td><%= producto.marca.customer.name %></td>
+
+        <% if producto.marca.nil? %>
+
+         <td></td>
+
+        <% else %>
+
+             <td><%= producto.marca.name %></td>
+
+            <% if producto.marca.customer.nil? %>
+
+               <td></td>
+
+            <% else %>
+                <td><%= producto.marca.customer.name %></td>
+
+            <% end %>
+
+        <% end %>
+
+
+
+    
+
         <td><%= link_to 'Show', producto %></td>
         <td><%= link_to 'Editar', edit_producto_path(producto) %></td>
-         <%     if current_user.level != "admin"  %>
+         <%     if current_user.level == "admin"  %>
 
         <td><%= link_to 'Eliminar', producto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 

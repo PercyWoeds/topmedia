@@ -21,7 +21,7 @@
         
         <td><%= link_to 'Ver', avisodetail %></td>
         <td><%= link_to 'Editar', edit_avisodetail_path(avisodetail) %></td>
-         <%     if current_user.level != "admin"  %>
+         <%     if current_user.level == "admin"  %>
 
         <td><%= link_to 'Eliminar', avisodetail, method: :delete, data: { confirm: 'Esta seguro eliminar ?' } %></td>
         <% end %>

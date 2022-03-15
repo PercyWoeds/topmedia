@@ -24,15 +24,20 @@ totals = []
 
   <%= form_tag(rpt_cadmin_02_supplier_payments_path, :method => "get") do %>
 
-  <div class="field">
-    Desde <input type="date" name="fecha1" value= <%= Date.today - 30 %> style = "width: 150px" >
-  </div>
+ <p> Desde</p>
 
-  <div class="field">
-    Hasta <input type="date" name="fecha2" value = <%= Date.today %> style = "width: 150px" >
-  </div>
-  
-  
+<%= select_tag(:year, options_for_select(@years, @year), :style =>"width: 100px" )  %>
+
+<%= select_tag(:month, options_for_select(@months, @month), :style =>"width: 100px" ) %>
+<br>
+
+    <p> Hasta</p>
+
+<%= select_tag(:year1, options_for_select(@years, @year), :style =>"width: 100px" ) %>
+
+<%= select_tag(:month1, options_for_select(@months, @month), :style =>"width: 100px" ) %>
+<br>
+
 
 <table>
     <tr>
