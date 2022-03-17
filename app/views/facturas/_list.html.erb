@@ -60,6 +60,13 @@
           <td class="bordered_right bordered_bottom <%= invoice.processed_color %>">
             <%= invoice.get_processed_short %>
           </td>
+
+
+            <td class="bordered_right bordered_bottom <%= invoice.processed_color %>">
+            <%= invoice.get_estado_nubefact %>
+          </td>
+
+
         <td class="bordered_right bordered_bottom <%= invoice.processed_color %>">
 
           <% if invoice.processed =="0" %>
@@ -69,13 +76,17 @@
 
           <% elsif invoice.processed =="1"%>    
         
-          <%= link_to "Ver", invoice %>                      
+          <%= link_to "Ver", invoice %>    
+
+
           <%= link_to 'Eliminar', invoice,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %> 
                      
           <% elsif invoice.processed =="2"%>  
           <%= "** Anulado **" %>
           <%= link_to 'Eliminar', invoice,:data=> {:confirm => 'Esta seguro ?'}, :method => :delete %>            
           <% elsif invoice.processed =="3"%> 
+
+          <%= link_to "Ver", invoice %>    
            <%= link_to "Print", "/facturas/print/#{invoice.id}" %>
          
 

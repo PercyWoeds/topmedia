@@ -352,14 +352,17 @@ if days_mes >=28
 
         @orden_product.avisodetail_id = 3517
 
-        sum_dias = (@orden_product.d01 + @orden_product.d02 + @orden_product.d03 + @orden_product.d04+
-                    @orden_product.d05 + @orden_product.d06 + @orden_product.d07 + @orden_product.d08+
-                    @orden_product.d09 + @orden_product.d10 + @orden_product.d11 + @orden_product.d12+
-                    @orden_product.d13 + @orden_product.d14 + @orden_product.d15 + @orden_product.d16+
-                    @orden_product.d17 + @orden_product.d18 + @orden_product.d19 + @orden_product.d20+
-                    @orden_product.d21 + @orden_product.d22 + @orden_product.d23 + @orden_product.d24+
-                    @orden_product.d25 + @orden_product.d26 + @orden_product.d27 + @orden_product.d28+
-                    @orden_product.d29 + @orden_product.d30 + @orden_product.d31)
+
+        puts "mmmmm"
+
+        sum_dias = (params[:orden_product][:d01].to_f + params[:orden_product][:d02].to_f +  params[:orden_product][:d03].to_f +  params[:orden_product][:d04].to_f  +
+         params[:orden_product][:d05].to_f + params[:orden_product][:d06].to_f +  params[:orden_product][:d07].to_f +  params[:orden_product][:d08].to_f +  
+         params[:orden_product][:d09].to_f + params[:orden_product][:d10].to_f +  params[:orden_product][:d11].to_f +  params[:orden_product][:d12].to_f + 
+         params[:orden_product][:d13].to_f + params[:orden_product][:d14].to_f +  params[:orden_product][:d15].to_f +  params[:orden_product][:d16].to_f +
+         params[:orden_product][:d17].to_f + params[:orden_product][:d18].to_f +  params[:orden_product][:d19].to_f +  params[:orden_product][:d20].to_f +
+         params[:orden_product][:d21].to_f + params[:orden_product][:d22].to_f +  params[:orden_product][:d23].to_f +  params[:orden_product][:d24].to_f +
+         params[:orden_product][:d25].to_f + params[:orden_product][:d26].to_f +  params[:orden_product][:d27].to_f +  params[:orden_product][:d28].to_f + 
+         params[:orden_product][:d29].to_f + params[:orden_product][:d30].to_f +  params[:orden_product][:d31].to_f )
 
         @orden_product.quantity = sum_dias
         @orden_product.tarifa   = 0 
@@ -368,20 +371,27 @@ if days_mes >=28
          puts   @orden_product.price
          puts  @orden_product.quantity 
 
+
+         puts "sum dias"
+        puts params[:orden_product][:d12].to_f 
+         puts sum_dias 
+
+
     end 
 
     if @orden.tipo_orden_id == 3
 
         @orden_product.avisodetail_id = 3517
 
-        sum_dias = (@orden_product.d01 + @orden_product.d02 + @orden_product.d03 + @orden_product.d04+
-                    @orden_product.d05 + @orden_product.d06 + @orden_product.d07 + @orden_product.d08+
-                    @orden_product.d09 + @orden_product.d10 + @orden_product.d11 + @orden_product.d12+
-                    @orden_product.d13 + @orden_product.d14 + @orden_product.d15 + @orden_product.d16+
-                    @orden_product.d17 + @orden_product.d18 + @orden_product.d19 + @orden_product.d20+
-                    @orden_product.d21 + @orden_product.d22 + @orden_product.d23 + @orden_product.d24+
-                    @orden_product.d25 + @orden_product.d26 + @orden_product.d27 + @orden_product.d28+
-                    @orden_product.d29 + @orden_product.d30 + @orden_product.d31)
+       
+      sum_dias = (params[:orden_product][:d01].to_f + params[:orden_product][:d02].to_f +  params[:orden_product][:d03].to_f +  params[:orden_product][:d04].to_f  +
+         params[:orden_product][:d05].to_f + params[:orden_product][:d06].to_f +  params[:orden_product][:d07].to_f +  params[:orden_product][:d08].to_f +  
+         params[:orden_product][:d09].to_f + params[:orden_product][:d10].to_f +  params[:orden_product][:d11].to_f +  params[:orden_product][:d12].to_f + 
+         params[:orden_product][:d13].to_f + params[:orden_product][:d14].to_f +  params[:orden_product][:d15].to_f +  params[:orden_product][:d16].to_f +
+         params[:orden_product][:d17].to_f + params[:orden_product][:d18].to_f +  params[:orden_product][:d19].to_f +  params[:orden_product][:d20].to_f +
+         params[:orden_product][:d21].to_f + params[:orden_product][:d22].to_f +  params[:orden_product][:d23].to_f +  params[:orden_product][:d24].to_f +
+         params[:orden_product][:d25].to_f + params[:orden_product][:d26].to_f +  params[:orden_product][:d27].to_f +  params[:orden_product][:d28].to_f + 
+         params[:orden_product][:d29].to_f + params[:orden_product][:d30].to_f +  params[:orden_product][:d31].to_f )
 
         @orden_product.quantity = sum_dias
         @orden_product.tarifa   = 0 
@@ -396,15 +406,15 @@ if days_mes >=28
 
     @orden_product.avisodetail_id = 3517
          @orden_product.tarifa   = 0 
-        sum_dias = (@orden_product.d01 + @orden_product.d02 + @orden_product.d03 + @orden_product.d04+
-                    @orden_product.d05 + @orden_product.d06 + @orden_product.d07 + @orden_product.d08+
-                    @orden_product.d09 + @orden_product.d10 + @orden_product.d11 + @orden_product.d12+
-                    @orden_product.d13 + @orden_product.d14 + @orden_product.d15 + @orden_product.d16+
-                    @orden_product.d17 + @orden_product.d18 + @orden_product.d19 + @orden_product.d20+
-                    @orden_product.d21 + @orden_product.d22 + @orden_product.d23 + @orden_product.d24+
-                    @orden_product.d25 + @orden_product.d26 + @orden_product.d27 + @orden_product.d28+
-                    @orden_product.d29 + @orden_product.d30 + @orden_product.d31)
-
+        
+         sum_dias = (params[:orden_product][:d01].to_f + params[:orden_product][:d02].to_f +  params[:orden_product][:d03].to_f +  params[:orden_product][:d04].to_f  +
+         params[:orden_product][:d05].to_f + params[:orden_product][:d06].to_f +  params[:orden_product][:d07].to_f +  params[:orden_product][:d08].to_f +  
+         params[:orden_product][:d09].to_f + params[:orden_product][:d10].to_f +  params[:orden_product][:d11].to_f +  params[:orden_product][:d12].to_f + 
+         params[:orden_product][:d13].to_f + params[:orden_product][:d14].to_f +  params[:orden_product][:d15].to_f +  params[:orden_product][:d16].to_f +
+         params[:orden_product][:d17].to_f + params[:orden_product][:d18].to_f +  params[:orden_product][:d19].to_f +  params[:orden_product][:d20].to_f +
+         params[:orden_product][:d21].to_f + params[:orden_product][:d22].to_f +  params[:orden_product][:d23].to_f +  params[:orden_product][:d24].to_f +
+         params[:orden_product][:d25].to_f + params[:orden_product][:d26].to_f +  params[:orden_product][:d27].to_f +  params[:orden_product][:d28].to_f + 
+         params[:orden_product][:d29].to_f + params[:orden_product][:d30].to_f +  params[:orden_product][:d31].to_f )
         @orden_product.quantity = sum_dias
         
 
@@ -446,6 +456,8 @@ if days_mes >=28
         format.json { render json: @orden.errors, status: :unprocessable_entity }
       end
     end
+
+
   end
 
   # DELETE /orden_products/1

@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @orden_comision.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @orden_comision.name %>
+</p>
+
+<%= link_to 'Edit', edit_orden_comision_path(@orden_comision) %> |
+<%= link_to 'Back', orden_comisions_path %>

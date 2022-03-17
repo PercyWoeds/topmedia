@@ -77,6 +77,20 @@ class Factura < ActiveRecord::Base
   end 
 
 
+  def get_tipo_cambio( fecha  )
+    b = 0
+    fecha1 = fecha.to_date 
+
+     if Tipocambio.where(["dia  >= ? and dia <= ? ", "#{fecha1} 00:00:00","#{fecha1} 23:59:59" ]).exists?
+
+      b = Tipocambio.where(["dia >= ? and dia <= ? ", "#{fecha1} 00:00:00","#{fecha1} 23:59:59" ]).last.venta 
+
+     end 
+
+     return b 
+
+  end 
+
  
   
   def get_subtotal_items(items)
@@ -466,13 +480,24 @@ class Factura < ActiveRecord::Base
     end
   end
   # Process the invoice
-  def process
-    if(self.processed == "1" or self.processed == true)          
-      self.processed="1"
-      self.date_processed = Time.now
-      self.save
-    end
+  def do_process
+    @invoice = Factura.find(params[:id])
+    @invoice[:processed] = "1"
+    @invoice.process
+   
+    flash[:notice] = "The invoice order has been processed."
+    redirect_to @invoice
   end
+
+  def do_process2
+    @invoice = Factura.find(params[:id])
+    @invoice[:processed] = "1"
+   # @invoice.process2
+    
+    flash[:notice] = "The invoice order has been processed."
+    redirect_to @invoice
+  end
+
 
   def cerrar
     if(self.processed == "1" )         
@@ -504,6 +529,7 @@ class Factura < ActiveRecord::Base
       self.save
     end
   end
+
 
   def processed_color
     if(self.processed == "1")
@@ -560,5 +586,312 @@ class Factura < ActiveRecord::Base
     end 
   end   
   
+  def process
+
+
+        #  Factura.where(id: self.id).update_all("fecha_cuota1 = fecha2, importe_cuota1 =  total - detraccion_importe ")
+             @factura = Factura.find(self.id)
+
+          puts @factura.code 
+
+          @fecha_emision = @factura.fecha.strftime("%Y-%m-%d")
+          @fecha_vmto    = @factura.fecha2.strftime("%Y-%m-%d")
+
+
+          if @factura.payment.day == 0 
+            @forma_pago = "CONTADO" 
+            @medio_pago = "CONTADO"
+          else 
+             @forma_pago = "CREDITO"
+             @medio_pago = "VENTA AL CREDITO"
+          end
+
+
+
+          ff = @factura.code.split("-")
+
+          @serie  =  ff[0]
+          @numero =  ff[1]
+
+         if @factura.moneda_id == 1 
+           @moneda_nube = 2
+          else
+                @moneda_nube = 1
+          end
+
+
+          if @factura.servicio == "true"
+               @texto_obs = ""
+          else
+               @texto_obs = " "
+          end
+
+          if @factura.detraccion_importe  > 0.0
+            puts " ** detraccion********************************************"
+
+
+              @detraccion_tipo  =  "12"
+              @detraccion_total =  @factura.detraccion_importe * @factura.tipo_cambio 
+              @medio_de_pago_detraccion = "1" 
+              @detraccion_porcentaje = @factura.detraccion_percent
+
+            # create a new Invoice object
+            invoice = NubeFact::Invoice.new({
+                "operacion"                   => "generar_comprobante",
+                "tipo_de_comprobante"               => "1",
+                "serie"                             =>  @serie,
+                "numero"                            =>  @numero ,
+                "sunat_transaction"                 => "30",
+                "cliente_tipo_de_documento"         => "6",
+                "cliente_numero_de_documento"       => @factura.customer.ruc ,
+                "cliente_denominacion"              => @factura.customer.name ,
+                "cliente_direccion"                 => @factura.customer.direccion_all ,
+                "cliente_email"                     => "",
+                "cliente_email_1"                   => "",
+                "cliente_email_2"                   => "",
+                "fecha_de_emision"                  => @fecha_emision,
+                "fecha_de_vencimiento"              => @fecha_vmto ,
+                "moneda"                            => @moneda_nube,
+                "tipo_de_cambio"                    => "",
+                "porcentaje_de_igv"                 => "18.00",
+                "descuento_global"                  => "",
+                "total_descuento"                   => "",
+                "total_anticipo"                    => "",
+                "total_gravada"                     => @factura.subtotal,
+                "total_inafecta"                    => "",
+                "total_exonerada"                   => "",
+                "total_igv"                         => @factura.tax,
+                "total_gratuita"                    => "",
+                "total_otros_cargos"                => "",
+                "total"                             => @factura.total,
+                "percepcion_tipo"                   => "",
+                "percepcion_base_imponible"         => "",
+                "total_percepcion"                  => "",
+                "total_incluido_percepcion"         => "",
+                "detraccion"                        => "true",
+                "observaciones"                     => @texto_obs, 
+                "documento_que_se_modifica_tipo"    => "",
+                "documento_que_se_modifica_serie"   => "",
+                "documento_que_se_modifica_numero"  => "",
+                "tipo_de_nota_de_credito"           => "",
+                "tipo_de_nota_de_debito"            => "",
+                "enviar_automaticamente_a_la_sunat" => "true",
+                "enviar_automaticamente_al_cliente" => "false",
+                "codigo_unico"                      => "",
+                "condiciones_de_pago"               => @forma_pago,
+                "medio_de_pago"                     => @medio_pago,
+                "placa_vehiculo"                    => @factura.description  ,
+                "orden_compra_servicio"             => "",
+                "tabla_personalizada_codigo"        => "",
+                "formato_de_pdf"                    => "",
+                "detraccion_tipo"                  => @detraccion_tipo,
+                "detraccion_total"                 => @detraccion_total,
+                "detraccion_porcentaje"            => @detraccion_porcentaje,
+                "medio_de_pago_detraccion"         => @medio_de_pago_detraccion,
+                "ubigeo_origen"                    => "150101",
+                "direccion_origen"                 => ""
+                
+            })
+
+          else 
+
+            puts " sin detraccion**"
+              # create a new Invoice object
+              invoice = NubeFact::Invoice.new({
+                  "operacion"                   => "generar_comprobante",
+                  "tipo_de_comprobante"               => "1",
+                  "serie"                             =>  @serie,
+                  "numero"                            =>  @numero ,
+                  "sunat_transaction"                 => "1",
+                  "cliente_tipo_de_documento"         => "6",
+                  "cliente_numero_de_documento"       => @factura.customer.ruc ,
+                  "cliente_denominacion"              => @factura.customer.name ,
+                  "cliente_direccion"                 => @factura.customer.direccion_all ,
+                  "cliente_email"                     => "",
+                  "cliente_email_1"                   => "",
+                  "cliente_email_2"                   => "",
+                  "fecha_de_emision"                  => @fecha_emision,
+                  "fecha_de_vencimiento"              => @fecha_vmto ,
+                  "moneda"                            => @moneda_nube,
+                  "tipo_de_cambio"                    => "",
+                  "porcentaje_de_igv"                 => "18.00",
+                  "descuento_global"                  => "",
+                  "total_descuento"                   => "",
+                  "total_anticipo"                    => "",
+                  "total_gravada"                     => @factura.subtotal,
+                  "total_inafecta"                    => "",
+                  "total_exonerada"                   => "",
+                  "total_igv"                         => @factura.tax,
+                  "total_gratuita"                    => "",
+                  "total_otros_cargos"                => "",
+                  "total"                             => @factura.total,
+                  "percepcion_tipo"                   => "",
+                  "percepcion_base_imponible"         => "",
+                  "total_percepcion"                  => "",
+                  "total_incluido_percepcion"         => "",
+                  "detraccion"                        => "false",
+                  "observaciones"                     => @texto_obs, 
+                  "documento_que_se_modifica_tipo"    => "",
+                  "documento_que_se_modifica_serie"   => "",
+                  "documento_que_se_modifica_numero"  => "",
+                  "tipo_de_nota_de_credito"           => "",
+                  "tipo_de_nota_de_debito"            => "",
+                  "enviar_automaticamente_a_la_sunat" => "true",
+                  "enviar_automaticamente_al_cliente" => "false",
+                  "codigo_unico"                      => "",
+                  "condiciones_de_pago"               => @forma_pago,
+                  "medio_de_pago"                     => @medio_pago,
+                  "placa_vehiculo"                    => @factura.description  ,
+                  "orden_compra_servicio"             => "",
+                  "tabla_personalizada_codigo"        => "",
+                  "formato_de_pdf"                    => "",
+                   "detraccion_tipo"                  => "",
+                   "detraccion_total"                 => "",
+                   "medio_de_pago_detraccion"         => ""
+                 
+              })
+
+
+
+
+          end    
+
+
+# Add items
+# You don't need to add the fields that are calculated like total or igv
+# those got calculated automatically.
+
+
+cantidad = 0
+
+
+    
+       
+         @factura_detail = FacturaDetail.where(factura_id: @factura.id )
+     
+
+
+# for item0 in @factura_detail
+#   puts "***********"
+#     puts item0.product.code
+#     puts item0.product.name 
+#     puts item0.quantity 
+#     puts item0.total 
+
+# end
+
+for item_factura in @factura_detail 
+    
+
+puts "*+++++++++++++++++++++"
+puts item_factura.quantity  
+#puts item_factura.preciosigv 
+
+        if @factura.servicio == "true"
+          invoice.add_item({
+            codigo: item_factura.product.code ,
+         unidad_de_medida: "ZZ", 
+          descripcion: item_factura.product.name ,
+          cantidad: item_factura.quantity,
+          valor_unitario: item_factura.preciosigv.round(3)   ,
+          tipo_de_igv: 1 
+
+          })
+        else 
+
+          @valor_unitario = (item_factura.total / item_factura.quantity ) / 1.18 
+          invoice.add_item({
+            codigo: item_factura.service.code ,
+           unidad_de_medida:"ZZ", 
+          descripcion: item_factura.service.name ,
+          cantidad: item_factura.quantity,
+          valor_unitario:  @valor_unitario  ,
+          tipo_de_igv: 1 
+
+          })
+
+        end 
+
+end 
+
+if @factura.importe_cuota1 > 0.00
+          invoice.add_cuota({
+            cuota: "1" ,
+            fecha_de_pago: @factura.fecha_cuota1.strftime("%d-%m-%Y"), 
+            importe: @factura.importe_cuota1 
+
+          })
+
+end 
+
+
+if  !@factura.importe_cuota2.nil?
+   if @factura.importe_cuota2 > 0.00 and 
+              invoice.add_cuota({
+                 cuota: "2" , 
+                 fecha_de_pago: @factura.fecha_cuota2.strftime("%d-%m-%Y"), 
+                 importe: @factura.importe_cuota2 
+
+
+              })
+
+    end 
+
+
+
+else 
+
+   
+end 
+
+if !@factura.importe_cuota3.nil?
+
+   if @factura.importe_cuota3 > 0.00  
+                invoice.add_cuota({
+                   cuota: "3" ,
+                  fecha_de_pago: @factura.fecha_cuota3.strftime("%d-%m-%Y"), 
+                  importe: @factura.importe_cuota3 ,
+
+                })
+
+      end 
+
+
+
+else 
+     
+end 
+
+
+
+puts JSON.pretty_generate(invoice )
+
+result = invoice.deliver
+
+    if result['errors'] 
+        puts  "#{result['codigo']}: #{result['errors']}  aviso"
+        self.msgerror = "#{result['codigo']}: #{result['errors']}  aviso"
+      else 
+        self.msgerror = "Factura en nubefact."
+
+    end
+
+        self.processed="1"
+   
+        self.date_processed = Time.now
+        self.save
+
+ end
+
+  def get_estado_nubefact
+
+    if !self.msgerror.nil?
+
+      return self.msgerror 
+    else 
+      return "-"  
+    end 
+      
+  end 
   
 end

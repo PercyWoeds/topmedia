@@ -14,7 +14,7 @@
         </th>
         
         <th class="bordered_right bordered_bottom">
-          Total
+          Total S/IGV 
         </th>
         <th class="bordered_right bordered_bottom">
           Periodo 
@@ -52,7 +52,7 @@
           </td>          
 
           <td class="bordered_right bordered_bottom right">
-            <%= money(orden.total) %>
+            <%= money(orden.subtotal) %>
           </td>
           <td class="bordered_right bordered_bottom right">
             <%= orden.month.to_s  + "-" +  orden.year.to_s  %> 

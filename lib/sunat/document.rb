@@ -59,7 +59,7 @@ module SUNAT
 
     def build_pdf_header(pdf)
      if self.accounting_supplier_party.logo_path.present?
-        pdf.image "#{self.accounting_supplier_party.logo_path}", :width => 200
+        pdf.image "#{self.accounting_supplier_party.logo_path}", :width => 100
 
         pdf.move_down 2
       end

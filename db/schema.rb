@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220104133133) do
+ActiveRecord::Schema.define(version: 20220317145912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -467,6 +467,7 @@ ActiveRecord::Schema.define(version: 20220104133133) do
     t.string   "name"
     t.string   "ruc"
     t.string   "active"
+    t.integer  "{:index=>true, :foreign_key=>true}_id"
   end
 
   create_table "declaration_deliveries", force: :cascade do |t|
@@ -632,12 +633,12 @@ ActiveRecord::Schema.define(version: 20220104133133) do
     t.datetime "updated_at",         null: false
     t.integer  "contrato_detail_id"
     t.integer  "contrato_id"
-    t.string   "service_id"
-    t.string   "price"
-    t.string   "quantity"
-    t.string   "discount"
     t.integer  "orden_id"
     t.integer  "medio_id"
+    t.float    "price"
+    t.float    "quantity"
+    t.float    "discount"
+    t.integer  "service_id"
   end
 
   create_table "facturas", force: :cascade do |t|
@@ -699,6 +700,7 @@ ActiveRecord::Schema.define(version: 20220104133133) do
     t.float    "importe_neto"
     t.string   "servicio"
     t.float    "detraccion"
+    t.float    "tipo_cambio"
   end
 
   create_table "histories", force: :cascade do |t|
@@ -1010,8 +1012,9 @@ ActiveRecord::Schema.define(version: 20220104133133) do
     t.integer  "customer_id"
     t.float    "comision1"
     t.float    "comision2"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "orden_comision_id"
   end
 
   create_table "medio_details", force: :cascade do |t|
@@ -1140,6 +1143,13 @@ ActiveRecord::Schema.define(version: 20220104133133) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "orden_comisions", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "orden_product_imports", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -1218,11 +1228,15 @@ ActiveRecord::Schema.define(version: 20220104133133) do
     t.string   "cobertura"
     t.string   "horario"
     t.integer  "tipo_aviso_id"
+    t.integer  "tipo_tarifa_id"
+    t.integer  "tipo_tarifas_id"
     t.integer  "medio_detail_id"
     t.string   "pelicula"
     t.integer  "tipo_cpm_id"
     t.integer  "tipo_formato_id"
   end
+
+  add_index "orden_products", ["tipo_tarifas_id"], name: "index_orden_products_on_tipo_tarifas_id", using: :btree
 
   create_table "ordens", force: :cascade do |t|
     t.integer  "contrato_id"
@@ -2068,6 +2082,7 @@ ActiveRecord::Schema.define(version: 20220104133133) do
 
   add_foreign_key "medio_contacts", "medios"
   add_foreign_key "medio_details", "medios"
+  add_foreign_key "orden_products", "tipo_tarifas"
   add_foreign_key "tanks", "companies"
   add_foreign_key "tanks", "products"
 end

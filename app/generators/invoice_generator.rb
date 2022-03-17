@@ -187,8 +187,15 @@ class InvoiceGenerator < DocumentGenerator
 
         $lcTd           = @invoice.document.descripshort
      
+        if @invoice.moneda_id == 1 
+            $lcDetraccionImporte = @invoice.detraccion_importe * @invoice.tipo_cambio.round(2)
 
-        $lcDetraccionImporte = @invoice.detraccion_importe
+        else
+
+             $lcDetraccionImporte = @invoice.detraccion_importe
+
+        end 
+
         $lcDetraccionPercent = @invoice.detraccion_percent 
         $lcDetraccionCuenta  = @invoice.detraccion_cuenta 
        
@@ -352,10 +359,6 @@ class InvoiceGenerator < DocumentGenerator
         lcPrecioSIgv   =  lcPrecioSigv2.to_i 
         lcPrecioSIGVr  = lcPrecioSIGV.round(3).to_s 
 
-        puts lcCantidad
-        puts lcPrecioCigv
-        puts lcPrecioSIGV
-        puts lcDes1 
         
               a   =  {id: nro_item.to_s, quantity: lcCantidad, line_extension_amount: {value: lcTotal, currency: currency}, 
            pricing_reference: {alternative_condition_price: {price_amount: {value: lcPrecioCigv, currency: currency}}}, 

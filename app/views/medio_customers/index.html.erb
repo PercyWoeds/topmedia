@@ -5,10 +5,12 @@
 <table>
   <thead>
     <tr>
+      <th>Comision</th>
+      
       <th>Medio</th>
       <th>Customer</th>
-      <th>Comision1</th>
-      <th>Comision2</th>
+      <th>% Comision1</th>
+      <th>% Comision2</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,6 +18,13 @@
   <tbody>
     <% @medio_customers.each do |medio_customer| %>
       <tr>
+        <% if medio_customer.orden_comision.nil? %>
+            <td> --</td>
+        <%else%>
+            <td><%= medio_customer.orden_comision.name %></td>
+
+        <% end %>
+
         <td><%= medio_customer.medio.descrip %></td>
         <td><%= medio_customer.customer.name  %></td>
         <td><%= medio_customer.comision1 %></td>

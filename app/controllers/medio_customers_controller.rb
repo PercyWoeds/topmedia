@@ -16,11 +16,11 @@ class MedioCustomersController < ApplicationController
   def new
     @medio_customer = MedioCustomer.new
     @medios =  Medio.all.order(:descrip)
+    @orden_comision =  OrdenComision.order(:name)
+    
     @customers = Customer.all.order(:name)
     @medio_customer[:comision1] = 5
     @medio_customer[:comision2] = 0
-
-
 
 
   end
@@ -29,7 +29,7 @@ class MedioCustomersController < ApplicationController
   def edit
     @medios =  Medio.all.order(:descrip)
     @customers = Customer.all.order(:name)
-
+ @orden_comision =  OrdenComision.order(:name)
   end
 
   # POST /medio_customers
@@ -80,6 +80,6 @@ class MedioCustomersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def medio_customer_params
-      params.require(:medio_customer).permit(:medio_id, :customer_id, :comision1, :comision2)
+      params.require(:medio_customer).permit(:medio_id, :customer_id, :comision1, :comision2,:orden_comision_id  )
     end
 end

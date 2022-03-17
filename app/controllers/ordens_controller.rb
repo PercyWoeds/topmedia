@@ -2999,7 +2999,7 @@ if days_mes >=28
     @ciudad = Ciudad.all
     @contratos2 = @company.get_customer_contratos()
     @monedas = Moneda.all
- @tipo_ordens = @company.get_tipo_orden()
+   @tipo_ordens = @company.get_tipo_orden()
 
 
     @products_lines = @orden.products_lines

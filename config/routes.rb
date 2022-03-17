@@ -1,6 +1,7 @@
   Mnygo::Application.routes.draw do
 
 
+  resources :orden_comisions
   resources :customer_contacts
   resources :medio_contacts
   resources :medio_details
@@ -209,6 +210,8 @@
   resources :deliveryships
   resources :declarations 
   resources :inventarios  
+  resources :orden_comisions   
+
 
 
   resources :inventarios  do

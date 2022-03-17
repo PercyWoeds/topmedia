@@ -14,6 +14,7 @@ class FacturasController < ApplicationController
 def reportes4 
     $lcFacturasall = '1'
 
+
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
@@ -967,6 +968,10 @@ new_invoice_item.save
     @invoice[:importe_cuota3] = 0
     @invoice[:importe_cuota4] = 0
     @invoice[:importe_cuota5] = 0
+
+    @invoice[:tipo_cambio] = @invoice.get_tipo_cambio(@invoice.fecha)
+
+
 
     respond_to do |format|
 

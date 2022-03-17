@@ -3,6 +3,10 @@
 
   <div class="form-inputs">
   
+     <div class="field">
+      <%= f.label :orden_comision_id , "Orden Comision ", :class => "bold" %><br />
+      <%= f.collection_select :orden_comision_id, @orden_comision, :id, :name,{:prompt   => "Seleccione orden_comision"} %>
+      </div>
 
       <div class="field">
       <%= f.label :medio_id , "Medio ", :class => "bold" %><br />

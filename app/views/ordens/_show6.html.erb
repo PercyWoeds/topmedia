@@ -345,11 +345,14 @@
     </td>
     
     <% end %>
+  
+     <% if last_day = 28 %> 
     <tr>
       <td colspan="41" class="bordered_bottom bordered_right">
         &nbsp;
       </td>
     </tr>
+
     <tr>
       <td colspan="41" class="bordered_bottom bordered_right bold">
         Subtotal:
@@ -374,5 +377,113 @@
         <%= money(@orden.total) %>
       </td>
     </tr>
+<% end %>
+
+
+
+
+   <% if last_day == 29 %> 
+    <tr>
+      <td colspan="42" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="42" class="bordered_bottom bordered_right bold">
+        Subtotal:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@orden.subtotal) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="42" class="bordered_bottom bordered_right bold">
+        IGV:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@orden.tax) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="42" class="bordered_bottom bordered_right bold">
+        Total:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@orden.total) %>
+      </td>
+    </tr>
+<% end %>
+
+
+   <% if last_day == 30 %> 
+    <tr>
+      <td colspan="43" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="43" class="bordered_bottom bordered_right bold">
+        Subtotal:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@orden.subtotal) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="43" class="bordered_bottom bordered_right bold">
+        IGV:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@orden.tax) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="43" class="bordered_bottom bordered_right bold">
+        Total:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@orden.total) %>
+      </td>
+    </tr>
+<% end %>
+
+
+
+   <% if last_day == 31 %> 
+    <tr>
+      <td colspan="44" class="bordered_bottom bordered_right">
+        &nbsp;
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="44" class="bordered_bottom bordered_right bold">
+        Subtotal:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@orden.subtotal) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="44" class="bordered_bottom bordered_right bold">
+        IGV:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@orden.tax) %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="44" class="bordered_bottom bordered_right bold">
+        Total:
+      </td>
+      <td class="bordered_bottom bordered_right bold right">
+        <%= money(@orden.total) %>
+      </td>
+    </tr>
+<% end %>
+
+
   </tbody>
 </table>

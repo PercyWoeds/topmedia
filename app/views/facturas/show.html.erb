@@ -70,12 +70,21 @@
   <%= @invoice.moneda.description  %>
 </p>
 
+
+<p>
+  <b>Tipo de Cambio:</b>
+  <%= @invoice.tipo_cambio %>
+</p>
+
 <% if !@invoice.msgerror.nil? %> 
 <p>
   <b> Estado Nubefact:</b>
   <%= @invoice.msgerror %>
 </p>
 <% end %>
+
+
+
 
 <%= hr() %>
 
@@ -430,9 +439,6 @@
 
 <%= hr() %>
 <div class="button" >
-
-
-
     
 <% if @invoice.processed =="1"|| @invoice.processed==nil   %> 
  <%= link_to 'Cuotas / Detraccion', "/facturas/do_closed/#{@invoice.id}" %> 
@@ -451,7 +457,7 @@
 <% end %>
 
 
- <%= link_to 'Reenviar nubefact', "/facturas/do_process2/#{@invoice.id}" %> 
+ <%= link_to 'Reenviar nubefact', "/facturas/do_process/#{@invoice.id}" %> 
 
 
 <%= link_to 'Regresar', "/companies/facturas/#{@invoice.company.id}" %>

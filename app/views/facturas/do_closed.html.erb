@@ -41,6 +41,12 @@
   <%= @invoice.moneda.description  %>
 </p>
 
+<p>
+  <b>Tipo de Cambio:</b>
+  <%= @invoice.tipo_cambio  %>
+</p>
+
+
 <% if !@invoice.msgerror.nil? %> 
 <p>
   <b> Estado Nubefact:</b>
@@ -232,6 +238,9 @@ function updateItemDetraccion() {
     var importe_factura = <%= @invoice.total %> ;
   
     var moneda = <%= @invoice.moneda_id  %> ;
+
+    var tipo_cambio =  <%= @invoice.tipo_cambio %> ;
+
    
     if( percent_detraccion > 0) {
 
@@ -242,9 +251,11 @@ function updateItemDetraccion() {
       var balance =  0 ;
       
         if (moneda == 1) {
+
+          
            balance = parseFloat(importe_factura) - parseFloat(importe_retencion) -  parseFloat(nuevo_detraccion).toFixed(2) ; 
 
-           nuevo_detraccion_r =  importe_factura - balance ; 
+           nuevo_detraccion_r =  (importe_factura - balance ) * tipo_cambio ; 
           $("#ac_detraccion_importe").html(nuevo_detraccion_r.toFixed(2));
 
         }
