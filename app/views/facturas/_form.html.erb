@@ -37,10 +37,6 @@
       </div>
 
 
-    <div class="field">
-      <%= f.label :code, "Code*", :class => "bold" %><br />
-      <%= f.text_field :code, :onclick => "$(this).select();" %>
-    </div>
 
     <div class="field">
       <%= f.label :moneda_id ,"  "%><br />
@@ -48,11 +44,28 @@
     </div>
 
     <%= hr() %>
-    
+
+     <%= f.select :tipo_factura, options_for_select([["MEDIO-CLIENTE",1],["CLIENTE-MEDIO",2]]) %>
+
+<div class="field">
+      <%= "Serie:  " %><br />
+     
+        <%= select_tag(:option, options_for_select([["FFF1",1],["FF01",2],["FF02",3],["FF03",4],["FF04",5],["FF05",6],["FF06",7]], params[:option] ), class:"select") %>
+     
+     </div>
+
+      <br> Tipo de Facturacion <br />
     <div class="field">
-      <%= f.label :medio_id %><br />
+      <%= f.label :medio_id, "Medio:" %><br />
       <%= f.select :medio_id,options_from_collection_for_select(@medios,'id','descrip') %>
     </div>
+
+
+     <div class="field">
+      <%= f.label :customer_id, "Cliente:" %><br />
+      <%= f.select :customer_id,options_from_collection_for_select(@customers,'id','name') %>
+    </div>
+
 
      <div class="field">
       <%= f.label :payment_id,"Forma de Pago " %><br />
@@ -127,7 +140,6 @@
       
       <%= f.hidden_field :user_id, :id => "ac_user_id" %>
       <%= f.hidden_field :contrato_id, :id => "ac_contrato_id" %>
-      <%= f.hidden_field :customer_id, :id => "ac_customer_id" %>
      
       
       <%= f.hidden_field :company_id %>      

@@ -756,12 +756,12 @@ end
     end      
 
     
-  def get_comision(medio,customer,uno ) 
+  def get_comision(medio,customer,uno,order1 ) 
       
       if uno == 1
-           if MedioCustomer.where(customer_id: customer,medio_id: medio ).exists?
+           if MedioCustomer.where(customer_id: customer,medio_id: medio,orden_comision: order1).exists?
 
-          a = MedioCustomer.find_by(medio_id: medio, customer_id: customer)
+          a = MedioCustomer.find_by(medio_id: medio, customer_id: customer,orden_comision: order1)
           return a.comision1
         else
           return 0
@@ -770,13 +770,15 @@ end
       end       
 
       if uno == 2
-        if MedioCustomer.where(customer_id: customer,medio_id: medio ).exists?
-          a = MedioCustomer.find_by(medio_id: medio, customer_id: customer)
+        if MedioCustomer.where(customer_id: customer,medio_id: medio ,orden_comision: order1).exists?
+          a = MedioCustomer.find_by(medio_id: medio, customer_id: customer,orden_comision: order1)
           return a.comision2
         else 
           return 0 
         end     
       end   
+
+      
 
    end
    def get_cantidad_avisos(orden)

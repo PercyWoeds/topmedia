@@ -42,8 +42,8 @@ def reportes4
                            right: '[page] of [topage]'
                   }
                }
-               
 
+               
         end   
       when "To Excel" then render xlsx: 'exportxls'
 
@@ -57,9 +57,9 @@ def reportes4
     @factura_id = params[:factura_id]
         puts @factura_id
 
+        @factura = Factura.find(@factura_id)
+
     @facturasselect = Orden.find(params[:products_ids])
-
-
  
    
     for item in @facturasselect
@@ -71,16 +71,22 @@ def reportes4
           c = item.customer_id 
 
 
-              # comision1  =  item.get_comision(item.medio_id,item.customer_id,1)
-              # comision2  =  item.get_comision(item.medio_id,item.customer_id,2)
-                comision1  = 5 
-                comision2  = 0 
+               comision1  =  item.get_comision(item.medio_id,item.customer_id,1,@factura.tipo_factura)
+               comision2  =  item.get_comision(item.medio_id,item.customer_id,2,@factura.tipo_factura)
+                
+                puts "comision ***************************************************"
+                puts comision1
+                puts comision2
+
              
               comision1_importe   =  item.total * comision1 / 100
 
               comision2_importe   =  ((item.total - comision1_importe) * comision2 / 100)
 
-              total_importe  = comision1_importe  + comision1_importe
+              puts comision1_importe
+              puts comision2_importe 
+
+              total_importe  = comision1_importe  + comision2_importe
                                 
               new_invoice_detail = FacturaDetail.new(:factura_id => @factura_id  ,quantity: 1, :orden_id => a, :medio_id => b, :price=> total_importe,:total => total_importe  )          
           puts "ordennn.-++++++++++++++"
@@ -494,9 +500,8 @@ end
     @company = Company.find(1)
     @factura = Factura.find(params[:factura_id])
     @medio = @factura.medio
+    @customer = @factura.customer 
 
-    @check_product = params[:cbox1]
-    @customer = Customer.find(params[:customer_id]) 
 
     @fecha1 = params[:fecha1]
     @fecha2 = params[:fecha2]
@@ -515,18 +520,12 @@ end
      puts @factura.moneda_id 
 
 
-   if @check_product == "1"
-
-      @detalleitems =  Orden.where("fecha>=? and fecha<=? and processed=? and medio_id =?  and moneda_id = ? and facturado is null",
-          "#{@fecha1} 00:00:00","#{@fecha2} 23:59:59","1",@medio.id,@factura.moneda_id ).order(:fecha) 
+   
+      @detalleitems =  Orden.where("fecha>=? and fecha<=? and processed=? and medio_id =? and customer_id = ? and moneda_id = ? and facturado is null",
+          "#{@fecha1} 00:00:00","#{@fecha2} 23:59:59","1",@medio.id,@customer.id,@factura.moneda_id ).order(:fecha) 
      
-   else
-        @detalleitems =  Orden.where("fecha>=? and fecha<=? and processed=? and medio_id = ? and moneda_id = ?  and customer_id  = ? and facturado is null 
-       ","#{@fecha1} 00:00:00","#{@fecha2} 23:59:59","1",@medio.id, @factura.moneda_id , @customer.id ).order(:fecha)
+  
 
-   end 
-
-    puts "aaaa"
 
 
 
@@ -795,6 +794,7 @@ new_invoice_item.save
     @contrato = @invoice.contrato 
     @invoice_details = @invoice.factura_details 
     @medio  = @invoice.medio 
+    @customer = @invoice.customer 
 
     @medios = @company.get_medios()
     @customers = @company.get_customers()
@@ -832,6 +832,8 @@ new_invoice_item.save
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
     @medios = @company.get_medios()
+    @customers = @company.get_customers()
+    
     @tipodocumento = @company.get_documents()
 
     @ac_user = getUsername()
@@ -893,6 +895,8 @@ new_invoice_item.save
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
     @medios = @company.get_medios()
+    @customers = @company.get_customers()
+   
     @tipodocumento = @company.get_documents()
 
     @invoice[:subtotal] = 0
@@ -918,7 +922,11 @@ new_invoice_item.save
     if @invoice[:contrato_id] == nil
       @invoice[:contrato_id] = 1449 
     end 
-    
+  
+
+   @invoice[:code] = @invoice.get_maximo(params[:option],params[:factura][:document_id])
+
+   
     
     if items != nil or items !=""
 
@@ -983,7 +991,7 @@ new_invoice_item.save
         end 
         @invoice.correlativo
         # Check if we gotta process the invoice
-        @invoice.process()
+       # @invoice.process()
 
     
 
@@ -2089,7 +2097,7 @@ new_invoice_item.save
        :pago, :charge, :balance, :moneda_id, :observ, :fecha2, :year_mounth , :contrato_id, :anio ,:medio_id, :document_id ,
         :tc, :nacional , :orden_id , :msgerror, :cuota1, :fecha_cuota1, :importe_cuota1 , :cuota2 ,:fecha_cuota2, :importe_cuota2,
          :cuota3 , :fecha_cuota3 , :importe_cuota3 , :cuota4, :fecha_cuota4, :importe_cuota4 , :cuota5 ,:fecha_cuota5 ,
-        :importe_cuota5 , :detraccion_percent ,:detraccion_importe , :detraccion_cuenta, :retencion_importe )
+        :importe_cuota5 , :detraccion_percent ,:detraccion_importe , :detraccion_cuenta, :retencion_importe,:tipo_factura )
   end
 
 end

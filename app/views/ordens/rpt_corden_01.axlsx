@@ -47,7 +47,7 @@ wb.styles do |s|
             sheet.add_row [""]
             sheet.add_row [""]
 
-            lcTexto = "Reporte de Ordenes  S/IGV " << "Desde:" << @mes.to_s  << " -"<< @anio.to_s << " Hasta: " <<  @mes1.to_s << " - "<< @anio1.to_s 
+            lcTexto = " " << "Desde:" << @mes.to_s  << " -"<< @anio.to_s << " Hasta: " <<  @mes1.to_s << " - "<< @anio1.to_s 
 
             sheet.add_row ["Lima, " ,Time.now ] , :style =>[cadena0,date0 ]
             sheet.add_row [lcTexto] , :style =>[cadena0  ]

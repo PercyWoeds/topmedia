@@ -1,14 +1,3 @@
-GIT
-  remote: git://github.com/rails/activerecord-session_store.git
-  revision: 50e81319339d847a07a67eb32d77dbbbe4636317
-  specs:
-    activerecord-session_store (1.1.3)
-      actionpack (>= 4.0)
-      activerecord (>= 4.0)
-      multi_json (~> 1.11, >= 1.11.2)
-      rack (>= 1.5.2, < 3)
-      railties (>= 4.0)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -140,7 +129,6 @@ GEM
     mini_mime (1.0.1)
     mini_portile2 (2.4.0)
     minitest (5.11.3)
-    multi_json (1.13.1)
     net-http-digest_auth (1.4.1)
     net-http-persistent (4.0.1)
       connection_pool (~> 2.2)
@@ -292,7 +280,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord-session_store!
   annotate
   axlsx (~> 2.0)
   axlsx_rails

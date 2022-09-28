@@ -102,6 +102,24 @@
 <%= hr() %>
 
 
+
+
+<%= hr() %>
+
+<h3>
+  Informacion Cliente 
+</h3>
+<p>
+
+  <b>Name:</b>
+  <%= link_to @customer.name, @customer   %>
+</p>
+
+<%= render "customers/show" %>
+
+<%= hr() %>
+
+
 <% if @invoice.description != "" %>
   <div>
     <b>Description:</b>
@@ -112,7 +130,9 @@
   <%= hr() %>
 <% end %>
 
-
+<h3>
+  Fechas a facturar 
+</h3>
 
 <% if @invoice.processed  != "3" %>
 
@@ -120,6 +140,8 @@
 
     <%= form_tag(newfactura2_facturas_path, method: "get") do %>
 
+
+    
      <div class="field">
           <input type="date" name="fecha1" value= <%= Date.today - 15 %> style = "width: 150px" >
         </div>
@@ -129,14 +151,6 @@
       </div>
 
 
-       <div class="field">  
-        <%= check_box_tag("cbox1", value = "1", checked = true , options = {})  %> Todos los clientes     
-       </div>
-     
-     
-      <div class="field">
-        <%= select_tag(:customer_id,options_from_collection_for_select(@customers,'id','name') ) %>
-      </div>
       
     <br>
 
@@ -149,7 +163,7 @@
 
 <% end %>
 
-
+<h4><br> Detalle de ordenes </br></h4>
 <tbody>
 
 
