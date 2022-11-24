@@ -90,7 +90,7 @@ wb.styles do |s|
       end
     
     @fila_cliente += [ "Orden: " + @orden.code ]
-    @fila_direccion += [ "Fecha Ord.: " + @orden.fecha.strftime("%d/%m/%Y") ]
+    @fila_direccion += [ "Fecha Ord.: " + @orden.fecha  ]
     @fila_marca += ["Contrato Nro.: "+ @orden.get_nro_contrato(@orden.secu_cont) ]
     @fila_mes_anio += ["Tipo Orden: " + @orden.tipo_orden.descrip ]
     

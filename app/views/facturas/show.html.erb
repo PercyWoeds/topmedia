@@ -88,6 +88,8 @@
 
 <%= hr() %>
 
+<% if !@medio.nil? %>
+
 <h3>
   Informacion Medio 
 </h3>
@@ -100,6 +102,8 @@
 <%= render "medios/show" %>
 
 <%= hr() %>
+
+<% end %>
 
 
 
@@ -141,14 +145,20 @@
     <%= form_tag(newfactura2_facturas_path, method: "get") do %>
 
 
-    
-     <div class="field">
-          <input type="date" name="fecha1" value= <%= Date.today - 15 %> style = "width: 150px" >
-        </div>
+    <p> Desde</p>
 
-      <div class="field">
-        <input type="date" name="fecha2" value = <%= Date.today %> style = "width: 150px" >
-      </div>
+<%= select_tag(:year, options_for_select(@years, @year), :style =>"width: 100px" )  %>
+
+<%= select_tag(:month, options_for_select(@months, @month), :style =>"width: 100px" ) %>
+<br>
+
+    <p> Hasta</p>
+
+<%= select_tag(:year1, options_for_select(@years, @year), :style =>"width: 100px" ) %>
+
+<%= select_tag(:month1, options_for_select(@months, @month), :style =>"width: 100px" ) %>
+<br>
+
 
 
       

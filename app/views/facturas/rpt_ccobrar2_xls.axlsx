@@ -52,7 +52,7 @@ wb.styles do |s|
 
    @facturas_rpt.each do |payment|
    
-        if payment.document_id == 9
+        if payment.document_id == 2
             balance_importe = payment.balance.round(2) * -1
         else
             balance_importe = payment.balance.round(2) 

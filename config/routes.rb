@@ -501,6 +501,7 @@
   match 'companies/reports/:company_id' => 'reports#reports', via: [:get, :post]
   match 'companies/reports/reports_contratos/:company_id' => 'reports#reports_contratos', via: [:get, :post]
   match 'companies/reports/rpt_ordenes1_pdf/:company_id' => 'reports#rpt_ordenes1_pdf', via: [:get, :post]
+  match 'companies/reports/cerrar_ordenes/:company_id' => 'reports#cerrar_ordenes', via: [:get, :post]
   
   match 'companies/reports/rpt_contratos1_pdf/:company_id' => 'reports#rpt_contratos1_pdf', via: [:get, :post]
   match 'companies/reports/rpt_contratos2_pdf/:company_id' => 'reports#rpt_contratos2_pdf', via: [:get, :post]
@@ -530,6 +531,7 @@
   match 'ordens/do_email/:id' => 'ordens#do_email', via: [:get, :post]
   match 'ordens/do_process/:id' => 'ordens#do_process', via: [:get, :post]
   match 'ordens/do_cerrar/:id' => 'ordens#do_cerrar', via: [:get, :post]
+  match 'ordens/do_cerrar_orden/:id' => 'ordens#do_cerrar_orden', via: [:get, :post]
   
   match 'ordens/email/:id' => 'ordens#email', via: [:get, :post]
   match 'ordens/pdf/:id' => 'ordens#pdf', via: [:get, :post]
@@ -606,6 +608,8 @@
   match 'facturas/ac_guias/:company_id' => 'facturas#ac_guias', via: [:get, :post]
   match 'facturas/new/:company_id' => 'facturas#new', via: [:get, :post]
   match 'facturas/new2/:company_id' => 'facturas#new2', via: [:get, :post]
+  match 'facturas/new3/:company_id' => 'facturas#new3', via: [:get, :post]
+  
   
   match 'facturas/export/:company_id' => 'facturas#export', via: [:get, :post]
   match 'facturas/export2/:company_id' => 'facturas#export2', via: [:get, :post]

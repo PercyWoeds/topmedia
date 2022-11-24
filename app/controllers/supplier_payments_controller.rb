@@ -2055,7 +2055,7 @@ def list_receive_supplierpayments
           when "Generar" then 
 
             begin 
-              puts "reporeeeeeee ..."
+          
               render xlsx: 'rpt_cadmin_01'
 
             end
@@ -2125,8 +2125,9 @@ def list_receive_supplierpayments
     @anio1 = params[:year1]
 
 
-          
-    @ordenes = @company.get_ordenes_cliente4(@mes,@anio,@mes1,@anio1)
+      @ordenes  = @company.get_ordenes_cliente4(@mes,@anio,@mes1,@anio1)
+      @ordenes2 = @company.get_ordenes_cliente5(@mes,@anio,@mes1,@anio1)
+
 
         case params[:print]
       

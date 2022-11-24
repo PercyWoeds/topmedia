@@ -80,9 +80,9 @@ wb.styles do |s|
                           
 
                           if payment.moneda_id == 1
-                           lcDolar = payment.total
+                           lcDolar = payment.subtotal
                           else
-                           lcSoles =  payment.total   
+                           lcSoles =  payment.subtotal   
                           end 
                           lcDuracion = 0
                           lcDuracion = payment.get_cantidad_avisos(payment.id) * payment.get_duracion_avisos(payment.id)

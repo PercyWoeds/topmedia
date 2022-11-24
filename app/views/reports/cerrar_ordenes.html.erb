@@ -1,0 +1,36 @@
+<%= render 'layouts/charts' %>
+<%
+invoices_subtotal = 0
+invoices_tax = 0
+invoices_total = 0
+subtotals = []
+taxes = []
+totals = []
+%>
+<div class="breadcrumbs">
+  <%= link_to "My companies", "/companies" %> &raquo;
+  <%= link_to @company.name, @company %> &raquo;
+  <%= link_to "Reports", "/companies/reports/#{@company.id}" %>
+</div>
+
+<h1>
+  <%= image_tag("reports_48.png", :class => "vmiddle") %>
+  CERRAR ORDENES 
+</h1>
+
+<form method="get" action="/ordens/do_cerrar_orden/<%= @company.id %>" >   
+  <div class="field">
+      <input type="date" name="fecha1" value= <%= Date.today - 7.days %> style = "width: 150px" >
+    </div>
+
+	<div class="field">
+		<input type="date" name="fecha2" value = <%= Date.today %> style = "width: 150px" >
+  </div>
+
+ 
+  <input type="submit" value="Cerrar ordenes  " />
+  
+</form>
+
+<br />
+

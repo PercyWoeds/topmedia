@@ -1632,5 +1632,13 @@ def rpt_cadmin4
      
 end
 
-
+def cerrar_ordenes
+    @company = Company.find(params[:company_id])    
+    @pagetitle = "Reportes de Contratos "    
+    @customers = @company.get_customers()
+    @monedas=@company.get_monedas    
+    @medios    = Medio.order(:descrip)
+    @star_date = Date.today
+     
+end
 end

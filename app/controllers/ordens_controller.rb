@@ -16,6 +16,21 @@ class OrdensController < ApplicationController
     redirect_to @orden
   end
 
+  def do_cerrar_orden
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]
+    @company = Company.find(1)
+
+    @orden = Orden.where(["fecha1>= ? AND fecha1 <= ? ", "#{@fecha1} 00:00:00", "#{@fecha2} 23:59:59"]).update_all(processed:"3", date_processed: Time.now)  
+    
+
+  
+    flash[:notice] = "Documentos ha sido cerrados"
+
+    
+
+  end
+
 
 
   def do_anular

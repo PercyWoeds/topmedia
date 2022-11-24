@@ -53,13 +53,16 @@ def reportes4
 
 
   def discontinue
-    puts "discontinue"
+    
+
+
+
     @factura_id = params[:factura_id]
         puts @factura_id
 
         @factura = Factura.find(@factura_id)
 
-    @facturasselect = Orden.find(params[:products_ids])
+        @facturasselect = Orden.find(params[:products_ids])
  
    
     for item in @facturasselect
@@ -71,12 +74,14 @@ def reportes4
           c = item.customer_id 
 
 
+
+
                comision1  =  item.get_comision(item.medio_id,item.customer_id,1,@factura.tipo_factura)
+
                comision2  =  item.get_comision(item.medio_id,item.customer_id,2,@factura.tipo_factura)
                 
-                puts "comision ***************************************************"
-                puts comision1
-                puts comision2
+              
+
 
              
               comision1_importe   =  item.total * comision1 / 100
@@ -203,6 +208,8 @@ end
     @invoice[:processed] = false
     
     @invoice[:fecha] = Date.today
+    @invoice[:orden_comision] = "3"
+
     
     
     @company = Company.find(params[:company_id])
@@ -503,28 +510,35 @@ end
     @customer = @factura.customer 
 
 
-    @fecha1 = params[:fecha1]
-    @fecha2 = params[:fecha2]
+     @mes = params[:month]
+    @anio = params[:year]
+    @mes1 = params[:month1]
+    @anio1 = params[:year1]
     
-    @medio_name = @medio.descrip
+    
     @customers =  @company.get_customers()     
 
     @factura_detail = Factura.new
 
-    puts "mmedio"
+  
+
+
+
+    if !@medio.nil?
+   @medio_name = @medio.descrip
+   puts "mmedio"
     puts @medio.id
 
-
-     puts @check_product
-
-     puts @factura.moneda_id 
-
-
-   
-      @detalleitems =  Orden.where("fecha>=? and fecha<=? and processed=? and medio_id =? and customer_id = ? and moneda_id = ? and facturado is null",
-          "#{@fecha1} 00:00:00","#{@fecha2} 23:59:59","1",@medio.id,@customer.id,@factura.moneda_id ).order(:fecha) 
+      @detalleitems =  Orden.where("month >= ? and year >= ? and month <= ? and year <= ?and processed=? and medio_id =? and customer_id = ? and moneda_id = ? and facturado is null",
+          "#{@mes}","#{@anio}", "#{@mes1}","#{@anio1}","1",@medio.id,@customer.id,@factura.moneda_id ).order(:fecha) 
      
-  
+    else
+    @detalleitems =  Orden.where("month >= ? and year >= ? and month <= ? and year <= ?  and processed=?  and customer_id = ? and moneda_id = ? and facturado is null",
+          "#{@mes}","#{@anio}", "#{@mes1}","#{@anio1}","1",@customer.id,@factura.moneda_id ).order(:fecha) 
+      
+     
+
+    end 
 
 
 
@@ -801,6 +815,43 @@ new_invoice_item.save
 
     @productos = @company.get_products()
 
+
+
+     if(params[:year] and params[:year].numeric?)
+      @year = params[:year].to_i
+    else
+      @year = 2022
+    end
+
+    if(params[:month] and params[:month].numeric?)
+      @month = params[:month].to_i
+    else
+      @month = Time.now.month
+    end
+
+    if(@month < 10)
+      month_s = "0#{@month}"
+    else
+      month_s = @month.to_s
+    end
+
+    curr_year = Time.now.year + 1 
+    c_year = curr_year
+    c_month = 1
+
+    @years = []
+    @months = monthsArr
+    @month_name = @months[@month - 1][0]
+
+
+
+    while(c_year > 2022  - 5)
+      @years.push(c_year)
+      c_year -= 1
+    end
+
+
+
      respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @invoice  }
@@ -820,7 +871,9 @@ new_invoice_item.save
     @invoice = Factura.new
     @invoice[:code] = "#{generate_guid3()}"
     @invoice[:processed] = false
-     @invoice[:fecha]  = Date.today 
+     @invoice[:fecha]  = Date.today  
+     @invoice[:orden_comision] = "1"
+
     @company = Company.find(params[:company_id])
     @invoice.company_id = @company.id
     
@@ -844,6 +897,38 @@ new_invoice_item.save
     @invoice[:description]  = "SERVICIO DE GESTION PUBLICITARIA"
   end
 
+ def new3
+    @pagetitle = "Nueva factura"
+    @action_txt = "Create"
+    
+    @invoice = Factura.new
+    @invoice[:code] = "#{generate_guid3()}"
+    @invoice[:processed] = false
+    @invoice[:fecha]  = Date.today 
+    @invoice[:orden_comision] = "2"
+
+    @company = Company.find(params[:company_id])
+    @invoice.company_id = @company.id
+    
+    @locations = @company.get_locations()
+    @divisions = @company.get_divisions()
+    @payments = @company.get_payments()
+    @services = @company.get_services()
+    @deliveryships = @invoice.my_deliverys 
+    @tipofacturas = @company.get_tipofacturas() 
+    @monedas = @company.get_monedas()
+    @medios = @company.get_medios()
+    @customers = @company.get_customers()
+    
+    @tipodocumento = @company.get_documents()
+
+    @ac_user = getUsername()
+    @invoice[:user_id] = getUserId()
+
+    @lcTipoFactura = "1"
+
+    @invoice[:description]  = "SERVICIO DE GESTION PUBLICITARIA"
+  end
 
   # GET /invoices/1/edit
   def edit
@@ -981,6 +1066,8 @@ new_invoice_item.save
 
 
 
+
+
     respond_to do |format|
 
       if @invoice.save
@@ -992,10 +1079,6 @@ new_invoice_item.save
         @invoice.correlativo
         # Check if we gotta process the invoice
        # @invoice.process()
-
-    
-
-
         format.html { redirect_to(@invoice, :notice => 'Invoice was successfully created.') }
         format.xml  { render :xml => @invoice, :status => :created, :location => @invoice }
       else
@@ -1494,7 +1577,7 @@ new_invoice_item.save
 
           for product in @cliente_detalle 
 
-              if product.document_id == 9
+              if product.document_id == 2
                   balance_importe = product.balance.round(2) * -1
               else
                   balance_importe = product.balance.round(2) 
@@ -2097,7 +2180,8 @@ new_invoice_item.save
        :pago, :charge, :balance, :moneda_id, :observ, :fecha2, :year_mounth , :contrato_id, :anio ,:medio_id, :document_id ,
         :tc, :nacional , :orden_id , :msgerror, :cuota1, :fecha_cuota1, :importe_cuota1 , :cuota2 ,:fecha_cuota2, :importe_cuota2,
          :cuota3 , :fecha_cuota3 , :importe_cuota3 , :cuota4, :fecha_cuota4, :importe_cuota4 , :cuota5 ,:fecha_cuota5 ,
-        :importe_cuota5 , :detraccion_percent ,:detraccion_importe , :detraccion_cuenta, :retencion_importe,:tipo_factura )
+        :importe_cuota5 , :detraccion_percent ,:detraccion_importe , :detraccion_cuenta, :retencion_importe,:tipo_factura,
+        :orden_comision )
   end
 
 end

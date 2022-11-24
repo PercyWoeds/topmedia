@@ -58,6 +58,17 @@
 
 
 
+ <h3>
+    <%= image_tag("reports_32.png", :class => "vmiddle") %>
+      <%= link_to "Cerrar ordenes ", "/companies/reports/cerrar_ordenes/#{@company.id}" %>
+  </h3>
+
+  <p>
+    Abono Contrato clientes 
+  </p>
+<%= hr() %>
+
+
   <h3>
   <%= image_tag("reports_32.png", :class => "vmiddle") %>
     <%= link_to "Reportes", "/companies/reports/reports_contratos/#{@company.id}" %>

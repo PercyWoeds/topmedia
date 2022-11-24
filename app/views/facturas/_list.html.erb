@@ -40,7 +40,13 @@
             <% if invoice.tc == "1"%> 
               <%= invoice.contrato.medio.name %>
             <% else %>
-              <%= invoice.medio.descrip %>
+              <%if invoice.customer.nil?%>
+                <%= invoice.medio.descrip %>
+              <%else%>
+               <%= invoice.customer.name %>
+              
+              <% end%>  
+
             <%end %>
 
           </td>   

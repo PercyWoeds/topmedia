@@ -53,7 +53,7 @@ wb.styles do |s|
             sheet.merge_cells('A8:C8')
     
 
-            sheet.add_row ["Nro.Orden", "Fch.Orden", "Cliente", "Medio","Mes","Año","Imp.Orden","%Com.", "Com. S/.","Com.US$.","Factura","Fact.","Observacion"], :style => title 
+            sheet.add_row ["Nro.Orden", "Comision", "Fch.Orden",  "Medio","Cliente","Mes","Año","Imp.Orden","%Com.", "Com.1. S/.","Com.1.US$.","Com.2. S/.","Com.2.US$.","Factura","Fact.","Observacion"], :style => title 
 
 sheet.merge_cells('A8:C8')
     
@@ -63,53 +63,122 @@ sheet.merge_cells('A8:C8')
 
                @ordenes.each do |payment|
                
-                          puts "sssssssssssss"
-                          puts payment.fecha
-                          puts payment.customer.name 
-                          puts payment.medio.descrip 
-                          puts payment.code 
-                          puts payment.month 
-                          puts payment.year 
-                            if payment.marca.nil?
+                         
+                          if payment.marca.nil?
                             nombre_marca = ""
                           else 
                             nombre_marca = payment.marca.name 
                           end 
-                          puts payment.description 
-                                                     
-                          puts "sxxx"                                                                        
-                          comision1 = payment.get_comision1(payment.customer_id,payment.medio_id)
-                          comision2 = payment.get_comision2(payment.customer_id,payment.medio_id)
 
-                          puts "comisiones -----------------------"
-                          puts comision1
-                          puts comision2
+
+                          puts payment.description 
+                          puts "sxxx"             
+
+
+                          comision1 = payment.get_comision1(payment.customer_id,payment.medio_id,1)
+                          comision2 = payment.get_comision2(payment.customer_id,payment.medio_id,1)
+
+
                           total_comision_soles_1 = 0
                           total_comision_dolar_1 = 0
                           
+                          total_comision_soles_2 = 0
+                          total_comision_dolar_2 = 0
+                          
                           if payment.moneda_id == 2
-                             lcDolar = payment.total
+                             lcDolar = payment.subtotal
                              total_comision_soles_1 = payment.total * comision1 / 100
+                             total_comision_soles_2 = payment.total * comision2 / 100
                           else
-                             lcSoles =  payment.total 
-                             total_comision_dolar_1 = payment.total * comision1 / 100  
+                             lcSoles =  payment.subtotal 
+                             total_comision_dolar_1 = payment.total * comision1 / 100 
+                             total_comision_dolar_2 = payment.total * comision2 / 100 
                           end 
 
-                          puts total_comision_soles_1
-                          puts total_comision_dolar_1
-
-                          puts "orden"
-                          puts payment.id 
+                    
 
                           facturado = payment.get_facturado(payment.id)
 
-                          puts comision1
-                          puts comision2
-                          puts facturado 
-                          puts "omgg"                           
+                                  
                         
                           sheet.add_row [
                           payment.code,
+                          "MEDIO-CLIENTE",
+                          payment.fecha,
+                          payment.medio.descrip,
+                          payment.customer.name,
+                          payment.month,
+                          payment.year,
+                          payment.total,
+                          comision1,
+                          total_comision_soles_1,
+                          total_comision_dolar_1,
+                          total_comision_soles_2,
+                          total_comision_dolar_2,
+                          facturado ,"TM" ], 
+                           :style => [cadena,date,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency,currency,cadena,cadena,cadena,cadena] 
+
+               end 
+
+               else
+
+                puts "no hay nada..."
+               end 
+
+###### CLIENTE MEDIO ###########################################
+
+
+      sheet.add_row ["Nro.Orden", "Comision", "Fch.Orden",  "Cliente","Medio","Mes","Año","Imp.Orden","%Com.", "Com.1. S/.","Com.1.US$.","Com.2. S/.","Com.2.US$.","Factura","Fact.","Observacion"], :style => title 
+
+sheet.merge_cells('A8:C8')
+    
+            sheet.column_widths 10            
+
+            if  @ordenes2.count> 0
+
+               @ordenes2.each do |payment|
+               
+                         
+                          if payment.marca.nil?
+                            nombre_marca = ""
+                          else 
+                            nombre_marca = payment.marca.name 
+                          end 
+
+
+                          puts payment.description 
+                          puts "sxxx"             
+
+
+                          comision1 = payment.get_comision1(payment.customer_id,payment.medio_id,2)
+                          comision2 = payment.get_comision2(payment.customer_id,payment.medio_id,2)
+
+
+                          total_comision_soles_1 = 0
+                          total_comision_dolar_1 = 0
+                          
+                          total_comision_soles_2 = 0
+                          total_comision_dolar_2 = 0
+                          
+                          if payment.moneda_id == 2
+                             lcDolar = payment.subtotal
+                             total_comision_soles_1 = payment.total * comision1 / 100
+                             total_comision_soles_2 = payment.total * comision2 / 100
+                          else
+                             lcSoles =  payment.subtotal 
+                             total_comision_dolar_1 = payment.total * comision1 / 100 
+                             total_comision_dolar_2 = payment.total * comision2 / 100 
+                          end 
+
+                    
+
+                          facturado = payment.get_facturado(payment.id)
+
+                                  
+                        
+                          sheet.add_row [
+                          payment.code,
+                          "CLIENTE-MEDIO",
                           payment.fecha,
                           payment.customer.name,
                           payment.medio.descrip,
@@ -119,8 +188,10 @@ sheet.merge_cells('A8:C8')
                           comision1,
                           total_comision_soles_1,
                           total_comision_dolar_1,
+                          total_comision_soles_2,
+                          total_comision_dolar_2,
                           facturado ,"TM" ], 
-                           :style => [cadena,date,cadena,cadena,cadena,cadena,currency,currency,currency,currency,cadena,cadena,cadena,cadena] 
+                           :style => [cadena,date,cadena,cadena,cadena,cadena,cadena,currency,currency,currency,currency,currency,cadena,cadena,cadena,cadena] 
 
                end 
 
@@ -128,7 +199,8 @@ sheet.merge_cells('A8:C8')
 
                 puts "no hay nada..."
                end 
-                      
+
+                                  
    
     end
 end 

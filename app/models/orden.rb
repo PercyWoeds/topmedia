@@ -15,6 +15,8 @@ class Orden < ActiveRecord::Base
     belongs_to :tipo_orden 
     belongs_to :moneda  
     belongs_to :factura_details 
+    belongs_to :orden_comision 
+     
    
   	
   	has_many :orden_products, :dependent => :destroy
@@ -806,11 +808,11 @@ end
       return total 
    end 
 
-   def get_comision1(customer,medio)
+   def get_comision1(customer,medio,tipo)
 
-    if MedioCustomer.where(customer_id: customer,medio_id: medio ).exists?
+    if MedioCustomer.where(customer_id: customer,medio_id: medio,orden_comision_id: tipo ).exists?
 
-       a = MedioCustomer.where(customer_id: customer,medio_id: medio )
+       a = MedioCustomer.where(customer_id: customer,medio_id: medio,orden_comision_id: tipo  )
      return   a.first.comision1 
     else
      return 0.00 
@@ -818,11 +820,11 @@ end
    end 
 
 
-  def get_comision2(customer,medio)
+  def get_comision2(customer,medio,tipo)
 
-    if MedioCustomer.where(customer_id: customer,medio_id: medio ).exists?
+    if MedioCustomer.where(customer_id: customer,medio_id: medio , orden_comision_id: tipo ).exists?
 
-       a = MedioCustomer.where(customer_id: customer,medio_id: medio )
+       a = MedioCustomer.where(customer_id: customer,medio_id: medio ,orden_comision_id: tipo )
      return   a.first.comision2
     else
      return 0.00 
