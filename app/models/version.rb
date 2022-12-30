@@ -20,4 +20,14 @@ class Version < ActiveRecord::Base
     end
   end
 
+   def self.search(search)
+    # Title is for the above case, the OP incorrectly had 'name'
+      
+    
+         where("descrip ILIKE ?", "%#{search}%") 
+          
+    end
+
+
+
 end

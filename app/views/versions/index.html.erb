@@ -2,6 +2,27 @@
 
 <h1>Versiones</h1>
 
+
+
+<%= form_tag(versions_path, :method => "get", id: "search-form") do %>
+
+  <%= text_field_tag :search, params[:search], placeholder: "Buscar versions" %>
+  <%= submit_tag "Buscar" %>
+  <% end %>
+
+
+
+<div class="button">
+
+<%= link_to 'Nueva Version', new_version_path %>
+
+
+<%= link_to "CSV", versions_path(format: "csv") %> |
+
+</div>
+
+
+
 <table>
   <thead>
     <tr>
@@ -30,7 +51,7 @@
               <td>---</td>
 
               <%else %>
-<% if version.producto.marca.customer.nil?%>
+            <% if version.producto.marca.customer.nil?%>
                <td>---</td>
 
               <%else%>
@@ -61,14 +82,8 @@
 <br>
 
 
-<div class="button">
 
-<%= link_to 'Nueva Version', new_version_path %>
-
-
-<%= link_to "CSV", versions_path(format: "csv") %> |
-
-</div>
+<%= will_paginate @versions %>
 
 
 

@@ -10,7 +10,20 @@ class VersionsController < ApplicationController
   
   def index
     
-    @versions = Version.order(:descrip)
+     if params[:search] and params[:search] != ""
+
+          @versions = Version.search(params[:search]).paginate(:page => params[:page]).order(:descrip)
+
+
+          puts "sssssvvvv"
+     else 
+        
+       @versions = Version.order(:descrip).paginate(:page => params[:page])
+
+          puts "noooo"
+     end    
+  
+
     
     respond_to do |format|
       format.html

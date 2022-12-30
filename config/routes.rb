@@ -97,6 +97,7 @@
   end
   resources :versions do 
      collection { post :import }
+     
   end 
   
   resources :tipoavisos do 
@@ -646,6 +647,7 @@
   match 'companies/facturas/:company_id' => 'facturas#list_invoices', via: [:get, :post]
 
   resources :facturas
+
 
 
 

@@ -55,8 +55,6 @@ def reportes4
   def discontinue
     
 
-
-
     @factura_id = params[:factura_id]
         puts @factura_id
 
@@ -79,11 +77,9 @@ def reportes4
                comision1  =  item.get_comision(item.medio_id,item.customer_id,1,@factura.tipo_factura)
 
                comision2  =  item.get_comision(item.medio_id,item.customer_id,2,@factura.tipo_factura)
-                
-              
 
+               
 
-             
               comision1_importe   =  item.total * comision1 / 100
 
               comision2_importe   =  ((item.total - comision1_importe) * comision2 / 100)
